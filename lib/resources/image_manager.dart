@@ -41,4 +41,5 @@ class AppImages {
   static const qrCode = "assets/images/icons/qr_coded.svg";
   static const bitCoinIcon = "assets/images/icons/bit_coin.png";
   static const walletDivider = "assets/images/icons/wallet_divider.svg";
+  static const verificationDivider = "assets/images/verification_divider.png";
 }

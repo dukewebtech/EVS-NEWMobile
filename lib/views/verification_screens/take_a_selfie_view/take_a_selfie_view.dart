@@ -78,7 +78,7 @@ class _TakeASelfieViewState extends State<TakeASelfieView> {
               child: Container(
                 width: AppSize.s229.w,
                 padding: EdgeInsets.symmetric(horizontal: AppSize.s50.w),
-                child: const CustomTextWithLineHeight(text: AppStrings.takeASelfie,
+                child: const CustomTextWithLineHeight(text: AppStrings.takeAShot,
                   textColor: ColorManager.blackTextColor,
                   fontSize: FontSize.s24, fontWeight: FontWeightManager.bold,
                 alignCenter: true,),

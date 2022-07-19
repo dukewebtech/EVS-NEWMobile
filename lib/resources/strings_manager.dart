@@ -85,7 +85,7 @@ class AppStrings {
   static const uploadYourID = "Upload your ID ";
   static const uploadEitherYourPassport = "Upload either your passport, driver’s licence or other national ID. ";
   static const upload = "Upload";
-  static const takeASelfie = "Taking a Selfie";
+  static const takeAShot = "Snap shot";
   static const youWouldHaveToTake = "You would have to take a selfie for verification of your identity";
   static const frontOfCard = "Front of card";
   static const positionAll4CornersOf = "Position all 4 corners of the front clearly in the frame and remove any over";
