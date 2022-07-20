@@ -25,9 +25,4 @@ final List<TransactionTypeModel> transactionTypes = [
       containerColor: ColorManager.orangeColor,
     slug: "receive"
   ),
-  TransactionTypeModel(title: AppStrings.trade,
-      textColor: ColorManager.lightTextColor,
-      containerColor: ColorManager.whiteColor,
-    slug: "trade"
-  ),
 ];

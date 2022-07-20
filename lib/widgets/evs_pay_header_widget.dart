@@ -1,4 +1,5 @@
 import 'package:evs_pay_mobile/resources/font_manager.dart';
+import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +25,11 @@ class EvsPayHeaderWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SvgPicture.asset(leftIcon),
+        InkWell(
+          onTap: (){
+            openNotificationsScreen(context);
+          },
+            child: SvgPicture.asset(leftIcon)),
         CustomTextWithLineHeight(text: title,
           textColor: ColorManager.lightTextColor,
           fontWeight: FontWeightManager.bold, fontSize: FontSize.s16,),

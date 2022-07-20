@@ -105,6 +105,8 @@ class AppStrings {
   static const trade = "Trade";
   static const transactionHistory = "Transactions History";
   static const waiting = "Waiting";
+  static const home = "Home";
+  static const trades = "Trades";
 
 
 

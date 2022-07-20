@@ -14,6 +14,7 @@ class ColorManager {
   static const greenColor = Color.fromRGBO(93, 248, 136, 1);
   static const blueColor = Color.fromRGBO(37, 123, 206, 1);
   static const orangeColor = Color.fromRGBO(247, 147, 26, 1);
+  static const blackTxtColor = Color.fromRGBO(40, 40, 40, 1);
 
   static Color lightTextColor = HexColor.fromHex("#657B9A");
   static Color whiteColor = HexColor.fromHex("#FFFFFF");
@@ -39,7 +40,7 @@ class ColorManager {
   static Color boldSecureVpnBgColor = HexColor.fromHex("#FDF3EC");
   static Color sendToCardColor = HexColor.fromHex("#173F82");
 
-  static Color colorRed = Color.fromRGBO(204, 51, 79, 1);
+  static Color colorRed = const Color.fromRGBO(204, 51, 79, 1);
 
   static Color redeemContainerColor = HexColor.fromHex("#F3EEFC");
   static Color redeemPrimaryTextColor = HexColor.fromHex("#290F57");
