@@ -81,6 +81,8 @@ class AppStrings {
   static const identityCard = "Identity Card";
   static const snapShot = "Snap Shot";
   static const proofOfAddress = "Proof Of Address";
+  static const paymentMethod = "Payment Method";
+  static const selectCoin = "Select Coin";
   static const uploadEitherCable = "Upload either Cable TV bill such as DSTV bill or Utility bill for services to the address.";
   static const uploadYourID = "Upload your ID ";
   static const uploadEitherYourPassport = "Upload either your passport, driver’s licence or other national ID. ";
@@ -107,6 +109,19 @@ class AppStrings {
   static const waiting = "Waiting";
   static const home = "Home";
   static const trades = "Trades";
+  static const pending = "Pending";
+  static const completed = "Completed";
+  static const cancelled = "Cancelled";
+  static const youHaveNotComplete = "You have to complete your Verification to trade";
+  static const sell = "SELL";
+  static const buy = "BUY";
+  static const sellLowerCase = "Sell";
+  static const buyLowerCase = "Buy";
+  static const six20N = "620 NGN";
+  static const oneK = "1000 NGN";
+  static const perUSD = "per USD";
+  static const search = "Search";
+
 
 
 

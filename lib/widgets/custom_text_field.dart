@@ -9,10 +9,14 @@ class CustomTextField extends StatelessWidget {
    final bool obSecureText;
       final int? maxLines;
       final double contentPadding;
+      final bool isNumbers;
+      final bool isEnabled;
   final String hint;
       final TextEditingController controller;
         const CustomTextField({Key? key, this.autoFocus = false,
     this.obSecureText = false,
+          this.isNumbers = false,
+          this.isEnabled = true,
     this.hint = "",
           this.maxLines = 1,
           required this.controller,
@@ -34,6 +38,8 @@ class CustomTextField extends StatelessWidget {
               cursorColor: ColorManager.textFieldColor,
               autofocus: autoFocus,
               maxLines: maxLines,
+              enabled: isEnabled,
+              keyboardType: isNumbers? TextInputType.number: TextInputType.text,
               obscureText:  obSecureText,
               style: const TextStyle(
                 color: ColorManager.textFieldColor,

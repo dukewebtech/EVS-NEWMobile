@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ColorManager {
   static const primaryColor = Color.fromRGBO(255, 220, 24, 1);
+  static const accentColor = Color.fromRGBO(204, 176, 19, 1);
   static const greyColor = Color.fromRGBO(130, 130, 130, 1);
   static const greyTextColor = Color.fromRGBO(151, 151, 151, 1);
   static const buttonSplashColor = Color.fromRGBO(255, 220, 24, 1);
@@ -15,11 +16,13 @@ class ColorManager {
   static const blueColor = Color.fromRGBO(37, 123, 206, 1);
   static const orangeColor = Color.fromRGBO(247, 147, 26, 1);
   static const blackTxtColor = Color.fromRGBO(40, 40, 40, 1);
+  static const verifyContainerColor = Color.fromRGBO(252, 253, 249, 1);
+  static const blckColor = Color.fromRGBO(0, 0, 0, 1);
+  static const filterGreyColor = Color.fromRGBO(245, 245, 245, 1);
 
   static Color lightTextColor = HexColor.fromHex("#657B9A");
   static Color whiteColor = HexColor.fromHex("#FFFFFF");
   static Color containerShadow = HexColor.fromHex("#2C3A4E14");
-  static Color accentColor = HexColor.fromHex("#F1C00F");
   static Color disabledButtonColor = HexColor.fromHex("#ABC4ED");
   static Color cardColor = HexColor.fromHex("#F3F4F7");
   static Color filledInputColor = HexColor.fromHex("#EEF3FB");

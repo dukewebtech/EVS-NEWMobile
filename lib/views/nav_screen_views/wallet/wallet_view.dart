@@ -91,6 +91,7 @@ class _WalletViewState extends State<WalletView> {
                                           vertical: AppSize.s5.h
                                       ),
                                       height: AppSize.s28.h,
+                                      width: AppSize.s88.w,
                                       decoration: BoxDecoration(
                                           color: transaction.containerColor,
                                         borderRadius: BorderRadius.circular(AppSize.s4.r)
@@ -119,7 +120,57 @@ class _WalletViewState extends State<WalletView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const CustomTextWithLineHeight(text: AppStrings.transactionHistory, fontSize: FontSize.s18,),
-                      SvgPicture.asset(AppImages.moreIconRow),
+                      PopupMenuButton(
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: const [
+                                      CustomTextWithLineHeight(text: AppStrings.pending),
+                                    ],
+                                  ),
+                                  SizedBox(height: AppSize.s13.h,),
+                                  SvgPicture.asset(AppImages.popupMenuIcon),
+                                ],
+                              ),
+                              value: 1,
+                              onTap: (){
+                                // print("pending");
+                              },
+                            ),
+                            PopupMenuItem(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: const [
+                                      CustomTextWithLineHeight(text: AppStrings.completed),
+                                    ],
+                                  ),
+                                  SizedBox(height: AppSize.s13.h,),
+                                  SvgPicture.asset(AppImages.popupMenuIcon),
+                                ],
+                              ),
+                              value: 1,
+                              onTap: (){
+                                // print("pending");
+                              },
+                            ),
+
+                            PopupMenuItem(
+                              child: Column(
+                                children: const [
+                                  CustomTextWithLineHeight(text: AppStrings.cancelled),
+
+                                ],
+                              ),
+                              value: 1,
+                              onTap: (){
+                                // print("pending");
+                              },
+                            ),
+                          ]
+                      )
                     ],
                   ),
                 )),
