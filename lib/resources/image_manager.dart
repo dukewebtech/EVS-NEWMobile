@@ -42,4 +42,13 @@ class AppImages {
   static const bitCoinIcon = "assets/images/icons/bit_coin.png";
   static const walletDivider = "assets/images/icons/wallet_divider.svg";
   static const verificationDivider = "assets/images/verification_divider.png";
+  static const moreIconRow = "assets/images/icons/more_icon_row.svg";
+  static const popupMenuIcon = "assets/images/icons/popup_divider.svg";
+  static const verifyIconYellow = "assets/images/icons/verify_icon_yellow.svg";
+  static const sellIcon = "assets/images/icons/sell_arrow.svg";
+  static const buyIcon = "assets/images/icons/buy_icon.svg";
+  static const filterIcon = "assets/images/icons/filter_icon.svg";
+  static const btcIconSmallBlack = "assets/images/icons/bitcoin.svg";
+  static const dropDownIcon = "assets/images/icons/dropdown_arrow.svg";
+  static const searchIcon = "assets/images/icons/search.svg";
 }

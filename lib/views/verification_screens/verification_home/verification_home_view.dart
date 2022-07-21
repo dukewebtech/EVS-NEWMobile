@@ -1,9 +1,7 @@
-import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
-import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/custom_app_bar.dart';
 import 'package:evs_pay_mobile/widgets/verification_item_widget.dart';
 import 'package:flutter/material.dart';

@@ -4,6 +4,7 @@ import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/evs_pay_header_widget.dart';
+import 'package:evs_pay_mobile/widgets/transaction_history_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,17 +24,7 @@ class _WalletViewState extends State<WalletView> {
 
   int index = 0;
 
-  List<TransactionHistory> displayTransactions = [];
 
-
-  @override
-  void initState() {
-    displayTransactions = transactionHistories.where((element) => element.type == "send").toList();
-    setState(() {
-
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +35,7 @@ class _WalletViewState extends State<WalletView> {
           children: [
             Container(
               color: const Color.fromRGBO(248, 248, 248, 1),
-              height: AppSize.s250.h,
+              height: AppSize.s229.h,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -73,7 +64,7 @@ class _WalletViewState extends State<WalletView> {
                           fontWeight: FontWeightManager.bold,),
 
                         const CustomTextWithLineHeight(
-                          text: AppStrings.amount,
+                          text: AppStrings.bitCoinAmount,
                           textColor: ColorManager.blackTextColor,
                           fontSize: FontSize.s14,
                           fontWeight: FontWeightManager.regular,),
@@ -93,10 +84,6 @@ class _WalletViewState extends State<WalletView> {
                                   ),
                                   child: InkWell(
                                     onTap: (){
-                                      displayTransactions = transactionHistories.where((element) => element.type == transaction.slug ).toList();
-
-                                      setState(() {
-                                      });
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
@@ -104,6 +91,7 @@ class _WalletViewState extends State<WalletView> {
                                           vertical: AppSize.s5.h
                                       ),
                                       height: AppSize.s28.h,
+                                      width: AppSize.s88.w,
                                       decoration: BoxDecoration(
                                           color: transaction.containerColor,
                                         borderRadius: BorderRadius.circular(AppSize.s4.r)
@@ -127,46 +115,74 @@ class _WalletViewState extends State<WalletView> {
                 // height: AppSize.s40.h,
                 width: double.infinity,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w, vertical: AppSize.s18.h),
-                  child: const CustomTextWithLineHeight(text: AppStrings.transactionHistory, fontSize: FontSize.s18,),
+                  padding: EdgeInsets.symmetric(horizontal: AppSize.s27.w, vertical: AppSize.s18.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const CustomTextWithLineHeight(text: AppStrings.transactionHistory, fontSize: FontSize.s18,),
+                      PopupMenuButton(
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: const [
+                                      CustomTextWithLineHeight(text: AppStrings.pending),
+                                    ],
+                                  ),
+                                  SizedBox(height: AppSize.s13.h,),
+                                  SvgPicture.asset(AppImages.popupMenuIcon),
+                                ],
+                              ),
+                              value: 1,
+                              onTap: (){
+                                // print("pending");
+                              },
+                            ),
+                            PopupMenuItem(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: const [
+                                      CustomTextWithLineHeight(text: AppStrings.completed),
+                                    ],
+                                  ),
+                                  SizedBox(height: AppSize.s13.h,),
+                                  SvgPicture.asset(AppImages.popupMenuIcon),
+                                ],
+                              ),
+                              value: 1,
+                              onTap: (){
+                                // print("pending");
+                              },
+                            ),
+
+                            PopupMenuItem(
+                              child: Column(
+                                children: const [
+                                  CustomTextWithLineHeight(text: AppStrings.cancelled),
+
+                                ],
+                              ),
+                              value: 1,
+                              onTap: (){
+                                // print("pending");
+                              },
+                            ),
+                          ]
+                      )
+                    ],
+                  ),
                 )),
             Expanded(
                 child: Container(
               color: ColorManager.whiteColor,
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    itemCount: displayTransactions.length,
+                    itemCount: transactionHistories.length,
                       itemBuilder: (context, index){
                       final transaction = transactionHistories[index];
-                    return Column(
-                      children: [
-                        ListTile(
-                          leading: Image.asset(transaction.iconName),
-                          title: CustomTextWithLineHeight(
-                            text: transaction.type,
-                            textColor: ColorManager.lightTextColor,
-                            fontWeight: FontWeightManager.bold,),
-                          subtitle: CustomTextWithLineHeight(
-                            text: transaction.status,
-                            textColor: ColorManager.orangeColor,
-                            fontWeight: FontWeightManager.light,
-                          ),
-                          trailing: Column(
-                            children: [
-                              CustomTextWithLineHeight(
-                                text: transaction.coinValue,
-                                textColor: ColorManager.lightTextColor,
-                                fontWeight: FontWeightManager.regular,),
-                              CustomTextWithLineHeight(
-                                text: transaction.time,
-                                textColor: ColorManager.lightTextColor,
-                                fontWeight: FontWeightManager.regular,),
-                            ],
-                          ),
-                        ),
-                        SvgPicture.asset(AppImages.walletDivider),
-                      ],
-                    );
+                    return TransactionHistoryItem(transaction: transaction);
                   }),
             ))
           ],

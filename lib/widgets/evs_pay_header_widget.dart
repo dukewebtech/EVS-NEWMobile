@@ -1,4 +1,5 @@
 import 'package:evs_pay_mobile/resources/font_manager.dart';
+import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,10 +14,12 @@ class EvsPayHeaderWidget extends StatelessWidget {
   final String title;
   final String rightIcon;
   final bool isWallet;
+  final bool showLeftIcon;
   const EvsPayHeaderWidget({Key? key,
     this.leftIcon = AppImages.activeNotificationIcon,
     this.title = "", this.rightIcon = AppImages.dummyGuy,
     this.isWallet = false,
+    this.showLeftIcon = true,
   }) : super(key: key);
 
   @override
@@ -24,7 +27,12 @@ class EvsPayHeaderWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SvgPicture.asset(leftIcon),
+        if(showLeftIcon)
+        InkWell(
+          onTap: (){
+            openNotificationsScreen(context);
+          },
+            child: SvgPicture.asset(leftIcon)),
         CustomTextWithLineHeight(text: title,
           textColor: ColorManager.lightTextColor,
           fontWeight: FontWeightManager.bold, fontSize: FontSize.s16,),
