@@ -29,7 +29,7 @@ void openConfirmTransactionPin(BuildContext context) async{
 }
 
 void openNavScreen(BuildContext context) async{
-  Navigator.pushReplacementNamed(context, Routes.navScreen);
+  Navigator.pushNamedAndRemoveUntil(context, Routes.navScreen, (route) => false);
 }
 
 void openSecuritySettingsScreen(BuildContext context) async{
@@ -75,5 +75,21 @@ void openPhoneNumberVerificationScreen(BuildContext context) async{
 
 void openEmailVerificationScreen(BuildContext context) async{
   Navigator.pushNamed(context, Routes.emailVerification);
+}
+
+void openSendTradeScreen(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.sendTradeView);
+}
+
+void openReceiveTradeScreen(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.receiveTradeView);
+}
+
+void openTransactionPinScreen(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.transactionPinView);
+}
+
+void openTransactionSuccessfulScreen(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.transactionSuccessfulView);
 }
 

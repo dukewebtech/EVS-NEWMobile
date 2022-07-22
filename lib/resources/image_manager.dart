@@ -51,4 +51,5 @@ class AppImages {
   static const btcIconSmallBlack = "assets/images/icons/bitcoin.svg";
   static const dropDownIcon = "assets/images/icons/dropdown_arrow.svg";
   static const searchIcon = "assets/images/icons/search.svg";
+  static const qrCodeScannerIcon = "assets/images/icons/qr_code_scanner.svg";
 }

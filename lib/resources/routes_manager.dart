@@ -7,11 +7,15 @@ import 'package:evs_pay_mobile/views/nav_screen_views/nav_screen_view.dart';
 import 'package:evs_pay_mobile/views/notification_settings/notification_settings_view.dart';
 import 'package:evs_pay_mobile/views/notifications/nottifications_view.dart';
 import 'package:evs_pay_mobile/views/on_boarding_screen/on_boarding_screen.dart';
+import 'package:evs_pay_mobile/views/receive_trade/receive_trade_view.dart';
 import 'package:evs_pay_mobile/views/recover_password_view/recover_password_view.dart';
 import 'package:evs_pay_mobile/views/security_settings/security_settings_view.dart';
+import 'package:evs_pay_mobile/views/send_trade/send_trade_view.dart';
 import 'package:evs_pay_mobile/views/setup_pin_view/confirm_transaction_pin.dart';
 import 'package:evs_pay_mobile/views/setup_pin_view/set_up_transaction_pin.dart';
 import 'package:evs_pay_mobile/views/sign_up/sign_up_view.dart';
+import 'package:evs_pay_mobile/views/transaction_pin_view/transaction_pin_view.dart';
+import 'package:evs_pay_mobile/views/transaction_successful_view/transaction_successful_view.dart';
 import 'package:evs_pay_mobile/views/veriffy_email_view/verify_email_view.dart';
 import 'package:evs_pay_mobile/views/verification_screens/email_verification_view/email_verification_view.dart';
 import 'package:evs_pay_mobile/views/verification_screens/phone_number_verification/phone_number_verification_view.dart';
@@ -45,6 +49,10 @@ class Routes {
   static const verificationSubmittedScreen = "/verification_submitted_screen";
   static const phoneVerification = "/phone_verification";
   static const emailVerification = "/email_verification";
+  static const sendTradeView = "/send_trade_view";
+  static const receiveTradeView = "/receive_trade_view";
+  static const transactionPinView = "/transaction_pin_view";
+  static const transactionSuccessfulView = "/transaction_successful";
 
 }
 
@@ -91,6 +99,14 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const PhoneNumberVerificationView());
       case Routes.emailVerification:
         return MaterialPageRoute(builder: (_) => const EmailVerificationView());
+      case Routes.sendTradeView:
+        return MaterialPageRoute(builder: (_) => const SendTradeView());
+      case Routes.receiveTradeView:
+        return MaterialPageRoute(builder: (_) => const ReceiveTradeView());
+      case Routes.transactionPinView:
+        return MaterialPageRoute(builder: (_) => const TransactionPinView());
+      case Routes.transactionSuccessfulView:
+        return MaterialPageRoute(builder: (_) => const TransactionSuccessfulView());
 
       default:
         return undefinedRoute();

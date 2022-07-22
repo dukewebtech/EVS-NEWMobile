@@ -15,16 +15,16 @@ PreferredSizeWidget evsPayCustomAppBar(BuildContext context, String title,
       String? routeName,
       isCenterAlign = false,
       bool showLeading = true,
-      bool isPng = false}) {
+      bool isPng = false,
+      VoidCallback? leadingTap,
+    }) {
   return PreferredSize(
     preferredSize: Size.fromHeight(AppSize.s56.h),
     child: AppBar(
       backgroundColor: const Color.fromRGBO(248, 248, 248, 1),
       shadowColor: const Color.fromRGBO(0, 0, 0, 0.2),
       leading: showLeading ? GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
+          onTap: leadingTap,
           child: const Icon(Icons.arrow_back_ios, color: ColorManager.greyColor,)) : Container(),
       title: CustomText(
           text: title,
