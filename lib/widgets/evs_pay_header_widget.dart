@@ -15,11 +15,13 @@ class EvsPayHeaderWidget extends StatelessWidget {
   final String rightIcon;
   final bool isWallet;
   final bool showLeftIcon;
+  final bool showRightIcon;
   const EvsPayHeaderWidget({Key? key,
     this.leftIcon = AppImages.activeNotificationIcon,
     this.title = "", this.rightIcon = AppImages.dummyGuy,
     this.isWallet = false,
     this.showLeftIcon = true,
+    this.showRightIcon = true,
   }) : super(key: key);
 
   @override
@@ -48,7 +50,7 @@ class EvsPayHeaderWidget extends StatelessWidget {
              ),
              child: SvgPicture.asset(AppImages.qrCode),
            ),
-         if(!isWallet)
+         if(!isWallet && showRightIcon)
          Container(
           height:
           AppSize.s40.h,

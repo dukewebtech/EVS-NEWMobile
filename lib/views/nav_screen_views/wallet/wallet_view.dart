@@ -1,5 +1,6 @@
 import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
+import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
@@ -84,6 +85,11 @@ class _WalletViewState extends State<WalletView> {
                                   ),
                                   child: InkWell(
                                     onTap: (){
+                                      if(index == 0){
+                                        openSendTradeScreen(context);
+                                      }else{
+                                        openReceiveTradeScreen(context);
+                                      }
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
@@ -91,7 +97,7 @@ class _WalletViewState extends State<WalletView> {
                                           vertical: AppSize.s5.h
                                       ),
                                       height: AppSize.s28.h,
-                                      width: AppSize.s88.w,
+                                      width: AppSize.s100.w,
                                       decoration: BoxDecoration(
                                           color: transaction.containerColor,
                                         borderRadius: BorderRadius.circular(AppSize.s4.r)

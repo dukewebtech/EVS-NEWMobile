@@ -121,6 +121,21 @@ class AppStrings {
   static const oneK = "1000 NGN";
   static const perUSD = "per USD";
   static const search = "Search";
+  static const recipientBtcAddress = "Recipient’s BTC  Address";
+  static const walletAddress = "Wallet Address ";
+  static const scanQrCode = "Scan QR Code";
+  static const descriptionOptional = "Description (Optional)";
+  static const btc = "BTC";
+  static const usd = "USD";
+  static const scanThisQrCode = "Scan this QR Code Receive Bitcoin ";
+  static const walletID = "3FUNYpHdGFLE7smoMCwZWHTab4zwwW9jrS";
+  static const copyAddressToClipboard = "Copy address to clipboard";
+  static const saveQrCode = "Save QR Code";
+  static const transactionPin = "Transaction pin";
+  static const enterPinToCompleteTransaction = "Enter PIN to complete transaction ";
+  static const amt = "Amount";
+  static const close = "Close";
+
 
 
 
