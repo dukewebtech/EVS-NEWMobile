@@ -1,6 +1,7 @@
 import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
+import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/my_ads.dart';
@@ -26,7 +27,7 @@ class _TradeViewState extends State<TradeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: evsTradeAppBar(context, AppStrings.trades, onTap: (){
-      //  Create a new trade or ads
+      openCreateOfferScreen(context);
       }),
       body: SafeArea(
           child: Column(

@@ -29,7 +29,7 @@ PreferredSizeWidget evsPayCustomAppBar(BuildContext context, String title,
       title: CustomText(
           text: title,
           fontWeight: FontWeightManager.bold,
-          textColor: ColorManager.greyColor,
+          textColor: ColorManager.blckColor,
           fontSize: FontSize.s16),
       actions: [
         actionIcon == null

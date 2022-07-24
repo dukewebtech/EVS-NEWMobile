@@ -50,7 +50,12 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: evsPayCustomAppBar(context, AppStrings.profileEdit, isCenterAlign: true),
+      appBar: evsPayCustomAppBar(
+          context, AppStrings.profileEdit,
+          isCenterAlign: true,
+          leadingTap: (){
+            Navigator.pop(context);
+          }),
 
       body: SafeArea(child: SingleChildScrollView(
         child: Column(

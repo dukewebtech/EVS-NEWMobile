@@ -17,7 +17,12 @@ class VerificationHomeView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children:  [
-            evsPayCustomAppBar(context, AppStrings.verification, isCenterAlign: true),
+            evsPayCustomAppBar(
+                context, AppStrings.verification,
+                isCenterAlign: true,
+                leadingTap: (){
+                  Navigator.pop(context);
+                }),
 
             SizedBox(height: AppSize.s24.h,),
 

@@ -97,3 +97,7 @@ void openViewTradeScreen(BuildContext context) async{
   Navigator.pushNamed(context, Routes.viewTradeScreen);
 }
 
+void openCreateOfferScreen(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.createOffer);
+}
+
