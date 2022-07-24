@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../resources/strings_manager.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_text_field_no_border.dart';
+import '../scan_qr_code/scan_qr_code_view.dart';
 
 class SendTradeView extends StatefulWidget {
   const SendTradeView({Key? key}) : super(key: key);
@@ -52,7 +53,12 @@ class _SendTradeViewState extends State<SendTradeView> {
               contentPadding: AppSize.s20,),
 
             SizedBox(height: AppSize.s24.h,),
-            CustomElevatedButton(onTap: (){},
+            CustomElevatedButton(onTap: ()async{
+              final qrCode = Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>const ScanQrCodeView()));
+
+              print("The code is: $qrCode");
+            },
                 backgroundColor: ColorManager.primaryColor,
                 textColor: ColorManager.blackTxtColor,
                 title: AppStrings.scanQrCode,
@@ -133,6 +139,8 @@ class _SendTradeViewState extends State<SendTradeView> {
                 title: AppStrings.clickToContinue),
 
             SizedBox(height: AppSize.s50.h,),
+
+
 
 
           ],

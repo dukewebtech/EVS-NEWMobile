@@ -135,6 +135,7 @@ class AppStrings {
   static const enterPinToCompleteTransaction = "Enter PIN to complete transaction ";
   static const amt = "Amount";
   static const close = "Close";
+  static const myAds = "My Ads";
 
 
 

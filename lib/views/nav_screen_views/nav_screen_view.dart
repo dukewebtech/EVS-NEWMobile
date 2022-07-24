@@ -1,13 +1,13 @@
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/dashboard/dashboard_view.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/settings/settings_view.dart';
-import 'package:evs_pay_mobile/views/nav_screen_views/transaction/transactions_view.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/wallet/wallet_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/image_manager.dart';
+import 'trade_view/trade_view.dart';
 
 class NavScreenView extends StatefulWidget {
   const NavScreenView({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _NavScreenViewState extends State<NavScreenView> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     DashboardView(),
-    TransactionView(),
+    TradeView(),
     WalletView(),
     SettingsView()
   ];

@@ -35,6 +35,11 @@ dependencies:
 
   top_snackbar_flutter: ^2.0.0
 
+  modal_bottom_sheet: ^2.0.0
+
+  mobile_scanner:
+
+
 
 
 
