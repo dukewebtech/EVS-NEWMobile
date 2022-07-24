@@ -52,4 +52,8 @@ class AppImages {
   static const dropDownIcon = "assets/images/icons/dropdown_arrow.svg";
   static const searchIcon = "assets/images/icons/search.svg";
   static const qrCodeScannerIcon = "assets/images/icons/qr_code_scanner.svg";
+  static const addTradeIcon = "assets/images/add_trade_icon.svg";
+  static const emmanuelPraise = "Emmanuel Praise";
+  static const johnDoe = "John Doe";
+  static const myAdsMoreIcon = "assets/images/icons/my_ads_more_icon.svg";
 }

@@ -1,0 +1,112 @@
+
+
+const String bankTransfer = "Bank Transfer";
+
+enum MyAdStatus {
+  active,
+  disabled,
+}
+
+class MyAdsModel{
+  final String paymentMethod;
+  final String status;
+  final String transactionLimit;
+  final String time;
+  final String type;
+
+  MyAdsModel({
+    required this.paymentMethod,
+    required this.status,
+    required this.transactionLimit,
+    required this.time,
+    required this.type,
+  });
+
+}
+
+final List<MyAdsModel> myAds = [
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Buy", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.disabled.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Buy", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Buy", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Buy", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Buy", status: MyAdStatus.disabled.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Buy", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.disabled.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.disabled.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.disabled.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.disabled.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "trade", status: MyAdStatus.disabled.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "Sell", status: MyAdStatus.disabled.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+  MyAdsModel(paymentMethod: bankTransfer,
+      type: "trade", status: MyAdStatus.active.name,
+      transactionLimit: "300,000- 800,000 NGN", time: "12th Jul, 2022 - 12:12 AM"),
+];

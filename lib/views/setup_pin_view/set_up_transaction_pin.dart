@@ -38,7 +38,10 @@ class _SetupPinState extends State<SetupPin> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.whiteColor,
-      appBar: evsPayCustomAppBar(context, AppStrings.back),
+      appBar: evsPayCustomAppBar(
+          context, AppStrings.back,leadingTap: (){
+        Navigator.pop(context);
+      }),
       body: SafeArea(child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
