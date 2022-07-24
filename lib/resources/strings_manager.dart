@@ -158,6 +158,9 @@ class AppStrings {
   static const ten000000 = "10,000,000";
   static const termsOfTrade = "Terms of Trade";
   static const createOffer = "Create Offer";
+  static const active = "Active";
+  static const confirmed = "Confirmed";
+  static const disputed = "Disputed";
 
 
 
