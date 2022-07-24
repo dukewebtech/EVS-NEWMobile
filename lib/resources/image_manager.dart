@@ -56,4 +56,5 @@ class AppImages {
   static const emmanuelPraise = "Emmanuel Praise";
   static const johnDoe = "John Doe";
   static const myAdsMoreIcon = "assets/images/icons/my_ads_more_icon.svg";
+  static const tradeOptionsDivider = "assets/images/trade_options_divider.svg";
 }

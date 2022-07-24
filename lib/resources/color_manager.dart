@@ -21,6 +21,8 @@ class ColorManager {
   static const filterGreyColor = Color.fromRGBO(245, 245, 245, 1);
   static const inputFieldBorder = Color.fromRGBO(240, 240, 240, 1);
   static const lemonGreen = Color.fromRGBO(28, 209, 161, 1);
+  static const deepGreenColor = Color.fromRGBO(50, 116, 69, 1);
+
 
   static Color lightTextColor = HexColor.fromHex("#657B9A");
   static Color whiteColor = HexColor.fromHex("#FFFFFF");

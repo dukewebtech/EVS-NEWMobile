@@ -1,4 +1,3 @@
-import 'package:evs_pay_mobile/model/my_ads_model.dart';
 import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
@@ -7,11 +6,12 @@ import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/my_ads.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/trandes_on_my_ads.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
-import 'package:evs_pay_mobile/widgets/my_offer_item.dart';
 import 'package:evs_pay_mobile/widgets/trade_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
 
 class TradeView extends StatefulWidget {
   const TradeView({Key? key}) : super(key: key);
@@ -46,13 +46,19 @@ class _TradeViewState extends State<TradeView> {
                                   isMyAds = true;
                                 });
                               },
-                              child: const CustomTextWithLineHeight(text: AppStrings.myAds,
-                              fontSize: FontSize.s15, fontWeight: FontWeightManager.medium,
+                              child: const CustomTextWithLineHeight(
+                                text: AppStrings.myAds,
+                              fontSize: FontSize.s15,
+                                fontWeight: FontWeightManager.medium,
                               textColor: ColorManager.blckColor,),
                             ),
                           ),
                           SizedBox(width: AppSize.s10.h,),
-                          SvgPicture.asset(AppImages.dropDownIcon)
+                          InkWell(
+                            onTap: (){
+                              show(context);
+                            },
+                              child: SvgPicture.asset(AppImages.dropDownIcon))
                         ],
                       ),
                       SizedBox(height: AppSize.s8.h,),
@@ -78,13 +84,19 @@ class _TradeViewState extends State<TradeView> {
                                   isMyAds = false;
                                 });
                               },
-                              child: const CustomTextWithLineHeight(text: AppStrings.trades,
-                                fontSize: FontSize.s15, fontWeight: FontWeightManager.medium,
+                              child: const CustomTextWithLineHeight(
+                                text: AppStrings.trades,
+                                fontSize: FontSize.s15,
+                                fontWeight: FontWeightManager.medium,
                                 textColor: ColorManager.blckColor,),
                             ),
                           ),
                           SizedBox(width: AppSize.s10.h,),
-                          SvgPicture.asset(AppImages.dropDownIcon)
+                          InkWell(
+                              onTap: (){
+                                show(context);
+                              },
+                              child: SvgPicture.asset(AppImages.dropDownIcon))
                         ],
                       ),
                       SizedBox(height: AppSize.s8.h,),
@@ -110,4 +122,104 @@ class _TradeViewState extends State<TradeView> {
           )),
     );
   }
+
+  void show(BuildContext context) {
+    showMaterialModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => Container(
+        height: AppSize.s350.h,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(AppSize.s6.r),
+              topRight: Radius.circular(AppSize.s6.r)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: AppSize.s16.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
+              child: Container(
+                // height: AppSize.s117.h,
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
+                  decoration: BoxDecoration(
+                      color: ColorManager.whiteColor,
+                      borderRadius: BorderRadius.circular(AppSize.s15.r)
+                  ),
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: CustomTextWithLineHeight(
+                          text: AppStrings.enableTrade,
+                          textColor: ColorManager.blckColor,
+                          fontSize: FontSize.s16.sp,
+                          fontWeight: FontWeightManager.medium,
+                        ),
+                      ),
+
+                      SizedBox(height: AppSize.s20.h,),
+                      SvgPicture.asset(AppImages.tradeOptionsDivider),
+
+                      SizedBox(height: AppSize.s22.h,),
+
+                      InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: CustomTextWithLineHeight(
+                          text: AppStrings.disableTrade,
+                          textColor: ColorManager.redColor,
+                          fontSize: FontSize.s16.sp,
+                          fontWeight: FontWeightManager.medium,
+                        ),
+                      ),
+                    ],
+                  )
+              ),
+            ),
+
+            SizedBox(
+              height: AppSize.s13.h,
+            ),
+
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
+              child: InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: AppSize.s60.h,
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
+                  decoration: BoxDecoration(
+                      color: ColorManager.whiteColor,
+                      borderRadius: BorderRadius.circular(AppSize.s5.r)
+                  ),
+                  alignment: Alignment.center,
+                  child: CustomTextWithLineHeight(
+                    text: AppStrings.cancel,
+                    textColor: ColorManager.blckColor,
+                    fontSize: FontSize.s16.sp,
+                    fontWeight: FontWeightManager.medium,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
+
+
 }
