@@ -93,3 +93,7 @@ void openTransactionSuccessfulScreen(BuildContext context) async{
   Navigator.pushNamed(context, Routes.transactionSuccessfulView);
 }
 
+void openViewTradeScreen(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.viewTradeScreen);
+}
+
