@@ -141,6 +141,7 @@ class AppSize {
   static const double s34 = 34.0;
   static const double s400 = 400.0;
   static const double s430 = 430.0;
+  static const double s42 = 42.0;
   static const double s38 = 38.0;
   static const int numberCount = 10;
   static const double s102 = 102.0;

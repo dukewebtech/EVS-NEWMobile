@@ -4,6 +4,7 @@ import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/views/edit_profile_view/edit_profile_view.dart';
 import 'package:evs_pay_mobile/views/login_screen/login_screen.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/nav_screen_view.dart';
+import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/create_offer_view.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/view_trade_view.dart';
 import 'package:evs_pay_mobile/views/notification_settings/notification_settings_view.dart';
 import 'package:evs_pay_mobile/views/notifications/nottifications_view.dart';
@@ -55,6 +56,7 @@ class Routes {
   static const transactionPinView = "/transaction_pin_view";
   static const transactionSuccessfulView = "/transaction_successful";
   static const viewTradeScreen = "/view_trade_screen";
+  static const createOffer = "/create_offer";
 
 }
 
@@ -111,6 +113,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const TransactionSuccessfulView());
       case Routes.viewTradeScreen:
         return MaterialPageRoute(builder: (_) => const ViewTradeView());
+      case Routes.createOffer:
+        return MaterialPageRoute(builder: (_) => const CreateOfferView());
 
       default:
         return undefinedRoute();

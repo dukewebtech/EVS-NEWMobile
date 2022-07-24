@@ -24,7 +24,12 @@ class _NotificationSettingsState extends State<NotificationSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: evsPayCustomAppBar(context, AppStrings.securitySettings, isCenterAlign: true),
+      appBar: evsPayCustomAppBar(
+          context, AppStrings.notificationSettings,
+          leadingTap: (){
+            Navigator.pop(context);
+          },
+          isCenterAlign: true),
 
       body: SafeArea(child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: AppSize.s24.w, vertical: AppSize.s24.h),

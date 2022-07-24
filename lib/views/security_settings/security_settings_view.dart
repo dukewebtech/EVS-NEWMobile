@@ -23,7 +23,13 @@ class _SecuritySettingsViewState extends State<SecuritySettingsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: evsPayCustomAppBar(context, AppStrings.securitySettings, isCenterAlign: true),
+      appBar: evsPayCustomAppBar(
+          context, AppStrings.securitySettings,
+          isCenterAlign: true,
+          leadingTap: (){
+            Navigator.pop(context);
+          }
+      ),
 
       body: SafeArea(child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: AppSize.s24.w, vertical: AppSize.s24.h),

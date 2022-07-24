@@ -144,6 +144,20 @@ class AppStrings {
   static const deleteTrade = "Delete trade";
   static const myOfferDetails = "My Offer Details";
   static const tradesForOffer = "Trades for offer";
+  static const createAnOffer = "Create an Offer";
+  static const buyBitcoin = "Buy Bitcoin";
+  static const sellBitcoin = "Sell Bitcoin";
+  static const inputLocation = "Input location ";
+  static const location = "Location:";
+  static const startTyping = "Start typing.. ";
+  static const showAll = "Show all";
+  static const rate = "Rate:";
+  static const maximum = "Minimum";
+  static const minimum = "Minimum";
+  static const eight000 = "800,0000";
+  static const ten000000 = "10,000,000";
+  static const termsOfTrade = "Terms of Trade";
+  static const createOffer = "Create Offer";
 
 
 
