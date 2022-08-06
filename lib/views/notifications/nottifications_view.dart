@@ -14,7 +14,10 @@ class NotificationsView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(child: Column(
         children: [
-          evsPayCustomAppBar(context, AppStrings.notification, 
+          evsPayCustomAppBar(context, AppStrings.notification,
+              leadingTap: (){
+            Navigator.pop(context);
+              },
               isCenterAlign: true),
 
           SizedBox(height: AppSize.s31.h,),

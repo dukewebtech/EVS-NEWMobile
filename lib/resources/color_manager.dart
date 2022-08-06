@@ -7,6 +7,7 @@ class ColorManager {
   static const greyTextColor = Color.fromRGBO(151, 151, 151, 1);
   static const buttonSplashColor = Color.fromRGBO(255, 220, 24, 1);
   static const blackTextColor = Color.fromRGBO(47, 40, 30, 1);
+   static const amountColor =  Color.fromRGBO(40, 36, 10, 1);
   static const semiBlackTextColor = Color.fromRGBO(84, 72, 55, 1);
   static const textFieldColor = Color.fromRGBO(46, 56, 77, 1);
   static const inactiveInputFieldColor =  Color.fromRGBO(224, 231, 255, 1);
@@ -22,6 +23,8 @@ class ColorManager {
   static const inputFieldBorder = Color.fromRGBO(240, 240, 240, 1);
   static const lemonGreen = Color.fromRGBO(28, 209, 161, 1);
   static const deepGreenColor = Color.fromRGBO(50, 116, 69, 1);
+  static const walletGreenColor = Color.fromRGBO(28, 209, 161, 1);
+
 
 
   static Color lightTextColor = HexColor.fromHex("#657B9A");

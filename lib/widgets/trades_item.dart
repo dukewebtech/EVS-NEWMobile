@@ -1,9 +1,11 @@
-import 'package:evs_pay_mobile/model/trade_model.dart';
+import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../model/trades_model_api.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/image_manager.dart';
@@ -12,7 +14,7 @@ import '../resources/value_manager.dart';
 import 'app_texts/custom_text.dart';
 
 class TradeItem extends StatelessWidget {
-  final TradeModel trade;
+  final TradeData trade;
   const TradeItem({Key? key, required this.trade}) : super(key: key);
 
   @override
@@ -37,16 +39,16 @@ class TradeItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomTextWithLineHeight(
-                  text: trade.buyerName,
+                  text: "${trade.user!.firstName} ${trade.user!.lastName}",
                   fontWeight: FontWeightManager.bold,
                   textColor: ColorManager.blckColor,
                   fontSize: FontSize.s12,
                 ),
 
                 CustomTextWithLineHeight(
-                  text: trade.type,
+                  text: trade.type ?? "",
                   fontWeight: FontWeightManager.bold,
-                  textColor: trade.type == "Sell" ? ColorManager.primaryColor : ColorManager.blackTxtColor,
+                  textColor: trade.type == "SELL" ? ColorManager.primaryColor : ColorManager.blackTxtColor,
                 ),
               ],
             ),
@@ -56,14 +58,14 @@ class TradeItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomTextWithLineHeight(
-                  text: trade.paymentMethod,
+                  text: trade.paymentMethod!.name?? "",
                   fontWeight: FontWeightManager.regular,
                   textColor: ColorManager.blckColor,
                   fontSize: FontSize.s12,
                 ),
 
                 CustomTextWithLineHeight(
-                  text: trade.amount,
+                  text: "${moneyFormat.format(trade.amount)} ${trade.currency?.code}",
                   fontWeight: FontWeightManager.regular,
                   textColor: ColorManager.arrowColor,
                   fontSize: FontSize.s10,
@@ -75,7 +77,7 @@ class TradeItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CustomTextWithLineHeight(
-                  text: trade.time,
+                  text: Jiffy(trade.createdAt).yMMMMEEEEdjm,
                   fontWeight: FontWeightManager.regular,
                   textColor: ColorManager.arrowColor,
                 ),
@@ -96,7 +98,7 @@ class TradeItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppSize.s2.r)
                   ),
                   alignment: Alignment.center,
-                  child: CustomTextWithLineHeight(text: trade.status,
+                  child: CustomTextWithLineHeight(text: trade.status ?? "",
                   textColor: ColorManager.whiteColor,),
                 )
               ],

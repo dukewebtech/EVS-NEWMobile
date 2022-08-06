@@ -3,10 +3,12 @@ import 'package:evs_pay_mobile/model/offer_model.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../model/payment_method_model.dart';
 import '../../../resources/color_manager.dart';
@@ -26,6 +28,7 @@ class _DashboardViewState extends State<DashboardView> {
   List<OfferModel> displayOffers = [];
 
   String selectedOption = "";
+  bool showFilterOption = false;
 
   final amountController = TextEditingController();
   final btcValueController = TextEditingController();
@@ -42,6 +45,7 @@ class _DashboardViewState extends State<DashboardView> {
   }
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthenticationProvider>();
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,12 +68,12 @@ class _DashboardViewState extends State<DashboardView> {
 
               const CustomTextWithLineHeight(
                 text: AppStrings.amount,
-                textColor: ColorManager.blackTextColor,
+                textColor: ColorManager.amountColor,
                 fontSize: FontSize.s22,
-                fontWeight: FontWeightManager.bold,),
+                fontWeight: FontWeightManager.semiBold,),
 
-              const CustomTextWithLineHeight(
-                text: AppStrings.bitCoinAmount,
+              CustomTextWithLineHeight(
+                text: "${authProvider.walletData.data![0].balance} BTC",
                 textColor: ColorManager.blackTextColor,
                 fontSize: FontSize.s14,
                 fontWeight: FontWeightManager.regular,),
@@ -79,6 +83,10 @@ class _DashboardViewState extends State<DashboardView> {
             ],
           ),),
 
+          if(!authProvider.userData.user!.emailVerified! || !authProvider.userData.user!.phoneVerified! ||
+              !authProvider.userData.user!.homeVerified! || !authProvider.userData.user!.idCardVerified! ||
+              authProvider.userData.user!.photo == null
+          )
           Padding(padding: EdgeInsets.symmetric(horizontal: AppSize.s12.w),
           child: InkWell(
             onTap: (){
@@ -144,6 +152,7 @@ class _DashboardViewState extends State<DashboardView> {
                         });
                         selectedOption = "SELL";
                         displayOffers = offers.where((element) => element.offerType.toUpperCase() == "SELL").toList();
+                        showFilterOption = false;
                       },
                       child: Container(
                         height: AppSize.s39.h,
@@ -178,6 +187,7 @@ class _DashboardViewState extends State<DashboardView> {
                         });
                         selectedOption = "BUY";
                         displayOffers =  offers.where((element) => element.offerType.toUpperCase() == "BUY").toList();
+                        showFilterOption = false;
                       },
                       child: Container(
                         height: AppSize.s39.h,
@@ -206,9 +216,10 @@ class _DashboardViewState extends State<DashboardView> {
 
                     });
                     selectedOption = "FILTER";
+                    showFilterOption = !showFilterOption;
                   },
                   child: Padding(
-                    padding: EdgeInsets.only(top: selectedOption == "FILTER" ? AppSize.s5.h : 0),
+                    padding: EdgeInsets.only(top: selectedOption == "FILTER" && showFilterOption ? AppSize.s5.h : 0),
                     child: Container(
                       height: AppSize.s39.h,
                       width: AppSize.s64.w,
@@ -226,7 +237,7 @@ class _DashboardViewState extends State<DashboardView> {
             ),
           ),),
 
-          if(selectedOption == "FILTER")
+          if(selectedOption == "FILTER" && showFilterOption)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSize.s32.w),
               child: Column(
@@ -368,6 +379,7 @@ class _DashboardViewState extends State<DashboardView> {
                             ),
 
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 CustomTextWithLineHeight(text: offer.nairaValue,
                                   fontSize: FontSize.s14,
@@ -385,8 +397,6 @@ class _DashboardViewState extends State<DashboardView> {
                           ],
                         ),
 
-
-
                         SizedBox(height: AppSize.s15.h,),
 
                         Row(
@@ -398,7 +408,6 @@ class _DashboardViewState extends State<DashboardView> {
                                 textColor: ColorManager.lightTextColor,
                               ),
                             ),
-
                             Container(
                               height: AppSize.s26.h,
                               width: AppSize.s96.w,

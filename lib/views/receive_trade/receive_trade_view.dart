@@ -1,10 +1,12 @@
 import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/font_manager.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -18,6 +20,7 @@ class ReceiveTradeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthenticationProvider>();
     return Scaffold(
       appBar: evsPayCustomAppBar(
           context, AppStrings.receive, isCenterAlign: true,
@@ -50,7 +53,7 @@ class ReceiveTradeView extends StatelessWidget {
 
             Center(
               child: QrImage(
-                data: AppStrings.walletID,
+                data: authProvider.walletData.data![0].receivableAddress!.address!,
                 version: QrVersions.auto,
                 size: AppSize.s250.h,
               ),
@@ -61,8 +64,8 @@ class ReceiveTradeView extends StatelessWidget {
             const Center(child: CustomTextWithLineHeight(
                 text: AppStrings.walletAddress)),
 
-            const Center(child: CustomTextWithLineHeight(
-                text: AppStrings.walletID,
+            Center(child: CustomTextWithLineHeight(
+                text: authProvider.walletData.data![0].receivableAddress!.address!,
             fontSize: FontSize.s12, fontWeight: FontWeightManager.bold,)),
 
             SizedBox(height: AppSize.s54.h,),
@@ -71,15 +74,15 @@ class ReceiveTradeView extends StatelessWidget {
               children: [
                 CustomElevatedButton(
                     onTap: (){
-                      Clipboard.setData(const ClipboardData(text: AppStrings.walletID));
+                      Clipboard.setData(ClipboardData(text: authProvider.walletData.data![0].receivableAddress!.address!));
                       showTopSnackBar(
                         context,
-                        const CustomSnackBar.info(
-                          message: "Copied ${AppStrings.walletID}",
+                        CustomSnackBar.info(
+                          message: "Copied ${authProvider.walletData.data![0].receivableAddress!.address!}",
                         ),
                       );
                     },
-                    backgroundColor: ColorManager.greenColor,
+                    backgroundColor: ColorManager.walletGreenColor,
                     textColor: ColorManager.whiteColor,
                     fontSize: FontSize.s10,
                     width: AppSize.s165,
@@ -88,7 +91,7 @@ class ReceiveTradeView extends StatelessWidget {
                 SizedBox(width: AppSize.s40.w,),
                 CustomElevatedButton(
                     onTap: (){},
-                    backgroundColor: ColorManager.greenColor,
+                    backgroundColor: ColorManager.walletGreenColor,
                     textColor: ColorManager.whiteColor,
                     fontSize: FontSize.s10,
                     width: AppSize.s114,

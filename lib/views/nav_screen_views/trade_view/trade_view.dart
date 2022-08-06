@@ -12,6 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
+
+import '../../../view_models/general_view_model.dart';
 
 
 class TradeView extends StatefulWidget {
@@ -23,10 +26,32 @@ class TradeView extends StatefulWidget {
 
 class _TradeViewState extends State<TradeView> {
   bool isMyAds = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final evsPayViewModel = Provider.of<EvsPayViewModel>(context, listen: false);
+
+      evsPayViewModel.getOffers(context: context);
+
+    });
+
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final evsPayViewModel = Provider.of<EvsPayViewModel>(context, listen: false);
+
+      evsPayViewModel.getTrades(context: context);
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    final evsPayViewModel = context.watch<EvsPayViewModel>();
     return Scaffold(
-      appBar: evsTradeAppBar(context, AppStrings.trades, onTap: (){
+      appBar: evsTradeAppBar(context, AppStrings.trades, onTap: ()async{
+         evsPayViewModel.getPaymentMethods(context: context);
       openCreateOfferScreen(context);
       }),
       body: SafeArea(
@@ -57,9 +82,16 @@ class _TradeViewState extends State<TradeView> {
                           SizedBox(width: AppSize.s10.h,),
                           InkWell(
                             onTap: (){
-                              show(context);
+                              if(isMyAds){
+                                show(context);
+                              }
+
                             },
-                              child: SvgPicture.asset(AppImages.dropDownIcon))
+                              child: Container(
+                                width: AppSize.s30.w,
+                                  height: AppSize.s10.h,
+                                  alignment: Alignment.center,
+                                  child: SvgPicture.asset(AppImages.dropDownIcon)))
                         ],
                       ),
                       SizedBox(height: AppSize.s8.h,),
@@ -95,9 +127,16 @@ class _TradeViewState extends State<TradeView> {
                           SizedBox(width: AppSize.s10.h,),
                           InkWell(
                               onTap: (){
-                                showTradeDialog(context);
+                                if(!isMyAds){
+                                  showTradeDialog(context);
+                                }
+
                               },
-                              child: SvgPicture.asset(AppImages.dropDownIcon))
+                              child: Container(
+                                  width: AppSize.s30.w,
+                                  height: AppSize.s10.h,
+                                  alignment: Alignment.center,
+                                  child: SvgPicture.asset(AppImages.dropDownIcon)))
                         ],
                       ),
                       SizedBox(height: AppSize.s8.h,),
@@ -114,10 +153,10 @@ class _TradeViewState extends State<TradeView> {
               ),
 
               if(isMyAds)
-                const MyAdsWidget(),
+                evsPayViewModel.isLoading ? Container() : const MyAdsWidget(),
 
               if(!isMyAds)
-                const TradeOnMyAdsWidget(),
+                evsPayViewModel.isLoading ? Container() : const TradeOnMyAdsWidget(),
 
             ],
           )),
@@ -196,7 +235,7 @@ class _TradeViewState extends State<TradeView> {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  height: AppSize.s60.h,
+                  // height: AppSize.s60.h,
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
                   decoration: BoxDecoration(
@@ -341,7 +380,7 @@ class _TradeViewState extends State<TradeView> {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  height: AppSize.s60.h,
+                  // height: AppSize.s60.h,
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
                   decoration: BoxDecoration(

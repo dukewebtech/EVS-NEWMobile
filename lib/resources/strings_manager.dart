@@ -21,6 +21,9 @@ class AppStrings {
   static const createYourEvsAccount = "Create your EVSpay account.";
   static const userName = "Username";
   static const email = "Email";
+  static const firstName = "First Name";
+  static const lastName = "Last Name";
+  static const middleName = "Middle Name";
   static const confirmPassword = "Confirm Password";
   static const alreadyHaveAnAccount = "Already Have An Account?";
   static const signIn = "Sign In";
@@ -161,6 +164,13 @@ class AppStrings {
   static const active = "Active";
   static const confirmed = "Confirmed";
   static const disputed = "Disputed";
+  static const allFieldsRequired = "All fields are required";
+  static const passwordMismatch = "All fields are required";
+  static const emailVerified =  "Email Verified";
+  static const phoneVerified =  "Phone number Verified";
+  static const addressVerified =  "Address Verified";
+  static const idVerified =  "ID Verified";
+  static const selfieVerified =  "Selfie Verified";
 
 
 

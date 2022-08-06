@@ -48,7 +48,7 @@ class EvsPayHeaderWidget extends StatelessWidget {
                  borderRadius: BorderRadius.circular(AppSize.s3.r),
 
              ),
-             child: SvgPicture.asset(AppImages.qrCode),
+             child: Image.asset(AppImages.qrCode),
            ),
          if(!isWallet && showRightIcon)
          Container(

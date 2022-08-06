@@ -66,7 +66,7 @@ void openTakeSelfieScreen(BuildContext context) async{
 }
 
 void openVerificationSubmittedScreen(BuildContext context) async{
-  Navigator.pushNamed(context, Routes.verificationSubmittedScreen);
+  Navigator.pushReplacementNamed(context, Routes.verificationSubmittedScreen);
 }
 
 void openPhoneNumberVerificationScreen(BuildContext context) async{

@@ -21,14 +21,17 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
 
   @override
   void initState() {
-    emailEditingController.text = "john@gmail.com";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: evsPayCustomAppBar(context, AppStrings.back),
+      appBar: evsPayCustomAppBar(
+          context, AppStrings.back,
+      leadingTap: (){
+            Navigator.pop(context);
+      }),
 
       body: SafeArea(child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: AppSize.s30.w),

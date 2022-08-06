@@ -38,7 +38,7 @@ class AppImages {
   static const selfieIcon = "assets/images/selfie_sign_icon.svg";
   static const verificationGoodIcon = "assets/images/icons/verification_good_icon.svg";
   static const congratulations = "assets/images/congratulations.svg";
-  static const qrCode = "assets/images/icons/qr_coded.svg";
+  static const qrCode = "assets/images/icons/qr_code.png";
   static const bitCoinIcon = "assets/images/icons/bit_coin.png";
   static const walletDivider = "assets/images/icons/wallet_divider.svg";
   static const verificationDivider = "assets/images/verification_divider.png";

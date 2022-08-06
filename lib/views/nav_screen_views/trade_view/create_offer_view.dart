@@ -1,5 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:evs_pay_mobile/model/payment_method_model.dart';
+import 'package:evs_pay_mobile/model/user_model/api_payment_method_model.dart';
 import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
@@ -10,8 +10,10 @@ import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../resources/image_manager.dart';
+import '../../../view_models/general_view_model.dart';
 
 class CreateOfferView extends StatefulWidget {
   const CreateOfferView({Key? key}) : super(key: key);
@@ -27,10 +29,11 @@ class _CreateOfferViewState extends State<CreateOfferView> {
   final maximumController = TextEditingController();
   final termsOfTradeController = TextEditingController();
 
-  PaymentMethodModel? selectedPaymentMethod;
+  PaymentMethods? selectedPaymentMethod;
 
   @override
   Widget build(BuildContext context) {
+    final evsPayViewModel = context.watch<EvsPayViewModel>();
     return Scaffold(
       appBar: evsPayCustomAppBar(
         context, AppStrings.createAnOffer,
@@ -152,6 +155,8 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                       text: '${AppStrings.paymentMethod}:',
                       textColor: ColorManager.blckColor,),
                     SizedBox(height: AppSize.s4.h,),
+
+                    if(!evsPayViewModel.isLoading)
                     Row(
                       children: [
                         Expanded(
@@ -165,21 +170,21 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                       child: CustomText(text: AppStrings.paymentMethod,)),
                                 ],
                               ),
-                              items: paymentMethods
-                                  .map((item) => DropdownMenuItem<PaymentMethodModel>(
+                              items: evsPayViewModel.paymentMethod.paymentMethods
+                                  .map((item) => DropdownMenuItem<PaymentMethods>(
                                   value: item,
                                   child: Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CustomText(text: item.method)
+                                      CustomText(text: item.name!)
                                     ],
                                   )))
                                   .toList(),
                               value: selectedPaymentMethod,
                               onChanged: (value) {
                                 setState(() {
-                                  selectedPaymentMethod = value as PaymentMethodModel;
+                                  selectedPaymentMethod = value as PaymentMethods;
                                 });
                               },
                               icon: SvgPicture.asset(AppImages.dropDownIcon),

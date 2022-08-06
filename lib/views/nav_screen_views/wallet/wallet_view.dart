@@ -3,14 +3,14 @@ import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
+import 'package:evs_pay_mobile/views/nav_screen_views/wallet/widgets/transaction_widget.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/evs_pay_header_widget.dart';
-import 'package:evs_pay_mobile/widgets/transaction_history_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../model/transaction_history_model.dart';
+import 'package:provider/provider.dart';
 import '../../../model/transaction_type_model.dart';
 import '../../../resources/font_manager.dart';
 
@@ -25,10 +25,10 @@ class _WalletViewState extends State<WalletView> {
 
   int index = 0;
 
-
-
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthenticationProvider>();
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -64,16 +64,16 @@ class _WalletViewState extends State<WalletView> {
                           fontSize: FontSize.s22,
                           fontWeight: FontWeightManager.bold,),
 
-                        const CustomTextWithLineHeight(
-                          text: AppStrings.bitCoinAmount,
+                        CustomTextWithLineHeight(
+                          text: "${authProvider.walletData.data![0].balance} BTC",
                           textColor: ColorManager.blackTextColor,
                           fontSize: FontSize.s14,
                           fontWeight: FontWeightManager.regular,),
 
                         SizedBox(height: AppSize.s21.h,),
-                        SizedBox(
+                         SizedBox(
                           // width: AppSize.s300.w,
-                          height: AppSize.s28.h,
+                          height: AppSize.s40.h,
                           child: ListView.builder(
                               itemCount: transactionTypes.length,
                               scrollDirection: Axis.horizontal,
@@ -96,12 +96,13 @@ class _WalletViewState extends State<WalletView> {
                                           horizontal: AppSize.s24.w,
                                           vertical: AppSize.s5.h
                                       ),
-                                      height: AppSize.s28.h,
+                                      // height: AppSize.s28.h,
                                       width: AppSize.s100.w,
                                       decoration: BoxDecoration(
                                           color: transaction.containerColor,
                                         borderRadius: BorderRadius.circular(AppSize.s4.r)
                                       ),
+                                      alignment: Alignment.center,
                                       child: CustomTextWithLineHeight(text: transaction.title, textColor: transaction.textColor,),
 
                                     ),
@@ -180,17 +181,8 @@ class _WalletViewState extends State<WalletView> {
                     ],
                   ),
                 )),
-            Expanded(
-                child: Container(
-              color: ColorManager.whiteColor,
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: transactionHistories.length,
-                      itemBuilder: (context, index){
-                      final transaction = transactionHistories[index];
-                    return TransactionHistoryItem(transaction: transaction);
-                  }),
-            ))
+
+            const TransactionWidget()
           ],
         ),
       ),

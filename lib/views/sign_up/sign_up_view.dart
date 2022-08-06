@@ -10,6 +10,11 @@ import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../view_models/authentication_view_model/authentication_view_model.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -20,10 +25,13 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
   final userNameController = TextEditingController();
-  final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   final userEmailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final middleNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +83,48 @@ class _SignUpViewState extends State<SignUpView> {
 
                   SizedBox(height: AppSize.s40.h,),
 
+                  const LabelText(text: AppStrings.firstName),
+                  SizedBox(height: AppSize.s5.h,),
+                  CustomTextField(
+                    controller: firstNameController,
+                    hint: AppStrings.firstName,
+                  ),
+
+
+
+                  SizedBox(height: AppSize.s40.h,),
+
+                  const LabelText(text: AppStrings.middleName),
+                  SizedBox(height: AppSize.s5.h,),
+                  CustomTextField(
+                    controller: middleNameController,
+                    hint: AppStrings.middleName,
+                  ),
+
+
+                  SizedBox(height: AppSize.s40.h,),
+
+                  const LabelText(text: AppStrings.lastName),
+                  SizedBox(height: AppSize.s5.h,),
+                  CustomTextField(
+                    controller: lastNameController,
+                    hint: AppStrings.lastName,
+                  ),
+
+
+                  SizedBox(height: AppSize.s40.h,),
+
+                  const LabelText(text: AppStrings.phone),
+                  SizedBox(height: AppSize.s5.h,),
+                  CustomTextField(
+                    controller: phoneNumberController,
+                    hint: AppStrings.phoneNumber,
+                    maxLength: 14,
+                    isNumbers: true,
+                  ),
+
+                  SizedBox(height: AppSize.s40.h,),
+
                   const LabelText(text: AppStrings.password),
                   SizedBox(height: AppSize.s5.h,),
                   CustomTextField(
@@ -96,12 +146,68 @@ class _SignUpViewState extends State<SignUpView> {
                   SizedBox(height: AppSize.s38.h,),
 
 
-                  CustomElevatedButton(onTap: (){
-                    //  Perform sign up here
+                  Consumer<AuthenticationProvider>(
+                      builder: (ctx, auth, child) {
+                        WidgetsBinding.instance.
+                        addPostFrameCallback((_) {
+                          if (auth.resMessage != '') {
+                            showTopSnackBar(
+                              context,
+                              CustomSnackBar.info(
+                                message: auth.resMessage,
+                                backgroundColor:
+                                ColorManager.primaryColor,
+                              ),
+                            );
+                            ///Clear the response message to avoid duplicate
+                            auth.clear();
+                          }
+                        });
+                      return CustomElevatedButton(onTap: (){
+                        //  Perform sign up here
+                        if(userNameController.text.trim().isNotEmpty &&
+                            userEmailController.text.trim().isNotEmpty &&
+                        passwordController.text.trim().isNotEmpty &&
+                        confirmPasswordController.text.trim().isNotEmpty &&
+                        phoneNumberController.text.trim().isNotEmpty &&
+                        firstNameController.text.trim().isNotEmpty &&
+                        lastNameController.text.trim().isNotEmpty
+                        ){
+                          auth.registerUser(
+                              email: userEmailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              context: context,
+                              firstName: firstNameController.text.trim(),
+                              middleName: middleNameController.text.trim(),
+                              lastName: lastNameController.text.trim(),
+                              phone: phoneNumberController.text.trim(),
+                              username: userNameController.text);
+                        }else if(
+                        passwordController.text.trim()
+                            != confirmPasswordController.text.trim()
+                        ){
+                          showTopSnackBar(
+                            context,
+                            const CustomSnackBar.info(
+                              message: AppStrings.passwordMismatch,
+                              backgroundColor:
+                              ColorManager.primaryColor,
+                            ),
+                          );
+                        }else{
+                          showTopSnackBar(
+                            context,
+                            const CustomSnackBar.info(
+                              message: AppStrings.allFieldsRequired,
+                              backgroundColor:
+                              ColorManager.primaryColor,
+                            ),
+                          );
+                        }
 
-                    openSetupPin(context);
-
-                  }, backgroundColor: ColorManager.primaryColor, textColor: ColorManager.blackTextColor, title: AppStrings.signUp.toUpperCase()),
+                      }, backgroundColor: ColorManager.primaryColor, textColor: ColorManager.blackTextColor, title: AppStrings.signUp.toUpperCase());
+                    }
+                  ),
 
                   SizedBox(height: AppSize.s18.h,),
 

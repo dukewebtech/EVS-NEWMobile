@@ -1,28 +1,32 @@
-import 'package:evs_pay_mobile/model/my_ads_model.dart';
-import 'package:evs_pay_mobile/model/trade_model.dart';
 import 'package:evs_pay_mobile/resources/color_manager.dart';
+import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
+import 'package:evs_pay_mobile/view_models/general_view_model.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/trade_app_bar.dart';
 import 'package:evs_pay_mobile/widgets/trade_on_my_ad_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jiffy/jiffy.dart';
+import 'package:provider/provider.dart';
 
 
-class ViewTradeView extends StatefulWidget {
-  const ViewTradeView({Key? key}) : super(key: key);
+class ViewOfferView extends StatefulWidget {
+  const ViewOfferView({Key? key}) : super(key: key);
 
   @override
-  State<ViewTradeView> createState() => _ViewTradeViewState();
+  State<ViewOfferView> createState() => _ViewOfferViewState();
 }
 
-class _ViewTradeViewState extends State<ViewTradeView> {
+class _ViewOfferViewState extends State<ViewOfferView> {
+
   @override
   Widget build(BuildContext context) {
+    final evsPayProvider = context.watch<EvsPayViewModel>();
     return Scaffold(
       appBar: evsTradeAppBar(context, AppStrings.myOfferDetails,
           showActionButton: false,  onTap: (){
@@ -52,15 +56,15 @@ class _ViewTradeViewState extends State<ViewTradeView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomTextWithLineHeight(
-                              text: myAds[0].paymentMethod,
+                              text: evsPayProvider.selectedOffer.paymentMethod.name!,
                               fontWeight: FontWeightManager.bold,
                               textColor: ColorManager.blackTxtColor,
                             ),
 
                             CustomTextWithLineHeight(
-                              text: myAds[0].status == "active" ? 'Active' : 'Disabled',
+                              text: evsPayProvider.selectedOffer.status == "ACTIVE" ? 'Active' : 'Disabled',
                               fontWeight: FontWeightManager.bold,
-                              textColor: myAds[0].status == "active" ? ColorManager.lemonGreen :
+                              textColor: evsPayProvider.selectedOffer.status == "ACTIVE" ? ColorManager.lemonGreen :
                               ColorManager.blackTxtColor,
                             ),
                           ],
@@ -80,7 +84,10 @@ class _ViewTradeViewState extends State<ViewTradeView> {
                                 ),
 
                                 CustomTextWithLineHeight(
-                                  text: myAds[0].transactionLimit,
+                                  text:
+                                  "${moneyFormat.format(evsPayProvider.selectedOffer.minAmount)} - "
+                                      "${moneyFormat.format(evsPayProvider.selectedOffer.maxAmount)} "
+                                      "${evsPayProvider.selectedOffer.currency!.code}",
                                   fontWeight: FontWeightManager.regular,
                                   textColor: ColorManager.arrowColor,
                                   fontSize: FontSize.s10,
@@ -89,7 +96,7 @@ class _ViewTradeViewState extends State<ViewTradeView> {
                             ),
 
                             CustomTextWithLineHeight(
-                              text: myAds[1].type.toUpperCase(),
+                              text: evsPayProvider.selectedOffer.type.toUpperCase(),
                               fontWeight: FontWeightManager.bold,
                               textColor: ColorManager.arrowColor,
                               fontSize: FontSize.s10,
@@ -104,7 +111,7 @@ class _ViewTradeViewState extends State<ViewTradeView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomTextWithLineHeight(
-                              text: myAds[0].time,
+                              text: Jiffy(evsPayProvider.selectedOffer.createdAt).yMMMMEEEEdjm,
                               fontWeight: FontWeightManager.regular,
                               textColor: ColorManager.arrowColor,
                             ),
@@ -144,9 +151,9 @@ class _ViewTradeViewState extends State<ViewTradeView> {
 
               Expanded(
                   child: ListView.builder(
-                    itemCount: trades.length,
+                    itemCount: evsPayProvider.tradesOnOffer.tradesOnOffer?.length,
                       itemBuilder: (context, index){
-                        final tradeOnAd = trades[index];
+                        final tradeOnAd = evsPayProvider.tradesOnOffer.tradesOnOffer![index];
                         return TradeOnMyAdItem(trade: tradeOnAd,);
                       }))
 
