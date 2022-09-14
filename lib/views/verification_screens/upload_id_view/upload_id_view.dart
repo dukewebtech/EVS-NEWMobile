@@ -121,7 +121,7 @@ class _UploadIdViewState extends State<UploadIdView> {
                       auth.clear();
                     }
                   });
-                  auth.verifyIdentityCard(idCard: base64Image, context: context, endPoint: Endpoints.verifyId);
+                  auth.verifyIdentity(idCard: base64Image, context: context, endPoint: Endpoints.verifyId);
                 },
                     backgroundColor: ColorManager.primaryColor,
                     textColor: ColorManager.blackTextColor,

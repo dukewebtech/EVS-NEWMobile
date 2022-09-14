@@ -8,8 +8,10 @@ import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../resources/color_manager.dart';
+import '../../resources/constants/constants.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -67,14 +69,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
 
                 SizedBox(height: AppSize.s33.h,),
-                CustomElevatedButton(onTap: (){
+                CustomElevatedButton(onTap: ()async{
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.setBool(showOnBoarding, false);
                   openLoginScreen(context);
                 }, backgroundColor: ColorManager.primaryColor, textColor: ColorManager.blackColor, title: initialPage == 2? AppStrings.finish : AppStrings.clickToContinue),
 
                 SizedBox(height: AppSize.s25.h,),
                 initialPage < 2? SizedBox(height: AppSize.s20.h,
                 child: InkWell(
-                  onTap: (){
+                  onTap: ()async{
+                    final prefs = await SharedPreferences.getInstance();
+                    prefs.setBool(showOnBoarding, false);
                     openLoginScreen(context);
                   },
                     child: const CustomText(text: AppStrings.skip, textColor: ColorManager.greyTextColor, fontWeight: FontWeightManager.bold, fontSize: FontSize.s14,)),)

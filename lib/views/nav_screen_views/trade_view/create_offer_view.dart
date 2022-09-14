@@ -1,8 +1,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:evs_pay_mobile/model/create_offer_model.dart';
 import 'package:evs_pay_mobile/model/user_model/api_payment_method_model.dart';
 import 'package:evs_pay_mobile/resources/color_manager.dart';
+import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
+import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/custom_app_bar.dart';
 import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
@@ -11,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../resources/image_manager.dart';
 import '../../../view_models/general_view_model.dart';
@@ -31,9 +36,12 @@ class _CreateOfferViewState extends State<CreateOfferView> {
 
   PaymentMethods? selectedPaymentMethod;
 
+  bool isBuy = true;
+
   @override
   Widget build(BuildContext context) {
     final evsPayViewModel = context.watch<EvsPayViewModel>();
+    final myOfferModel = context.watch<MyAdsViewModel>();
     return Scaffold(
       appBar: evsPayCustomAppBar(
         context, AppStrings.createAnOffer,
@@ -56,14 +64,16 @@ class _CreateOfferViewState extends State<CreateOfferView> {
               children: [
                 InkWell(
                   onTap: (){
-
+                    setState(() {
+                      isBuy = true;
+                    });
                   },
                   child: Container(
                     height: AppSize.s32.h,
                     width: AppSize.s128.w,
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(234, 236, 239, 1),
-                      borderRadius: BorderRadius.circular(AppSize.s3),
+                      color: isBuy? ColorManager.primaryColor : ColorManager.sellSelectedColor,
+                      borderRadius: BorderRadius.circular(AppSize.s3.r),
                     ),
                     alignment: Alignment.center,
                     child: Row(
@@ -71,12 +81,12 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                       children: [
                         const CustomTextWithLineHeight(
                           text: AppStrings.buyBitcoin,
-                          textColor: Color.fromRGBO(196, 157, 62, 1),),
+                          textColor: ColorManager.blckColor,),
                         SizedBox(width: AppSize.s5.w,),
                         
                         const Icon(
                           Icons.arrow_forward,
-                          color: Color.fromRGBO(196, 157, 62, 1),)
+                          color: ColorManager.blckColor,)
                       ],
                     ),
                   ),
@@ -84,13 +94,16 @@ class _CreateOfferViewState extends State<CreateOfferView> {
 
                 InkWell(
                   onTap: (){
-
+                    setState(() {
+                      isBuy = false;
+                    });
                   },
                   child: Container(
                     height: AppSize.s32.h,
                     width: AppSize.s128.w,
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(234, 236, 239, 1),
+                      color: isBuy? ColorManager.sellSelectedColor :
+                      ColorManager.primaryColor,
                       borderRadius: BorderRadius.circular(AppSize.s3),
                     ),
                     alignment: Alignment.center,
@@ -227,7 +240,8 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                     CustomTextField(
                       controller: rateController,
                       hint: AppStrings.rate,
-                      isEnabled: false,
+                      isEnabled: true,
+                      isNumbers: true,
                     ),
 
                     SizedBox(height: AppSize.s11.h,),
@@ -247,15 +261,16 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
                         Expanded(
                           child: CustomTextField(
+                            isNumbers: true,
                             controller: minimumController,
                             hint: AppStrings.minimum,
                           ),
                         ),
 
                         Expanded(child: CustomTextField(
+                          isNumbers: true,
                           controller: maximumController,
                           hint: AppStrings.maximum,
                         ),)
@@ -283,10 +298,85 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                     SizedBox(
                       height: AppSize.s100.h,),
 
-                    CustomElevatedButton(onTap: (){},
-                        backgroundColor: ColorManager.primaryColor,
-                        textColor: ColorManager.blckColor,
-                        title: AppStrings.createAnOffer),
+                    Consumer<MyAdsViewModel>(
+                        builder: (ctx, myAd, child) {
+                          WidgetsBinding.instance.
+                          addPostFrameCallback((_) {
+                            if (myAd.resMessage != '') {
+                              showTopSnackBar(
+                                context,
+                                CustomSnackBar.info(
+                                  message: myAd.resMessage,
+                                  backgroundColor: myAd.isSuccessful ?
+                                      ColorManager.deepGreenColor :
+                                  ColorManager.primaryColor,
+                                ),
+                              );
+                              ///Clear the response message to avoid duplicate
+                              myAd.clear();
+                            }
+                          });
+                        return CustomElevatedButton(
+                            onTap: ()async{
+                              if(locationController.text.isNotEmpty &&
+                              selectedPaymentMethod != null &&
+                              rateController.text.isNotEmpty &&
+                              minimumController.text.isNotEmpty &&
+                              maximumController.text.isNotEmpty &&
+                              termsOfTradeController.text.trim().isNotEmpty){
+                                DateTime now = DateTime.now();
+                                DateTime expiryDate = now.add(const Duration(days: 30));
+                                final createOffer = CreateOfferModel(
+                                    location: locationController.text,
+                                    type: isBuy ? "BUY" : "SELL",
+                                    minAmount: int.parse(minimumController.text.trim()),
+                                    maxAmount: int.parse(maximumController.text),
+                                    paymentMethodCode: selectedPaymentMethod!.code!,
+                                    currencyCode: "NGN",
+                                    coinSymbol: "btc",
+                                    tags: ["payment", "special offers"],
+                                    terms: termsOfTradeController.text,
+                                    paymentWindow: 90,
+                                    profitMargin: int.parse(rateController.text),
+                                    paymentDetails: "",
+                                    trackLiquidity: false,
+                                    trustedPeopleOnly: false,
+                                    expiryDate: expiryDate);
+
+                                myOfferModel.createOfferModel = createOffer;
+
+                                final isCreated = await myOfferModel.createOffer(
+                                    context: context,
+                                    createOfferModel: createOffer);
+
+                                print("Is Created: $isCreated");
+                                if(isCreated){
+                                  Future.delayed(const Duration(seconds: 2), () {
+                                    setState(() {
+                                      openNavScreen(context);
+                                    });
+
+                                  });
+                                }
+                              }else{
+                                print('Some fields are empty');
+                                showTopSnackBar(
+                                  context,
+                                  const CustomSnackBar.info(
+                                    message: AppStrings.fillAllRequiredFields,
+                                    backgroundColor:
+                                    ColorManager.primaryColor,
+                                  ),
+                                );
+                              }
+
+
+                        },
+                            backgroundColor: ColorManager.primaryColor,
+                            textColor: ColorManager.blckColor,
+                            title: AppStrings.createAnOffer);
+                      }
+                    ),
 
                     SizedBox(height: AppSize.s48.h,),
 

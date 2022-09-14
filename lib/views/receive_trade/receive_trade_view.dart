@@ -53,7 +53,7 @@ class ReceiveTradeView extends StatelessWidget {
 
             Center(
               child: QrImage(
-                data: authProvider.walletData.data![0].receivableAddress!.address!,
+                data: authProvider.walletData.data!.isEmpty? "0.00" : authProvider.walletData.data![0].receivableAddress!.address!,
                 version: QrVersions.auto,
                 size: AppSize.s250.h,
               ),
@@ -65,7 +65,7 @@ class ReceiveTradeView extends StatelessWidget {
                 text: AppStrings.walletAddress)),
 
             Center(child: CustomTextWithLineHeight(
-                text: authProvider.walletData.data![0].receivableAddress!.address!,
+                text: authProvider.walletData.data!.isEmpty? "No address" : authProvider.walletData.data![0].receivableAddress!.address!,
             fontSize: FontSize.s12, fontWeight: FontWeightManager.bold,)),
 
             SizedBox(height: AppSize.s54.h,),

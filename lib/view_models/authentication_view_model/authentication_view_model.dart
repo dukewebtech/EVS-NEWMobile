@@ -324,7 +324,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
 
   //VERIFY PHONE NUMBER
-  void verifyIdentityCard({
+  void verifyIdentity({
     required String idCard,
     required BuildContext context,
     required String endPoint,
@@ -348,7 +348,7 @@ class AuthenticationProvider extends ChangeNotifier {
             'Authorization': 'Bearer ${_userData!.accessToken}',
             'Content-Type': 'application/json',
           }, body: json.encode(body));
-      print("Response body: ${response.body} Status code: ${response.statusCode}");
+      print(" Status code: ${response.statusCode}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         final res = json.decode(response.body);
         //first check for the user role
@@ -394,15 +394,82 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> updateProfilePhoto({
+    required String idCard,
+    required BuildContext context,
+    required String endPoint,
+  }) async {
+    _isLoading = true;
+    bool updated = false;
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => const LoadingIndicator());
+    notifyListeners();
+    final body = {
+      "file": idCard,
+    };
+    try {
+      final response =
+      await http.put(
+          Uri.parse("$baseURL$endPoint"),
+          headers: {
+            'Authorization': 'Bearer ${_userData!.accessToken}',
+            'Content-Type': 'application/json',
+          }, body: json.encode(body));
+      print(" Status code: ${response.body}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final res = json.decode(response.body);
+        //first check for the user role
+        _isLoading = false;
+        updated = true;
+        print("Success: $success");
+        _resMessage = res['message'] ?? "";
+        notifyListeners();
+        Navigator.pop(context);
+        // openNavScreen(context);
+
+      } else if (response.statusCode == 422) {
+        final res = json.decode(response.body);
+        print("$res");
+        _resMessage = res['message'];
+        _isLoading = false;
+        _success = false;
+        notifyListeners();
+        Navigator.pop(context);
+      } else {
+        final res = json.decode(response.body);
+        _resMessage = res['message'] ?? "";
+
+        _isLoading = false;
+        _success = false;
+        notifyListeners();
+        Navigator.pop(context);
+      }
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _success = false;
+      _resMessage = "Internet connection is not available";
+      notifyListeners();
+      Navigator.pop(context);
+    } catch (e) {
+      _isLoading = false;
+      _success = false;
+      _resMessage = "Please try again";
+      notifyListeners();
+      Navigator.pop(context);
+      // print("exception: $e");
+    }
+    return updated;
+  }
+
 
   //REGISTER USER
   void registerUser({
     required String email,
     required String password,
     required BuildContext context,
-    required firstName,
-    required middleName,
-    required lastName,
     required phone,
     required username,
   }) async {
@@ -415,9 +482,6 @@ class AuthenticationProvider extends ChangeNotifier {
     final body = {
       "email": email,
       "password": password,
-      "first_name": firstName,
-      "middle_name": middleName,
-      "last_name" : lastName,
       "phone": phone,
       "username": username,
     };
@@ -428,6 +492,7 @@ class AuthenticationProvider extends ChangeNotifier {
           headers: {
             'Content-Type': 'application/json',
           }, body: json.encode(body));
+      print("Registration response: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
         _isLoading = false;
@@ -482,6 +547,8 @@ class AuthenticationProvider extends ChangeNotifier {
   Future<void> getWalletAddress({
     required BuildContext context,
   }) async {
+    _isLoading = true;
+    notifyListeners();
     try {
       final response =
       await http.get(
@@ -495,6 +562,7 @@ class AuthenticationProvider extends ChangeNotifier {
         //first check for the user role
         _walletData = walletModelFromJson(response.body);
         _resMessage = "";
+        _isLoading = false;
         notifyListeners();
         // Navigator.pop(context);
 
@@ -503,6 +571,7 @@ class AuthenticationProvider extends ChangeNotifier {
         print("$res");
         final userNameError =  res['errors']['email'][0] ?? "";
         _resMessage = "${res['message']}$userNameError";
+        _isLoading = false;
         notifyListeners();
         Navigator.pop(context);
       } else {
@@ -513,10 +582,12 @@ class AuthenticationProvider extends ChangeNotifier {
       }
     } on SocketException catch (_) {
       _resMessage = "Internet connection is not available";
+      _isLoading = false;
       notifyListeners();
       Navigator.pop(context);
     } catch (e) {
       _resMessage = "Please try again";
+      _isLoading = false;
       notifyListeners();
       Navigator.pop(context);
       print("exception: $e");

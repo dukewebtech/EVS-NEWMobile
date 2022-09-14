@@ -24,6 +24,9 @@ class ColorManager {
   static const lemonGreen = Color.fromRGBO(28, 209, 161, 1);
   static const deepGreenColor = Color.fromRGBO(50, 116, 69, 1);
   static const walletGreenColor = Color.fromRGBO(28, 209, 161, 1);
+  static const sellSelectedColor = Color.fromRGBO(250, 251, 252, 1);
+  static const chatCardColor = Color.fromRGBO(241, 241, 241, 1);
+  static const greenTextColor = Color.fromRGBO(18, 124, 39, 1);
 
 
 

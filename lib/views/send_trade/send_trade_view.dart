@@ -137,12 +137,7 @@ class _SendTradeViewState extends State<SendTradeView> {
                 backgroundColor: ColorManager.primaryColor,
                 textColor: ColorManager.blackTextColor,
                 title: AppStrings.clickToContinue),
-
             SizedBox(height: AppSize.s50.h,),
-
-
-
-
           ],
         ),
       )),

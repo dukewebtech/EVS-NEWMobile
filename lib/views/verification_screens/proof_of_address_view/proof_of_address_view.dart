@@ -126,7 +126,7 @@ class _ProofOfAddressViewState extends State<ProofOfAddressView> {
                   if(base64Image.isEmpty){
 
                   }else{
-                    auth.verifyIdentityCard(idCard: base64Image, context: context, endPoint: Endpoints.verifyHome);
+                    auth.verifyIdentity(idCard: base64Image, context: context, endPoint: Endpoints.verifyHome);
                   }
 
                 },

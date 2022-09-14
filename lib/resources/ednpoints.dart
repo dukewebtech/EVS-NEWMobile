@@ -18,4 +18,7 @@ class Endpoints {
   static const offers = "offers";
   static const trades = "trades";
   static const btcToNairaEndpoint = "services/exchange-rates/0.00046777/btc-to-naira";
+  static const nairaToBtcEndpoint = "services/exchange-rates/:value/naira-to-btc";
+  static const exchangeRate = "services/exchange-rates";
+  static const deleteChat = "trades/crTmxRrnCofe3z9wcOZgSGfPK14eovKIK3A3Gr2w/chats";
 }

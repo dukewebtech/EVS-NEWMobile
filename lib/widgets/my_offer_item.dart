@@ -1,6 +1,8 @@
 import 'package:evs_pay_mobile/resources/constants/constants.dart';
+import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/general_view_model.dart';
+import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,11 +24,11 @@ class MyAdsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final evsPayProvider = context.watch<EvsPayViewModel>();
+    final myAdsViewModel = context.watch<MyAdsViewModel>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: AppSize.s13.w),
-        height: AppSize.s96.h,
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSize.s3.r),
@@ -37,6 +39,7 @@ class MyAdsItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center ,
           children: [
+            SizedBox(height: AppSize.s13.h,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -45,16 +48,13 @@ class MyAdsItem extends StatelessWidget {
                   fontWeight: FontWeightManager.bold,
                   textColor: ColorManager.blackTxtColor,
                 ),
-
                 CustomTextWithLineHeight(
-                  text: myAd.status == "ACTIVE" ? 'Active' : 'Disabled',
+                  text: myAd.type,
                   fontWeight: FontWeightManager.bold,
-                  textColor: myAd.status == "ACTIVE" ? ColorManager.lemonGreen :
-                  ColorManager.arrowColor,
+                  textColor: myAd.type == "SELL" ? ColorManager.primaryColor : ColorManager.lemonGreen,
                 ),
               ],
             ),
-
             SizedBox(height: AppSize.s8.h,),
             Row(
               children: [
@@ -64,7 +64,6 @@ class MyAdsItem extends StatelessWidget {
                   textColor: ColorManager.blackTxtColor,
                   fontSize: FontSize.s10,
                 ),
-
                 CustomTextWithLineHeight(
                   text: "${moneyFormat.format(myAd.minAmount)} - "
                       "${moneyFormat.format(myAd.maxAmount)} "
@@ -75,9 +74,7 @@ class MyAdsItem extends StatelessWidget {
                 ),
               ],
             ),
-
             SizedBox(height: AppSize.s12.h,),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -87,24 +84,45 @@ class MyAdsItem extends StatelessWidget {
                   textColor: ColorManager.arrowColor,
                   fontSize: FontSize.s10,
                 ),
-
                 InkWell(
                   onTap: (){
                     evsPayProvider.setSelectedOffer(myAd);
-                    show(context, evsPayProvider);
+                    show(context, evsPayProvider, myAdsViewModel);
                   },
                   child: SvgPicture.asset(AppImages.myAdsMoreIcon),
                 )
               ],
             ),
-
+            Row(
+              children: [
+                Container(
+                  // height: AppSize.s15.h,
+                  // width: AppSize.s48.w,
+                  padding: EdgeInsets.symmetric(horizontal: AppSize.s22.w, vertical: AppSize.s3.h),
+                  decoration:  BoxDecoration(
+                      color: myAd.status == "ACTIVE" ? ColorManager.deepGreenColor : ColorManager.primaryColor,
+                      borderRadius: BorderRadius.circular(AppSize.s2.r)
+                  ),
+                  alignment: Alignment.center,
+                  child: CustomTextWithLineHeight(text: myAd.status ?? "",
+                    textColor: myAd.status == "ACTIVE" ? ColorManager.whiteColor : ColorManager.blckColor,
+                  fontSize: FontSize.s6,),
+                )
+              ],
+            ),
+            SizedBox(height: AppSize.s3.h,)
           ],
         ),
       ),
     );
   }
 
-  void show(BuildContext ctx, EvsPayViewModel evsPayViewModel) {
+
+
+  void show(
+      BuildContext ctx,
+      EvsPayViewModel evsPayViewModel,
+      MyAdsViewModel myAdsViewModel) {
     showMaterialModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: ctx,
@@ -135,6 +153,7 @@ class MyAdsItem extends StatelessWidget {
                       InkWell(
                         onTap: (){
                           Navigator.pop(context);
+                          openEditOffer(context);
                         },
                         child: CustomTextWithLineHeight(
                           text: AppStrings.editThisTrade,
@@ -143,19 +162,15 @@ class MyAdsItem extends StatelessWidget {
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-
                       SizedBox(height: AppSize.s20.h,),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-
                       SizedBox(height: AppSize.s22.h,),
-
                       InkWell(
                         onTap: (){
                           evsPayViewModel.getTradesOnOffer(
                               context: ctx,
                               offerId: evsPayViewModel.selectedOffer.reference);
                           Navigator.pop(context);
-
                         },
                         child: CustomTextWithLineHeight(
                           text: AppStrings.viewTrade,
@@ -164,29 +179,26 @@ class MyAdsItem extends StatelessWidget {
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-
                       SizedBox(height: AppSize.s20.h,),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-
                       SizedBox(height: AppSize.s22.h,),
-
                       InkWell(
-                        onTap: (){
+                        onTap: ()async{
                           Navigator.pop(context);
+                          await  evsPayViewModel.enableOrDisableOffer(context);
+
                         },
                         child: CustomTextWithLineHeight(
-                          text: AppStrings.enableTrade,
+                          text: evsPayViewModel.selectedOffer.status == "INACTIVE" ?
+                          AppStrings.enableTrade : AppStrings.disableTrade,
                           textColor: ColorManager.blckColor,
                           fontSize: FontSize.s16.sp,
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-
                       SizedBox(height: AppSize.s20.h,),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-
                       SizedBox(height: AppSize.s22.h,),
-
                       InkWell(
                         onTap: (){
                           Navigator.pop(context);

@@ -3,10 +3,14 @@ import 'package:evs_pay_mobile/view_models/wallet_transaction_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../resources/color_manager.dart';
+import '../../../../resources/font_manager.dart';
+import '../../../../resources/strings_manager.dart';
 import '../../../../resources/value_manager.dart';
+import '../../../../widgets/app_texts/custom_text.dart';
 import '../../../../widgets/re_usable_widgets.dart';
 import '../../../../widgets/transaction_history_item.dart';
 
@@ -32,7 +36,37 @@ class TransactionWidget extends StatelessWidget {
     return Expanded(
         child: Container(
           color: ColorManager.whiteColor,
-          child: ListView.builder(
+          child: transactionViewModel.transactions.isEmpty ?
+          Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: AppSize.s20.h,
+                ),
+                Center(
+                    child: SvgPicture.asset("assets/images/empty_state.svg")
+                ),
+                SizedBox(
+                  height: AppSize.s49.h,
+                ),
+
+                const CustomText(text:
+                AppStrings.youHaveNoTrade,
+                  textColor: ColorManager.blckColor,
+                  fontSize: FontSize.s16,),
+                SizedBox(
+                  height: AppSize.s8.h,
+                ),
+
+                SizedBox(
+                    width: AppSize.s208.w,
+                    child: const CustomTextNoOverFlow(
+                        alignment: "center",
+                        fontSize: FontSize.s13,
+                        text: AppStrings.transferFundsTo))
+              ],
+            ),
+          ) : ListView.builder(
               itemCount: transactionViewModel.transactions.length + (transactionViewModel.isLastPage ? 0 : 1),
               itemBuilder: (context, index){
                 if (index == transactionViewModel.transactions.length - transactionViewModel.nextPageTrigger) {
@@ -55,7 +89,7 @@ class TransactionWidget extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               vertical: AppSize.s200.h
                           ),
-                          child: CupertinoActivityIndicator(),
+                          child: const CupertinoActivityIndicator(),
                         ));
                   }
                 }

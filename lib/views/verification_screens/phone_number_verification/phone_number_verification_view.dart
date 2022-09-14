@@ -110,7 +110,7 @@ class _PhoneNumberVerificationViewState extends State<PhoneNumberVerificationVie
                       return PinCodeTextField(
                         length: 6,
                         obscureText: true,
-                        keyboardType: TextInputType.none,
+                        keyboardType: TextInputType.number,
                         animationType: AnimationType.fade,
                         showCursor: true,
                         hintCharacter: "-",

@@ -23,7 +23,6 @@ class _NavScreenViewState extends State<NavScreenView> {
     DashboardView(),
     TradeViewCopy(),
     WalletView(),
-    SettingsView()
   ];
 
   void _onItemTapped(int index) {
@@ -63,13 +62,6 @@ class _NavScreenViewState extends State<NavScreenView> {
             activeIcon: SvgPicture.asset(
                 AppImages.walletIcon, color: ColorManager.primaryColor),
             label: AppStrings.wallet,
-            backgroundColor: ColorManager.whiteColor,
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppImages.slidersIcon),
-            activeIcon: SvgPicture.asset(
-                AppImages.slidersIcon, color: ColorManager.primaryColor),
-            label: AppStrings.settings,
             backgroundColor: ColorManager.whiteColor,
           ),
         ],

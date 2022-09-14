@@ -29,9 +29,6 @@ class _SignUpViewState extends State<SignUpView> {
   final userEmailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final middleNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,35 +78,6 @@ class _SignUpViewState extends State<SignUpView> {
                     hint: AppStrings.email,
                   ),
 
-                  SizedBox(height: AppSize.s40.h,),
-
-                  const LabelText(text: AppStrings.firstName),
-                  SizedBox(height: AppSize.s5.h,),
-                  CustomTextField(
-                    controller: firstNameController,
-                    hint: AppStrings.firstName,
-                  ),
-
-
-
-                  SizedBox(height: AppSize.s40.h,),
-
-                  const LabelText(text: AppStrings.middleName),
-                  SizedBox(height: AppSize.s5.h,),
-                  CustomTextField(
-                    controller: middleNameController,
-                    hint: AppStrings.middleName,
-                  ),
-
-
-                  SizedBox(height: AppSize.s40.h,),
-
-                  const LabelText(text: AppStrings.lastName),
-                  SizedBox(height: AppSize.s5.h,),
-                  CustomTextField(
-                    controller: lastNameController,
-                    hint: AppStrings.lastName,
-                  ),
 
 
                   SizedBox(height: AppSize.s40.h,),
@@ -169,17 +137,12 @@ class _SignUpViewState extends State<SignUpView> {
                             userEmailController.text.trim().isNotEmpty &&
                         passwordController.text.trim().isNotEmpty &&
                         confirmPasswordController.text.trim().isNotEmpty &&
-                        phoneNumberController.text.trim().isNotEmpty &&
-                        firstNameController.text.trim().isNotEmpty &&
-                        lastNameController.text.trim().isNotEmpty
+                        phoneNumberController.text.trim().isNotEmpty
                         ){
                           auth.registerUser(
                               email: userEmailController.text.trim(),
                               password: passwordController.text.trim(),
                               context: context,
-                              firstName: firstNameController.text.trim(),
-                              middleName: middleNameController.text.trim(),
-                              lastName: lastNameController.text.trim(),
                               phone: phoneNumberController.text.trim(),
                               username: userNameController.text);
                         }else if(

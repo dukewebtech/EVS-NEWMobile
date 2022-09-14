@@ -52,16 +52,16 @@ class TradeData {
     this.paymentMethod,
   });
 
-  String? reference;
-  String? type;
-  int? fee;
-  int? amount;
-  double? coinValue;
-  String? status;
+  dynamic reference;
+  dynamic type;
+  dynamic fee;
+  dynamic amount;
+  dynamic coinValue;
+  dynamic status;
   DateTime? deadline;
   DateTime? createdAt;
   DateTime? confirmedAt;
-  String? paymentDocument;
+  dynamic paymentDocument;
   Partner? user;
   Partner? partner;
   Coin? coin;
@@ -114,8 +114,8 @@ class Coin {
     this.symbol,
   });
 
-  String? name;
-  String? symbol;
+  dynamic name;
+  dynamic symbol;
 
   factory Coin.fromJson(Map<String, dynamic> json) => Coin(
     name: json["name"],
@@ -176,20 +176,20 @@ class Offer {
     this.coin,
   });
 
-  String? reference;
-  String? type;
-  int? minAmount;
-  int? maxAmount;
+  dynamic reference;
+  dynamic type;
+  dynamic minAmount;
+  dynamic maxAmount;
   // List<String>? tags;
-  String? location;
-  String? terms;
-  int? paymentWindow;
-  int? profitMargin;
-  double? pricePerCoin;
-  String? status;
+  dynamic location;
+  dynamic terms;
+  dynamic paymentWindow;
+  dynamic profitMargin;
+  dynamic pricePerCoin;
+  dynamic status;
   DateTime? expiryDate;
-  int? trackLiquidity;
-  int? trustedPeopleOnly;
+  dynamic trackLiquidity;
+  dynamic trustedPeopleOnly;
   DateTime? createdAt;
   TradePaymentMethod? paymentMethod;
   Currency? currency;
@@ -244,8 +244,8 @@ class TradePaymentMethod {
     this.code,
   });
 
-  String? name;
-  String? code;
+  dynamic name;
+  dynamic code;
 
   factory TradePaymentMethod.fromJson(Map<String, dynamic> json) => TradePaymentMethod(
     name: json["name"],
@@ -277,21 +277,21 @@ class Partner {
     this.photo,
   });
 
-  int? id;
-  String? firstName;
+  dynamic id;
+  dynamic firstName;
   dynamic middleName;
-  String? lastName;
-  String? username;
-  String? type;
+  dynamic lastName;
+  dynamic username;
+  dynamic type;
   Documents? documents;
-  String? email;
+  dynamic email;
   bool? emailVerified;
-  String? phone;
-  bool? phoneVerified;
+  dynamic phone;
+  dynamic phoneVerified;
   bool? homeVerified;
   bool? idcardVerified;
-  String? bio;
-  String? photo;
+  dynamic bio;
+  dynamic photo;
 
   factory Partner.fromJson(Map<String, dynamic> json) => Partner(
     id: json["id"],
@@ -359,10 +359,10 @@ class Links {
     this.next,
   });
 
-  String? first;
-  String? last;
+  dynamic first;
+  dynamic last;
   dynamic prev;
-  String? next;
+  dynamic next;
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
     first: json["first"],
@@ -390,13 +390,13 @@ class Meta {
     this.total,
   });
 
-  int? currentPage;
-  int? from;
-  int? lastPage;
-  String? path;
-  int? perPage;
-  int? to;
-  int? total;
+  dynamic currentPage;
+  dynamic from;
+  dynamic lastPage;
+  dynamic path;
+  dynamic perPage;
+  dynamic to;
+  dynamic total;
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
     currentPage: json["current_page"],

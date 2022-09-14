@@ -5,6 +5,7 @@ import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/my_ads.dart';
+import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/my_ads_future_builder_widget.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/trades_widget.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/trade_app_bar.dart';
@@ -15,6 +16,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_models/general_view_model.dart';
+import '../../../view_models/trade_view_model.dart';
 
 
 class TradeViewCopy extends StatefulWidget {
@@ -70,7 +72,6 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                                 if(isMyAds){
                                   show(context);
                                 }
-
                               },
                               child: Container(
                                   width: AppSize.s30.w,
@@ -115,7 +116,6 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                                 if(!isMyAds){
                                   showTradeDialog(context);
                                 }
-
                               },
                               child: Container(
                                   width: AppSize.s30.w,
@@ -138,7 +138,8 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
               ),
 
               if(isMyAds)
-                evsPayViewModel.isLoading ? Container() : const MyAdsWidget(),
+                evsPayViewModel.isLoading? Container() : const MyAdsFutureBuilderWidget(),
+                // evsPayViewModel.isLoading ? Container() : const MyAdsWidget(),
 
               if(!isMyAds)
                 evsPayViewModel.isLoading ? Container() : const TradesWidget(),
@@ -147,7 +148,6 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
           )),
     );
   }
-
   void show(BuildContext context) {
     showMaterialModalBottomSheet(
       backgroundColor: Colors.transparent,

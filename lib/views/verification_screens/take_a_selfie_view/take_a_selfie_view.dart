@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -126,7 +125,7 @@ class _TakeASelfieViewState extends State<TakeASelfieView> {
                   });
                 return CustomElevatedButton(onTap: (){
                   //  perform upload of selfie
-                  auth.verifyIdentityCard(idCard: base64Image, context: context, endPoint: Endpoints.uploadProfilePhoto);
+                  auth.verifyIdentity(idCard: base64Image, context: context, endPoint: Endpoints.uploadProfilePhoto);
                 },
                     backgroundColor: ColorManager.primaryColor,
                     textColor: ColorManager.blackTextColor,

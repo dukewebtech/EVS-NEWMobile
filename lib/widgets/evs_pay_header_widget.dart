@@ -18,7 +18,7 @@ class EvsPayHeaderWidget extends StatelessWidget {
   final bool showRightIcon;
   const EvsPayHeaderWidget({Key? key,
     this.leftIcon = AppImages.activeNotificationIcon,
-    this.title = "", this.rightIcon = AppImages.dummyGuy,
+    this.title = "", this.rightIcon = AppImages.dummyUserIcon,
     this.isWallet = false,
     this.showLeftIcon = true,
     this.showRightIcon = true,
@@ -29,12 +29,23 @@ class EvsPayHeaderWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if(showLeftIcon)
-        InkWell(
-          onTap: (){
-            openNotificationsScreen(context);
-          },
-            child: SvgPicture.asset(leftIcon)),
+        if(!isWallet && showRightIcon)
+          InkWell(
+            onTap: (){
+              openSettingScreen(context);
+            },
+            child: Container(
+              height:
+              AppSize.s40.h,
+              width: AppSize.s40.h,
+              decoration: BoxDecoration(
+                  // color: ColorManager.errorColor,
+                  borderRadius: BorderRadius.circular(AppSize.s100.r),
+                  image: DecorationImage(image: AssetImage(rightIcon), fit: BoxFit.cover)
+              ),
+            ),
+          ),
+
         CustomTextWithLineHeight(text: title,
           textColor: ColorManager.lightTextColor,
           fontWeight: FontWeightManager.bold, fontSize: FontSize.s16,),
@@ -50,17 +61,14 @@ class EvsPayHeaderWidget extends StatelessWidget {
              ),
              child: Image.asset(AppImages.qrCode),
            ),
-         if(!isWallet && showRightIcon)
-         Container(
-          height:
-          AppSize.s40.h,
-          width: AppSize.s40.h,
-          decoration: BoxDecoration(
-              color: ColorManager.errorColor,
-              borderRadius: BorderRadius.circular(AppSize.s100.r),
-              image: DecorationImage(image: AssetImage(rightIcon), fit: BoxFit.cover)
-          ),
-        )
+
+        if(showLeftIcon)
+          InkWell(
+              onTap: (){
+                openNotificationsScreen(context);
+              },
+              child: SvgPicture.asset(leftIcon)),
+
       ],
     );
   }

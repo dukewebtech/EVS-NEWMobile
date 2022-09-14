@@ -1,9 +1,14 @@
 
 
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
+import 'package:evs_pay_mobile/views/buy_trade_view/buy_trade_view.dart';
+import 'package:evs_pay_mobile/views/chat_screen/chat_screen.dart';
+import 'package:evs_pay_mobile/views/confirm_buy_screen/confirm_buy_screen.dart';
+import 'package:evs_pay_mobile/views/edit_offer_view/edit_offer_view.dart';
 import 'package:evs_pay_mobile/views/edit_profile_view/edit_profile_view.dart';
 import 'package:evs_pay_mobile/views/login_screen/login_screen.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/nav_screen_view.dart';
+import 'package:evs_pay_mobile/views/nav_screen_views/settings/settings_view.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/create_offer_view.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/view_offer_view.dart';
 import 'package:evs_pay_mobile/views/notification_settings/notification_settings_view.dart';
@@ -12,6 +17,7 @@ import 'package:evs_pay_mobile/views/on_boarding_screen/on_boarding_screen.dart'
 import 'package:evs_pay_mobile/views/receive_trade/receive_trade_view.dart';
 import 'package:evs_pay_mobile/views/recover_password_view/recover_password_view.dart';
 import 'package:evs_pay_mobile/views/security_settings/security_settings_view.dart';
+import 'package:evs_pay_mobile/views/sell_view/sell_view.dart';
 import 'package:evs_pay_mobile/views/send_trade/send_trade_view.dart';
 import 'package:evs_pay_mobile/views/setup_pin_view/confirm_transaction_pin.dart';
 import 'package:evs_pay_mobile/views/setup_pin_view/set_up_transaction_pin.dart';
@@ -57,6 +63,12 @@ class Routes {
   static const transactionSuccessfulView = "/transaction_successful";
   static const viewTradeScreen = "/view_trade_screen";
   static const createOffer = "/create_offer";
+  static const sellView = "/sell_view";
+  static const buyTradeView = "/buy_trade_view";
+  static const editOfferView = "/edit_offer_view";
+  static const confirmBuyTrade = "/confirm_buy_trade";
+  static const chatScreen = "/chat_screen";
+  static const settingsScreen = "/settings_screen";
 
 }
 
@@ -115,6 +127,18 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ViewOfferView());
       case Routes.createOffer:
         return MaterialPageRoute(builder: (_) => const CreateOfferView());
+      case Routes.editOfferView:
+        return MaterialPageRoute(builder: (_) => const EditOfferView());
+      case Routes.sellView:
+        return MaterialPageRoute(builder: (_) => const SellView());
+      case Routes.buyTradeView:
+        return MaterialPageRoute(builder: (_) => const BuyTradeView());
+      case Routes.confirmBuyTrade:
+        return MaterialPageRoute(builder: (_) => const ConfirmBuyScreen());
+      case Routes.chatScreen:
+        return MaterialPageRoute(builder: (_) => const ChatScreen());
+      case Routes.settingsScreen:
+        return MaterialPageRoute(builder: (_) => const SettingsView());
 
       default:
         return undefinedRoute();

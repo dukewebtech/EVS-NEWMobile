@@ -45,7 +45,7 @@ class AppImages {
   static const moreIconRow = "assets/images/icons/more_icon_row.svg";
   static const popupMenuIcon = "assets/images/icons/popup_divider.svg";
   static const verifyIconYellow = "assets/images/icons/verify_icon_yellow.svg";
-  static const sellIcon = "assets/images/icons/sell_arrow.svg";
+  static const sellIcon = "assets/images/sell_icon.svg";
   static const buyIcon = "assets/images/icons/buy_icon.svg";
   static const filterIcon = "assets/images/icons/filter_icon.svg";
   static const btcIconSmallBlack = "assets/images/icons/bitcoin.svg";
@@ -57,4 +57,8 @@ class AppImages {
   static const johnDoe = "John Doe";
   static const myAdsMoreIcon = "assets/images/icons/my_ads_more_icon.svg";
   static const tradeOptionsDivider = "assets/images/trade_options_divider.svg";
+  static const emptyTrade = "assets/images/empty_trade.png";
+  static const sendIcon = "assets/images/icons/send_icon.svg";
+  static const chatIcon = "assets/images/chat.svg";
+  static const dummyUserIcon = "assets/images/dummy_user_icon.png";
 }

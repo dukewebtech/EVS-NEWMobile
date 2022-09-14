@@ -48,6 +48,10 @@ void openEditProfileScreen(BuildContext context) async{
   Navigator.pushNamed(context, Routes.editProfileScreen);
 }
 
+void openSettingScreen(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.settingsScreen);
+}
+
 //VERIFICATION SCREENS
 void openVerificationHomeView(BuildContext context) async{
   Navigator.pushNamed(context, Routes.verificationHome);
@@ -99,5 +103,25 @@ void openViewTradeScreen(BuildContext context) async{
 
 void openCreateOfferScreen(BuildContext context) async{
   Navigator.pushNamed(context, Routes.createOffer);
+}
+
+void openEditOffer(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.editOfferView);
+}
+
+void openChatScreen(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.chatScreen);
+}
+
+void openSellView(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.sellView);
+}
+
+void openBuyTradeView(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.buyTradeView);
+}
+
+void openConfirmBuyTradeView(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.confirmBuyTrade);
 }
 

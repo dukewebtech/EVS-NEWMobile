@@ -78,10 +78,10 @@ class EvsPayViewModel extends ChangeNotifier {
   }) async {
     _isLoading = true;
     _success = false;
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) => const LoadingIndicator());
+    // showDialog(
+    //     barrierDismissible: false,
+    //     context: context,
+    //     builder: (BuildContext context) => const LoadingIndicator());
     notifyListeners();
     try {
       final response =
@@ -131,6 +131,58 @@ class EvsPayViewModel extends ChangeNotifier {
       Navigator.pop(context);
       // print("exception: $e");
     }
+  }
+
+
+  Future<bool> enableOrDisableOffer(BuildContext context) async {
+    bool isUpdated = false;
+    final prefs = await SharedPreferences.getInstance();
+    final retrievedAccessToken = prefs.getString(accessToken);
+    _isLoading = true;
+    print("Selected offer status: ${selectedOffer.status}");
+    notifyListeners();
+    final body = {
+      "location": _selectedOffer!.location,
+      "type": _selectedOffer!.type,
+      "min_amount": _selectedOffer!.minAmount,
+      "max_amount": _selectedOffer!.maxAmount,
+      "payment_method_code": _selectedOffer!.paymentMethod.code,
+      "currency_code": _selectedOffer!.currency!.code,
+      "coin_symbol": _selectedOffer!.coin!.symbol,
+      "tags": _selectedOffer!.tags,
+      "terms": _selectedOffer!.terms,
+      "payment_window": _selectedOffer!.paymentWindow,
+      "profit_margin": _selectedOffer!.profitMargin,
+      "payment_details": "",
+      "track_liquidity": _selectedOffer!.trackLiquidity == 1 ? true : false,
+      "trusted_people_only": _selectedOffer!.trustedPeopleOnly == 1 ? true : false,
+      "expiry_date": _selectedOffer!.expiryDate.toString(),
+      "status": _selectedOffer!.status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
+    };
+
+    // print("Payload: $body");
+    try {
+      final response = await http.put(Uri.parse(
+          baseURL + "offers/${_selectedOffer!.reference}"
+      ),
+        headers: {
+          'Authorization': 'Bearer $retrievedAccessToken',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(body),
+      );
+      print("Status update response: ${response.body}");
+      if(response.statusCode == 200 || response.statusCode == 201){
+        isUpdated = true;
+        _isLoading = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      print("error --> $e");
+      _isLoading = false;
+      notifyListeners();
+    }
+    return isUpdated;
   }
 
 
@@ -196,7 +248,7 @@ class EvsPayViewModel extends ChangeNotifier {
   }) async {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
-    print("Access token $retrievedAccessToken");
+    // print("Access token $retrievedAccessToken");
     _isLoading = true;
     showDialog(
         barrierDismissible: false,
@@ -311,7 +363,6 @@ class EvsPayViewModel extends ChangeNotifier {
   }) async {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
-    print("Access token $retrievedAccessToken");
     _isLoading = true;
     showDialog(
         barrierDismissible: false,
@@ -325,7 +376,7 @@ class EvsPayViewModel extends ChangeNotifier {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
         },);
-      // print("Trades body=====: ${response.body}");
+      print("Trades body=====: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
         _tradesOnOffer = tradesOnOfferModelFromJson(response.body);

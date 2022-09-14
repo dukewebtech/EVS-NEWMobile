@@ -21,7 +21,7 @@ class MyAdsWidget extends StatelessWidget {
             ));
       } else if (myAdsViewModel.error) {
         return Center(
-            child: errorDialog(size: 20, tradeViewModel: myAdsViewModel)
+            child: errorDialog(size: 20, myAdsViewModel: myAdsViewModel)
         );
       }
     }
@@ -36,14 +36,14 @@ class MyAdsWidget extends StatelessWidget {
   }
 }
 
-Widget errorDialog({required double size, required MyAdsViewModel tradeViewModel}){
+Widget errorDialog({required double size, required MyAdsViewModel myAdsViewModel}){
   return SizedBox(
     height: 180,
     width: 200,
     child:  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('An error occurred when fetching the posts.',
+        Text('An error occurred when fetching the ads.',
           style: TextStyle(
               fontSize: size,
               fontWeight: FontWeight.w500,
@@ -52,7 +52,7 @@ Widget errorDialog({required double size, required MyAdsViewModel tradeViewModel
         ),
         const SizedBox(height: 10,),
         CustomElevatedButton(onTap: (){
-
+          myAdsViewModel.fetchOffers();
         }, backgroundColor: ColorManager.primaryColor,
             textColor: ColorManager.whiteColor,
             title: "Retry"),

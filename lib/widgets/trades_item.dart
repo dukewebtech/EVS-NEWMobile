@@ -1,16 +1,21 @@
 import 'package:evs_pay_mobile/resources/constants/constants.dart';
+import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 import '../model/trades_model_api.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/image_manager.dart';
+import '../resources/navigation_utils.dart';
 import '../resources/strings_manager.dart';
 import '../resources/value_manager.dart';
+import '../view_models/authentication_view_model/authentication_view_model.dart';
+import '../view_models/services/chats_services.dart';
 import 'app_texts/custom_text.dart';
 
 class TradeItem extends StatelessWidget {
@@ -19,94 +24,103 @@ class TradeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthenticationProvider>();
+    final dashboardViewModel = context.watch<DashboardViewModel2>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSize.s4.r),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
-        // height: AppSize.s96.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppSize.s3.r),
-            border: Border.all(
-                color: ColorManager.inputFieldBorder
-            )
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center ,
-          children: [
-            SizedBox(height: AppSize.s12.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomTextWithLineHeight(
-                  text: "${trade.user!.firstName} ${trade.user!.lastName}",
-                  fontWeight: FontWeightManager.bold,
-                  textColor: ColorManager.blckColor,
-                  fontSize: FontSize.s12,
-                ),
-
-                CustomTextWithLineHeight(
-                  text: trade.type ?? "",
-                  fontWeight: FontWeightManager.bold,
-                  textColor: trade.type == "SELL" ? ColorManager.primaryColor : ColorManager.blackTxtColor,
-                ),
-              ],
-            ),
-
-            SizedBox(height: AppSize.s8.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomTextWithLineHeight(
-                  text: trade.paymentMethod!.name?? "",
-                  fontWeight: FontWeightManager.regular,
-                  textColor: ColorManager.blckColor,
-                  fontSize: FontSize.s12,
-                ),
-
-                CustomTextWithLineHeight(
-                  text: "${moneyFormat.format(trade.amount)} ${trade.currency?.code}",
-                  fontWeight: FontWeightManager.regular,
-                  textColor: ColorManager.arrowColor,
-                  fontSize: FontSize.s10,
-                ),
-              ],
-            ),
-            SizedBox(height: AppSize.s4.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CustomTextWithLineHeight(
-                  text: Jiffy(trade.createdAt).yMMMMEEEEdjm,
-                  fontWeight: FontWeightManager.regular,
-                  textColor: ColorManager.arrowColor,
-                ),
-
-              ],
-            ),
-
-            SizedBox(height: AppSize.s10.h,),
-
-            Row(
-              children: [
-                Container(
-                  // height: AppSize.s15.h,
-                  // width: AppSize.s48.w,
-                  padding: EdgeInsets.symmetric(horizontal: AppSize.s22.w, vertical: AppSize.s3.h),
-                  decoration:  BoxDecoration(
-                    color: ColorManager.deepGreenColor,
-                    borderRadius: BorderRadius.circular(AppSize.s2.r)
+      child: InkWell(
+        onTap: (){
+          dashboardViewModel.changeTradeReference(trade.reference);
+          ChatService().getChats(authProvider.userData.accessToken!, trade.reference);
+          openChatScreen(context);
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
+          // height: AppSize.s96.h,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppSize.s3.r),
+              border: Border.all(
+                  color: ColorManager.inputFieldBorder
+              )
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center ,
+            children: [
+              SizedBox(height: AppSize.s12.h,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomTextWithLineHeight(
+                    text: "${trade.user!.firstName} ${trade.user!.lastName}",
+                    fontWeight: FontWeightManager.bold,
+                    textColor: ColorManager.blckColor,
+                    fontSize: FontSize.s12,
                   ),
-                  alignment: Alignment.center,
-                  child: CustomTextWithLineHeight(text: trade.status ?? "",
-                  textColor: ColorManager.whiteColor,),
-                )
-              ],
-            ),
 
-            SizedBox(height: AppSize.s12.h,),
+                  CustomTextWithLineHeight(
+                    text: trade.type ?? "",
+                    fontWeight: FontWeightManager.bold,
+                    textColor: trade.type == "SELL" ? ColorManager.primaryColor : ColorManager.blackTxtColor,
+                  ),
+                ],
+              ),
 
-          ],
+              SizedBox(height: AppSize.s8.h,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomTextWithLineHeight(
+                    text: trade.paymentMethod!.name?? "",
+                    fontWeight: FontWeightManager.regular,
+                    textColor: ColorManager.blckColor,
+                    fontSize: FontSize.s12,
+                  ),
+
+                  CustomTextWithLineHeight(
+                    text: "${moneyFormat.format(trade.amount)} ${trade.currency?.code}",
+                    fontWeight: FontWeightManager.regular,
+                    textColor: ColorManager.arrowColor,
+                    fontSize: FontSize.s10,
+                  ),
+                ],
+              ),
+              SizedBox(height: AppSize.s4.h,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CustomTextWithLineHeight(
+                    text: Jiffy(trade.createdAt).yMMMMEEEEdjm,
+                    fontWeight: FontWeightManager.regular,
+                    textColor: ColorManager.arrowColor,
+                  ),
+
+                ],
+              ),
+
+              SizedBox(height: AppSize.s10.h,),
+
+              Row(
+                children: [
+                  Container(
+                    // height: AppSize.s15.h,
+                    // width: AppSize.s48.w,
+                    padding: EdgeInsets.symmetric(horizontal: AppSize.s22.w, vertical: AppSize.s3.h),
+                    decoration:  BoxDecoration(
+                      color: ColorManager.deepGreenColor,
+                      borderRadius: BorderRadius.circular(AppSize.s2.r)
+                    ),
+                    alignment: Alignment.center,
+                    child: CustomTextWithLineHeight(text: trade.status ?? "",
+                    textColor: ColorManager.whiteColor, fontSize: FontSize.s6,),
+                  )
+                ],
+              ),
+
+              SizedBox(height: AppSize.s12.h,),
+
+            ],
+          ),
         ),
       ),
     );

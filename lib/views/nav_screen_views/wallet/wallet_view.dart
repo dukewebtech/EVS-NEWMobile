@@ -6,13 +6,17 @@ import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/wallet/widgets/transaction_widget.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
-import 'package:evs_pay_mobile/widgets/evs_pay_header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../model/transaction_type_model.dart';
+import '../../../resources/constants/constants.dart';
 import '../../../resources/font_manager.dart';
+import '../../../view_models/dashboard_view_model.dart';
+import '../../../view_models/general_view_model.dart';
 
 class WalletView extends StatefulWidget {
   const WalletView({Key? key}) : super(key: key);
@@ -24,6 +28,21 @@ class WalletView extends StatefulWidget {
 class _WalletViewState extends State<WalletView> {
 
   int index = 0;
+
+  @override
+  void initState() {
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async{
+      final evsPayVModel = Provider.of<EvsPayViewModel>(context, listen: false);
+      final authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
+      final dashboardViewModel = Provider.of<DashboardViewModel2>(context, listen: false);
+      await authProvider.getWalletAddress(context: context);
+      await dashboardViewModel.getBtcToNairaRate(authProvider.walletData.data!.isEmpty? "0.00" : authProvider.walletData.data![0].balance.toString());
+      print("Waiting");
+      evsPayVModel.getPaymentMethods(context: context);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +61,39 @@ class _WalletViewState extends State<WalletView> {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppSize.s14.w),
-                    child: const EvsPayHeaderWidget(
-                      title: AppStrings.wallet,
-                      isWallet: true,
-                      leftIcon: AppImages.backButton,
-                    ),
+                    child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                          InkWell(
+                            // onTap: (){
+                            //   // openEditProfileScreen(context);
+                            // },
+                            child: InkWell(
+                                onTap: (){
+                                  openNotificationsScreen(context);
+                                },
+                                child: SvgPicture.asset(AppImages.backButton)),
+                          ),
+
+                        CustomTextWithLineHeight(text: AppStrings.wallet,
+                          textColor: ColorManager.lightTextColor,
+                          fontWeight: FontWeightManager.bold, fontSize: FontSize.s16,),
+                          Container(
+                            height:
+                            AppSize.s40.h,
+                            width: AppSize.s40.h,
+                            decoration: BoxDecoration(
+                              color: ColorManager.blueColor,
+                              borderRadius: BorderRadius.circular(AppSize.s3.r),
+
+                            ),
+                            child: Image.asset(AppImages.qrCode),
+                          ),
+
+
+
+                      ],
+                    )
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppSize.s40.w),
@@ -58,17 +105,34 @@ class _WalletViewState extends State<WalletView> {
                           textColor: ColorManager.blackTextColor,),
                         SizedBox(height: AppSize.s12.h,),
 
-                        const CustomTextWithLineHeight(
-                          text: AppStrings.amount,
-                          textColor: ColorManager.blackTextColor,
-                          fontSize: FontSize.s22,
-                          fontWeight: FontWeightManager.bold,),
+                        Consumer<DashboardViewModel2>(
+                            builder: (ctx, dashboardViewModel, child) {
+                              return CustomTextWithLineHeight(
+                                text: "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading? "0.00" : dashboardViewModel.btcNairaModel == null
+                                    ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
+                                textColor: ColorManager.amountColor,
+                                fontSize: FontSize.s22,
+                                fontWeight: FontWeightManager.semiBold,);
+                            }
+                        ),
 
                         CustomTextWithLineHeight(
-                          text: "${authProvider.walletData.data![0].balance} BTC",
+                          text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
                           textColor: ColorManager.blackTextColor,
                           fontSize: FontSize.s14,
                           fontWeight: FontWeightManager.regular,),
+
+                        // CustomTextWithLineHeight(
+                        //   text: authProvider.walletData.data!.isEmpty? "0.00" : AppStrings.amount,
+                        //   textColor: ColorManager.blackTextColor,
+                        //   fontSize: FontSize.s22,
+                        //   fontWeight: FontWeightManager.bold,),
+                        //
+                        // CustomTextWithLineHeight(
+                        //   text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
+                        //   textColor: ColorManager.blackTextColor,
+                        //   fontSize: FontSize.s14,
+                        //   fontWeight: FontWeightManager.regular,),
 
                         SizedBox(height: AppSize.s21.h,),
                          SizedBox(
@@ -85,11 +149,23 @@ class _WalletViewState extends State<WalletView> {
                                   ),
                                   child: InkWell(
                                     onTap: (){
-                                      if(index == 0){
-                                        openSendTradeScreen(context);
+                                      if(authProvider.walletData.data!.isEmpty){
+                                        showTopSnackBar(
+                                          context,
+                                          const CustomSnackBar.info(
+                                            message: "Verify your email to trade",
+                                            backgroundColor:
+                                            ColorManager.primaryColor,
+                                          ),
+                                        );
                                       }else{
-                                        openReceiveTradeScreen(context);
+                                        if(index == 0){
+                                          openSendTradeScreen(context);
+                                        }else{
+                                          openReceiveTradeScreen(context);
+                                        }
                                       }
+
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(

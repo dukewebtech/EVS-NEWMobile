@@ -44,6 +44,8 @@ class AppStrings {
   static const transactions = "Transactions";
   static const verification = "Verification";
   static const profile = "Profile";
+  static const proceedToSell = "Proceed to sell";
+  static const proceedToBuy = "Proceed to buy";
   static const termsPfService = "Terms of service";
   static const about = "About";
   static const signOut = "Sign Out";
@@ -69,6 +71,7 @@ class AppStrings {
   static const profileEdit = "Profile edit";
   static const tapOnTheImageToChangeProfilePicture = "Tap on the image to change the profile picture ";
   static const name = "Name";
+  static const ngn = "NGN";
   static const phone = "Phone";
   static const saveChanges = "Save Changes";
   static const areousEmail = "areous@evspay.com";
@@ -108,6 +111,7 @@ class AppStrings {
   static const send = "Send";
   static const receive = "Receive";
   static const trade = "Trade";
+  static const tradeTimeLimit = "Trade Time Limit ";
   static const transactionHistory = "Transactions History";
   static const waiting = "Waiting";
   static const home = "Home";
@@ -118,8 +122,16 @@ class AppStrings {
   static const youHaveNotComplete = "You have to complete your Verification to trade";
   static const sell = "SELL";
   static const buy = "BUY";
+  static const buyNow = "Buy Now";
   static const sellLowerCase = "Sell";
   static const buyLowerCase = "Buy";
+  static const sellersRate = "Seller's Rate";
+  static const buyLimit = "Buy Limit";
+  static const iWantToBuyBtc = "I want to buy BTC";
+  static const iWillReceive = "I will receive  ";
+  static const aboutThisOffer = "About this offer";
+  static const terms = "Terms";
+  static const termsLimit = "Trade Time Limit ";
   static const six20N = "620 NGN";
   static const oneK = "1000 NGN";
   static const perUSD = "per USD";
@@ -148,14 +160,21 @@ class AppStrings {
   static const myOfferDetails = "My Offer Details";
   static const tradesForOffer = "Trades for offer";
   static const createAnOffer = "Create an Offer";
+  static const updateAnOffer = "Update an Offer";
+  static const editOffer = "Edit Offer";
   static const buyBitcoin = "Buy Bitcoin";
   static const sellBitcoin = "Sell Bitcoin";
   static const inputLocation = "Input location ";
   static const location = "Location:";
+  static const howMuchDoYou = "How much do you want to sell ?";
+  static const howMuchDoYouWantToBuy = "How much do you want to buy?";
   static const startTyping = "Start typing.. ";
   static const showAll = "Show all";
   static const rate = "Rate:";
-  static const maximum = "Minimum";
+  static const andReceive = "And receive";
+  static const iWantToSell = "I want to sell my BTC";
+  static const iWantToPayWithItunes = "I will pay with iTunes Gift Card";
+  static const maximum = "Maximum";
   static const minimum = "Minimum";
   static const eight000 = "800,0000";
   static const ten000000 = "10,000,000";
@@ -171,7 +190,14 @@ class AppStrings {
   static const addressVerified =  "Address Verified";
   static const idVerified =  "ID Verified";
   static const selfieVerified =  "Selfie Verified";
-
+  static const fillAllRequiredFields = "Fill all required fields";
+  static const specifyAmountToSell = "Specify Amount To Sell";
+  static const buyer = "buyer";
+  static const youHaveNotCreatedAnyOffer = "You have not created any offers yet";
+  static const youHaveNoTrade = "You have no trade yet";
+  static const secureEscrow = "Secure escrow + Automated trade with";
+  static const transferFundsTo = "Transfer funds to your wallet address to start trading.";
+  static const transferFundsToYourWallet = "Transfer funds to your wallet address to get started.";
 
 
 

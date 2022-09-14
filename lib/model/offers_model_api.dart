@@ -64,7 +64,7 @@ class OfferData {
   String terms;
   int? paymentWindow;
   int? profitMargin;
-  int? pricePerCoin;
+  dynamic pricePerCoin;
   String? status;
   DateTime? expiryDate;
   int? trackLiquidity;

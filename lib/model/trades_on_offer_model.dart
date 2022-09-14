@@ -54,10 +54,10 @@ class TradesOnOfferData {
 
   String? reference;
   String? type;
-  int? fee;
-  int? amount;
-  double? coinValue;
-  String? status;
+  dynamic fee;
+  dynamic amount;
+  dynamic coinValue;
+  dynamic status;
   DateTime? deadline;
   DateTime? createdAt;
   dynamic confirmedAt;
@@ -115,7 +115,7 @@ class Coin {
   });
 
   String? name;
-  String? symbol;
+  dynamic symbol;
 
   factory Coin.fromJson(Map<String, dynamic> json) => Coin(
     name: json["name"],
@@ -136,7 +136,7 @@ class Currency {
   });
 
   String? name;
-  String? code;
+  dynamic code;
   dynamic symbol;
 
   factory Currency.fromJson(Map<String, dynamic> json) => Currency(
@@ -175,19 +175,19 @@ class Offer {
   });
 
   String? reference;
-  String? type;
-  int? minAmount;
-  int? maxAmount;
+  dynamic type;
+  dynamic minAmount;
+  dynamic maxAmount;
   List<String>? tags;
   String? location;
   String? terms;
-  int? paymentWindow;
-  int? profitMargin;
-  int? pricePerCoin;
-  String? status;
+  dynamic paymentWindow;
+  dynamic profitMargin;
+  dynamic pricePerCoin;
+  dynamic status;
   DateTime? expiryDate;
-  int? trackLiquidity;
-  int? trustedPeopleOnly;
+  dynamic trackLiquidity;
+  dynamic trustedPeopleOnly;
   DateTime? createdAt;
   TradesOnOfferPaymentMethod? paymentMethod;
   Currency? currency;
@@ -243,7 +243,7 @@ class TradesOnOfferPaymentMethod {
   });
 
   String? name;
-  String? code;
+  dynamic code;
 
   factory TradesOnOfferPaymentMethod.fromJson(Map<String, dynamic> json) => TradesOnOfferPaymentMethod(
     name: json["name"],
@@ -276,15 +276,15 @@ class Partner {
   });
 
   int? id;
-  String? firstName;
+  dynamic firstName;
   dynamic middleName;
-  String? lastName;
-  String? username;
-  String? type;
+  dynamic lastName;
+  dynamic username;
+  dynamic type;
   Documents? documents;
-  String? email;
+  dynamic email;
   bool? emailVerified;
-  String? phone;
+  dynamic phone;
   bool? phoneVerified;
   bool? homeVerified;
   bool? idcardVerified;
@@ -356,8 +356,8 @@ class Links {
     this.next,
   });
 
-  String? first;
-  String? last;
+  dynamic first;
+  dynamic last;
   dynamic prev;
   dynamic next;
 
@@ -387,13 +387,13 @@ class Meta {
     this.total,
   });
 
-  int? currentPage;
-  int? from;
-  int? lastPage;
-  String? path;
-  int? perPage;
-  int? to;
-  int? total;
+  dynamic currentPage;
+  dynamic from;
+  dynamic lastPage;
+  dynamic path;
+  dynamic perPage;
+  dynamic to;
+  dynamic total;
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
     currentPage: json["current_page"],
