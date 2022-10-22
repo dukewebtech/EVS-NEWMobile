@@ -4,6 +4,7 @@ import 'package:evs_pay_mobile/view_models/authentication_view_model/authenticat
 import 'package:evs_pay_mobile/view_models/authentication_view_model/user_profile_view_model.dart';
 import 'package:evs_pay_mobile/view_models/chats_view_model.dart';
 import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
+import 'package:evs_pay_mobile/view_models/nav_screen_view_model.dart';
 import 'package:evs_pay_mobile/view_models/trade_view_model.dart';
 import 'package:evs_pay_mobile/view_models/wallet_transaction_view_model.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => TradeViewModel()),
       ChangeNotifierProvider(create: (_) => ChatsViewModel()),
       ChangeNotifierProvider(create: (_) => DashboardViewModel2()),
+      ChangeNotifierProvider(create: (_) =>  NavScreenViewModel()),
     ],
       child: const MyApp()));
 

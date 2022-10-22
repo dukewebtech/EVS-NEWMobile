@@ -12,10 +12,14 @@ class CustomTextField extends StatelessWidget {
       final bool isNumbers;
       final bool isEnabled;
       final int maxLength;
+      final bool showPassword;
+      final bool showSuffixIcon;
       Function(String)? onChanged;
   final String hint;
       final TextEditingController controller;
         CustomTextField({Key? key, this.autoFocus = false,
+          this.showSuffixIcon  = false,
+          this.showPassword = false,
     this.obSecureText = false,
           this.isNumbers = false,
           this.isEnabled = true,
@@ -58,6 +62,7 @@ class CustomTextField extends StatelessWidget {
                 fillColor: ColorManager.whiteColor,
                 contentPadding: EdgeInsets.all(contentPadding),
                 hintText: hint,
+                // suffixIcon: showSuffixIcon ? Icon() : Container(),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.r),
                   borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
@@ -81,7 +86,7 @@ class CustomTextField extends StatelessWidget {
                   labelStyle: const TextStyle(
                     color: ColorManager.labelTextColor,
                       fontSize: FontSize.s16
-                  )
+                  ),
               ),
             )
         ),

@@ -6,6 +6,7 @@ import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
+import 'package:evs_pay_mobile/view_models/nav_screen_view_model.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/custom_app_bar.dart';
 import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
@@ -353,6 +354,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                 if(isCreated){
                                   Future.delayed(const Duration(seconds: 2), () {
                                     setState(() {
+                                      context.read<NavScreenViewModel>().updateSelectedPage(1);
                                       openNavScreen(context);
                                     });
 

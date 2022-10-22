@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:evs_pay_mobile/model/user_model/chat_model.dart';
 import 'package:evs_pay_mobile/view_models/chats_view_model.dart';
 import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -18,19 +21,63 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/loading_indicator.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({Key? key,}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+   Future<List<Chats?>>? _future;
   bool showBottomSheet = true;
   final chatController = TextEditingController();
+
+   final ScrollController _scrollController = ScrollController();
+
+  Future<List<Chats?>> getChats(String token, String tradeReference) async {
+    final chats =  ChatService().getChats(token, tradeReference);
+
+    return chats;
+  }
+
+
+
+  setUpTimedFetch() {
+    Timer.periodic(const Duration(milliseconds: 2000), (timer) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        final authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
+        final dashboardViewModel = Provider.of<DashboardViewModel2>(context, listen: false);
+        setState(() {
+          _future = getChats(authProvider.userData.accessToken??"", dashboardViewModel.tradeReference);
+
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 1),
+                curve: Curves.fastOutSlowIn);
+          });
+        });
+      });
+
+
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setUpTimedFetch();
+
+  }
+
+
+
+  
+  
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthenticationProvider>();
-    final dashboardViewModel = context.watch<DashboardViewModel2>();
+      final dashboardViewModel = context.watch<DashboardViewModel2>();
     return Scaffold(
       appBar: evsPayCustomAppBar(
           context, AppStrings.buyLowerCase,
@@ -69,8 +116,96 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     SizedBox(height: AppSize.s32.h,),
 
+                  // StreamBuilder(
+                  //   stream: Stream.periodic(const Duration(seconds: 5))
+                  //       .asyncMap((i) => ChatService().getChats(authProvider.userData.accessToken!, dashboardViewModel.tradeReference)), // i is null here (check periodic docs)
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.hasError) {
+                  //       return const Center(child: Text('Error Occurred'));
+                  //     } else if (snapshot.hasData) {
+                  //       if (snapshot.data == null) {
+                  //         return Center(
+                  //           child: Column(
+                  //             children: [
+                  //               SizedBox(
+                  //                 height: AppSize.s96.h,
+                  //               ),
+                  //               Center(
+                  //                   child: SvgPicture.asset("assets/images/empty_state.svg")
+                  //               ),
+                  //               SizedBox(
+                  //                 height: AppSize.s49.h,
+                  //               ),
+                  //
+                  //               const CustomText(text:
+                  //               AppStrings.youHaveNotCreatedAnyOffer,
+                  //                 textColor: ColorManager.blckColor,
+                  //                 fontSize: FontSize.s16,),
+                  //               SizedBox(
+                  //                 height: AppSize.s8.h,
+                  //               ),
+                  //
+                  //               SizedBox(
+                  //                   width: AppSize.s208.w,
+                  //                   child: const CustomTextNoOverFlow(
+                  //                       alignment: "center",
+                  //                       fontSize: FontSize.s13,
+                  //                       text: AppStrings.transferFundsToYourWallet))
+                  //             ],
+                  //           ),
+                  //         );
+                  //       } else {
+                  //         final offers = snapshot.data!;
+                  //         return SizedBox(
+                  //           height: MediaQuery.of(context).size.height * 0.55,
+                  //           child: ListView.builder(
+                  //               itemCount: offers.length,
+                  //               physics: const BouncingScrollPhysics(),
+                  //               shrinkWrap: true,
+                  //               itemBuilder: (context, index) {
+                  //                 final chat = offers[index];
+                  //
+                  //                 return Padding(
+                  //                   padding: EdgeInsets.only(
+                  //                       bottom: AppSize.s20.h
+                  //                   ),
+                  //                   child: Row(
+                  //                     mainAxisAlignment: chat?.direction == "SEND" ?
+                  //                     MainAxisAlignment.end : MainAxisAlignment.start,
+                  //                     children: [
+                  //                       Container(
+                  //                         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
+                  //                         padding: EdgeInsets.symmetric(
+                  //                             horizontal: AppSize.s16.w,
+                  //                             vertical: AppSize.s8.h
+                  //                         ),
+                  //                         decoration: BoxDecoration(
+                  //                             color: chat?.direction == "SEND" ?  ColorManager.primaryColor
+                  //                                 : ColorManager.chatCardColor,
+                  //                             borderRadius: BorderRadius.circular(AppSize.s12.r)
+                  //                         ),
+                  //                         child: CustomTextNoOverFlow(text: chat?.message,
+                  //                           fontSize: FontSize.s12,
+                  //                           textColor: ColorManager.blckColor,),
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                 );
+                  //               }),
+                  //         );
+                  //       }
+                  //     } else {
+                  //       return Padding(
+                  //         padding: EdgeInsets.only(
+                  //             top: MediaQuery.of(context).size.height * 0.2),
+                  //         child: const LoadingIndicator(),
+                  //       );
+                  //     }
+                  //   }, // builder should also handle the case when data is not fetched yet
+                  // ),
+
                     FutureBuilder<List<Chats?>>(
-                        future: ChatService().getChats(authProvider.userData.accessToken!, dashboardViewModel.tradeReference),
+                        future: _future,
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             return const Center(child: Text('Error Occurred'));
@@ -111,6 +246,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               return SizedBox(
                                 height: MediaQuery.of(context).size.height * 0.55,
                                 child: ListView.builder(
+                                  controller: _scrollController,
                                     itemCount: offers.length,
                                     physics: const BouncingScrollPhysics(),
                                     shrinkWrap: true,

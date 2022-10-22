@@ -2,12 +2,14 @@ import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/custom_app_bar.dart';
 import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class EmailVerificationView extends StatefulWidget {
   const EmailVerificationView({Key? key}) : super(key: key);
@@ -22,6 +24,12 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final auth = Provider.of<AuthenticationProvider>(context, listen: false);
+
+      emailEditingController.text = auth.userData.user?.email??"";
+    });
   }
 
   @override
@@ -59,15 +67,19 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
 
             SizedBox(height: AppSize.s33.h,),
 
+
             CustomTextField(
               hint: AppStrings.email,
+              isEnabled: false,
               controller: emailEditingController,
               contentPadding: AppSize.s15.h,
             ),
 
             SizedBox(height: AppSize.s23.h,),
 
-            CustomElevatedButton(onTap: (){},
+            CustomElevatedButton(onTap: (){
+              context.read<AuthenticationProvider>().verifyEmailInit(email: emailEditingController.text, context: context);
+            },
                 backgroundColor: ColorManager.primaryColor,
                 textColor: ColorManager.blackTextColor,
                 title: AppStrings.resendVerification.toUpperCase())

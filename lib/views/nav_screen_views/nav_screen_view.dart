@@ -1,10 +1,11 @@
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
+import 'package:evs_pay_mobile/view_models/nav_screen_view_model.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/dashboard/dashboard_view.dart';
-import 'package:evs_pay_mobile/views/nav_screen_views/settings/settings_view.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/trade_view_copy.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/wallet/wallet_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/image_manager.dart';
@@ -18,7 +19,6 @@ class NavScreenView extends StatefulWidget {
 
 class _NavScreenViewState extends State<NavScreenView> {
 
-  int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     DashboardView(),
     TradeViewCopy(),
@@ -27,15 +27,16 @@ class _NavScreenViewState extends State<NavScreenView> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      context.read<NavScreenViewModel>().updateSelectedPage(index);
     });
   }
   @override
   Widget build(BuildContext context) {
+    final navViewModel = context.watch<NavScreenViewModel>();
     return Scaffold(
       backgroundColor: ColorManager.whiteColor,
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions.elementAt(navViewModel.selectedPage),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: ColorManager.whiteColor,
@@ -65,7 +66,7 @@ class _NavScreenViewState extends State<NavScreenView> {
             backgroundColor: ColorManager.whiteColor,
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: navViewModel.selectedPage,
         selectedItemColor: ColorManager.primaryColor,
         unselectedItemColor: ColorManager.blackTextColor,
         onTap: _onItemTapped,

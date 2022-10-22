@@ -45,7 +45,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
             SizedBox(height: AppSize.s8.h,),
             Center(
               child: CustomTextWithLineHeight(
-                text: "Buy BTC from ${dashboardViewModel.selectedTrade.user!.firstName!} by ${dashboardViewModel.selectedTrade.paymentMethod!.name}",
+                text: "Buy BTC from ${dashboardViewModel.selectedDashboardTrade!.user!.username!} by ${dashboardViewModel.selectedDashboardTrade!.paymentMethod!.name}",
                 textColor: ColorManager.blckColor,
                 fontSize: FontSize.s14,),
             ),
@@ -77,7 +77,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                             Padding(
                               padding: EdgeInsets.only(left: AppSize.s8.w),
                               child: CustomTextWithLineHeight(
-                                text: "${dashboardViewModel.selectedTrade.profitMargin}",
+                                text: "${dashboardViewModel.selectedDashboardTrade!.profitMargin}",
                                 textColor: ColorManager.blckColor,
                                 fontSize: FontSize.s14,),
                             ),
@@ -117,7 +117,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                             Padding(
                               padding: EdgeInsets.only(left: AppSize.s8.w),
                               child: CustomTextWithLineHeight(
-                                text: "${moneyFormat.format(dashboardViewModel.selectedTrade.minAmount)}-${moneyFormat.format(dashboardViewModel.selectedTrade.maxAmount)} ${dashboardViewModel.selectedTrade.currency!.code}",
+                                text: "${moneyFormat.format(dashboardViewModel.selectedDashboardTrade!.minAmount)}-${moneyFormat.format(dashboardViewModel.selectedDashboardTrade!.maxAmount)} ${dashboardViewModel.selectedDashboardTrade!.currency!.code}",
                                 textColor: ColorManager.blckColor,
                                 fontSize: FontSize.s14,),
                             ),
@@ -265,9 +265,9 @@ class _BuyTradeViewState extends State<BuyTradeView> {
 
                     maxLines: 1,
                     validator: (value){
-                      if(value!.isNotEmpty && double.parse(value.isEmpty ? "0.0" : value) < dashboardViewModel.selectedTrade.minAmount ||
-                          double.parse(value.isEmpty ? "0.0" : value) > dashboardViewModel.selectedTrade.maxAmount){
-                        return "Between ${dashboardViewModel.selectedTrade.minAmount} and ${dashboardViewModel.selectedTrade.maxAmount}";
+                      if(value!.isNotEmpty && double.parse(value.isEmpty ? "0.0" : value) < dashboardViewModel.selectedDashboardTrade!.minAmount ||
+                          double.parse(value.isEmpty ? "0.0" : value) > dashboardViewModel.selectedDashboardTrade!.maxAmount){
+                        return "Between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}";
                       }
                       return null;
                     },
@@ -392,7 +392,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                       ),
                     ),
                     CustomTextWithLineHeight(
-                      text: "${dashboardViewModel.selectedTrade.terms}",
+                      text: "${dashboardViewModel.selectedDashboardTrade!.terms}",
                       textColor: ColorManager.arrowColor,
                       fontWeight: FontWeightManager.regular,),
 
@@ -431,14 +431,14 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                               onTap: ()async{
                                 if(double.parse(nairaAmountController.text.trim().isEmpty ? "0.0" :
                                 nairaAmountController.text.trim())
-                                    < dashboardViewModel.selectedTrade.minAmount ||
+                                    < dashboardViewModel.selectedDashboardTrade!.minAmount ||
                                     double.parse(nairaAmountController.text.trim().isEmpty ? "0.0" :
                                     nairaAmountController.text.trim())
-                                        > dashboardViewModel.selectedTrade.maxAmount){
+                                        > dashboardViewModel.selectedDashboardTrade!.maxAmount){
                                   showTopSnackBar(
                                     context,
                                     CustomSnackBar.info(
-                                      message: "Amount must be Between ${dashboardViewModel.selectedTrade.minAmount} and ${dashboardViewModel.selectedTrade.maxAmount}",
+                                      message: "Amount must be Between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}",
                                       backgroundColor:
                                       ColorManager.primaryColor,
                                     ),

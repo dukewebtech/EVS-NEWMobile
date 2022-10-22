@@ -1,5 +1,6 @@
 import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class BuyTradeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+    final authProvider = context.watch<AuthenticationProvider>();
     if (dashboardViewModel.buyTrades.isEmpty) {
       if (dashboardViewModel.loading) {
         return const Center(
@@ -32,7 +34,7 @@ class BuyTradeWidget extends StatelessWidget {
             ));
       } else if (dashboardViewModel.error) {
         return Center(
-            child: errorDialog(size: 20, dashboardViewModel: dashboardViewModel)
+            child: errorDialog(context: context,size: 20, dashboardViewModel: dashboardViewModel)
         );
       }
     }
@@ -62,7 +64,7 @@ class BuyTradeWidget extends StatelessWidget {
                 if (index == dashboardViewModel.buyTrades.length) {
                   if (dashboardViewModel.error) {
                     return Center(
-                        child: errorDialog(size: 15, dashboardViewModel: dashboardViewModel)
+                        child: errorDialog(context: context, size: 15, dashboardViewModel: dashboardViewModel)
                     );
                   } else {
                     return Center(
@@ -82,13 +84,20 @@ class BuyTradeWidget extends StatelessWidget {
                   ),
                   child: InkWell(
                     onTap: (){
-                      dashboardViewModel.setSelectedTrade(offer);
-                      if(offer.type == "SELL"){
-                        dashboardViewModel.getBtcRate();
-                        openBuyTradeView(context);
+                      dashboardViewModel.changeSelectedDashboardTrade(offer);
+                      if(!authProvider.userData.user!.emailVerified! || !authProvider.userData.user!.phoneVerified! ||
+                          !authProvider.userData.user!.homeVerified! || !authProvider.userData.user!.idCardVerified! ||
+                          authProvider.userData.user!.photo == null){
+                        openVerifyAccountToTradeView(context);
                       }else{
-                        openSellView(context);
+                        if(offer.type == "SELL"){
+                          dashboardViewModel.getBtcRate();
+                          openBuyTradeView(context);
+                        }else{
+                          openSellView(context);
+                        }
                       }
+
                     },
                     child: Container(
                       padding: EdgeInsets.all(AppSize.s15.r),
@@ -179,22 +188,24 @@ class BuyTradeWidget extends StatelessWidget {
   }
 }
 
-Widget errorDialog({required double size, required DashboardViewModel2 dashboardViewModel}){
+Widget errorDialog({
+  required BuildContext context,
+  required double size, required DashboardViewModel2 dashboardViewModel}){
   return SizedBox(
-    height: 180,
-    width: 200,
+    // height: MediaQuery.of(context).size.width * 0.9,
+    width: MediaQuery.of(context).size.width * 0.9,
     child:  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('An error occurred when fetching the trades.',
-          style: TextStyle(
-              fontSize: size,
-              fontWeight: FontWeight.w500,
-              color: Colors.black
-          ),
-        ),
+         const CustomTextWithLineHeight(
+           text: 'An error occurred when fetching the trades.',
+        textColor: Colors.black, fontWeight: FontWeightManager.medium,
+        fontSize: FontSize.s18,
+         alignCenter: true,),
+
         const SizedBox(height: 10,),
         CustomElevatedButton(onTap: (){
+          dashboardViewModel.fetchBuyTrades(isRefresh: true);
         }, backgroundColor: ColorManager.primaryColor,
             textColor: ColorManager.whiteColor,
             title: "Retry"),

@@ -255,6 +255,72 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+  //VERIFY PHONE NUMBER
+  void verifyEmailInit({
+    required String email,
+    required BuildContext context,
+  }) async {
+    _isLoading = true;
+    _success = false;
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => const LoadingIndicator());
+    notifyListeners();
+    final body = {
+      "email": email,
+    };
+    try {
+      final response =
+      await http.put(
+          Uri.parse("$baseURL${Endpoints.verifyEmail}"),
+          headers: {
+            'Authorization': 'Bearer ${_userData!.accessToken}',
+            'Content-Type': 'application/json',
+          }, body: json.encode(body));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        //first check for the user role
+        _isLoading = false;
+        _success = true;
+        print("Success: $success");
+        _resMessage = "Success! OTP has been sent.";
+        notifyListeners();
+        Navigator.pop(context);
+
+        openNavScreen(context);
+
+      } else if (response.statusCode == 422) {
+        final res = json.decode(response.body);
+        print("$res");
+        _resMessage = res['message'];
+        _isLoading = false;
+        _success = false;
+        notifyListeners();
+        Navigator.pop(context);
+      } else {
+        final res = json.decode(response.body);
+        _resMessage = res['message'];
+        _isLoading = false;
+        _success = false;
+        notifyListeners();
+        Navigator.pop(context);
+      }
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _success = false;
+      _resMessage = "Internet connection is not available";
+      notifyListeners();
+      Navigator.pop(context);
+    } catch (e) {
+      _isLoading = false;
+      _success = false;
+      _resMessage = "Please try again";
+      notifyListeners();
+      Navigator.pop(context);
+      // print("exception: $e");
+    }
+  }
+
 
   //VERIFY PHONE NUMBER
   void verifyPhoneNumberComplete({
@@ -474,6 +540,7 @@ class AuthenticationProvider extends ChangeNotifier {
     required username,
   }) async {
     _isLoading = true;
+    _success = false;
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -495,6 +562,7 @@ class AuthenticationProvider extends ChangeNotifier {
       print("Registration response: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
+        _success = true;
         _isLoading = false;
         _resMessage = "Registered successfully";
         notifyListeners();

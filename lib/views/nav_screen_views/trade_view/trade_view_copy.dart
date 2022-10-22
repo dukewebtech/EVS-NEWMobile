@@ -4,7 +4,7 @@ import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
-import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/my_ads.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/my_ads_future_builder_widget.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/trades_widget.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
@@ -14,9 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-
 import '../../../view_models/general_view_model.dart';
-import '../../../view_models/trade_view_model.dart';
 
 
 class TradeViewCopy extends StatefulWidget {
@@ -36,10 +34,17 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
   @override
   Widget build(BuildContext context) {
     final evsPayViewModel = context.watch<EvsPayViewModel>();
+    final authProvider = context.watch<AuthenticationProvider>();
     return Scaffold(
       appBar: evsTradeAppBar(context, AppStrings.trades, onTap: ()async{
-        evsPayViewModel.getPaymentMethods(context: context);
-        openCreateOfferScreen(context);
+        if(!authProvider.userData.user!.emailVerified! || !authProvider.userData.user!.phoneVerified! ||
+            !authProvider.userData.user!.homeVerified! || !authProvider.userData.user!.idCardVerified! ||
+            authProvider.userData.user!.photo == null){
+          openVerifyAccountToTradeView(context);
+        }else{
+          evsPayViewModel.getPaymentMethods(context: context);
+          openCreateOfferScreen(context);
+        }
       }),
       body: SafeArea(
           child: Column(

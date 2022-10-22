@@ -423,7 +423,7 @@ class _DashboardViewState extends State<DashboardView> {
                     InkWell(
                       onTap: (){
                         context.read<DashboardViewModel2>().changeFilteredPageNumber(0);
-                        String queryParam = sellOrBuyTab == 0? "?type=buy" : "?type=sell";
+                        String queryParam = sellOrBuyTab == 0 ? "?type=buy" : "?type=sell";
                         String paymentMethodParam = selectedPaymentMethod == null ? "" : "&payment_method=${selectedPaymentMethod!.code}";
                         String amountParam = amountController.text.isEmpty ? "" : "&amount=${amountController.text}";
                         queryParam = queryParam + paymentMethodParam + amountParam;

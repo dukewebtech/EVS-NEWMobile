@@ -29,6 +29,8 @@ class _SignUpViewState extends State<SignUpView> {
   final userEmailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  bool obscureText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,21 +97,135 @@ class _SignUpViewState extends State<SignUpView> {
 
                   const LabelText(text: AppStrings.password),
                   SizedBox(height: AppSize.s5.h,),
-                  CustomTextField(
-                    controller: passwordController,
-                    hint: AppStrings.password,
-                    obSecureText: true,
+
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.r),
+                        color: ColorManager.whiteColor,
+                      ),
+                      alignment: Alignment.center,
+                      child: TextField(
+                        controller: passwordController,
+                        cursorColor: ColorManager.textFieldColor,
+                        keyboardType: TextInputType.text,
+                        obscureText:  obscureText,
+                        style: const TextStyle(
+                            color: ColorManager.textFieldColor,
+                            fontSize: FontSize.s16
+                        ),
+                        decoration: InputDecoration(
+                          filled: false,
+                          counterText: "",
+                          fillColor: ColorManager.whiteColor,
+                          contentPadding: const EdgeInsets.all(10),
+                          hintText: AppStrings.password,
+                          suffixIcon: InkWell(
+                            onTap: (){
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                            child: Icon(
+                                obscureText ?  Icons.visibility_off : Icons.visibility
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                                width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                                width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            gapPadding: 0.0,
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.textFieldColor,
+                                width: 1),
+                          ),
+                          hintStyle: const TextStyle(
+                              color: ColorManager.labelTextColor,
+                              fontSize: FontSize.s16
+                          ),
+                          labelStyle: const TextStyle(
+                              color: ColorManager.labelTextColor,
+                              fontSize: FontSize.s16
+                          ),
+                        ),
+                      )
                   ),
+                  // CustomTextField(
+                  //   controller: passwordController,
+                  //   hint: AppStrings.password,
+                  //   obSecureText: true,
+                  // ),
 
                   SizedBox(height: AppSize.s40.h,),
 
                   const LabelText(text: AppStrings.confirmPassword),
                   SizedBox(height: AppSize.s5.h,),
-                  CustomTextField(
-                    controller: confirmPasswordController,
-                    hint: AppStrings.confirmPassword,
-                    obSecureText: true,
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.r),
+                        color: ColorManager.whiteColor,
+                      ),
+                      alignment: Alignment.center,
+                      child: TextField(
+                        controller: confirmPasswordController,
+                        cursorColor: ColorManager.textFieldColor,
+                        keyboardType: TextInputType.text,
+                        obscureText:  obscureText,
+                        style: const TextStyle(
+                            color: ColorManager.textFieldColor,
+                            fontSize: FontSize.s16
+                        ),
+                        decoration: InputDecoration(
+                          filled: false,
+                          counterText: "",
+                          suffixIcon: InkWell(
+                            onTap: (){
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                            child: Icon(
+                                obscureText ?  Icons.visibility_off : Icons.visibility
+                            ),
+                          ),
+                          fillColor: ColorManager.whiteColor,
+                          contentPadding: const EdgeInsets.all(10),
+                          hintText: AppStrings.confirmPassword,
+                          // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                                width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                                width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            gapPadding: 0.0,
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.textFieldColor,
+                                width: 1),
+                          ),
+                          hintStyle: const TextStyle(
+                              color: ColorManager.labelTextColor,
+                              fontSize: FontSize.s16
+                          ),
+                          labelStyle: const TextStyle(
+                              color: ColorManager.labelTextColor,
+                              fontSize: FontSize.s16
+                          ),
+                        ),
+                      )
                   ),
+
 
                   SizedBox(height: AppSize.s38.h,),
 
@@ -124,7 +240,7 @@ class _SignUpViewState extends State<SignUpView> {
                               CustomSnackBar.info(
                                 message: auth.resMessage,
                                 backgroundColor:
-                                ColorManager.primaryColor,
+                                auth.success ? ColorManager.deepGreenColor : ColorManager.primaryColor,
                               ),
                             );
                             ///Clear the response message to avoid duplicate

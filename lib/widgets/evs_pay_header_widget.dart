@@ -67,7 +67,9 @@ class EvsPayHeaderWidget extends StatelessWidget {
               onTap: (){
                 openNotificationsScreen(context);
               },
-              child: SvgPicture.asset(leftIcon)),
+              child: const Icon(Icons.notifications, color: ColorManager.greyColor,)
+              // SvgPicture.asset(leftIcon),
+          ),
 
       ],
     );

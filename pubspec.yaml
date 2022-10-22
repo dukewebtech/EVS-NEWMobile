@@ -48,6 +48,8 @@ dependencies:
 # Money format
   intl: ^0.17.0
 
+  flutter_countdown_timer: ^4.1.0
+
 
 
 

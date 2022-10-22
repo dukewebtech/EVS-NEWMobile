@@ -72,7 +72,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                   SizedBox(height: AppSize.s19.h,),
 
                   CustomElevatedButton(onTap: (){
-                    //  Perform login here
+                    //  Perform verify email here
 
                   }, backgroundColor: ColorManager.primaryColor, textColor: ColorManager.blackTextColor, title: AppStrings.login.toUpperCase()),
 

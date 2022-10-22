@@ -64,16 +64,7 @@ class _WalletViewState extends State<WalletView> {
                     child:  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                          InkWell(
-                            // onTap: (){
-                            //   // openEditProfileScreen(context);
-                            // },
-                            child: InkWell(
-                                onTap: (){
-                                  openNotificationsScreen(context);
-                                },
-                                child: SvgPicture.asset(AppImages.backButton)),
-                          ),
+                          Container(),
 
                         CustomTextWithLineHeight(text: AppStrings.wallet,
                           textColor: ColorManager.lightTextColor,

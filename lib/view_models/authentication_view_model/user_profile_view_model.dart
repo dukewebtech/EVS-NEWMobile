@@ -38,7 +38,7 @@ class UserProfileViewModel extends ChangeNotifier{
 
   setUserProfile(UserProfileModel? userProfile){
     _userProfile = userProfile!;
-    nameEditingController.text = "${_userProfile.data!.firstName} ${_userProfile.data!.middleName ?? ''} ${_userProfile.data!.lastName}";
+    nameEditingController.text = "${_userProfile.data!.firstName ?? 'None'} ${_userProfile.data!.middleName ?? ''} ${_userProfile.data!.lastName ?? "None"}";
   }
 
   getUserProfile() async{

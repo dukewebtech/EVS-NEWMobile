@@ -125,3 +125,11 @@ void openConfirmBuyTradeView(BuildContext context) async{
   Navigator.pushNamed(context, Routes.confirmBuyTrade);
 }
 
+void openConfirmSellTradeView(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.confirmSellTrade);
+}
+
+void openVerifyAccountToTradeView(BuildContext context) async{
+  Navigator.pushNamed(context, Routes.verifyAccountScreen);
+}
+

@@ -1,9 +1,7 @@
 import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
-import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/widgets/expiry_date_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
@@ -23,14 +21,14 @@ import '../../widgets/app_texts/custom_text.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/re_usable_widgets.dart';
 
-class ConfirmBuyScreen extends StatefulWidget {
-  const ConfirmBuyScreen({Key? key}) : super(key: key);
+class ConfirmSellTradeScreen extends StatefulWidget {
+  const ConfirmSellTradeScreen({Key? key}) : super(key: key);
 
   @override
-  State<ConfirmBuyScreen> createState() => _ConfirmBuyScreenState();
+  State<ConfirmSellTradeScreen> createState() => _ConfirmSellTradeScreenState();
 }
 
-class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
+class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
 
   void onEnd() {
     print('onEnd');
@@ -39,10 +37,9 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
-    final auth = context.watch<AuthenticationProvider>();
     return Scaffold(
       appBar: evsPayCustomAppBar(
-          context, AppStrings.buyLowerCase,
+          context, AppStrings.sellLowerCase,
           leadingTap: (){
             Navigator.pop(context);
           },
@@ -65,8 +62,7 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                       child: Row(
                         children: [
                           CustomTextWithLineHeight(
-                            text: "Buy Bitcoin from  ${dashboardViewModel.singleTradeModel?.data?.partner?.username == auth.userData.user?.username? dashboardViewModel.singleTradeModel?.data?.user?.username :
-                            dashboardViewModel.singleTradeModel?.data?.partner?.username}",
+                            text: "Sell Bitcoin to  ${dashboardViewModel.singleTradeModel?.data?.partner?.username}",
                             textColor: ColorManager.blckColor,
                             fontSize: FontSize.s16,
                             fontWeight: FontWeightManager.bold,),
@@ -112,14 +108,8 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                             ExpiryDateWidget(item: time.min == null || time.min! < 10 ? "0" : time.min.toString()[0]),
                             SizedBox(width: AppSize.s4.w,),
                             ExpiryDateWidget(item: time.min == null || time.min! < 10 ? "0" : time.min!.toString()[1]),
-                            // SizedBox(width: AppSize.s3.w,),
-                            // SvgPicture.asset("assets/images/clock_time.svg"),
-                            // ExpiryDateWidget(item: time.sec == null || time.sec! < 10 ? "0" : time.sec.toString()[0]),
-                            // SizedBox(width: AppSize.s4.w,),
-                            // ExpiryDateWidget(item: time.sec == null || time.sec! < 10 ? "0" : time.sec!.toString()[1]),
                           ],
                         );
-                        // Text('days: [ ${time.days} ], hours: [ ${time.hours} ], min: [ ${time.min} ], sec: [ ${time.sec} ]');
                       },
                     ),
 
@@ -192,6 +182,24 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                         CustomTextWithLineHeight(
                           text: "${dashboardViewModel.singleTradeModel!.data!.coinValue} BTC",
                           textColor: ColorManager.greenTextColor,
+                          fontSize: FontSize.s16,
+                          fontWeight: FontWeightManager.medium,)
+                      ],
+                    ),
+
+                    SizedBox(height: AppSize.s4.h,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children:  [
+                        const CustomTextWithLineHeight(
+                          text: "Payment Status",
+                          textColor: ColorManager.arrowColor,
+                          fontSize: FontSize.s16,
+                          fontWeight: FontWeightManager.medium,),
+
+                        CustomTextWithLineHeight(
+                          text: dashboardViewModel.singleTradeModel!.data!.confirmedAt == null ?'Pending' : 'Paid',
+                          textColor: ColorManager.arrowColor,
                           fontSize: FontSize.s16,
                           fontWeight: FontWeightManager.medium,)
                       ],
@@ -293,25 +301,24 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
               ),
 
               SizedBox(height: AppSize.s39.h,),
-
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: AppSize.s24.w
                 ),
                 child: RichText(
                   text: TextSpan(
-                    text: "After payment click  ",
+                    text: "Only click  ",
                     style: getRichTextStyle(
                         fontSize: FontSize.s15,
                         textColor: ColorManager.greyColor,
                         fontWeight: FontWeightManager.medium),
                     children: <TextSpan>[
-                      TextSpan(text: '“i have paid” ', style:
+                      TextSpan(text: '“Release Coin” ', style:
                       getRichTextStyle(
                           fontSize: FontSize.s15,
                           textColor: ColorManager.blackColor,
                           fontWeight: FontWeightManager.medium)),
-                      TextSpan(text: "button to notify seller", style:
+                      TextSpan(text: "button after you have confirmed payment from buyer", style:
                       getRichTextStyle(
                           fontSize: FontSize.s15,
                           textColor: ColorManager.greyColor,
@@ -326,8 +333,7 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
 
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppSize.s50.w),
-                child: dashboardViewModel.loading ? const CupertinoActivityIndicator() :
-                Consumer<DashboardViewModel2>(
+                child: Consumer<DashboardViewModel2>(
                     builder: (ctx, dashboardViewModel, child) {
                       WidgetsBinding.instance.
                       addPostFrameCallback((_) {
@@ -345,13 +351,13 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                         }
                       });
                     return CustomElevatedButton(onTap: ()async{
-                      final isConfirmed = await dashboardViewModel.iHavePaidTrade(dashboardViewModel.singleTradeModel!.data!.reference);
-                      print("I have pai $isConfirmed");
+                      final isConfirmed = await dashboardViewModel.releaseCoin(dashboardViewModel.singleTradeModel!.data!.reference);
+                      print("I have paid $isConfirmed");
 
                     },
                         backgroundColor: ColorManager.primaryColor,
                         textColor: ColorManager.blackTxtColor,
-                        title: "I have Paid");
+                        title: "Release Coin");
                   }
                 ),
               ),

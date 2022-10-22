@@ -5,6 +5,7 @@ class Endpoints {
   static const login = "accounts/login";
   static const recoverPassword = "accounts/password-reset";
   static const verifyPhoneNumberInit = "accounts/verify/phone/init";
+  static const verifyEmail = "accounts/verify/email";
   static const verifyPhoneNumberComplete = "accounts/verify/phone/complete";
   static const verifyId = "accounts/verify/identity";
   static const verifyHome = "accounts/verify/address";

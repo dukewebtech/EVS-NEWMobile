@@ -1,4 +1,5 @@
 import 'package:evs_pay_mobile/resources/constants/constants.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +15,6 @@ import '../resources/image_manager.dart';
 import '../resources/navigation_utils.dart';
 import '../resources/strings_manager.dart';
 import '../resources/value_manager.dart';
-import '../view_models/authentication_view_model/authentication_view_model.dart';
-import '../view_models/services/chats_services.dart';
 import 'app_texts/custom_text.dart';
 
 class TradeItem extends StatelessWidget {
@@ -24,15 +23,28 @@ class TradeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = context.watch<AuthenticationProvider>();
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+    final auth = context.watch<AuthenticationProvider>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSize.s4.r),
       child: InkWell(
-        onTap: (){
+        onTap: ()async{
           dashboardViewModel.changeTradeReference(trade.reference);
-          ChatService().getChats(authProvider.userData.accessToken!, trade.reference);
-          openChatScreen(context);
+          context.read<DashboardViewModel2>().changeSelectedTrade(trade);
+          final  isFetched = await context.read<DashboardViewModel2>().getTradeDetails(trade.reference);
+          if(isFetched){
+            if(trade.type == "SELL"){
+              if(trade.partner?.username == auth.userData.user?.username){
+                openConfirmBuyTradeView(context);
+              }else{
+                openConfirmSellTradeView(context);
+              }
+
+            }else{
+              openConfirmBuyTradeView(context);
+            }
+
+          }
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
@@ -52,7 +64,7 @@ class TradeItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomTextWithLineHeight(
-                    text: "${trade.user!.firstName} ${trade.user!.lastName}",
+                    text: "${trade.partner!.firstName ?? "First Name"} ${trade.partner!.lastName?? "Last Name"}",
                     fontWeight: FontWeightManager.bold,
                     textColor: ColorManager.blckColor,
                     fontSize: FontSize.s12,

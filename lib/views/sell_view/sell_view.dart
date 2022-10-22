@@ -283,9 +283,9 @@ class _SellViewState extends State<SellView> {
 
                             maxLines: 1,
                             validator: (value){
-                              if(value!.isNotEmpty && double.parse(value.isEmpty ? "0.0" : value) < dashboardViewModel.selectedTrade.minAmount ||
-                                  double.parse(value.isEmpty ? "0.0" : value) > dashboardViewModel.selectedTrade.maxAmount){
-                                return "Between ${dashboardViewModel.selectedTrade.minAmount} and ${dashboardViewModel.selectedTrade.maxAmount}";
+                              if(value!.isNotEmpty && double.parse(value.isEmpty ? "0.0" : value) < dashboardViewModel.selectedDashboardTrade!.minAmount ||
+                                  double.parse(value.isEmpty ? "0.0" : value) > dashboardViewModel.selectedDashboardTrade!.maxAmount){
+                                return "Between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}";
                               }
                               return null;
                             },
@@ -423,14 +423,14 @@ class _SellViewState extends State<SellView> {
                               onTap: ()async{
                                 if(double.parse(nairaAmountController.text.trim().isEmpty ? "0.0" :
                                     nairaAmountController.text.trim())
-                                    < dashboardViewModel.selectedTrade.minAmount ||
+                                    < dashboardViewModel.selectedDashboardTrade!.minAmount ||
                                     double.parse(nairaAmountController.text.trim().isEmpty ? "0.0" :
                                     nairaAmountController.text.trim())
-                                        > dashboardViewModel.selectedTrade.maxAmount){
+                                        > dashboardViewModel.selectedDashboardTrade!.maxAmount){
                                   showTopSnackBar(
                                     context,
                                     CustomSnackBar.info(
-                                      message: "Amount much be between ${dashboardViewModel.selectedTrade.minAmount} and ${dashboardViewModel.selectedTrade.maxAmount}",
+                                      message: "Amount much be between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}",
                                       backgroundColor:
                                       ColorManager.primaryColor,
                                     ),
@@ -441,7 +441,7 @@ class _SellViewState extends State<SellView> {
                                     Future.delayed(const Duration(seconds: 1), () {
                                       setState(() {
                                         setState(() {
-                                          openConfirmBuyTradeView(context);
+                                          openConfirmSellTradeView(context);
                                         });
                                       });
 

@@ -25,6 +25,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final userNameOrEmailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool obscureText = true;
 
   @override
   void initState() {
@@ -80,10 +81,65 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const LabelText(text: AppStrings.password),
                   SizedBox(height: AppSize.s5.h,),
-                  CustomTextField(
-                    controller: passwordController,
-                    hint: AppStrings.password,
-                    obSecureText: true,
+
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.r),
+                        color: ColorManager.whiteColor,
+                      ),
+                      alignment: Alignment.center,
+                      child: TextField(
+                        controller: passwordController,
+                        cursorColor: ColorManager.textFieldColor,
+                        keyboardType: TextInputType.text,
+                        obscureText:  obscureText,
+                        style: const TextStyle(
+                            color: ColorManager.textFieldColor,
+                            fontSize: FontSize.s16
+                        ),
+                        decoration: InputDecoration(
+                          filled: false,
+                          counterText: "",
+                          suffixIcon: InkWell(
+                            onTap: (){
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                            child: Icon(
+                                obscureText ?  Icons.visibility_off : Icons.visibility
+                            ),
+                          ),
+                          fillColor: ColorManager.whiteColor,
+                          contentPadding: const EdgeInsets.all(10),
+                          hintText: AppStrings.confirmPassword,
+                          // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                                width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                                width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            gapPadding: 0.0,
+                            borderRadius: BorderRadius.circular(5.r),
+                            borderSide: const BorderSide(color: ColorManager.textFieldColor,
+                                width: 1),
+                          ),
+                          hintStyle: const TextStyle(
+                              color: ColorManager.labelTextColor,
+                              fontSize: FontSize.s16
+                          ),
+                          labelStyle: const TextStyle(
+                              color: ColorManager.labelTextColor,
+                              fontSize: FontSize.s16
+                          ),
+                        ),
+                      )
                   ),
 
                   SizedBox(height: AppSize.s32.h,),
@@ -98,7 +154,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         textColor: ColorManager.labelTextColor,)),
 
                   SizedBox(height: AppSize.s19.h,),
-
                   Consumer<AuthenticationProvider>(
                       builder: (ctx, auth, child) {
                         WidgetsBinding.instance.

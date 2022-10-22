@@ -51,19 +51,19 @@ class TransactionWidget extends StatelessWidget {
                 ),
 
                 const CustomText(text:
-                AppStrings.youHaveNoTrade,
+                "No transaction history",
                   textColor: ColorManager.blckColor,
                   fontSize: FontSize.s16,),
                 SizedBox(
                   height: AppSize.s8.h,
                 ),
 
-                SizedBox(
-                    width: AppSize.s208.w,
-                    child: const CustomTextNoOverFlow(
-                        alignment: "center",
-                        fontSize: FontSize.s13,
-                        text: AppStrings.transferFundsTo))
+                // SizedBox(
+                //     width: AppSize.s208.w,
+                //     child: const CustomTextNoOverFlow(
+                //         alignment: "center",
+                //         fontSize: FontSize.s13,
+                //         text: AppStrings.transferFundsTo))
               ],
             ),
           ) : ListView.builder(

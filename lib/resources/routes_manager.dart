@@ -4,6 +4,7 @@ import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/views/buy_trade_view/buy_trade_view.dart';
 import 'package:evs_pay_mobile/views/chat_screen/chat_screen.dart';
 import 'package:evs_pay_mobile/views/confirm_buy_screen/confirm_buy_screen.dart';
+import 'package:evs_pay_mobile/views/confirm_sell_trade_view/confirm_sell_trade_view.dart';
 import 'package:evs_pay_mobile/views/edit_offer_view/edit_offer_view.dart';
 import 'package:evs_pay_mobile/views/edit_profile_view/edit_profile_view.dart';
 import 'package:evs_pay_mobile/views/login_screen/login_screen.dart';
@@ -31,6 +32,7 @@ import 'package:evs_pay_mobile/views/verification_screens/proof_of_address_view/
 import 'package:evs_pay_mobile/views/verification_screens/take_a_selfie_view/take_a_selfie_view.dart';
 import 'package:evs_pay_mobile/views/verification_screens/upload_id_view/upload_id_view.dart';
 import 'package:evs_pay_mobile/views/verification_screens/verification_submitted_view/verification_submitted_view.dart';
+import 'package:evs_pay_mobile/views/verify_account_to_trade_view/verify_account_to_trade_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../views/splash_view/splash_view.dart';
@@ -67,8 +69,10 @@ class Routes {
   static const buyTradeView = "/buy_trade_view";
   static const editOfferView = "/edit_offer_view";
   static const confirmBuyTrade = "/confirm_buy_trade";
+  static const confirmSellTrade = "/confirm_sell_trade";
   static const chatScreen = "/chat_screen";
   static const settingsScreen = "/settings_screen";
+  static const verifyAccountScreen =  "/verify_account_screen";
 
 }
 
@@ -135,10 +139,14 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const BuyTradeView());
       case Routes.confirmBuyTrade:
         return MaterialPageRoute(builder: (_) => const ConfirmBuyScreen());
+      case Routes.confirmSellTrade:
+        return MaterialPageRoute(builder: (_) => const ConfirmSellTradeScreen());
       case Routes.chatScreen:
         return MaterialPageRoute(builder: (_) => const ChatScreen());
       case Routes.settingsScreen:
         return MaterialPageRoute(builder: (_) => const SettingsView());
+      case Routes.verifyAccountScreen:
+        return MaterialPageRoute(builder: (_) => const VerifyAccountToTradeScreen());
 
       default:
         return undefinedRoute();

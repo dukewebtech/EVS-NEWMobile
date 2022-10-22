@@ -23,15 +23,17 @@ class FilterTradeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final tradeViewModel = context.watch<DashboardViewModel2>();
     if (tradeViewModel.filteredTrades.isEmpty) {
-      if (tradeViewModel.loading) {
+      if (tradeViewModel.loadingFilterTrade) {
         return const Center(
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: CircularProgressIndicator(),
+              child: CupertinoActivityIndicator(),
             ));
       } else if (tradeViewModel.error) {
         return Center(
-            child: errorDialog(size: 20, tradeViewModel: tradeViewModel)
+            child: errorDialog
+              (context: context,
+                size: 20, tradeViewModel: tradeViewModel)
         );
       }
     }
@@ -59,7 +61,9 @@ class FilterTradeWidget extends StatelessWidget {
                 if (index == tradeViewModel.filteredTrades.length) {
                   if (tradeViewModel.error) {
                     return Center(
-                        child: errorDialog(size: 15, tradeViewModel: tradeViewModel)
+                        child: errorDialog(
+                          context: context,
+                            size: 15, tradeViewModel: tradeViewModel)
                     );
                   } else {
                     return Center(
@@ -79,7 +83,7 @@ class FilterTradeWidget extends StatelessWidget {
                   ),
                   child: InkWell(
                     onTap: (){
-                      tradeViewModel.setSelectedTrade(offer);
+                      tradeViewModel.changeSelectedDashboardTrade(offer);
                       if(offer.type == "SELL"){
                         openBuyTradeView(context);
                       }else{
@@ -176,26 +180,50 @@ class FilterTradeWidget extends StatelessWidget {
   }
 }
 
-Widget errorDialog({required double size, required DashboardViewModel2? tradeViewModel}){
+Widget errorDialog({
+  required BuildContext context,
+  required double size, required DashboardViewModel2? tradeViewModel}){
   return SizedBox(
-    height: 180,
-    width: 200,
+    // height: MediaQuery.of(context).size.width * 0.9,
+    width: MediaQuery.of(context).size.width * 0.9,
     child:  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('An error occurred when fetching the trades.',
-          style: TextStyle(
-              fontSize: size,
-              fontWeight: FontWeight.w500,
-              color: Colors.black
-          ),
-        ),
+        const CustomTextWithLineHeight(
+          text: 'An error occurred when fetching the trades.',
+          textColor: Colors.black, fontWeight: FontWeightManager.medium,
+          fontSize: FontSize.s18,
+          alignCenter: true,),
+
         const SizedBox(height: 10,),
         CustomElevatedButton(onTap: (){
+          tradeViewModel!.fetchFilteredTrades();
         }, backgroundColor: ColorManager.primaryColor,
             textColor: ColorManager.whiteColor,
             title: "Retry"),
       ],
     ),
   );
+  //   SizedBox(
+  //   height: 180,
+  //   width: 200,
+  //   child:  Column(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       Text('An error occurred when fetching the trades.',
+  //         style: TextStyle(
+  //             fontSize: size,
+  //             fontWeight: FontWeight.w500,
+  //             color: Colors.black
+  //         ),
+  //       ),
+  //       const SizedBox(height: 10,),
+  //       CustomElevatedButton(onTap: (){
+  //
+  //       }, backgroundColor: ColorManager.primaryColor,
+  //           textColor: ColorManager.whiteColor,
+  //           title: "Retry"),
+  //     ],
+  //   ),
+  // );
 }
