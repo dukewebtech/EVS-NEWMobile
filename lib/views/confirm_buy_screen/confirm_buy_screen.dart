@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../model/new_trade_model.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/strings_manager.dart';
@@ -345,13 +346,20 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                         }
                       });
                     return CustomElevatedButton(onTap: ()async{
-                      final isConfirmed = await dashboardViewModel.iHavePaidTrade(dashboardViewModel.singleTradeModel!.data!.reference);
-                      print("I have pai $isConfirmed");
+                      final action = dashboardViewModel.singleTradeModel!.data!.status == "ACTIVE" ?  "confirm" : "cancel";
+                      final isConfirmed = await dashboardViewModel.iHavePaidTrade(
+                        dashboardViewModel.singleTradeModel!.data!.reference,
+                        action
+                      );
+                      print("I have paid $isConfirmed");
+                      if(isConfirmed){
+                        dashboardViewModel.getTradeDetails(dashboardViewModel.singleTradeModel!.data!.reference);
+                      }
 
                     },
                         backgroundColor: ColorManager.primaryColor,
                         textColor: ColorManager.blackTxtColor,
-                        title: "I have Paid");
+                        title: dashboardViewModel.singleTradeModel!.data!.status == "ACTIVE" ?  "I have Paid" : "Cancel Trade");
                   }
                 ),
               ),

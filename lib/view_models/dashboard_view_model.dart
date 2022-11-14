@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/dashboard_trade_model.dart';
+import '../model/new_trade_model.dart';
 import '../model/rate_model.dart';
 import '../resources/constants/constants.dart';
 
@@ -71,6 +72,9 @@ class DashboardViewModel2 extends ChangeNotifier {
   DashboardTradeData? _selectedDashboardTrade;
   TradeData? _selectedTrade;
   TradeData? get selectedTrade => _selectedTrade;
+
+  NewTradeData? _newSelectedTrade;
+  NewTradeData? get newSelectedTrade => _newSelectedTrade;
 
   List<DashboardTradeData> _buyTrades = [];
   DashboardTradeModel? buyTradesModel;
@@ -268,6 +272,13 @@ class DashboardViewModel2 extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Set selected new Trade;
+  void changeSelectedNewTrade(NewTradeData selectedTrade){
+    _newSelectedTrade = selectedTrade;
+    print("${_newSelectedTrade!.reference}");
+    notifyListeners();
+  }
+
 
   set sellUrl(String url){
     _sellUrl = url;
@@ -378,7 +389,8 @@ class DashboardViewModel2 extends ChangeNotifier {
     return isInitiated;
   }
 
-  Future<bool> iHavePaidTrade(String tradeReference) async {
+  Future<bool> iHavePaidTrade(String tradeReference,
+      String action) async {
     bool isConfirmed = false;
     _isSuccessful = false;
 
@@ -392,7 +404,7 @@ class DashboardViewModel2 extends ChangeNotifier {
     };
     try {
       final response = await http.put(Uri.parse(
-        "http://evspay.com/api/trades/$tradeReference/confirm",
+        "http://evspay.com/api/trades/$tradeReference/$action",
       ),
           headers: {
             'Authorization': 'Bearer $retrievedAccessToken',
@@ -429,12 +441,14 @@ class DashboardViewModel2 extends ChangeNotifier {
     return isConfirmed;
   }
 
-  Future<bool> releaseCoin(String tradeReference) async {
+  Future<bool> releaseCoin(String tradeReference, String action) async {
+    print("Trade reference: $tradeReference");
     bool isConfirmed = false;
     _isSuccessful = false;
 
     _loading = true;
     notifyListeners();
+
 
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
@@ -443,7 +457,7 @@ class DashboardViewModel2 extends ChangeNotifier {
     };
     try {
       final response = await http.put(Uri.parse(
-        "http://evspay.com/api/trades/$tradeReference/complete",
+        "http://evspay.com/api/trades/$tradeReference/$action",
       ),
           headers: {
             'Authorization': 'Bearer $retrievedAccessToken',
@@ -452,7 +466,7 @@ class DashboardViewModel2 extends ChangeNotifier {
           body: json.encode(body)
       );
 
-      print("I have paid response: ${response.body} Status code: ${response.statusCode}");
+      print("Release coin response: ${response.body} Status code: ${response.statusCode}");
       print("Status code: ${response.statusCode}");
 
       final decodedResponse = json.decode(response.body);
@@ -462,7 +476,7 @@ class DashboardViewModel2 extends ChangeNotifier {
       if(response.statusCode == 200 || response.statusCode == 201){
         _isSuccessful = true;
         isConfirmed = true;
-        _resMessage = "Trade Confirmed";
+        _resMessage = "Trade ${decodedResponse['data']['status']}";
 
         notifyListeners();
       }else{

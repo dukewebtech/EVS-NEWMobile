@@ -1,47 +1,59 @@
+import 'package:evs_pay_mobile/model/new_trade_model.dart';
 import 'package:evs_pay_mobile/resources/constants/constants.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
+import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-
-import '../model/trades_on_offer_model.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/image_manager.dart';
 import '../resources/navigation_utils.dart';
 import '../resources/strings_manager.dart';
 import '../resources/value_manager.dart';
-import '../view_models/authentication_view_model/authentication_view_model.dart';
-import '../view_models/dashboard_view_model.dart';
 import 'app_texts/custom_text.dart';
 
-class TradeOnMyAdItem extends StatelessWidget {
-  final TradesOnOfferData trade;
-  const TradeOnMyAdItem({Key? key, required this.trade}) : super(key: key);
+class NewTradeItem extends StatelessWidget {
+  final NewTradeData trade;
+  const NewTradeItem({Key? key, required this.trade}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final dashboardViewModel = context.watch<DashboardViewModel2>();
     final auth = context.watch<AuthenticationProvider>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSize.s4.r),
       child: InkWell(
         onTap: ()async{
-          final  isFetched = await context.read<DashboardViewModel2>().getTradeDetails(trade.reference!);
+          dashboardViewModel.changeTradeReference(trade.reference);
+          context.read<DashboardViewModel2>().changeSelectedNewTrade(trade);
+          final  isFetched = await context.read<DashboardViewModel2>().getTradeDetails(trade.reference);
           if(isFetched){
-
+            print("Trade type: ${trade.type}");
             if(trade.type == "SELL"){
-              openConfirmBuyTradeView(context);
+              if(trade.partner?.username == auth.userData.user?.username){
+                openConfirmBuyTradeView(context);
+              }else{
+                openConfirmSellTradeView(context);
+              }
+
             }else{
-              openConfirmSellTradeView(context);
+              if(trade.partner?.username == auth.userData.user?.username){
+                openConfirmSellTradeView(context);
+              }else{
+                openConfirmBuyTradeView(context);
+              }
+
             }
 
           }
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
-          height: AppSize.s96.h,
+          // height: AppSize.s96.h,
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppSize.s3.r),
@@ -52,6 +64,7 @@ class TradeOnMyAdItem extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center ,
             children: [
+              SizedBox(height: AppSize.s12.h,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -63,9 +76,9 @@ class TradeOnMyAdItem extends StatelessWidget {
                   ),
 
                   CustomTextWithLineHeight(
-                    text: trade.type! ,
+                    text: trade.type ?? "",
                     fontWeight: FontWeightManager.bold,
-                    textColor: ColorManager.blackTxtColor,
+                    textColor: trade.type == "SELL" ? ColorManager.primaryColor : ColorManager.blackTxtColor,
                   ),
                 ],
               ),
@@ -75,15 +88,14 @@ class TradeOnMyAdItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomTextWithLineHeight(
-                    text: trade.paymentMethod!.code!,
+                    text: trade.paymentMethod!.name?? "",
                     fontWeight: FontWeightManager.regular,
                     textColor: ColorManager.blckColor,
                     fontSize: FontSize.s12,
                   ),
 
                   CustomTextWithLineHeight(
-                    text: "${moneyFormat.format(trade.amount)} "
-                        "${trade.currency!.code!}",
+                    text: "${moneyFormat.format(trade.amount)} ${trade.currency?.code}",
                     fontWeight: FontWeightManager.regular,
                     textColor: ColorManager.arrowColor,
                     fontSize: FontSize.s10,
@@ -98,7 +110,6 @@ class TradeOnMyAdItem extends StatelessWidget {
                     text: Jiffy(trade.createdAt).yMMMMEEEEdjm,
                     fontWeight: FontWeightManager.regular,
                     textColor: ColorManager.arrowColor,
-                    fontSize: FontSize.s10,
                   ),
 
                 ],
@@ -113,18 +124,17 @@ class TradeOnMyAdItem extends StatelessWidget {
                     // width: AppSize.s48.w,
                     padding: EdgeInsets.symmetric(horizontal: AppSize.s22.w, vertical: AppSize.s3.h),
                     decoration:  BoxDecoration(
-                        color: trade.status == "CONFIRMED" ?
-                        const Color.fromRGBO(0, 62, 220, 1) : trade.status == "CANCELLED" ||  trade.status == "DISPUTED" ?
-                        const Color.fromRGBO(218, 73, 79, 1) : trade.status == "ACTIVE" ? ColorManager.primaryColor :  ColorManager.deepGreenColor,
+                        color: ColorManager.deepGreenColor,
                         borderRadius: BorderRadius.circular(AppSize.s2.r)
                     ),
                     alignment: Alignment.center,
                     child: CustomTextWithLineHeight(text: trade.status ?? "",
-                      textColor: trade.status == "ACTIVE" ? const Color.fromRGBO(20, 24, 31, 1) : ColorManager.whiteColor, fontSize: FontSize.s6,),
+                      textColor: ColorManager.whiteColor, fontSize: FontSize.s6,),
                   )
                 ],
               ),
 
+              SizedBox(height: AppSize.s12.h,),
 
             ],
           ),
@@ -152,7 +162,6 @@ class TradeOnMyAdItem extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
               child: Container(
-                // height: AppSize.s117.h,
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
                   decoration: BoxDecoration(

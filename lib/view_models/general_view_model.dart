@@ -364,6 +364,7 @@ class EvsPayViewModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     _isLoading = true;
+    print("$baseURL${Endpoints.offers}/$offerId/trades");
     showDialog(
         barrierDismissible: false,
         context: context,

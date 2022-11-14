@@ -2,6 +2,7 @@ import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/widgets/expiry_date_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
@@ -350,14 +351,23 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                           dashboardViewModel.clear();
                         }
                       });
-                    return CustomElevatedButton(onTap: ()async{
-                      final isConfirmed = await dashboardViewModel.releaseCoin(dashboardViewModel.singleTradeModel!.data!.reference);
-                      print("I have paid $isConfirmed");
+                    return dashboardViewModel.loading ? const Center(child: CupertinoActivityIndicator()) : CustomElevatedButton(onTap: ()async{
+                      final action = dashboardViewModel.singleTradeModel!.data!.status == "CONFIRMED" ? "complete" : dashboardViewModel.singleTradeModel!.data!.status == "COMPLETED" ? "dispute" : "comfirm";
+                      final isConfirmed = await dashboardViewModel.releaseCoin(
+                          dashboardViewModel.singleTradeModel!.data!.reference,
+                        action
+
+                      );
+
+                      if(isConfirmed){
+                        dashboardViewModel.getTradeDetails(dashboardViewModel.singleTradeModel!.data!.reference);
+                      }
+                      print("I have paid here $isConfirmed");
 
                     },
                         backgroundColor: ColorManager.primaryColor,
                         textColor: ColorManager.blackTxtColor,
-                        title: "Release Coin");
+                        title: dashboardViewModel.singleTradeModel!.data!.status == "CONFIRMED" ? "Release Coin" : dashboardViewModel.singleTradeModel!.data!.status == "COMPLETED" ? "Dispute Trade" : "Release Coin");
                   }
                 ),
               ),

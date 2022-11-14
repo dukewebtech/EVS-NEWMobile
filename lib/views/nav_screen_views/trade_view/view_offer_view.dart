@@ -150,7 +150,30 @@ class _ViewOfferViewState extends State<ViewOfferView> {
               SizedBox(height: AppSize.s10.h,),
 
               Expanded(
-                  child: ListView.builder(
+                  child: evsPayProvider.tradesOnOffer.tradesOnOffer!.isEmpty ?  Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: AppSize.s96.h,
+                        ),
+                        Center(
+                            child: SvgPicture.asset("assets/images/empty_state.svg")
+                        ),
+                        SizedBox(
+                          height: AppSize.s49.h,
+                        ),
+
+                        const CustomText(text:
+                        "No trades on offer yet",
+                          textColor: ColorManager.blckColor,
+                          fontSize: FontSize.s16,),
+                        SizedBox(
+                          height: AppSize.s8.h,
+                        ),
+
+                      ],
+                    ),
+                  ) :  ListView.builder(
                     itemCount: evsPayProvider.tradesOnOffer.tradesOnOffer?.length,
                       itemBuilder: (context, index){
                         final tradeOnAd = evsPayProvider.tradesOnOffer.tradesOnOffer![index];

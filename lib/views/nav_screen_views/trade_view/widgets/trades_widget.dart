@@ -1,3 +1,4 @@
+import 'package:evs_pay_mobile/model/new_trade_model.dart';
 import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/trade_view_model.dart';
@@ -7,11 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import '../../../../model/trades_model_api.dart';
 import '../../../../resources/font_manager.dart';
 import '../../../../resources/strings_manager.dart';
 import '../../../../widgets/app_texts/custom_text.dart';
-import '../../../../widgets/trades_item.dart';
+import '../../../../widgets/new_trade_item.dart';
 
 
 class TradesWidget extends StatefulWidget {
@@ -28,14 +28,14 @@ class _TradesWidgetState extends State<TradesWidget> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final tradesViewModel = Provider.of<TradeViewModel>(context, listen: false);
       tradesViewModel.pageNumber = 0;
-      tradesViewModel.fetchTrades();
+      tradesViewModel.newFetchTrades();
 
     });
   }
   @override
   Widget build(BuildContext context) {
     final tradeViewModel = context.watch<TradeViewModel>();
-    if (tradeViewModel.trades.isEmpty) {
+    if (tradeViewModel.newTrades.isEmpty) {
       if (tradeViewModel.loading) {
         return const Center(
             child: Padding(
@@ -49,7 +49,7 @@ class _TradesWidgetState extends State<TradesWidget> {
       }
     }
     return Expanded(
-        child: tradeViewModel.trades.isEmpty ?
+        child: tradeViewModel.newTrades.isEmpty ?
         Center(
           child: Column(
             children: [
@@ -82,21 +82,21 @@ class _TradesWidgetState extends State<TradesWidget> {
         ) :
         RefreshIndicator(
           onRefresh: () async{
-            await tradeViewModel.fetchTrades();
+            await tradeViewModel.newFetchTrades();
           },
           child: ListView.builder(
-              itemCount: tradeViewModel.trades.length + (tradeViewModel.isLastPage ? 0 : 1),
+              itemCount: tradeViewModel.newTrades.length + (tradeViewModel.isLastPage ? 0 : 1),
               itemBuilder: (context, index){
-                if (index == tradeViewModel.trades.length - tradeViewModel.nextPageTrigger) {
-                  if(tradeViewModel.tradesModel!.links!.next != null){
-                    tradeViewModel.sellUrl = tradeViewModel.tradesModel!.links!.next?? '';
-                    tradeViewModel.fetchTrades();
+                if (index == tradeViewModel.newTrades.length - tradeViewModel.nextPageTrigger) {
+                  if(tradeViewModel.newTradesModel!.links!.next != null){
+                    tradeViewModel.newTradeUrl = tradeViewModel.newTradesModel!.links!.next?? '';
+                    tradeViewModel.newFetchTrades();
                   }else{
                     // print("Gotten to the end");
                   }
 
                 }
-                if (index == tradeViewModel.trades.length) {
+                if (index == tradeViewModel.newTrades.length) {
                   if (tradeViewModel.error) {
                     return Center(
                         child: errorDialog(size: 15, tradeViewModel: tradeViewModel)
@@ -111,8 +111,8 @@ class _TradesWidgetState extends State<TradesWidget> {
                         ));
                   }
                 }
-                final TradeData post = tradeViewModel.trades[index];
-                return TradeItem(trade: post);
+                final NewTradeData post = tradeViewModel.newTrades[index];
+                return NewTradeItem(trade: post);
               }),
         ));
   }

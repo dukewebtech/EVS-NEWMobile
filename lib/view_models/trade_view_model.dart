@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:evs_pay_mobile/model/new_trade_model.dart';
 import 'package:evs_pay_mobile/model/offers_model_api.dart';
 import 'package:evs_pay_mobile/model/trades_model_api.dart';
 import 'package:evs_pay_mobile/model/trades_on_offer_model.dart';
@@ -21,16 +22,26 @@ class TradeViewModel extends ChangeNotifier {
   bool _isLastPage = false;
   int _pageNumber = 0;
 
+  int _newPageNumber = 0;
+
   bool _isBuyTradeLastPage = false;
   int _buyTradePageNumber = 0;
 
    String _sellUrl = "http://evspay.com/api/trades/?type=sell";
   String _buyUrl = "http://evspay.com/api/trades/?type=buy";
+
+  String _newTradeUrl = "http://evspay.com/api/trades";
+  String get newTradeUrl => _newTradeUrl;
+
+
    bool _error = false;
   bool _loading = false;
   final int numberOfPostsPerRequest = 10;
   final List<TradeData> _trades = [];
   TradesModel? tradesModel;
+
+  final List<NewTradeData> _newTrades = [];
+  NewTradeModel? newTradesModel;
 
   final List<TradeData> _buyTrades = [];
   TradesModel? buyTradesModel;
@@ -41,18 +52,21 @@ class TradeViewModel extends ChangeNotifier {
   bool get isLastPage => _isLastPage;
   bool get isBuyTradeLastPage => _isBuyTradeLastPage;
   int get pageNumber => _pageNumber;
+  int get newPageNumber => _newPageNumber;
   String get sellUrl => _sellUrl;
   String get buyUrl => _buyUrl;
   bool get error => _error;
   bool get loading => _loading;
 
   List<TradeData> get trades => _trades;
+  List<NewTradeData> get newTrades => _newTrades;
 
   List<TradeData> get buyTrades => _buyTrades;
 
 
   TradeViewModel(){
     fetchTrades();
+    newFetchTrades();
     fetchBuyTrades();
   }
 
@@ -71,8 +85,18 @@ class TradeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  set newPageNumber(int value){
+    _newPageNumber = value;
+    notifyListeners();
+  }
+
   set sellUrl(String url){
     _sellUrl = url;
+    notifyListeners();
+  }
+
+  set newTradeUrl(String url){
+    _newTradeUrl = url;
     notifyListeners();
   }
 
@@ -142,6 +166,7 @@ class TradeViewModel extends ChangeNotifier {
     print("Method called");
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
+    print("========$_sellUrl======");
     try {
       final response = await http.get(Uri.parse(
         _sellUrl,
@@ -168,6 +193,36 @@ class TradeViewModel extends ChangeNotifier {
         _loading = false;
         _error = true;
         notifyListeners();
+    }
+  }
+
+  Future<void> newFetchTrades() async {
+    print("Method called $_newTradeUrl");
+    final prefs = await SharedPreferences.getInstance();
+    final retrievedAccessToken = prefs.getString(accessToken);
+    try {
+      final response = await http.get(Uri.parse(_newTradeUrl),
+          headers: {
+            'Authorization': 'Bearer $retrievedAccessToken',
+            'Content-Type': 'application/json',
+          }
+      );
+      // print("New Trades Fetched: ${response.body}");
+      newTradesModel = newTradeModelFromJson(response.body);
+      final responseHere = newTradeModelFromJson(response.body);
+      print("Here at mapping successful");
+      final postList = responseHere.data;
+      print("List length: ${postList!.length}");
+      _isLastPage = (postList.length < numberOfPostsPerRequest);
+      _loading = false;
+      _newPageNumber = _newPageNumber + 1;
+      _newTrades.addAll(postList.where((trade) => trade.status != "COMPLETED").toList());
+      notifyListeners();
+    } catch (e) {
+      print("error --> $e");
+      _loading = false;
+      _error = true;
+      notifyListeners();
     }
   }
 

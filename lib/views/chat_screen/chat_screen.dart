@@ -225,19 +225,13 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ),
 
                                     const CustomText(text:
-                                    AppStrings.youHaveNotCreatedAnyOffer,
+                                    "No Chats yet",
                                       textColor: ColorManager.blckColor,
                                       fontSize: FontSize.s16,),
                                     SizedBox(
                                       height: AppSize.s8.h,
                                     ),
 
-                                    SizedBox(
-                                        width: AppSize.s208.w,
-                                        child: const CustomTextNoOverFlow(
-                                            alignment: "center",
-                                            fontSize: FontSize.s13,
-                                            text: AppStrings.transferFundsToYourWallet))
                                   ],
                                 ),
                               );
