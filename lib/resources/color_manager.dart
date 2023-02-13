@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ColorManager {
-  static const primaryColor = Color.fromRGBO(255, 220, 24, 1);
+  // static const primaryColor = Color.fromRGBO(255, 220, 24, 1);
+  static const primaryColor = Color(0xffF4B731);
   static const accentColor = Color.fromRGBO(204, 176, 19, 1);
   static const greyColor = Color.fromRGBO(130, 130, 130, 1);
   static const greyTextColor = Color.fromRGBO(151, 151, 151, 1);

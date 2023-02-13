@@ -7,7 +7,7 @@ const backendComputedTimeBox = "backendComputedTimeBox";
 class AppStrings {
   static const noRouteFound = "No Route Found";
   static const back = "Back";
-  static const skip = "Skip>>";
+  static const skip = "Skip";
   static const clickToContinue = "Continue";
   static const finish = "FINISH";
   static const welcome = "Welcome";

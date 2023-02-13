@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class FontConstants{
-  static const String fontFamily = "Poppins";
+  static const String fontFamily = "Lexend";
 }
 
 class FontWeightManager{

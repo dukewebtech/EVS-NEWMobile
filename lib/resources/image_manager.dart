@@ -2,6 +2,14 @@ const String imagePath = "assets/images";
 
 class AppImages {
   static const appLogoSplash = "assets/images/logo_splash_screen.png";
+  static const group = "assets/images/group.png";
+  static const fakeBtc = "assets/images/fakeBtc.png";
+  static const pureEth = "assets/images/pureEth.png";
+  static const movie = "assets/images/movie.png";
+  static const btc = "assets/images/btc.png";
+  static const greenEth = "assets/images/greenEth.png";
+  static const ligthBlue = "assets/images/lightBlue.png";
+  static const purpleStack = "assets/images/purpleStack.png";
   static const backButton = "assets/images/back_button.svg";
   static const backIconPng = "assets/images/back_icon.png";
   static const dashboardIcon = "assets/images/icons/dashboard_icon.svg";

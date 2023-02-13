@@ -15,6 +15,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  google_fonts: ^4.0.3
+
+
   flutter_svg: ^1.0.0
 
   flutter_screenutil: ^5.5.3+2
@@ -91,16 +94,29 @@ flutter:
    - assets/images/icons/
 
   # example:
+#  fonts:
+#    - family: Poppins
+#      fonts:
+#        - asset: assets/fonts/Poppins-Bold.ttf
+#          weight: 700
+#        - asset: assets/fonts/Poppins-SemiBold.ttf
+#          weight: 600
+#        - asset: assets/fonts/Poppins-Regular.ttf
+#          weight: 400
+#        - asset: assets/fonts/Poppins-Medium.ttf
+#          weight: 500
+#        - asset: assets/fonts/Poppins-Light.ttf
+#          weight: 300
   fonts:
-    - family: Poppins
+    - family: Lexend
       fonts:
-        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Lexend-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Lexend-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Lexend-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Poppins-Medium.ttf
+        - asset: assets/fonts/Lexend-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Poppins-Light.ttf
+        - asset: assets/fonts/Lexend-Light.ttf
           weight: 300
