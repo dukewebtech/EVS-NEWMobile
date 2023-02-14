@@ -34,6 +34,122 @@ class ReceiveTradeView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
+        //        IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_back_outlined, color: Color(0xff292D32),)),
+        //         SizedBox(width: AppSize.s8.w,),
+        //   const Text('Buy BTC',style: TextStyle(
+        //           fontSize: 20,
+        //           fontWeight:FontWeight.w700 ,
+        //           fontFamily: 'Lexend',
+        //           color: Color(0xff424242),
+        //
+        //
+        //         ),),
+        //     SizedBox(height: AppSize.s54.h,),
+        //                   const Text('Scan this QR Code receive bitcoin',style: TextStyle(
+        //                     fontSize: 20,
+        //                     fontWeight:FontWeight.w400 ,
+        //                     fontFamily: 'Lexend',
+        //                     color: Color(0xff000000),
+        //
+        //
+        //                   ), textAlign: TextAlign.center),
+        //     SizedBox(height: AppSize.s13.h,),
+        // SizedBox(
+        //     height: 283,
+        //     width: 313,
+        //     child: Padding(
+        //       padding: const EdgeInsets.only(top: 13,left: 16,right: 16),
+        //       child: Card(
+        //
+        //         color: const Color(0xffF6F6F6),
+        //         child: Center(
+        //           child: QrImage(
+        //             data: authProvider.walletData.data!.isEmpty? "0.00" : authProvider.walletData.data![0].receivableAddress!.address!,
+        //             version: QrVersions.auto,
+        //             size: AppSize.s250.h,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        //     SizedBox(height: AppSize.s28.h,),
+        //     const SizedBox(
+        //       height: 52,
+        //       width: 313,
+        //       child: Padding(
+        //         padding: EdgeInsets.only(top: 14,left: 20,right: 20),
+        //         child: Card(
+        //
+        //           color: Color(0xffF6F6F6),
+        //           child: Center(
+        //             child: Text('0x63802792790427902huhkfjkhjfhjf',style: TextStyle(
+        //               fontSize: 16,
+        //               fontWeight:FontWeight.w400 ,
+        //               fontFamily: 'Lexend',
+        //               color: Color(0xff6D6D6D),
+        //
+        //
+        //             ),),
+        //
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     SizedBox(height: AppSize.s28.h,),
+        //
+        //     Row(
+        //       children: [
+        //         ElevatedButton(
+        //           style: ElevatedButton.styleFrom(
+        //             backgroundColor: const Color(0xffF6F6F6),
+        //           ),
+        //             onPressed: (){}, child: Row(
+        //           children: [
+        //             const Text('Copy',style: TextStyle(
+        //               fontSize: 16,
+        //               fontWeight:FontWeight.w400 ,
+        //               fontFamily: 'Lexend',
+        //               color: Color(0xff6D6D6D),
+        //
+        //
+        //             )),
+        //             SizedBox(height: AppSize.s11.h,),
+        //             const Icon(Icons.copy,color: Color(0xff6D6D6D),)
+        //           ],
+        //         )),
+        //         ElevatedButton(
+        //             style: ElevatedButton.styleFrom(
+        //               backgroundColor: const Color(0xffF6F6F6),
+        //             ),
+        //             onPressed: (){}, child: Row(
+        //           children: [
+        //             const Text('Share',style:TextStyle(
+        //               fontSize: 16,
+        //               fontWeight:FontWeight.w400 ,
+        //               fontFamily: 'Lexend',
+        //               color: Color(0xff6D6D6D),
+        //
+        //
+        //             ) ,),
+        //             SizedBox(height: AppSize.s11.h,),
+        //             const Icon(Icons.share,color: Color(0xff6D6D6D),)
+        //           ],
+        //         )),
+        //       ],
+        //     ),
+
+
+
+
+
+
+
+
+
+
+
+            /// na here i go stop
+
             SizedBox(height: AppSize.s80.h,),
 
             Center(

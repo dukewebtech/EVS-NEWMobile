@@ -92,7 +92,7 @@ class _WalletViewState extends State<WalletView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const CustomTextWithLineHeight(
-                          text: AppStrings.totalBalance,
+                          text: AppStrings.walletBalance,
                           textColor: ColorManager.blackTextColor,),
                         SizedBox(height: AppSize.s12.h,),
 

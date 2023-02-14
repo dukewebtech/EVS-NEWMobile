@@ -105,7 +105,7 @@ class AppStrings {
   static const sendALivePicture = "Send a live picture of yourself";
   static const verify = "Verify";
   static const wallet = "Wallet";
-  static const totalBalance = "Total Balance";
+  static const walletBalance = "Wallet Balance";
   static const amount = "\$23,000.90 ";
   static const bitCoinAmount = "0.27398663 BTC";
   static const send = "Send";

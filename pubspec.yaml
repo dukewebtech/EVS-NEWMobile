@@ -52,6 +52,7 @@ dependencies:
   intl: ^0.17.0
 
   flutter_countdown_timer: ^4.1.0
+  iconsax: ^0.0.8
 
 
 

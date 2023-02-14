@@ -26,6 +26,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
   final nairaAmountController = TextEditingController();
   final usdAmount = TextEditingController();
   String btcAmount = "0.0";
+  String lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ";
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
@@ -42,6 +43,290 @@ class _BuyTradeViewState extends State<BuyTradeView> {
         ),
         child: Column(
           children: [
+            // Row(
+            //   children:  [
+            //    IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_back_outlined, color: Color(0xff292D32),)),
+            //     SizedBox(width: AppSize.s8.w,),
+            //     const Text('Buy BTC',style: TextStyle(
+            //       fontSize: 20,
+            //       fontWeight:FontWeight.w700 ,
+            //       fontFamily: 'Lexend',
+            //       color: Color(0xff424242),
+            //
+            //
+            //     ),)
+            //   ],
+            // ),
+            //  SizedBox(
+            //   height: 86,
+            //   width: double.infinity,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 13,left: 16,right: 16),
+            //     child: Card(
+            //
+            //       color: const Color(0xffF6F6F6),
+            //       child: Column(
+            //         children: [
+            //           Row(
+            //             children: const [
+            //               Text('UserName:',style: TextStyle(
+            //                 fontSize: 16,
+            //                 fontWeight:FontWeight.w400 ,
+            //                 fontFamily: 'Lexend',
+            //                 color: Color(0xff000000),
+            //
+            //
+            //               ),),
+            //               Text('Deposit type',style: TextStyle(
+            //                 fontSize: 18,
+            //                 fontWeight:FontWeight.w400 ,
+            //                 fontFamily: 'Lexend',
+            //                 color: Color(0xff969696),
+            //
+            //
+            //               ),)
+            //             ],
+            //           ),
+            //           Row(
+            //             children: const [
+            //               Text('Rate:',style: TextStyle(
+            //                 fontSize: 16,
+            //                 fontWeight:FontWeight.w400 ,
+            //                 fontFamily: 'Lexend',
+            //                 color: Color(0xff000000),
+            //
+            //
+            //               ),),
+            //               Text('400/USD',style: TextStyle(
+            //                 fontSize: 16,
+            //                 fontWeight:FontWeight.w400 ,
+            //                 fontFamily: 'Lexend',
+            //                 color: Color(0xff312DA3),
+            //
+            //
+            //               ),)
+            //             ],
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: AppSize.s31.h,),
+            // const Text('I want to buy',style: TextStyle(
+            //   fontSize: 16,
+            //   fontWeight:FontWeight.w400 ,
+            //   fontFamily: 'Lexend',
+            //   color: Color(0xff000000),
+            //
+            //
+            // ),),
+            // SizedBox(height: AppSize.s17.h,),
+            // TextFormField(
+            //   controller: btcAmountController,
+            //   autovalidateMode: AutovalidateMode.onUserInteraction,
+            //   cursorColor: ColorManager.textFieldColor,
+            //   autofocus: true,
+            //   maxLines: 1,
+            //   keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
+            //   style: const TextStyle(
+            //       color: ColorManager.textFieldColor,
+            //       fontSize: FontSize.s16
+            //   ),
+            //   onChanged: (value)async{
+            //     if(value.isNotEmpty){
+            //       btcAmount = value;
+            //       await dashboardViewModel.getBtcToNairaRate(value);
+            //       nairaAmountController.text = dashboardViewModel.btcNairaModel == null ? "0.00" : dashboardViewModel.btcNairaModel!.data.naira.toString();
+            //       setState(() {
+            //       });
+            //     }else{
+            //       nairaAmountController.text = "";
+            //       setState(() {
+            //       });
+            //     }
+            //
+            //
+            //   },
+            //   decoration: InputDecoration(
+            //     filled: false,
+            //     counterText: "",
+            //     fillColor: ColorManager.whiteColor,
+            //     contentPadding: const EdgeInsets.all(10),
+            //     hintText: AppStrings.amt,
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.only(
+            //         bottomLeft: Radius.circular(AppSize.s3.r),
+            //         topLeft: Radius.circular(AppSize.s3.r),
+            //       ),
+            //       borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+            //           width: 1),
+            //     ),
+            //     enabledBorder: OutlineInputBorder(
+            //       borderRadius: BorderRadius.only(
+            //         bottomLeft: Radius.circular(AppSize.s3.r),
+            //         topLeft: Radius.circular(AppSize.s3.r),
+            //       ),
+            //       borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+            //           width: 1),
+            //     ),
+            //     focusedBorder: OutlineInputBorder(
+            //       gapPadding: 0.0,
+            //       borderRadius: BorderRadius.only(
+            //         bottomLeft: Radius.circular(AppSize.s3.r),
+            //         topLeft: Radius.circular(AppSize.s3.r),
+            //       ),
+            //       borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+            //           width: 1),
+            //     ),
+            //     hintStyle: const TextStyle(
+            //         color: ColorManager.labelTextColor,
+            //         fontSize: FontSize.s16
+            //     ),
+            //     labelStyle: const TextStyle(
+            //         color: ColorManager.labelTextColor,
+            //         fontSize: FontSize.s16
+            //     ),
+            //     errorStyle: TextStyle(
+            //         color: ColorManager.redColor,
+            //         fontSize: FontSize.s16
+            //     ),
+            //   ),
+            //
+            // ),
+            // SizedBox(height: AppSize.s17.h,),
+            // const Text('I will Receive',style: TextStyle(
+            //   fontSize: 16,
+            //   fontWeight:FontWeight.w400 ,
+            //   fontFamily: 'Lexend',
+            //   color: Color(0xff000000),
+            //
+            //
+            // ),),
+            // SizedBox(height: AppSize.s17.h,),
+            // SizedBox(
+            //   height: 86,
+            //   width: double.infinity,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 13,left: 16,right: 16),
+            //     child: Card(
+            //
+            //       color: const Color(0xffffffff),
+            //       shape: RoundedRectangleBorder(
+            // borderRadius: BorderRadius.circular(11),
+            //         side: BorderSide(width: 0.5,color: Color(0xffE8E8E8)),
+            //       ),
+            //       child: Column(
+            //         children: const [
+            //           Text('0.877BTC',style: TextStyle(
+            //             fontSize: 24,
+            //             fontWeight:FontWeight.w600 ,
+            //             fontFamily: 'Lexend',
+            //             color: Color(0xff666666),
+            //
+            //
+            //           ),),
+            //           Text('#89.4',style: TextStyle(
+            //             fontSize: 16,
+            //             fontWeight:FontWeight.w400 ,
+            //             fontFamily: 'Lexend',
+            //             color: Color(0xffA7A7A7),
+            //
+            //
+            //           ),)
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: AppSize.s38.h,),
+            // const Text('Terms',style: TextStyle(
+            //   fontSize: 16,
+            //   fontWeight:FontWeight.w400 ,
+            //   fontFamily: 'Lexend',
+            //   color: Color(0xff000000),
+            //
+            //
+            // ),),
+            // SizedBox(height: AppSize.s17.h,),
+            //  Text(lorem,style:const  TextStyle(
+            //   fontSize: 14,
+            //   fontWeight:FontWeight.w400 ,
+            //   fontFamily: 'Lexend',
+            //   color: Color(0xffBFBFBF),
+            //
+            //
+            //
+            // ),textAlign: TextAlign.center,),
+            // SizedBox(height: AppSize.s50.h,),
+            // dashboardViewModel.loading ? const Center(child: CupertinoActivityIndicator()) : Consumer<DashboardViewModel2>(
+            //     builder: (ctx, myAd, child) {
+            //       WidgetsBinding.instance.
+            //       addPostFrameCallback((_) {
+            //         if (myAd.resMessage != '') {
+            //           showTopSnackBar(
+            //             context,
+            //             CustomSnackBar.info(
+            //               message: myAd.resMessage,
+            //               icon: Container(),
+            //               backgroundColor: myAd.isSuccessful ?
+            //               ColorManager.deepGreenColor :
+            //               ColorManager.primaryColor,
+            //             ),
+            //           );
+            //           ///Clear the response message to avoid duplicate
+            //           myAd.clear();
+            //         }
+            //       });
+            //       return CustomElevatedButton(
+            //           onTap: ()async{
+            //             if(double.parse(nairaAmountController.text.trim().isEmpty ? "0.0" :
+            //             nairaAmountController.text.trim())
+            //                 < dashboardViewModel.selectedDashboardTrade!.minAmount ||
+            //                 double.parse(nairaAmountController.text.trim().isEmpty ? "0.0" :
+            //                 nairaAmountController.text.trim())
+            //                     > dashboardViewModel.selectedDashboardTrade!.maxAmount){
+            //               showTopSnackBar(
+            //                 context,
+            //                 CustomSnackBar.info(
+            //                   message: "Amount must be Between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}",
+            //                   backgroundColor:
+            //                   ColorManager.primaryColor,
+            //                 ),
+            //               );
+            //             }else{
+            //               dashboardViewModel.changeBtcAmount(btcAmountController.text);
+            //               dashboardViewModel.changeNairaAmount(nairaAmountController.text);
+            //               print("BTC Amount: ${nairaAmountController.text}");
+            //               final isCreated = await dashboardViewModel.initTrade(nairaAmountController.text);
+            //
+            //               if(isCreated){
+            //                 Future.delayed(const Duration(seconds: 1), () {
+            //                   setState(() {
+            //                     openConfirmBuyTradeView(context);
+            //                   });
+            //
+            //                 });
+            //
+            //               }
+            //             }
+            //           },
+            //           backgroundColor: ColorManager.primaryColor,
+            //           textColor: ColorManager.blackTxtColor,
+            //           title: AppStrings.buyNow);
+            //     }
+            // ),
+            //
+
+
+
+
+
+
+
+
+
+            ///na here my own go stop
             SizedBox(height: AppSize.s8.h,),
             Center(
               child: CustomTextWithLineHeight(
