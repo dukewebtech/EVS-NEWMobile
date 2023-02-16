@@ -12,6 +12,9 @@ import '../../resources/color_manager.dart';
 import '../../resources/image_manager.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../buy_trade_view/buy_trade_view.dart';
+import 'dashboard/sell_trade_widget.dart';
+
 class NavScreenView extends StatefulWidget {
   const NavScreenView({Key? key}) : super(key: key);
 
@@ -25,6 +28,7 @@ class _NavScreenViewState extends State<NavScreenView> {
     DashboardView(),
     TradeViewCopy(),
     WalletView(),
+    // BuyTradeView(),
   ];
 
   void _onItemTapped(int index) {
@@ -46,15 +50,14 @@ class _NavScreenViewState extends State<NavScreenView> {
         showUnselectedLabels: true,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon:  Icon(Iconsax.home),
+            icon:  const Icon(Iconsax.home),
             label: AppStrings.home,
-            activeIcon:  Icon(Iconsax.home, color: Color(0xffF4B731),),
+            activeIcon:  const Icon(Iconsax.home, color: Color(0xffF4B731),),
             backgroundColor: ColorManager.whiteColor,
           ),
           BottomNavigationBarItem(
-            icon:SvgPicture.asset(AppImages.marketPlaceIcon),
-            activeIcon: SvgPicture.asset(
-                AppImages.marketPlaceIcon, color: ColorManager.primaryColor),
+            icon:const Icon(Iconsax.transaction_minus),
+            activeIcon: const Icon(Iconsax.transaction_minus,color: Color(0xffF4B731)),
             label: AppStrings.trade,
             backgroundColor: ColorManager.whiteColor,
           ),
@@ -64,6 +67,7 @@ class _NavScreenViewState extends State<NavScreenView> {
             label: AppStrings.wallet,
             backgroundColor: ColorManager.whiteColor,
           ),
+
         ],
         currentIndex: navViewModel.selectedPage,
         selectedItemColor: ColorManager.primaryColor,

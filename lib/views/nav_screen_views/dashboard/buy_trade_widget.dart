@@ -100,6 +100,114 @@ class BuyTradeWidget extends StatelessWidget {
 
                     },
                     child: Container(
+                      ///the container below is the new design widget and i have passed the logic into you, replace with the container above.
+                      // Container(
+                      //   // padding: EdgeInsets.only(top: 10 ),
+                      //   decoration: BoxDecoration(
+                      //     // color: Colors.yellow ,
+                      //     // color: Color(0xfff6f6f6),
+                      //       borderRadius: BorderRadius.circular(12)
+                      //   ),
+                      //   height: 109,
+                      //   width: double.infinity,
+                      //   child: Column(
+                      //     children: [
+                      //       Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children:  [
+                      //           Text("${toBeginningOfSentenceCase(offer.user!.username!)}",style: const TextStyle(
+                      //             fontSize: 17,
+                      //             fontWeight:FontWeight.w500 ,
+                      //             fontFamily: 'Lexend',
+                      //             color: Color(0xff000000),
+                      //
+                      //
+                      //           ),),
+                      //           Text(moneyFormat.format(offer.maxAmount),style: const TextStyle(
+                      //             fontSize: 17,
+                      //             fontWeight:FontWeight.w500 ,
+                      //             fontFamily: 'Lexend',
+                      //             color: Color(0xff000000),
+                      //
+                      //
+                      //           ),),
+                      //
+                      //
+                      //         ],
+                      //       ),
+                      //       const SizedBox(height: 5,),
+                      //       Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children: [
+                      //           Text("${toBeginningOfSentenceCase(offer.user!.username!)}",style: const TextStyle(
+                      //             fontSize: 14,
+                      //             fontWeight:FontWeight.w400 ,
+                      //             fontFamily: 'Lexend',
+                      //             color: Color(0xff8e8e8e),
+                      //
+                      //
+                      //           ),),
+                      //           const Text('18%',style: TextStyle(
+                      //             fontSize: 14,
+                      //             fontWeight:FontWeight.w400 ,
+                      //             fontFamily: 'Lexend',
+                      //             color: Color(0xff8e8e8e),
+                      //
+                      //
+                      //           ),),
+                      //
+                      //
+                      //         ],
+                      //       ),
+                      //       const SizedBox(height: 5,),
+                      //       Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children:  [
+                      //            Text("${moneyFormat.format(offer.minAmount!)} - ${moneyFormat.format(offer.maxAmount)}",style: const TextStyle(
+                      //             fontSize: 14,
+                      //             fontWeight:FontWeight.w400 ,
+                      //             fontFamily: 'Lexend',
+                      //             color: Color(0xff8e8e8e),
+                      //
+                      //
+                      //           ),),
+                      //           SizedBox(
+                      //             height: MediaQuery.of(context).size.height * 0.041,
+                      //             width: MediaQuery.of(context).size.width * 0.2,
+                      //
+                      //             child: ElevatedButton(
+                      //
+                      //               style: ElevatedButton.styleFrom(
+                      //                 elevation: 1,
+                      //
+                      //                 backgroundColor:  const Color(0xffF4B731),
+                      //               ),
+                      //               onPressed: (){}, child:const FittedBox(
+                      //               child: Text('Sell',style: TextStyle(
+                      //                 fontSize: 14,
+                      //                 fontWeight:FontWeight.w400 ,
+                      //                 fontFamily: 'Lexend',
+                      //                 color: Color(0xff303030),
+                      //
+                      //
+                      //               ),),
+                      //             ),
+                      //             ),
+                      //           ),
+                      //
+                      //
+                      //         ],
+                      //       ),
+                      //       const SizedBox(height: 5,),
+                      //
+                      //       const Divider(
+                      //         thickness: 1.5,
+                      //       ),
+                      //       const SizedBox(height: 5,),
+                      //
+                      //     ],
+                      //   ),
+                      // ),
                       padding: EdgeInsets.all(AppSize.s15.r),
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -108,6 +216,7 @@ class BuyTradeWidget extends StatelessWidget {
                           )
                       ),
                       child: Column(
+
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
@@ -130,8 +239,10 @@ class BuyTradeWidget extends StatelessWidget {
                                 ),
                               ),
                               Column(
+
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
+
                                   CustomTextWithLineHeight(text: moneyFormat.format(offer.maxAmount),
                                     fontSize: FontSize.s14,
                                     fontWeight: FontWeightManager.bold,

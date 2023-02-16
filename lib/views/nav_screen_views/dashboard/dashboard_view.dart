@@ -89,7 +89,7 @@ class _DashboardViewState extends State<DashboardView> {
             children: [
 
               Padding(
-                padding: const EdgeInsets.only(top: 5),
+                padding: const EdgeInsets.only(top: 18),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:  [
@@ -116,12 +116,13 @@ class _DashboardViewState extends State<DashboardView> {
               //   padding: EdgeInsets.symmetric(horizontal: AppSize.s25.w),
               //   child: const EvsPayHeaderWidget(showLeftIcon: true,),
               // ),
-
+              /// this section is for the header part with amount and the fancy container
               SizedBox(height: AppSize.s20.h,),
               if (changeAll == 0) Container(
                 decoration: BoxDecoration(
-                    color: Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(12)
+                  color: Color(0xffF4B731),
+                  borderRadius: BorderRadius.circular(12),
+                  image:  const DecorationImage(image: AssetImage("assets/images/shape.png" ),fit: BoxFit.cover),
                 ),
                 padding: EdgeInsets.only(left: 24,top: 19),
 
@@ -174,11 +175,11 @@ class _DashboardViewState extends State<DashboardView> {
                   ],
                 ),
               ),
-
-             if (changeAll == 1) Container(
+              if (changeAll == 1) Container(
                decoration: BoxDecoration(
                  color: Color(0xffF4B731),
-                 borderRadius: BorderRadius.circular(12)
+                 borderRadius: BorderRadius.circular(12),
+                 image:  const DecorationImage(image: AssetImage("assets/images/shape.png" ),fit: BoxFit.cover),
                ),
                padding: EdgeInsets.only(left: 24,top: 19),
 
@@ -233,8 +234,9 @@ class _DashboardViewState extends State<DashboardView> {
              ),
               if (changeAll == 2)  Container(
                 decoration: BoxDecoration(
-                    color: Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(12)
+                  color: Color(0xffF4B731),
+                  borderRadius: BorderRadius.circular(12),
+                  image:  const DecorationImage(image: AssetImage("assets/images/shape.png" ),fit: BoxFit.cover),
                 ),
                 padding: EdgeInsets.only(left: 24,top: 19),
 

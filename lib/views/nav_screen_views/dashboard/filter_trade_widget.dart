@@ -185,7 +185,7 @@ Widget errorDialog({
   required double size, required DashboardViewModel2? tradeViewModel}){
   return SizedBox(
     // height: MediaQuery.of(context).size.width * 0.9,
-    width: MediaQuery.of(context).size.width * 0.9,
+    width: MediaQuery.of(context).size.width * 0.5,
     child:  Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

@@ -3,6 +3,7 @@ const String imagePath = "assets/images";
 class AppImages {
   static const appLogoSplash = "assets/images/logo_splash_screen.png";
   static const group = "assets/images/group.png";
+  static const shape = "assets/images/shape.png";
   static const fakeBtc = "assets/images/fakeBtc.png";
   static const pureEth = "assets/images/pureEth.png";
   static const movie = "assets/images/movie.png";
