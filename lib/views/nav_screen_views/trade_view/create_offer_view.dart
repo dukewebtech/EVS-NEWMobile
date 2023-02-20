@@ -39,13 +39,18 @@ class _CreateOfferViewState extends State<CreateOfferView> {
   PaymentMethods? selectedPaymentMethod;
 
   List<Map<String, dynamic>> btnList = [
-    {"title": "Buy Bitcoin", "isClicked": false,},
-    {"title": "Sell Bitcoin", "isClicked": false,},
+    {
+      "title": "Buy Bitcoin",
+      "isClicked": false,
+    },
+    {
+      "title": "Sell Bitcoin",
+      "isClicked": false,
+    },
   ];
 
-
   bool isBuy = true;
-  dynamic  changeAll;
+  dynamic changeAll;
 
   @override
   void initState() {
@@ -59,30 +64,37 @@ class _CreateOfferViewState extends State<CreateOfferView> {
     final evsPayViewModel = context.watch<EvsPayViewModel>();
     final myOfferModel = context.watch<MyAdsViewModel>();
     return Scaffold(
-
       body: SafeArea(
           child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: AppSize.s13.w),
         child: Column(
           /// i have inserted the sell and buy logic expect for the payment method which might cause and error
 
-        children: [
+          children: [
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 25),
               child: Row(
                 children: [
-                  IconButton(onPressed: (){
-                    Navigator.pop(context);
-                  }, icon: const Icon(Icons.arrow_back_outlined, color: Color(0xff292D32),)),
-                  SizedBox(width: AppSize.s3.w,),
-                  const Text('Create Offer',style: TextStyle(
-                    fontSize: 20,
-                    fontWeight:FontWeight.w700 ,
-                    fontFamily: 'Lexend',
-                    color: Color(0xff606060),
-
-
-                  ),),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_outlined,
+                        color: Color(0xff292D32),
+                      )),
+                  SizedBox(
+                    width: AppSize.s3.w,
+                  ),
+                  const Text(
+                    'Create Offer',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Lexend',
+                      color: Color(0xff606060),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -91,15 +103,14 @@ class _CreateOfferViewState extends State<CreateOfferView> {
               height: 40,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount:  btnList.length,
-                  itemBuilder: (context, index){
+                  itemCount: btnList.length,
+                  itemBuilder: (context, index) {
                     var title = btnList[index]['title'];
 
                     return GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           changeAll = index;
-
                         });
                       },
                       child: AnimatedContainer(
@@ -117,963 +128,981 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                         ),
                         child: Center(
                             child: Text(title
-                              // btnList[index]["title"],
-                            )),
+                                // btnList[index]["title"],
+                                )),
                       ),
                     );
-
                   }),
             ),
-            if(changeAll == 0)
-
-           Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-             children: [
-               const Padding(
-                 padding: EdgeInsets.only(top: 30),
-                 child: Text(
-                   'Location',
-                   style: TextStyle(
-                     fontSize: 16,
-                     fontWeight: FontWeight.w400,
-                     fontFamily: 'Lexend',
-                     color: Color(0xffB1B1B1),
-                   ),
-                 ),
-               ),
-               SizedBox(
-                 height: AppSize.s26.h,
-               ),
-               SizedBox(
-                 width: double.infinity,
-                 child: TextFormField(
-                   controller: locationController,
-                   decoration: InputDecoration(
-                     filled: false,
-                     counterText: "",
-                     fillColor: ColorManager.whiteColor,
-                     contentPadding: const EdgeInsets.only(),
-                     hintText: '',
-                     // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                     border: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     enabledBorder: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     focusedBorder: OutlineInputBorder(
-                       gapPadding: 0.0,
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     hintStyle: const TextStyle(
-                         color: ColorManager.labelTextColor,
-                         fontSize: FontSize.s16),
-                     labelStyle: const TextStyle(
-                         color: ColorManager.labelTextColor,
-                         fontSize: FontSize.s16),
-                   ),
-                 ),
-               ),
-               SizedBox(
-                 height: AppSize.s26.h,
-               ),
-               const Text(
-                 'Payment Method',
-                 style: TextStyle(
-                   fontSize: 16,
-                   fontWeight: FontWeight.w400,
-                   fontFamily: 'Lexend',
-                   color: Color(0xffB1B1B1),
-                 ),
-               ),
-               SizedBox(
-                 height: AppSize.s26.h,
-               ),
-               SizedBox(
-                 width: double.infinity,
-                 child: TextFormField(
-                   decoration: InputDecoration(
-                     filled: false,
-                     counterText: "",
-                     fillColor: ColorManager.whiteColor,
-                     contentPadding: const EdgeInsets.only(),
-                     hintText: '',
-                     // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                     border: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     enabledBorder: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     focusedBorder: OutlineInputBorder(
-                       gapPadding: 0.0,
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     hintStyle: const TextStyle(
-                         color: ColorManager.labelTextColor,
-                         fontSize: FontSize.s16),
-                     labelStyle: const TextStyle(
-                         color: ColorManager.labelTextColor,
-                         fontSize: FontSize.s16),
-                   ),
-                 ),
-               ),
-               SizedBox(
-                 height: AppSize.s26.h,
-               ),
-               const Text(
-                 'Rate',
-                 style: TextStyle(
-                   fontSize: 16,
-                   fontWeight: FontWeight.w400,
-                   fontFamily: 'Lexend',
-                   color: Color(0xffB1B1B1),
-                 ),
-               ),
-               SizedBox(
-                 height: AppSize.s26.h,
-               ),
-               SizedBox(
-                 width: double.infinity,
-                 child: TextFormField(
-                   controller: rateController,
-                   decoration: InputDecoration(
-                     filled: false,
-                     counterText: "",
-                     fillColor: ColorManager.whiteColor,
-                     contentPadding: const EdgeInsets.only(),
-                     hintText: '',
-                     // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                     border: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     enabledBorder: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     focusedBorder: OutlineInputBorder(
-                       gapPadding: 0.0,
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     hintStyle: const TextStyle(
-                         color: ColorManager.labelTextColor,
-                         fontSize: FontSize.s16),
-                     labelStyle: const TextStyle(
-                         color: ColorManager.labelTextColor,
-                         fontSize: FontSize.s16),
-                   ),
-                 ),
-               ),
-               SizedBox(
-                 height: AppSize.s26.h,
-               ),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-
-                     children: [
-                       const Text(
-                         'Minimum',
-                         style: TextStyle(
-                           fontSize: 18,
-                           fontWeight: FontWeight.w400,
-                           fontFamily: 'Lexend',
-                           color: Color(0xffB1B1B1),
-                         ),
-                       ),
-                       SizedBox(
-                         height: AppSize.s6.h,
-                       ),
-                       SizedBox(
-                         height: 72,
-                         width: 176,
-                         child: TextFormField(
-                           controller: minimumController,
-                           decoration: InputDecoration(
-                             filled: false,
-                             counterText: "",
-                             fillColor: ColorManager.whiteColor,
-                             contentPadding: const EdgeInsets.only(),
-                             hintText: '',
-                             // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                             border: OutlineInputBorder(
-                               borderRadius: BorderRadius.circular(12.r),
-                               borderSide: const BorderSide(
-                                   color: Color(0xffE8E8E8), width: 1),
-                             ),
-                             enabledBorder: OutlineInputBorder(
-                               borderRadius: BorderRadius.circular(12.r),
-                               borderSide: const BorderSide(
-                                   color: Color(0xffE8E8E8), width: 1),
-                             ),
-                             focusedBorder: OutlineInputBorder(
-                               gapPadding: 0.0,
-                               borderRadius: BorderRadius.circular(12.r),
-                               borderSide: const BorderSide(
-                                   color: Color(0xffE8E8E8), width: 1),
-                             ),
-                             hintStyle: const TextStyle(
-                                 color: ColorManager.labelTextColor,
-                                 fontSize: FontSize.s16),
-                             labelStyle: const TextStyle(
-                                 color: ColorManager.labelTextColor,
-                                 fontSize: FontSize.s16),
-                           ),
-                         ),
-                       ),
-                     ],
-                   ),
-                   Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       const Text(
-                         'Maximum',
-                         style: TextStyle(
-                           fontSize: 18,
-                           fontWeight: FontWeight.w400,
-                           fontFamily: 'Lexend',
-                           color: Color(0xffB1B1B1),
-                         ),
-                       ),
-                       SizedBox(
-                         height: AppSize.s6.h,
-                       ),
-                       SizedBox(
-                         height: 72,
-                         width: 176,
-                         child: TextFormField(
-                           controller: maximumController,
-                           decoration: InputDecoration(
-                             filled: false,
-                             counterText: "",
-                             fillColor: ColorManager.whiteColor,
-                             contentPadding: const EdgeInsets.only(),
-                             hintText: '',
-                             // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                             border: OutlineInputBorder(
-                               borderRadius: BorderRadius.circular(12.r),
-                               borderSide: const BorderSide(
-                                   color: Color(0xffE8E8E8), width: 1),
-                             ),
-                             enabledBorder: OutlineInputBorder(
-                               borderRadius: BorderRadius.circular(12.r),
-                               borderSide: const BorderSide(
-                                   color: Color(0xffE8E8E8), width: 1),
-                             ),
-                             focusedBorder: OutlineInputBorder(
-                               gapPadding: 0.0,
-                               borderRadius: BorderRadius.circular(12.r),
-                               borderSide: const BorderSide(
-                                   color: Color(0xffE8E8E8), width: 1),
-                             ),
-                             hintStyle: const TextStyle(
-                                 color: ColorManager.labelTextColor,
-                                 fontSize: FontSize.s16),
-                             labelStyle: const TextStyle(
-                                 color: ColorManager.labelTextColor,
-                                 fontSize: FontSize.s16),
-                           ),
-                         ),
-                       ),
-                     ],
-                   ),
-                 ],
-               ),
-               SizedBox(
-                 height: AppSize.s26.h,
-               ),
-
-               const Text(
-                 'Terms Of Trade',
-                 style: TextStyle(
-                   fontSize: 16,
-                   fontWeight: FontWeight.w400,
-                   fontFamily: 'Lexend',
-                   color: Color(0xffB1B1B1),
-                 ),
-               ),
-               SizedBox(
-                 height: AppSize.s14.h,
-               ),
-               SizedBox(
-                 width: double.infinity,
-                 child: TextFormField(
-                   controller: termsOfTradeController,
-                   maxLines: 9,
-
-                   decoration: InputDecoration(
-                     filled: false,
-                     counterText: "",
-                     fillColor: ColorManager.whiteColor,
-                     contentPadding: const EdgeInsets.only(),
-                     hintText: '',
-                     // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                     border: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     enabledBorder: OutlineInputBorder(
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     focusedBorder: OutlineInputBorder(
-                       gapPadding: 0.0,
-                       borderRadius: BorderRadius.circular(12.r),
-                       borderSide:
-                       const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                     ),
-                     hintStyle: const TextStyle(
-                         color: ColorManager.labelTextColor,
-                         fontSize: FontSize.s16),
-                     labelStyle: const TextStyle(
-                         color: ColorManager.labelTextColor,
-                         fontSize: FontSize.s16),
-                   ),
-                 ),
-               ),
-               SizedBox(
-                 height: AppSize.s40.h,
-               ),
-               Center(
-                 child: Consumer<MyAdsViewModel>(builder: (ctx, myAd, child) {
-                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                     if (myAd.resMessage != '') {
-                       showTopSnackBar(
-                         context,
-                         CustomSnackBar.info(
-                           message: myAd.resMessage,
-                           backgroundColor: myAd.isSuccessful
-                               ? ColorManager.deepGreenColor
-                               : ColorManager.primaryColor,
-                         ),
-                       );
-
-                       ///Clear the response message to avoid duplicate
-                       myAd.clear();
-                     }
-                   });
-                   return SizedBox(
-                     height: 50,
-                     width: double.infinity,
-                     child: ElevatedButton(onPressed:  () async {
-                       if (locationController.text.isNotEmpty &&
-                           selectedPaymentMethod != null &&
-                           rateController.text.isNotEmpty &&
-                           minimumController.text.isNotEmpty &&
-                           maximumController.text.isNotEmpty &&
-                           termsOfTradeController.text.trim().isNotEmpty) {
-                         DateTime now = DateTime.now();
-                         DateTime expiryDate = now.add(const Duration(days: 30));
-                         final createOffer = CreateOfferModel(
-                             location: locationController.text,
-                             type: isBuy ? "BUY" : "SELL",
-                             minAmount: int.parse(minimumController.text.trim()),
-                             maxAmount: int.parse(maximumController.text),
-                             paymentMethodCode: selectedPaymentMethod!.code!,
-                             currencyCode: "NGN",
-                             coinSymbol: "btc",
-                             tags: ["payment", "special offers"],
-                             terms: termsOfTradeController.text,
-                             paymentWindow: 90,
-                             profitMargin: int.parse(rateController.text),
-                             paymentDetails: "",
-                             trackLiquidity: false,
-                             trustedPeopleOnly: false,
-                             expiryDate: expiryDate);
-
-                         myOfferModel.createOfferModel = createOffer;
-
-                         final isCreated = await myOfferModel.createOffer(
-                             context: context, createOfferModel: createOffer);
-
-                         print("Is Created: $isCreated");
-                         if (isCreated) {
-                           Future.delayed(const Duration(seconds: 2), () {
-                             setState(() {
-                               context
-                                   .read<NavScreenViewModel>()
-                                   .updateSelectedPage(1);
-                               openNavScreen(context);
-                             });
-                           });
-                         }
-                       } else {
-                         print('Some fields are empty');
-                         showTopSnackBar(
-                           context,
-                           const CustomSnackBar.info(
-                             message: AppStrings.fillAllRequiredFields,
-                             backgroundColor: ColorManager.primaryColor,
-                           ),
-                         );
-                       }
-                     }, child: const Text('Create Offer',style: TextStyle(
-                       fontSize: 22,
-                       fontWeight: FontWeight.w400,
-                       fontFamily: 'Lexend',
-                       color: Color(0xff303030)
-
-                     ),)),
-                   );
-
-
-                   // CustomElevatedButton(
-                     //   onTap: () async {
-                     //     if (locationController.text.isNotEmpty &&
-                     //         selectedPaymentMethod != null &&
-                     //         rateController.text.isNotEmpty &&
-                     //         minimumController.text.isNotEmpty &&
-                     //         maximumController.text.isNotEmpty &&
-                     //         termsOfTradeController.text.trim().isNotEmpty) {
-                     //       DateTime now = DateTime.now();
-                     //       DateTime expiryDate = now.add(const Duration(days: 30));
-                     //       final createOffer = CreateOfferModel(
-                     //           location: locationController.text,
-                     //           type: isBuy ? "BUY" : "SELL",
-                     //           minAmount: int.parse(minimumController.text.trim()),
-                     //           maxAmount: int.parse(maximumController.text),
-                     //           paymentMethodCode: selectedPaymentMethod!.code!,
-                     //           currencyCode: "NGN",
-                     //           coinSymbol: "btc",
-                     //           tags: ["payment", "special offers"],
-                     //           terms: termsOfTradeController.text,
-                     //           paymentWindow: 90,
-                     //           profitMargin: int.parse(rateController.text),
-                     //           paymentDetails: "",
-                     //           trackLiquidity: false,
-                     //           trustedPeopleOnly: false,
-                     //           expiryDate: expiryDate);
-                     //
-                     //       myOfferModel.createOfferModel = createOffer;
-                     //
-                     //       final isCreated = await myOfferModel.createOffer(
-                     //           context: context, createOfferModel: createOffer);
-                     //
-                     //       print("Is Created: $isCreated");
-                     //       if (isCreated) {
-                     //         Future.delayed(const Duration(seconds: 2), () {
-                     //           setState(() {
-                     //             context
-                     //                 .read<NavScreenViewModel>()
-                     //                 .updateSelectedPage(1);
-                     //             openNavScreen(context);
-                     //           });
-                     //         });
-                     //       }
-                     //     } else {
-                     //       print('Some fields are empty');
-                     //       showTopSnackBar(
-                     //         context,
-                     //         const CustomSnackBar.info(
-                     //           message: AppStrings.fillAllRequiredFields,
-                     //           backgroundColor: ColorManager.primaryColor,
-                     //         ),
-                     //       );
-                     //     }
-                     //   },
-                     //   backgroundColor: ColorManager.primaryColor,
-                     //   textColor: ColorManager.blckColor,
-                     //   title: 'Create Offer');
-                 }),
-               ),
-             ],
-           ),
-            if(changeAll == 1)
-               Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 30),
-                child: Text(
-                  'Location',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Lexend',
-                    color: Color(0xffB1B1B1),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s26.h,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: TextFormField(
-                  controller: locationController,
-                  decoration: InputDecoration(
-                    filled: false,
-                    counterText: "",
-                    fillColor: ColorManager.whiteColor,
-                    contentPadding: const EdgeInsets.only(),
-                    hintText: '',
-                    // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      gapPadding: 0.0,
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    hintStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16),
-                    labelStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s26.h,
-              ),
-              const Text(
-                'Payment Method',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Lexend',
-                  color: Color(0xffB1B1B1),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s26.h,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    filled: false,
-                    counterText: "",
-                    fillColor: ColorManager.whiteColor,
-                    contentPadding: const EdgeInsets.only(),
-                    hintText: '',
-                    // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      gapPadding: 0.0,
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    hintStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16),
-                    labelStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s26.h,
-              ),
-              const Text(
-                'Rate',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Lexend',
-                  color: Color(0xffB1B1B1),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s26.h,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: TextFormField(
-                  controller: rateController,
-                  decoration: InputDecoration(
-                    filled: false,
-                    counterText: "",
-                    fillColor: ColorManager.whiteColor,
-                    contentPadding: const EdgeInsets.only(),
-                    hintText: '',
-                    // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      gapPadding: 0.0,
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    hintStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16),
-                    labelStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s26.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            if (changeAll == 0)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
+                  const Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: Text(
+                      'Location',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Lexend',
+                        color: Color(0xffB1B1B1),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s6.h,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      controller: locationController,
+                      decoration: InputDecoration(
+                        filled: false,
+                        counterText: "",
+                        fillColor: ColorManager.whiteColor,
+                        contentPadding: const EdgeInsets.only(),
+                        hintText: '',
+                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          gapPadding: 0.0,
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        hintStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                        labelStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s26.h,
+                  ),
+                  const Text(
+                    'Payment Method',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Lexend',
+                      color: Color(0xffB1B1B1),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s6.h,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        filled: false,
+                        counterText: "",
+                        fillColor: ColorManager.whiteColor,
+                        contentPadding: const EdgeInsets.only(),
+                        hintText: '',
+                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          gapPadding: 0.0,
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        hintStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                        labelStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s26.h,
+                  ),
+                  const Text(
+                    'Rate',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Lexend',
+                      color: Color(0xffB1B1B1),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s6.h,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      controller: rateController,
+                      decoration: InputDecoration(
+                        filled: false,
+                        counterText: "",
+                        fillColor: ColorManager.whiteColor,
+                        contentPadding: const EdgeInsets.only(),
+                        hintText: '',
+                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          gapPadding: 0.0,
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        hintStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                        labelStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s26.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Minimum',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Lexend',
-                          color: Color(0xffB1B1B1),
-                        ),
-                      ),
-                      SizedBox(
-                        height: AppSize.s6.h,
-                      ),
-                      SizedBox(
-                        height: 72,
-                        width: 176,
-                        child: TextFormField(
-                          controller: minimumController,
-                          decoration: InputDecoration(
-                            filled: false,
-                            counterText: "",
-                            fillColor: ColorManager.whiteColor,
-                            contentPadding: const EdgeInsets.only(),
-                            hintText: '',
-                            // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                              borderSide: const BorderSide(
-                                  color: Color(0xffE8E8E8), width: 1),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Minimum',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xffB1B1B1),
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                              borderSide: const BorderSide(
-                                  color: Color(0xffE8E8E8), width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              gapPadding: 0.0,
-                              borderRadius: BorderRadius.circular(12.r),
-                              borderSide: const BorderSide(
-                                  color: Color(0xffE8E8E8), width: 1),
-                            ),
-                            hintStyle: const TextStyle(
-                                color: ColorManager.labelTextColor,
-                                fontSize: FontSize.s16),
-                            labelStyle: const TextStyle(
-                                color: ColorManager.labelTextColor,
-                                fontSize: FontSize.s16),
                           ),
-                        ),
+                          SizedBox(
+                            height: AppSize.s6.h,
+                          ),
+                          SizedBox(
+                            height: 72,
+                            width: 176,
+                            child: TextFormField(
+                              controller: minimumController,
+                              decoration: InputDecoration(
+                                filled: false,
+                                counterText: "",
+                                fillColor: ColorManager.whiteColor,
+                                contentPadding: const EdgeInsets.only(),
+                                hintText: '',
+                                // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  gapPadding: 0.0,
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                hintStyle: const TextStyle(
+                                    color: ColorManager.labelTextColor,
+                                    fontSize: FontSize.s16),
+                                labelStyle: const TextStyle(
+                                    color: ColorManager.labelTextColor,
+                                    fontSize: FontSize.s16),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Maximum',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xffB1B1B1),
+                            ),
+                          ),
+                          SizedBox(
+                            height: AppSize.s6.h,
+                          ),
+                          SizedBox(
+                            height: 72,
+                            width: 176,
+                            child: TextFormField(
+                              controller: maximumController,
+                              decoration: InputDecoration(
+                                filled: false,
+                                counterText: "",
+                                fillColor: ColorManager.whiteColor,
+                                contentPadding: const EdgeInsets.only(),
+                                hintText: '',
+                                // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  gapPadding: 0.0,
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                hintStyle: const TextStyle(
+                                    color: ColorManager.labelTextColor,
+                                    fontSize: FontSize.s16),
+                                labelStyle: const TextStyle(
+                                    color: ColorManager.labelTextColor,
+                                    fontSize: FontSize.s16),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Maximum',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Lexend',
-                          color: Color(0xffB1B1B1),
+                  SizedBox(
+                    height: AppSize.s26.h,
+                  ),
+                  const Text(
+                    'Terms Of Trade',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Lexend',
+                      color: Color(0xffB1B1B1),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s14.h,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      controller: termsOfTradeController,
+                      maxLines: 9,
+                      decoration: InputDecoration(
+                        filled: false,
+                        counterText: "",
+                        fillColor: ColorManager.whiteColor,
+                        contentPadding: const EdgeInsets.only(),
+                        hintText: '',
+                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
                         ),
-                      ),
-                      SizedBox(
-                        height: AppSize.s6.h,
-                      ),
-                      SizedBox(
-                        height: 72,
-                        width: 176,
-                        child: TextFormField(
-                          controller: maximumController,
-                          decoration: InputDecoration(
-                            filled: false,
-                            counterText: "",
-                            fillColor: ColorManager.whiteColor,
-                            contentPadding: const EdgeInsets.only(),
-                            hintText: '',
-                            // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                              borderSide: const BorderSide(
-                                  color: Color(0xffE8E8E8), width: 1),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                              borderSide: const BorderSide(
-                                  color: Color(0xffE8E8E8), width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              gapPadding: 0.0,
-                              borderRadius: BorderRadius.circular(12.r),
-                              borderSide: const BorderSide(
-                                  color: Color(0xffE8E8E8), width: 1),
-                            ),
-                            hintStyle: const TextStyle(
-                                color: ColorManager.labelTextColor,
-                                fontSize: FontSize.s16),
-                            labelStyle: const TextStyle(
-                                color: ColorManager.labelTextColor,
-                                fontSize: FontSize.s16),
-                          ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          gapPadding: 0.0,
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        hintStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                        labelStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
                       ),
-                    ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s40.h,
+                  ),
+                  Center(
+                    child:
+                        Consumer<MyAdsViewModel>(builder: (ctx, myAd, child) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (myAd.resMessage != '') {
+                          showTopSnackBar(
+                            context,
+                            CustomSnackBar.info(
+                              message: myAd.resMessage,
+                              backgroundColor: myAd.isSuccessful
+                                  ? ColorManager.deepGreenColor
+                                  : ColorManager.primaryColor,
+                            ),
+                          );
+
+                          ///Clear the response message to avoid duplicate
+                          myAd.clear();
+                        }
+                      });
+                      return SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              if (locationController.text.isNotEmpty &&
+                                  selectedPaymentMethod != null &&
+                                  rateController.text.isNotEmpty &&
+                                  minimumController.text.isNotEmpty &&
+                                  maximumController.text.isNotEmpty &&
+                                  termsOfTradeController.text
+                                      .trim()
+                                      .isNotEmpty) {
+                                DateTime now = DateTime.now();
+                                DateTime expiryDate =
+                                    now.add(const Duration(days: 30));
+                                final createOffer = CreateOfferModel(
+                                    location: locationController.text,
+                                    type: isBuy ? "BUY" : "SELL",
+                                    minAmount: int.parse(
+                                        minimumController.text.trim()),
+                                    maxAmount:
+                                        int.parse(maximumController.text),
+                                    paymentMethodCode:
+                                        selectedPaymentMethod!.code!,
+                                    currencyCode: "NGN",
+                                    coinSymbol: "btc",
+                                    tags: ["payment", "special offers"],
+                                    terms: termsOfTradeController.text,
+                                    paymentWindow: 90,
+                                    profitMargin:
+                                        int.parse(rateController.text),
+                                    paymentDetails: "",
+                                    trackLiquidity: false,
+                                    trustedPeopleOnly: false,
+                                    expiryDate: expiryDate);
+
+                                myOfferModel.createOfferModel = createOffer;
+
+                                final isCreated =
+                                    await myOfferModel.createOffer(
+                                        context: context,
+                                        createOfferModel: createOffer);
+
+                                print("Is Created: $isCreated");
+                                if (isCreated) {
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    setState(() {
+                                      context
+                                          .read<NavScreenViewModel>()
+                                          .updateSelectedPage(1);
+                                      openNavScreen(context);
+                                    });
+                                  });
+                                }
+                              } else {
+                                print('Some fields are empty');
+                                showTopSnackBar(
+                                  context,
+                                  const CustomSnackBar.info(
+                                    message: AppStrings.fillAllRequiredFields,
+                                    backgroundColor: ColorManager.primaryColor,
+                                  ),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              'Create Offer',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Lexend',
+                                  color: Color(0xff303030)),
+                            )),
+                      );
+
+                      // CustomElevatedButton(
+                      //   onTap: () async {
+                      //     if (locationController.text.isNotEmpty &&
+                      //         selectedPaymentMethod != null &&
+                      //         rateController.text.isNotEmpty &&
+                      //         minimumController.text.isNotEmpty &&
+                      //         maximumController.text.isNotEmpty &&
+                      //         termsOfTradeController.text.trim().isNotEmpty) {
+                      //       DateTime now = DateTime.now();
+                      //       DateTime expiryDate = now.add(const Duration(days: 30));
+                      //       final createOffer = CreateOfferModel(
+                      //           location: locationController.text,
+                      //           type: isBuy ? "BUY" : "SELL",
+                      //           minAmount: int.parse(minimumController.text.trim()),
+                      //           maxAmount: int.parse(maximumController.text),
+                      //           paymentMethodCode: selectedPaymentMethod!.code!,
+                      //           currencyCode: "NGN",
+                      //           coinSymbol: "btc",
+                      //           tags: ["payment", "special offers"],
+                      //           terms: termsOfTradeController.text,
+                      //           paymentWindow: 90,
+                      //           profitMargin: int.parse(rateController.text),
+                      //           paymentDetails: "",
+                      //           trackLiquidity: false,
+                      //           trustedPeopleOnly: false,
+                      //           expiryDate: expiryDate);
+                      //
+                      //       myOfferModel.createOfferModel = createOffer;
+                      //
+                      //       final isCreated = await myOfferModel.createOffer(
+                      //           context: context, createOfferModel: createOffer);
+                      //
+                      //       print("Is Created: $isCreated");
+                      //       if (isCreated) {
+                      //         Future.delayed(const Duration(seconds: 2), () {
+                      //           setState(() {
+                      //             context
+                      //                 .read<NavScreenViewModel>()
+                      //                 .updateSelectedPage(1);
+                      //             openNavScreen(context);
+                      //           });
+                      //         });
+                      //       }
+                      //     } else {
+                      //       print('Some fields are empty');
+                      //       showTopSnackBar(
+                      //         context,
+                      //         const CustomSnackBar.info(
+                      //           message: AppStrings.fillAllRequiredFields,
+                      //           backgroundColor: ColorManager.primaryColor,
+                      //         ),
+                      //       );
+                      //     }
+                      //   },
+                      //   backgroundColor: ColorManager.primaryColor,
+                      //   textColor: ColorManager.blckColor,
+                      //   title: 'Create Offer');
+                    }),
                   ),
                 ],
               ),
-              SizedBox(
-                height: AppSize.s26.h,
-              ),
 
-              const Text(
-                'Terms Of Trade',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Lexend',
-                  color: Color(0xffB1B1B1),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s14.h,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: TextFormField(
-                  controller: termsOfTradeController,
-                  maxLines: 9,
-
-                  decoration: InputDecoration(
-                    filled: false,
-                    counterText: "",
-                    fillColor: ColorManager.whiteColor,
-                    contentPadding: const EdgeInsets.only(),
-                    hintText: '',
-                    // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      gapPadding: 0.0,
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide:
-                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
-                    ),
-                    hintStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16),
-                    labelStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s40.h,
-              ),
-              Center(
-                child: Consumer<MyAdsViewModel>(builder: (ctx, myAd, child) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    if (myAd.resMessage != '') {
-                      showTopSnackBar(
-                        context,
-                        CustomSnackBar.info(
-                          message: myAd.resMessage,
-                          backgroundColor: myAd.isSuccessful
-                              ? ColorManager.deepGreenColor
-                              : ColorManager.primaryColor,
-                        ),
-                      );
-
-                      ///Clear the response message to avoid duplicate
-                      myAd.clear();
-                    }
-                  });
-                  return SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: ElevatedButton(onPressed:  () async {
-                      if (locationController.text.isNotEmpty &&
-                          selectedPaymentMethod != null &&
-                          rateController.text.isNotEmpty &&
-                          minimumController.text.isNotEmpty &&
-                          maximumController.text.isNotEmpty &&
-                          termsOfTradeController.text.trim().isNotEmpty) {
-                        DateTime now = DateTime.now();
-                        DateTime expiryDate = now.add(const Duration(days: 30));
-                        final createOffer = CreateOfferModel(
-                            location: locationController.text,
-                            type: isBuy ? "BUY" : "SELL",
-                            minAmount: int.parse(minimumController.text.trim()),
-                            maxAmount: int.parse(maximumController.text),
-                            paymentMethodCode: selectedPaymentMethod!.code!,
-                            currencyCode: "NGN",
-                            coinSymbol: "btc",
-                            tags: ["payment", "special offers"],
-                            terms: termsOfTradeController.text,
-                            paymentWindow: 90,
-                            profitMargin: int.parse(rateController.text),
-                            paymentDetails: "",
-                            trackLiquidity: false,
-                            trustedPeopleOnly: false,
-                            expiryDate: expiryDate);
-
-                        myOfferModel.createOfferModel = createOffer;
-
-                        final isCreated = await myOfferModel.createOffer(
-                            context: context, createOfferModel: createOffer);
-
-                        print("Is Created: $isCreated");
-                        if (isCreated) {
-                          Future.delayed(const Duration(seconds: 2), () {
-                            setState(() {
-                              context
-                                  .read<NavScreenViewModel>()
-                                  .updateSelectedPage(1);
-                              openNavScreen(context);
-                            });
-                          });
-                        }
-                      } else {
-                        print('Some fields are empty');
-                        showTopSnackBar(
-                          context,
-                          const CustomSnackBar.info(
-                            message: AppStrings.fillAllRequiredFields,
-                            backgroundColor: ColorManager.primaryColor,
-                          ),
-                        );
-                      }
-                    }, child: const Text('Create Offer',style: TextStyle(
-                        fontSize: 22,
+            if (changeAll == 1)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: Text(
+                      'Location',
+                      style: TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
                         fontFamily: 'Lexend',
-                        color: Color(0xff303030)
+                        color: Color(0xffB1B1B1),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s6.h,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      controller: locationController,
+                      decoration: InputDecoration(
+                        filled: false,
+                        counterText: "",
+                        fillColor: ColorManager.whiteColor,
+                        contentPadding: const EdgeInsets.only(),
+                        hintText: '',
+                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          gapPadding: 0.0,
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        hintStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                        labelStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s26.h,
+                  ),
+                  const Text(
+                    'Payment Method',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Lexend',
+                      color: Color(0xffB1B1B1),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s6.h,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        filled: false,
+                        counterText: "",
+                        fillColor: ColorManager.whiteColor,
+                        contentPadding: const EdgeInsets.only(),
+                        hintText: '',
+                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          gapPadding: 0.0,
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        hintStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                        labelStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s26.h,
+                  ),
+                  const Text(
+                    'Rate',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Lexend',
+                      color: Color(0xffB1B1B1),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s6.h,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      controller: rateController,
+                      decoration: InputDecoration(
+                        filled: false,
+                        counterText: "",
+                        fillColor: ColorManager.whiteColor,
+                        contentPadding: const EdgeInsets.only(),
+                        hintText: '',
+                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          gapPadding: 0.0,
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        hintStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                        labelStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s26.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Minimum',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xffB1B1B1),
+                            ),
+                          ),
+                          SizedBox(
+                            height: AppSize.s6.h,
+                          ),
+                          SizedBox(
+                            height: 72,
+                            width: 176,
+                            child: TextFormField(
+                              controller: minimumController,
+                              decoration: InputDecoration(
+                                filled: false,
+                                counterText: "",
+                                fillColor: ColorManager.whiteColor,
+                                contentPadding: const EdgeInsets.only(),
+                                hintText: '',
+                                // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  gapPadding: 0.0,
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                hintStyle: const TextStyle(
+                                    color: ColorManager.labelTextColor,
+                                    fontSize: FontSize.s16),
+                                labelStyle: const TextStyle(
+                                    color: ColorManager.labelTextColor,
+                                    fontSize: FontSize.s16),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Maximum',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xffB1B1B1),
+                            ),
+                          ),
+                          SizedBox(
+                            height: AppSize.s6.h,
+                          ),
+                          SizedBox(
+                            height: 72,
+                            width: 176,
+                            child: TextFormField(
+                              controller: maximumController,
+                              decoration: InputDecoration(
+                                filled: false,
+                                counterText: "",
+                                fillColor: ColorManager.whiteColor,
+                                contentPadding: const EdgeInsets.only(),
+                                hintText: '',
+                                // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  gapPadding: 0.0,
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffE8E8E8), width: 1),
+                                ),
+                                hintStyle: const TextStyle(
+                                    color: ColorManager.labelTextColor,
+                                    fontSize: FontSize.s16),
+                                labelStyle: const TextStyle(
+                                    color: ColorManager.labelTextColor,
+                                    fontSize: FontSize.s16),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: AppSize.s26.h,
+                  ),
+                  const Text(
+                    'Terms Of Trade',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Lexend',
+                      color: Color(0xffB1B1B1),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s14.h,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextFormField(
+                      controller: termsOfTradeController,
+                      maxLines: 9,
+                      decoration: InputDecoration(
+                        filled: false,
+                        counterText: "",
+                        fillColor: ColorManager.whiteColor,
+                        contentPadding: const EdgeInsets.only(),
+                        hintText: '',
+                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          gapPadding: 0.0,
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: const BorderSide(
+                              color: Color(0xffE8E8E8), width: 1),
+                        ),
+                        hintStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                        labelStyle: const TextStyle(
+                            color: ColorManager.labelTextColor,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s40.h,
+                  ),
+                  Center(
+                    child:
+                        Consumer<MyAdsViewModel>(builder: (ctx, myAd, child) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (myAd.resMessage != '') {
+                          showTopSnackBar(
+                            context,
+                            CustomSnackBar.info(
+                              message: myAd.resMessage,
+                              backgroundColor: myAd.isSuccessful
+                                  ? ColorManager.deepGreenColor
+                                  : ColorManager.primaryColor,
+                            ),
+                          );
 
-                    ),)),
-                  );
+                          ///Clear the response message to avoid duplicate
+                          myAd.clear();
+                        }
+                      });
+                      return SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              if (locationController.text.isNotEmpty &&
+                                  selectedPaymentMethod != null &&
+                                  rateController.text.isNotEmpty &&
+                                  minimumController.text.isNotEmpty &&
+                                  maximumController.text.isNotEmpty &&
+                                  termsOfTradeController.text
+                                      .trim()
+                                      .isNotEmpty) {
+                                DateTime now = DateTime.now();
+                                DateTime expiryDate =
+                                    now.add(const Duration(days: 30));
+                                final createOffer = CreateOfferModel(
+                                    location: locationController.text,
+                                    type: isBuy ? "BUY" : "SELL",
+                                    minAmount: int.parse(
+                                        minimumController.text.trim()),
+                                    maxAmount:
+                                        int.parse(maximumController.text),
+                                    paymentMethodCode:
+                                        selectedPaymentMethod!.code!,
+                                    currencyCode: "NGN",
+                                    coinSymbol: "btc",
+                                    tags: ["payment", "special offers"],
+                                    terms: termsOfTradeController.text,
+                                    paymentWindow: 90,
+                                    profitMargin:
+                                        int.parse(rateController.text),
+                                    paymentDetails: "",
+                                    trackLiquidity: false,
+                                    trustedPeopleOnly: false,
+                                    expiryDate: expiryDate);
 
+                                myOfferModel.createOfferModel = createOffer;
 
-                  // CustomElevatedButton(
-                  //   onTap: () async {
-                  //     if (locationController.text.isNotEmpty &&
-                  //         selectedPaymentMethod != null &&
-                  //         rateController.text.isNotEmpty &&
-                  //         minimumController.text.isNotEmpty &&
-                  //         maximumController.text.isNotEmpty &&
-                  //         termsOfTradeController.text.trim().isNotEmpty) {
-                  //       DateTime now = DateTime.now();
-                  //       DateTime expiryDate = now.add(const Duration(days: 30));
-                  //       final createOffer = CreateOfferModel(
-                  //           location: locationController.text,
-                  //           type: isBuy ? "BUY" : "SELL",
-                  //           minAmount: int.parse(minimumController.text.trim()),
-                  //           maxAmount: int.parse(maximumController.text),
-                  //           paymentMethodCode: selectedPaymentMethod!.code!,
-                  //           currencyCode: "NGN",
-                  //           coinSymbol: "btc",
-                  //           tags: ["payment", "special offers"],
-                  //           terms: termsOfTradeController.text,
-                  //           paymentWindow: 90,
-                  //           profitMargin: int.parse(rateController.text),
-                  //           paymentDetails: "",
-                  //           trackLiquidity: false,
-                  //           trustedPeopleOnly: false,
-                  //           expiryDate: expiryDate);
-                  //
-                  //       myOfferModel.createOfferModel = createOffer;
-                  //
-                  //       final isCreated = await myOfferModel.createOffer(
-                  //           context: context, createOfferModel: createOffer);
-                  //
-                  //       print("Is Created: $isCreated");
-                  //       if (isCreated) {
-                  //         Future.delayed(const Duration(seconds: 2), () {
-                  //           setState(() {
-                  //             context
-                  //                 .read<NavScreenViewModel>()
-                  //                 .updateSelectedPage(1);
-                  //             openNavScreen(context);
-                  //           });
-                  //         });
-                  //       }
-                  //     } else {
-                  //       print('Some fields are empty');
-                  //       showTopSnackBar(
-                  //         context,
-                  //         const CustomSnackBar.info(
-                  //           message: AppStrings.fillAllRequiredFields,
-                  //           backgroundColor: ColorManager.primaryColor,
-                  //         ),
-                  //       );
-                  //     }
-                  //   },
-                  //   backgroundColor: ColorManager.primaryColor,
-                  //   textColor: ColorManager.blckColor,
-                  //   title: 'Create Offer');
-                }),
+                                final isCreated =
+                                    await myOfferModel.createOffer(
+                                        context: context,
+                                        createOfferModel: createOffer);
+
+                                print("Is Created: $isCreated");
+                                if (isCreated) {
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    setState(() {
+                                      context
+                                          .read<NavScreenViewModel>()
+                                          .updateSelectedPage(1);
+                                      openNavScreen(context);
+                                    });
+                                  });
+                                }
+                              } else {
+                                print('Some fields are empty');
+                                showTopSnackBar(
+                                  context,
+                                  const CustomSnackBar.info(
+                                    message: AppStrings.fillAllRequiredFields,
+                                    backgroundColor: ColorManager.primaryColor,
+                                  ),
+                                );
+                              }
+                            },
+                            child: const Text(
+                              'Create Offer',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Lexend',
+                                  color: Color(0xff303030)),
+                            )),
+                      );
+
+                      // CustomElevatedButton(
+                      //   onTap: () async {
+                      //     if (locationController.text.isNotEmpty &&
+                      //         selectedPaymentMethod != null &&
+                      //         rateController.text.isNotEmpty &&
+                      //         minimumController.text.isNotEmpty &&
+                      //         maximumController.text.isNotEmpty &&
+                      //         termsOfTradeController.text.trim().isNotEmpty) {
+                      //       DateTime now = DateTime.now();
+                      //       DateTime expiryDate = now.add(const Duration(days: 30));
+                      //       final createOffer = CreateOfferModel(
+                      //           location: locationController.text,
+                      //           type: isBuy ? "BUY" : "SELL",
+                      //           minAmount: int.parse(minimumController.text.trim()),
+                      //           maxAmount: int.parse(maximumController.text),
+                      //           paymentMethodCode: selectedPaymentMethod!.code!,
+                      //           currencyCode: "NGN",
+                      //           coinSymbol: "btc",
+                      //           tags: ["payment", "special offers"],
+                      //           terms: termsOfTradeController.text,
+                      //           paymentWindow: 90,
+                      //           profitMargin: int.parse(rateController.text),
+                      //           paymentDetails: "",
+                      //           trackLiquidity: false,
+                      //           trustedPeopleOnly: false,
+                      //           expiryDate: expiryDate);
+                      //
+                      //       myOfferModel.createOfferModel = createOffer;
+                      //
+                      //       final isCreated = await myOfferModel.createOffer(
+                      //           context: context, createOfferModel: createOffer);
+                      //
+                      //       print("Is Created: $isCreated");
+                      //       if (isCreated) {
+                      //         Future.delayed(const Duration(seconds: 2), () {
+                      //           setState(() {
+                      //             context
+                      //                 .read<NavScreenViewModel>()
+                      //                 .updateSelectedPage(1);
+                      //             openNavScreen(context);
+                      //           });
+                      //         });
+                      //       }
+                      //     } else {
+                      //       print('Some fields are empty');
+                      //       showTopSnackBar(
+                      //         context,
+                      //         const CustomSnackBar.info(
+                      //           message: AppStrings.fillAllRequiredFields,
+                      //           backgroundColor: ColorManager.primaryColor,
+                      //         ),
+                      //       );
+                      //     }
+                      //   },
+                      //   backgroundColor: ColorManager.primaryColor,
+                      //   textColor: ColorManager.blckColor,
+                      //   title: 'Create Offer');
+                    }),
+                  ),
+                ],
               ),
-            ],
-          ),
-
 
             /// na here i go stop
             SizedBox(

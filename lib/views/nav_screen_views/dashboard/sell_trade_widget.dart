@@ -29,286 +29,212 @@ class SellTradeWidget extends StatelessWidget {
         return const Scaffold(
           body: Center(
               child: Padding(
-                padding: EdgeInsets.all(8),
-                child: CircularProgressIndicator(),
-              )),
+            padding: EdgeInsets.all(8),
+            child: CircularProgressIndicator(),
+          )),
         );
       } else if (dashboardViewModel.error) {
         return Center(
             child: errorDialog(
-              context: context,
-                size: 20, dashboardViewModel: dashboardViewModel)
-        );
+                context: context,
+                size: 20,
+                dashboardViewModel: dashboardViewModel));
       }
     }
     return Expanded(
         child: RefreshIndicator(
-          onRefresh: () async{
-            dashboardViewModel.resetBuyTradePageNumber();
-            await dashboardViewModel.fetchSellTrades(isRefresh: true);
-          },
-          child: ListView.builder(
-              itemCount: dashboardViewModel.trades.length + (dashboardViewModel.isLastPage ? 0 : 1),
-              itemBuilder: (context, index){
-                if (index == dashboardViewModel.trades.length - dashboardViewModel.nextPageTrigger) {
-                  if(dashboardViewModel.tradesModel!.links!.next != null){
-                    dashboardViewModel.sellUrl = dashboardViewModel.tradesModel!.links!.next?? '';
-                    dashboardViewModel.fetchSellTrades();
-                  }else{
-                    // print("Gotten to the end");
-                  }
-                }
-                if (index == dashboardViewModel.trades.length) {
-                  if (dashboardViewModel.error) {
-                    return Center(
-                        child: errorDialog(
-                          context: context,
-                            size: 15, dashboardViewModel: dashboardViewModel)
-                    );
+      onRefresh: () async {
+        dashboardViewModel.resetBuyTradePageNumber();
+        await dashboardViewModel.fetchSellTrades(isRefresh: true);
+      },
+      child: ListView.builder(
+          itemCount: dashboardViewModel.trades.length +
+              (dashboardViewModel.isLastPage ? 0 : 1),
+          itemBuilder: (context, index) {
+            if (index ==
+                dashboardViewModel.trades.length -
+                    dashboardViewModel.nextPageTrigger) {
+              if (dashboardViewModel.tradesModel!.links!.next != null) {
+                dashboardViewModel.sellUrl =
+                    dashboardViewModel.tradesModel!.links!.next ?? '';
+                dashboardViewModel.fetchSellTrades();
+              } else {
+                // print("Gotten to the end");
+              }
+            }
+            if (index == dashboardViewModel.trades.length) {
+              if (dashboardViewModel.error) {
+                return Center(
+                    child: errorDialog(
+                        context: context,
+                        size: 15,
+                        dashboardViewModel: dashboardViewModel));
+              } else {
+                return Center(
+                    child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: AppSize.s300.h),
+                  child: const CupertinoActivityIndicator(),
+                ));
+              }
+            }
+            final DashboardTradeData offer = dashboardViewModel.trades[index];
+            return Padding(
+              padding: EdgeInsets.only(
+                  left: AppSize.s12.w,
+                  top: AppSize.s18.h,
+                  right: AppSize.s12.w),
+              child: InkWell(
+                onTap: () {
+                  dashboardViewModel.changeSelectedDashboardTrade(offer);
+                  if (!authProvider.userData.user!.emailVerified! ||
+                      !authProvider.userData.user!.phoneVerified! ||
+                      !authProvider.userData.user!.homeVerified! ||
+                      !authProvider.userData.user!.idCardVerified! ||
+                      authProvider.userData.user!.photo == null) {
+                    openVerifyAccountToTradeView(context);
                   } else {
-                    return Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppSize.s300.h
-                          ),
-                          child: const CupertinoActivityIndicator(),
-                        ));
+                    openSellView(context);
                   }
-                }
-                final DashboardTradeData offer = dashboardViewModel.trades[index];
-                return Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppSize.s12.w
-                  ),
-                  child: InkWell(
-                    onTap: (){
-                      dashboardViewModel.changeSelectedDashboardTrade(offer);
-                      if(!authProvider.userData.user!.emailVerified! || !authProvider.userData.user!.phoneVerified! ||
-                          !authProvider.userData.user!.homeVerified! || !authProvider.userData.user!.idCardVerified! ||
-                          authProvider.userData.user!.photo == null){
-                        openVerifyAccountToTradeView(context);
-                      }else{
-                        openSellView(context);
-                      }
-                    },
-                    child: Container(
-                      ///the container below is the new design widget and i have passed the logic into you, replace with the container above.
-                      // Container(
-                      //   // padding: EdgeInsets.only(top: 10 ),
-                      //   decoration: BoxDecoration(
-                      //     // color: Colors.yellow ,
-                      //     // color: Color(0xfff6f6f6),
-                      //       borderRadius: BorderRadius.circular(12)
-                      //   ),
-                      //   height: 109,
-                      //   width: double.infinity,
-                      //   child: Column(
-                      //     children: [
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children:  [
-                      //           Text("${toBeginningOfSentenceCase(offer.user!.username!)}",style: const TextStyle(
-                      //             fontSize: 17,
-                      //             fontWeight:FontWeight.w500 ,
-                      //             fontFamily: 'Lexend',
-                      //             color: Color(0xff000000),
-                      //
-                      //
-                      //           ),),
-                      //           Text(moneyFormat.format(offer.maxAmount),style: const TextStyle(
-                      //             fontSize: 17,
-                      //             fontWeight:FontWeight.w500 ,
-                      //             fontFamily: 'Lexend',
-                      //             color: Color(0xff000000),
-                      //
-                      //
-                      //           ),),
-                      //
-                      //
-                      //         ],
-                      //       ),
-                      //       const SizedBox(height: 5,),
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           Text("${toBeginningOfSentenceCase(offer.user!.username!)}",style: const TextStyle(
-                      //             fontSize: 14,
-                      //             fontWeight:FontWeight.w400 ,
-                      //             fontFamily: 'Lexend',
-                      //             color: Color(0xff8e8e8e),
-                      //
-                      //
-                      //           ),),
-                      //           const Text('18%',style: TextStyle(
-                      //             fontSize: 14,
-                      //             fontWeight:FontWeight.w400 ,
-                      //             fontFamily: 'Lexend',
-                      //             color: Color(0xff8e8e8e),
-                      //
-                      //
-                      //           ),),
-                      //
-                      //
-                      //         ],
-                      //       ),
-                      //       const SizedBox(height: 5,),
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children:  [
-                      //            Text("${moneyFormat.format(offer.minAmount!)} - ${moneyFormat.format(offer.maxAmount)}",style: const TextStyle(
-                      //             fontSize: 14,
-                      //             fontWeight:FontWeight.w400 ,
-                      //             fontFamily: 'Lexend',
-                      //             color: Color(0xff8e8e8e),
-                      //
-                      //
-                      //           ),),
-                      //           SizedBox(
-                      //             height: MediaQuery.of(context).size.height * 0.041,
-                      //             width: MediaQuery.of(context).size.width * 0.2,
-                      //
-                      //             child: ElevatedButton(
-                      //
-                      //               style: ElevatedButton.styleFrom(
-                      //                 elevation: 1,
-                      //
-                      //                 backgroundColor:  const Color(0xffF4B731),
-                      //               ),
-                      //               onPressed: (){}, child:const FittedBox(
-                      //               child: Text('Sell',style: TextStyle(
-                      //                 fontSize: 14,
-                      //                 fontWeight:FontWeight.w400 ,
-                      //                 fontFamily: 'Lexend',
-                      //                 color: Color(0xff303030),
-                      //
-                      //
-                      //               ),),
-                      //             ),
-                      //             ),
-                      //           ),
-                      //
-                      //
-                      //         ],
-                      //       ),
-                      //       const SizedBox(height: 5,),
-                      //
-                      //       const Divider(
-                      //         thickness: 1.5,
-                      //       ),
-                      //       const SizedBox(height: 5,),
-                      //
-                      //     ],
-                      //   ),
-                      // ),
-                      padding: EdgeInsets.all(AppSize.s15.r),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: ColorManager.filterGreyColor
-                          )
-                      ),
-                      child: Column(
-
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                },
+                child: Container(
+                  // padding: EdgeInsets.only(top: 10),
+                  decoration: BoxDecoration(
+                      // color: Colors.yellow ,
+                      // color: Color(0xfff6f6f6),
+                      borderRadius: BorderRadius.circular(12)),
+                  height: 109,
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomTextWithLineHeight(text: "${toBeginningOfSentenceCase(offer.user!.username!)}",
-                                      fontSize: FontSize.s12,
-                                      fontWeight: FontWeightManager.bold,
-                                      textColor: ColorManager.blackTxtColor,
-                                    ),
-                                    CustomTextWithLineHeight(text: offer.paymentMethod!.name!,
-                                      fontSize: FontSize.s10,
-                                      fontWeight: FontWeightManager.regular,
-                                      textColor: ColorManager.lightTextColor,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  CustomTextWithLineHeight(text: moneyFormat.format(offer.maxAmount),
-                                    fontSize: FontSize.s14,
-                                    fontWeight: FontWeightManager.bold,
-                                    textColor: ColorManager.accentColor,
-                                  ),
-                                  CustomTextWithLineHeight(text: AppStrings.perUSD,
-                                    fontSize: FontSize.s10,
-                                    fontWeight: FontWeightManager.regular,
-                                    textColor: ColorManager.lightTextColor,
-                                  ),
-                                ],
-                              )
-                            ],
+                          Text(
+                            "${toBeginningOfSentenceCase(offer.user!.username!)}",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff000000),
+                            ),
                           ),
-                          SizedBox(height: AppSize.s15.h,),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CustomTextWithLineHeight(text:  "${moneyFormat.format(offer.minAmount!)} - ${moneyFormat.format(offer.maxAmount)}",
-                                  fontSize: FontSize.s10,
-                                  fontWeight: FontWeightManager.regular,
-                                  textColor: ColorManager.lightTextColor,
-                                ),
-                              ),
-                              Container(
-                                height: AppSize.s26.h,
-                                width: AppSize.s96.w,
-                                decoration: BoxDecoration(
-                                    color: ColorManager.primaryColor,
-                                    borderRadius: BorderRadius.circular(AppSize.s3.r)
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: AppSize.s31.w,),
-                                    const CustomTextWithLineHeight(text: AppStrings.sell,
-                                      fontSize: FontSize.s12,
-                                      fontWeight: FontWeightManager.bold,
-                                      textColor: ColorManager.blackTxtColor,
-                                    ),
-                                    SizedBox(width: AppSize.s5.w,),
-                                    SvgPicture.asset(AppImages.btcIconSmallBlack)
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
+                          Text(
+                            moneyFormat.format(offer.maxAmount),
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff000000),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            offer.paymentMethod!.name!,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff8e8e8e),
+                            ),
+                          ),
+                          const Text(
+                            '18%',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff8e8e8e),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "NGN ${moneyFormat.format(offer.minAmount!)} - ${moneyFormat.format(offer.maxAmount)}",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff8e8e8e),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.041,
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 1,
+                                backgroundColor: const Color(0xffF4B731),
+                              ),
+                              onPressed: () {},
+                              child: const FittedBox(
+                                child: Text(
+                                  'Sell',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Lexend',
+                                    color: Color(0xff303030),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Divider(
+                        thickness: 1.5,
+                      ),
+                    ],
                   ),
-                );
-              }),
-        ));
+                ),
+              ),
+            );
+          }),
+    ));
   }
 }
 
-Widget errorDialog({
-  required BuildContext context,
-  required double size, required DashboardViewModel2 dashboardViewModel}){
+Widget errorDialog(
+    {required BuildContext context,
+    required double size,
+    required DashboardViewModel2 dashboardViewModel}) {
   return SizedBox(
     // height: MediaQuery.of(context).size.width * 0.9,
     width: MediaQuery.of(context).size.width * 0.5,
-    child:  Column(
+    child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const CustomTextWithLineHeight(
           text: 'An error occurred when fetching the trades.',
-          textColor: Colors.black, fontWeight: FontWeightManager.medium,
+          textColor: Colors.black,
+          fontWeight: FontWeightManager.medium,
           fontSize: FontSize.s18,
-          alignCenter: true,),
-
-        const SizedBox(height: 10,),
-        CustomElevatedButton(onTap: (){
-          dashboardViewModel.fetchBuyTrades(isRefresh: true);
-        }, backgroundColor: ColorManager.primaryColor,
+          alignCenter: true,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        CustomElevatedButton(
+            onTap: () {
+              dashboardViewModel.fetchBuyTrades(isRefresh: true);
+            },
+            backgroundColor: ColorManager.primaryColor,
             textColor: ColorManager.whiteColor,
             title: "Retry"),
       ],
