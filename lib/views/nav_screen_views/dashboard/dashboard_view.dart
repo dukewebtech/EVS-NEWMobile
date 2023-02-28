@@ -40,7 +40,7 @@ class _DashboardViewState extends State<DashboardView> {
       "isClicked": false,
     },
     {
-      "title": "😃",
+      "title": "Payment",
       "isClicked": false,
     }
   ];
@@ -96,12 +96,12 @@ class _DashboardViewState extends State<DashboardView> {
       // backgroundColor: ColorManager.blackTxtColor,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSize.s25.w),
+          padding: EdgeInsets.only(left: AppSize.s25.w,right: AppSize.s25.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 18),
+                padding: const EdgeInsets.only(top: 9),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -118,7 +118,7 @@ class _DashboardViewState extends State<DashboardView> {
                         onPressed: () {
                           openNotificationsScreen(context);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.notifications,
                           color: Color(0xff4D4D4D),
                         ))
@@ -133,7 +133,7 @@ class _DashboardViewState extends State<DashboardView> {
               // ),
               /// this section is for the header part with amount and the fancy container
               SizedBox(
-                height: AppSize.s20.h,
+                height: AppSize.s18.h,
               ),
               if (changeAll == 0)
                 Container(
@@ -417,7 +417,7 @@ class _DashboardViewState extends State<DashboardView> {
                         },
                         child: Container(
                           height: 40,
-                          color: Color(0xffEFEFEF),
+                          color: const Color(0xffEFEFEF),
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.linearToEaseOut,
@@ -427,7 +427,7 @@ class _DashboardViewState extends State<DashboardView> {
                             decoration: BoxDecoration(
                               color: changeAll == index
                                   ? const Color(0xffF4B731)
-                                  : Color(0xffEFEFEF),
+                                  : const Color(0xffEFEFEF),
                               borderRadius: changeAll == index
                                   ? BorderRadius.circular(6)
                                   : BorderRadius.circular(6),
@@ -556,6 +556,7 @@ class _DashboardViewState extends State<DashboardView> {
               //   ),
               // ),
               if (changeAll == 0) const BuyTradeWidget(),
+              // BuyTradeWidget(),
 
               if (changeAll == 1) const SellTradeWidget(),
               if (changeAll == 2)
@@ -578,40 +579,40 @@ class _DashboardViewState extends State<DashboardView> {
                                     children: [
                                       const Expanded(
                                           child: CustomText(
-                                        text: AppStrings.paymentMethod,
-                                      )),
+                                            text: AppStrings.paymentMethod,
+                                          )),
                                     ],
                                   ),
                                   items: evsPayViewModel
                                       .paymentMethod.paymentMethods
                                       .map((item) =>
-                                          DropdownMenuItem<PaymentMethods>(
-                                              value: item,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  CustomText(text: item.name!)
-                                                ],
-                                              )))
+                                      DropdownMenuItem<PaymentMethods>(
+                                          value: item,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceBetween,
+                                            children: [
+                                              CustomText(text: item.name!)
+                                            ],
+                                          )))
                                       .toList(),
                                   value: selectedPaymentMethod,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedPaymentMethod =
-                                          value as PaymentMethods;
+                                      value as PaymentMethods;
                                     });
                                   },
                                   icon:
-                                      SvgPicture.asset(AppImages.dropDownIcon),
+                                  SvgPicture.asset(AppImages.dropDownIcon),
                                   iconSize: 14,
                                   buttonHeight: 50,
                                   buttonPadding: const EdgeInsets.only(
                                       left: 14, right: 14),
                                   buttonDecoration: BoxDecoration(
                                     borderRadius:
-                                        BorderRadius.circular(AppSize.s6.r),
+                                    BorderRadius.circular(AppSize.s6.r),
                                     border: Border.all(
                                       color: ColorManager.filterGreyColor,
                                     ),
@@ -621,12 +622,12 @@ class _DashboardViewState extends State<DashboardView> {
                                   dropdownPadding: null,
                                   dropdownDecoration: BoxDecoration(
                                     borderRadius:
-                                        BorderRadius.circular(AppSize.s4.r),
+                                    BorderRadius.circular(AppSize.s4.r),
                                     color: ColorManager.whiteColor,
                                   ),
                                   dropdownElevation: 8,
                                   selectedItemHighlightColor:
-                                      ColorManager.filterGreyColor,
+                                  ColorManager.filterGreyColor,
                                   scrollbarAlwaysShow: false,
                                   offset: const Offset(0, 0),
                                 ),
@@ -635,7 +636,7 @@ class _DashboardViewState extends State<DashboardView> {
                           ],
                         ),
                       SizedBox(
-                        height: AppSize.s17.h,
+                        height: AppSize.s18.h,
                       ),
                       Row(
                         children: [
@@ -643,13 +644,13 @@ class _DashboardViewState extends State<DashboardView> {
                             child: TextFormField(
                               controller: amountController,
                               autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                              AutovalidateMode.onUserInteraction,
                               cursorColor: ColorManager.textFieldColor,
                               autofocus: true,
                               maxLines: 1,
                               keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true, signed: false),
+                              const TextInputType.numberWithOptions(
+                                  decimal: true, signed: false),
                               style: const TextStyle(
                                   color: ColorManager.textFieldColor,
                                   fontSize: FontSize.s16),
@@ -680,7 +681,7 @@ class _DashboardViewState extends State<DashboardView> {
                                   ),
                                   borderSide: const BorderSide(
                                       color:
-                                          ColorManager.inactiveInputFieldColor,
+                                      ColorManager.inactiveInputFieldColor,
                                       width: 1),
                                 ),
                                 enabledBorder: OutlineInputBorder(
@@ -690,7 +691,7 @@ class _DashboardViewState extends State<DashboardView> {
                                   ),
                                   borderSide: const BorderSide(
                                       color:
-                                          ColorManager.inactiveInputFieldColor,
+                                      ColorManager.inactiveInputFieldColor,
                                       width: 1),
                                 ),
                                 focusedBorder: OutlineInputBorder(
@@ -701,7 +702,7 @@ class _DashboardViewState extends State<DashboardView> {
                                   ),
                                   borderSide: const BorderSide(
                                       color:
-                                          ColorManager.inactiveInputFieldColor,
+                                      ColorManager.inactiveInputFieldColor,
                                       width: 1),
                                 ),
                                 hintStyle: const TextStyle(
@@ -722,15 +723,15 @@ class _DashboardViewState extends State<DashboardView> {
                           ),
                           Expanded(
                               child: CustomTextField(
-                            controller: btcValueController,
-                            isNumbers: true,
-                            isEnabled: false,
-                            hint: "BTC Value",
-                          )),
+                                controller: btcValueController,
+                                isNumbers: true,
+                                isEnabled: false,
+                                hint: "BTC Value",
+                              )),
                         ],
                       ),
                       SizedBox(
-                        height: AppSize.s20.h,
+                        height: AppSize.s17.h,
                       ),
                       InkWell(
                         onTap: () {
@@ -738,9 +739,9 @@ class _DashboardViewState extends State<DashboardView> {
                               .read<DashboardViewModel2>()
                               .changeFilteredPageNumber(0);
                           String queryParam =
-                              sellOrBuyTab == 0 ? "?type=buy" : "?type=sell";
+                          sellOrBuyTab == 0 ? "?type=buy" : "?type=sell";
                           String paymentMethodParam = selectedPaymentMethod ==
-                                  null
+                              null
                               ? ""
                               : "&payment_method=${selectedPaymentMethod!.code}";
                           String amountParam = amountController.text.isEmpty
@@ -1003,13 +1004,13 @@ class _DashboardViewState extends State<DashboardView> {
               //     ),
               //   ),
 
-              SizedBox(
-                height: AppSize.s26.h,
-              ),
+              // SizedBox(
+              //   height: AppSize.s26.h,
+              // ),
 
               // if (selectedOption == "SELL") const SellTradeWidget(),
 
-              if (selectedOption == "BUY") const BuyTradeWidget(),
+              // if (selectedOption == "BUY") const BuyTradeWidget(),
               // if (selectedOption == "FILTER") const FilterTradeWidget()
             ],
           ),

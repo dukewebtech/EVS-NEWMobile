@@ -11,6 +11,7 @@ import 'app_texts/custom_text.dart';
 
 class NotificationItem extends StatelessWidget {
   final NotificationModelApi notification;
+
   const NotificationItem({Key? key, required this.notification})
       : super(key: key);
 
@@ -21,72 +22,76 @@ class NotificationItem extends StatelessWidget {
           left: AppSize.s27.w, right: AppSize.s18.w, bottom: AppSize.s22.h),
       child: Container(
         // padding: EdgeInsets.only(right: 5),
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Positioned(
-                left: 15,
-                top: 25,
-                child: CircleAvatar(
-                  maxRadius: 15,
-                  backgroundImage: AssetImage(AppImages.btc),
-                )),
-            Positioned(
-              top: 12,
-              left: 55,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 15),
+              child: Row(
                 children: [
-                  Text(
-                    notification.message,
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                        fontFamily: 'Lexend',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: Color(0xff737373)),
+                  const CircleAvatar(
+                    maxRadius: 15,
+                    backgroundImage: AssetImage(AppImages.btc),
                   ),
                   const SizedBox(
-                    height: 2,
+                    width: 10,
                   ),
-                  const Text(
-                    '0.89 BTC',
-                    style: TextStyle(
-                        fontFamily: 'Lexend',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        color: Color(0xff000000)),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    "${notification.createdAt!.year}-${notification.createdAt!.month < 10 ? "0${notification.createdAt!.month}" : notification.createdAt!.month}-${notification.createdAt!.month < 10 ? "0${notification.createdAt!.month}" : notification.createdAt!.month}",
-                    style: const TextStyle(
-                        fontFamily: 'Lexend',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 11,
-                        color: Color(0xffA7A7A7)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        notification.message,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: const TextStyle(
+                            fontFamily: 'Lexend',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            overflow: TextOverflow.ellipsis,
+                            color: Color(0xff737373)),
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      const Text(
+                        '0.89 BTC',
+                        style: TextStyle(
+                            fontFamily: 'Lexend',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                            color: Color(0xff000000)),
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                        "${notification.createdAt!.year}-${notification.createdAt!.month < 10 ? "0${notification.createdAt!.month}" : notification.createdAt!.month}-${notification.createdAt!.month < 10 ? "0${notification.createdAt!.month}" : notification.createdAt!.month}",
+                        style: const TextStyle(
+                            fontFamily: 'Lexend',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 11,
+                            color: Color(0xffA7A7A7)),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            Positioned(
-              left: -10,
-              child: SizedBox(
-                height: 108,
-                width: 15,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  color: Color(0xffF4B731),
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 108,
+            //   width: 15,
+            //   child: Card(
+            //     shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(10)),
+            //     color: Color(0xffF4B731),
+            //   ),
+            // ),
           ],
         ),
-        height: 80,
+        height: 85,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(12)),
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(12)),
       ),
     );
   }

@@ -80,9 +80,10 @@ class SellTradeWidget extends StatelessWidget {
             final DashboardTradeData offer = dashboardViewModel.trades[index];
             return Padding(
               padding: EdgeInsets.only(
-                  left: AppSize.s12.w,
-                  top: AppSize.s18.h,
-                  right: AppSize.s12.w),
+                  // left: AppSize.s12.w,
+                  top: AppSize.s10.h,
+                  // right: AppSize.s12.w
+              ),
               child: InkWell(
                 onTap: () {
                   dashboardViewModel.changeSelectedDashboardTrade(offer);
@@ -97,12 +98,12 @@ class SellTradeWidget extends StatelessWidget {
                   }
                 },
                 child: Container(
-                  // padding: EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 6, left: 5,right: 5,),
                   decoration: BoxDecoration(
                       // color: Colors.yellow ,
                       // color: Color(0xfff6f6f6),
                       borderRadius: BorderRadius.circular(12)),
-                  height: 109,
+                  height: 105,
                   width: double.infinity,
                   child: Column(
                     children: [
@@ -220,12 +221,13 @@ Widget errorDialog(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const CustomTextWithLineHeight(
-          text: 'An error occurred when fetching the trades.',
-          textColor: Colors.black,
-          fontWeight: FontWeightManager.medium,
-          fontSize: FontSize.s18,
-          alignCenter: true,
+        const Padding(
+          padding: EdgeInsets.only(top: 80),
+          child: CustomTextWithLineHeight(
+            text: 'An error occurred when fetching the trades.',
+            textColor: Colors.black, fontWeight: FontWeightManager.medium,
+            fontSize: FontSize.s18,
+            alignCenter: true,),
         ),
         const SizedBox(
           height: 10,

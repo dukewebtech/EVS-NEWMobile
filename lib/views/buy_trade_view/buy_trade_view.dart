@@ -64,7 +64,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
               child: Card(
                 elevation: 0.5,
 
-                color: const Color(0xffF6F6F6),
+                color: Colors.grey.shade200,
                 child: Padding(
                   padding:  EdgeInsets.only(left: 16,top: 18,right: 16),
                   child: Column(
@@ -252,97 +252,97 @@ class _BuyTradeViewState extends State<BuyTradeView> {
               ),
             ),
         /// i added this below container so i can understand the"i will receieve properly to know if it's a textfield with container or just a card with a text"
-        Container(
-            // height: AppSize.s48.h,
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: ColorManager.inputFieldBorder
-                ),
-                borderRadius: BorderRadius.circular(AppSize.s3.r)
-            ),
-            child: Row(
-              children: [
-                Expanded(child:
-                TextFormField(
-                  controller: nairaAmountController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  cursorColor: ColorManager.textFieldColor,
-                  autofocus: true,
-
-                  maxLines: 1,
-                  validator: (value){
-                    if(value!.isNotEmpty && double.parse(value.isEmpty ? "0.0" : value) < dashboardViewModel.selectedDashboardTrade!.minAmount ||
-                        double.parse(value.isEmpty ? "0.0" : value) > dashboardViewModel.selectedDashboardTrade!.maxAmount){
-                      return "Between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}";
-                    }
-                    return null;
-                  },
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
-                  style: const TextStyle(
-                      color: ColorManager.textFieldColor,
-                      fontSize: FontSize.s16
-                  ),
-                  onChanged: (value)async{
-                    if(value.isNotEmpty){
-                        btcAmount = value;
-                       final nairaBtc = await  dashboardViewModel.getNairaToBtcRate(value);
-                       print("Naira value: $nairaBtc");
-                        btcAmountController.text  =  dashboardViewModel.nairaToBtc!.data.btc.toString();
-                        setState(() {
-                        });
-                    }else{
-                      btcAmountController.text =  "";
-                    }
-
-
-
-                  },
-                  decoration: InputDecoration(
-                    filled: false,
-                    counterText: "",
-                    fillColor: ColorManager.whiteColor,
-                    contentPadding: const EdgeInsets.all(10),
-                    hintText: AppStrings.amt,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(AppSize.s3.r),
-                        topLeft: Radius.circular(AppSize.s3.r),
-                      ),
-                      borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
-                          width: 1),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(AppSize.s3.r),
-                        topLeft: Radius.circular(AppSize.s3.r),
-                      ),
-                      borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
-                          width: 1),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      gapPadding: 0.0,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(AppSize.s3.r),
-                        topLeft: Radius.circular(AppSize.s3.r),
-                      ),
-                      borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
-                          width: 1),
-                    ),
-                    hintStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16
-                    ),
-                    labelStyle: const TextStyle(
-                        color: ColorManager.labelTextColor,
-                        fontSize: FontSize.s16
-                    ),
-                    errorStyle: TextStyle(
-                        color: ColorManager.redColor,
-                        fontSize: FontSize.s16
-                    ),
-                  ),
-
-                ),),],),),
+        // Container(
+        //     // height: AppSize.s48.h,
+        //     decoration: BoxDecoration(
+        //         border: Border.all(
+        //             color: ColorManager.inputFieldBorder
+        //         ),
+        //         borderRadius: BorderRadius.circular(AppSize.s3.r)
+        //     ),
+        //     child: Row(
+        //       children: [
+        //         Expanded(child:
+        //         TextFormField(
+        //           controller: nairaAmountController,
+        //           autovalidateMode: AutovalidateMode.onUserInteraction,
+        //           cursorColor: ColorManager.textFieldColor,
+        //           autofocus: true,
+        //
+        //           maxLines: 1,
+        //           validator: (value){
+        //             if(value!.isNotEmpty && double.parse(value.isEmpty ? "0.0" : value) < dashboardViewModel.selectedDashboardTrade!.minAmount ||
+        //                 double.parse(value.isEmpty ? "0.0" : value) > dashboardViewModel.selectedDashboardTrade!.maxAmount){
+        //               return "Between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}";
+        //             }
+        //             return null;
+        //           },
+        //           keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
+        //           style: const TextStyle(
+        //               color: ColorManager.textFieldColor,
+        //               fontSize: FontSize.s16
+        //           ),
+        //           onChanged: (value)async{
+        //             if(value.isNotEmpty){
+        //                 btcAmount = value;
+        //                final nairaBtc = await  dashboardViewModel.getNairaToBtcRate(value);
+        //                print("Naira value: $nairaBtc");
+        //                 btcAmountController.text  =  dashboardViewModel.nairaToBtc!.data.btc.toString();
+        //                 setState(() {
+        //                 });
+        //             }else{
+        //               btcAmountController.text =  "";
+        //             }
+        //
+        //
+        //
+        //           },
+        //           decoration: InputDecoration(
+        //             filled: false,
+        //             counterText: "",
+        //             fillColor: ColorManager.whiteColor,
+        //             contentPadding: const EdgeInsets.all(10),
+        //             hintText: AppStrings.amt,
+        //             border: OutlineInputBorder(
+        //               borderRadius: BorderRadius.only(
+        //                 bottomLeft: Radius.circular(AppSize.s3.r),
+        //                 topLeft: Radius.circular(AppSize.s3.r),
+        //               ),
+        //               borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+        //                   width: 1),
+        //             ),
+        //             enabledBorder: OutlineInputBorder(
+        //               borderRadius: BorderRadius.only(
+        //                 bottomLeft: Radius.circular(AppSize.s3.r),
+        //                 topLeft: Radius.circular(AppSize.s3.r),
+        //               ),
+        //               borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+        //                   width: 1),
+        //             ),
+        //             focusedBorder: OutlineInputBorder(
+        //               gapPadding: 0.0,
+        //               borderRadius: BorderRadius.only(
+        //                 bottomLeft: Radius.circular(AppSize.s3.r),
+        //                 topLeft: Radius.circular(AppSize.s3.r),
+        //               ),
+        //               borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+        //                   width: 1),
+        //             ),
+        //             hintStyle: const TextStyle(
+        //                 color: ColorManager.labelTextColor,
+        //                 fontSize: FontSize.s16
+        //             ),
+        //             labelStyle: const TextStyle(
+        //                 color: ColorManager.labelTextColor,
+        //                 fontSize: FontSize.s16
+        //             ),
+        //             errorStyle: TextStyle(
+        //                 color: ColorManager.redColor,
+        //                 fontSize: FontSize.s16
+        //             ),
+        //           ),
+        //
+        //         ),),],),),
             SizedBox(height: AppSize.s38.h,),
             const Text('Terms',style: TextStyle(
               fontSize: 16,
@@ -353,11 +353,11 @@ class _BuyTradeViewState extends State<BuyTradeView> {
 
             ),),
             SizedBox(height: AppSize.s15.h,),
-             Text(lorem,style:const  TextStyle(
+             Text(lorem,style:  TextStyle(
               fontSize: 14,
               fontWeight:FontWeight.w400 ,
               fontFamily: 'Lexend',
-              color: Color(0xffBFBFBF),
+              color: Colors.black.withOpacity(0.6),
 
 
 

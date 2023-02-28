@@ -88,7 +88,7 @@ class ReceiveTradeView extends StatelessWidget {
                   child: Card(
                     elevation: 3,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
-                    color: const Color(0xffF6F6F6),
+                    color: Colors.grey.shade200,
                     child: Center(
                       child: QrImage(
                         backgroundColor: const Color(0xfff6f6f6),
@@ -109,20 +109,23 @@ class ReceiveTradeView extends StatelessWidget {
             ),
              SizedBox(
               height: 62,
-              width: 313,
+              width: 340,
               child: Padding(
-                padding: EdgeInsets.only(top: 14, left: 20, right: 20),
+                padding: const EdgeInsets.only(top: 14, left: 15, right: 15),
                 child: Card(
                   elevation: 0.5,
-                  color: Color(0xffF6F6F6),
+                  color: Colors.grey.shade200,
                   child: Center(
-                    child: Text(
-                      authProvider.walletData.data!.isEmpty? "No address" : authProvider.walletData.data![0].receivableAddress!.address!,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Lexend',
-                        color: Color(0xff6D6D6D),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8),
+                      child: Text(
+                        authProvider.walletData.data!.isEmpty? "No address" : authProvider.walletData.data![0].receivableAddress!.address!,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Lexend',
+                          color: Color(0xff6D6D6D),
+                        ),
                       ),
                     ),
                   ),

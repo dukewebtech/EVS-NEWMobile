@@ -68,6 +68,7 @@ class _NavScreenViewState extends State<NavScreenView> {
             backgroundColor: ColorManager.whiteColor,
           ),
 
+
         ],
         currentIndex: navViewModel.selectedPage,
         selectedItemColor: ColorManager.primaryColor,
