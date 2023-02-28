@@ -248,7 +248,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Lexend',
-                      color:Colors.grey.shade700,
+                      color: Colors.grey.shade700,
                     ),
                   ),
                   SizedBox(
@@ -305,7 +305,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Lexend',
-                              color:Colors.grey.shade700,
+                              color: Colors.grey.shade700,
                             ),
                           ),
                           SizedBox(
@@ -313,7 +313,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                           ),
                           SizedBox(
                             height: 72,
-                            width: 176,
+                            width: MediaQuery.of(context).size.width * 0.45,
                             child: TextFormField(
                               controller: minimumController,
                               decoration: InputDecoration(
@@ -367,7 +367,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                           ),
                           SizedBox(
                             height: 72,
-                            width: 176,
+                            width: MediaQuery.of(context).size.width * 0.45,
                             child: TextFormField(
                               controller: maximumController,
                               decoration: InputDecoration(
@@ -415,7 +415,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Lexend',
-                      color:Colors.grey.shade700,
+                      color: Colors.grey.shade700,
                     ),
                   ),
                   SizedBox(
@@ -463,7 +463,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                   ),
                   Center(
                     child:
-                    Consumer<MyAdsViewModel>(builder: (ctx, myAd, child) {
+                        Consumer<MyAdsViewModel>(builder: (ctx, myAd, child) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         if (myAd.resMessage != '') {
                           showTopSnackBar(
@@ -495,23 +495,23 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                       .isNotEmpty) {
                                 DateTime now = DateTime.now();
                                 DateTime expiryDate =
-                                now.add(const Duration(days: 30));
+                                    now.add(const Duration(days: 30));
                                 final createOffer = CreateOfferModel(
                                     location: locationController.text,
                                     type: isBuy ? "BUY" : "SELL",
                                     minAmount: int.parse(
                                         minimumController.text.trim()),
                                     maxAmount:
-                                    int.parse(maximumController.text),
+                                        int.parse(maximumController.text),
                                     paymentMethodCode:
-                                    selectedPaymentMethod!.code!,
+                                        selectedPaymentMethod!.code!,
                                     currencyCode: "NGN",
                                     coinSymbol: "btc",
                                     tags: ["payment", "special offers"],
                                     terms: termsOfTradeController.text,
                                     paymentWindow: 90,
                                     profitMargin:
-                                    int.parse(rateController.text),
+                                        int.parse(rateController.text),
                                     paymentDetails: "",
                                     trackLiquidity: false,
                                     trustedPeopleOnly: false,
@@ -520,21 +520,21 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                 myOfferModel.createOfferModel = createOffer;
 
                                 final isCreated =
-                                await myOfferModel.createOffer(
-                                    context: context,
-                                    createOfferModel: createOffer);
+                                    await myOfferModel.createOffer(
+                                        context: context,
+                                        createOfferModel: createOffer);
 
                                 print("Is Created: $isCreated");
                                 if (isCreated) {
                                   Future.delayed(const Duration(seconds: 2),
-                                          () {
-                                        setState(() {
-                                          context
-                                              .read<NavScreenViewModel>()
-                                              .updateSelectedPage(1);
-                                          openNavScreen(context);
-                                        });
-                                      });
+                                      () {
+                                    setState(() {
+                                      context
+                                          .read<NavScreenViewModel>()
+                                          .updateSelectedPage(1);
+                                      openNavScreen(context);
+                                    });
+                                  });
                                 }
                               } else {
                                 print('Some fields are empty');
@@ -733,7 +733,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Lexend',
-                      color:Colors.grey.shade700,
+                      color: Colors.grey.shade700,
                     ),
                   ),
                   SizedBox(
@@ -790,7 +790,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Lexend',
-                              color:Colors.grey.shade700,
+                              color: Colors.grey.shade700,
                             ),
                           ),
                           SizedBox(
@@ -900,7 +900,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Lexend',
-                      color:Colors.grey.shade700,
+                      color: Colors.grey.shade700,
                     ),
                   ),
                   SizedBox(
@@ -948,7 +948,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                   ),
                   Center(
                     child:
-                    Consumer<MyAdsViewModel>(builder: (ctx, myAd, child) {
+                        Consumer<MyAdsViewModel>(builder: (ctx, myAd, child) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         if (myAd.resMessage != '') {
                           showTopSnackBar(
@@ -980,23 +980,23 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                       .isNotEmpty) {
                                 DateTime now = DateTime.now();
                                 DateTime expiryDate =
-                                now.add(const Duration(days: 30));
+                                    now.add(const Duration(days: 30));
                                 final createOffer = CreateOfferModel(
                                     location: locationController.text,
                                     type: isBuy ? "BUY" : "SELL",
                                     minAmount: int.parse(
                                         minimumController.text.trim()),
                                     maxAmount:
-                                    int.parse(maximumController.text),
+                                        int.parse(maximumController.text),
                                     paymentMethodCode:
-                                    selectedPaymentMethod!.code!,
+                                        selectedPaymentMethod!.code!,
                                     currencyCode: "NGN",
                                     coinSymbol: "btc",
                                     tags: ["payment", "special offers"],
                                     terms: termsOfTradeController.text,
                                     paymentWindow: 90,
                                     profitMargin:
-                                    int.parse(rateController.text),
+                                        int.parse(rateController.text),
                                     paymentDetails: "",
                                     trackLiquidity: false,
                                     trustedPeopleOnly: false,
@@ -1005,21 +1005,21 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                 myOfferModel.createOfferModel = createOffer;
 
                                 final isCreated =
-                                await myOfferModel.createOffer(
-                                    context: context,
-                                    createOfferModel: createOffer);
+                                    await myOfferModel.createOffer(
+                                        context: context,
+                                        createOfferModel: createOffer);
 
                                 print("Is Created: $isCreated");
                                 if (isCreated) {
                                   Future.delayed(const Duration(seconds: 2),
-                                          () {
-                                        setState(() {
-                                          context
-                                              .read<NavScreenViewModel>()
-                                              .updateSelectedPage(1);
-                                          openNavScreen(context);
-                                        });
-                                      });
+                                      () {
+                                    setState(() {
+                                      context
+                                          .read<NavScreenViewModel>()
+                                          .updateSelectedPage(1);
+                                      openNavScreen(context);
+                                    });
+                                  });
                                 }
                               } else {
                                 print('Some fields are empty');

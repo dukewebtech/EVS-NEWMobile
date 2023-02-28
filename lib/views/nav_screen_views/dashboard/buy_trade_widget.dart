@@ -51,11 +51,35 @@ class BuyTradeWidget extends StatelessWidget {
       },
       child: dashboardViewModel.buyTrades.isEmpty
           ? Center(
-              child: const Text('Empty boy',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                  )),
+              child: SizedBox(
+                // height: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 80),
+                      child: CustomTextWithLineHeight(
+                        text: 'You do not have an active trade.',
+                        textColor: Colors.black,
+                        fontWeight: FontWeightManager.medium,
+                        fontSize: FontSize.s18,
+                        alignCenter: true,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // CustomElevatedButton(
+                    //     onTap: () {
+                    //       dashboardViewModel.fetchBuyTrades(isRefresh: true);
+                    //     },
+                    //     backgroundColor: ColorManager.primaryColor,
+                    //     textColor: ColorManager.whiteColor,
+                    //     title: "Retry"),
+                  ],
+                ),
+              ),
             )
           : ListView.builder(
               itemCount: dashboardViewModel.buyTrades.length +

@@ -80,9 +80,9 @@ class SellTradeWidget extends StatelessWidget {
             final DashboardTradeData offer = dashboardViewModel.trades[index];
             return Padding(
               padding: EdgeInsets.only(
-                  // left: AppSize.s12.w,
-                  top: AppSize.s10.h,
-                  // right: AppSize.s12.w
+                // left: AppSize.s12.w,
+                top: AppSize.s10.h,
+                // right: AppSize.s12.w
               ),
               child: InkWell(
                 onTap: () {
@@ -94,11 +94,15 @@ class SellTradeWidget extends StatelessWidget {
                       authProvider.userData.user!.photo == null) {
                     openVerifyAccountToTradeView(context);
                   } else {
-                    openSellView(context);
+                    // openSellView(context);
                   }
                 },
                 child: Container(
-                  padding: const EdgeInsets.only(top: 6, left: 5,right: 5,),
+                  padding: const EdgeInsets.only(
+                    top: 6,
+                    left: 5,
+                    right: 5,
+                  ),
                   decoration: BoxDecoration(
                       // color: Colors.yellow ,
                       // color: Color(0xfff6f6f6),
@@ -179,7 +183,9 @@ class SellTradeWidget extends StatelessWidget {
                                 elevation: 1,
                                 backgroundColor: const Color(0xffF4B731),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                openSellView(context);
+                              },
                               child: const FittedBox(
                                 child: Text(
                                   'Sell',
@@ -225,9 +231,11 @@ Widget errorDialog(
           padding: EdgeInsets.only(top: 80),
           child: CustomTextWithLineHeight(
             text: 'An error occurred when fetching the trades.',
-            textColor: Colors.black, fontWeight: FontWeightManager.medium,
+            textColor: Colors.black,
+            fontWeight: FontWeightManager.medium,
             fontSize: FontSize.s18,
-            alignCenter: true,),
+            alignCenter: true,
+          ),
         ),
         const SizedBox(
           height: 10,
