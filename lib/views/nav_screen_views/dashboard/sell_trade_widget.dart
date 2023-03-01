@@ -47,172 +47,206 @@ class SellTradeWidget extends StatelessWidget {
         dashboardViewModel.resetBuyTradePageNumber();
         await dashboardViewModel.fetchSellTrades(isRefresh: true);
       },
-      child: ListView.builder(
-          itemCount: dashboardViewModel.trades.length +
-              (dashboardViewModel.isLastPage ? 0 : 1),
-          itemBuilder: (context, index) {
-            if (index ==
-                dashboardViewModel.trades.length -
-                    dashboardViewModel.nextPageTrigger) {
-              if (dashboardViewModel.tradesModel!.links!.next != null) {
-                dashboardViewModel.sellUrl =
-                    dashboardViewModel.tradesModel!.links!.next ?? '';
-                dashboardViewModel.fetchSellTrades();
-              } else {
-                // print("Gotten to the end");
-              }
-            }
-            if (index == dashboardViewModel.trades.length) {
-              if (dashboardViewModel.error) {
-                return Center(
-                    child: errorDialog(
-                        context: context,
-                        size: 15,
-                        dashboardViewModel: dashboardViewModel));
-              } else {
-                return Center(
-                    child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: AppSize.s300.h),
-                  child: const CupertinoActivityIndicator(),
-                ));
-              }
-            }
-            final DashboardTradeData offer = dashboardViewModel.trades[index];
-            return Padding(
-              padding: EdgeInsets.only(
-                // left: AppSize.s12.w,
-                top: AppSize.s10.h,
-                // right: AppSize.s12.w
+      child: dashboardViewModel.trades.isEmpty
+          ? Center(
+              child: SizedBox(
+                // height: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(top: 80),
+                      child: CustomTextWithLineHeight(
+                        text: 'You do not have an active trade.',
+                        textColor: Colors.black,
+                        fontWeight: FontWeightManager.medium,
+                        fontSize: FontSize.s18,
+                        alignCenter: true,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // CustomElevatedButton(
+                    //     onTap: () {
+                    //       dashboardViewModel.fetchBuyTrades(isRefresh: true);
+                    //     },
+                    //     backgroundColor: ColorManager.primaryColor,
+                    //     textColor: ColorManager.whiteColor,
+                    //     title: "Retry"),
+                  ],
+                ),
               ),
-              child: InkWell(
-                onTap: () {
-                  dashboardViewModel.changeSelectedDashboardTrade(offer);
-                  if (!authProvider.userData.user!.emailVerified! ||
-                      !authProvider.userData.user!.phoneVerified! ||
-                      !authProvider.userData.user!.homeVerified! ||
-                      !authProvider.userData.user!.idCardVerified! ||
-                      authProvider.userData.user!.photo == null) {
-                    openVerifyAccountToTradeView(context);
+            )
+          : ListView.builder(
+              itemCount: dashboardViewModel.trades.length +
+                  (dashboardViewModel.isLastPage ? 0 : 1),
+              itemBuilder: (context, index) {
+                if (index ==
+                    dashboardViewModel.trades.length -
+                        dashboardViewModel.nextPageTrigger) {
+                  if (dashboardViewModel.tradesModel!.links!.next != null) {
+                    dashboardViewModel.sellUrl =
+                        dashboardViewModel.tradesModel!.links!.next ?? '';
+                    dashboardViewModel.fetchSellTrades();
                   } else {
-                    // openSellView(context);
+                    // print("Gotten to the end");
                   }
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(
-                    top: 6,
-                    left: 5,
-                    right: 5,
+                }
+                if (index == dashboardViewModel.trades.length) {
+                  if (dashboardViewModel.error) {
+                    return Center(
+                        child: errorDialog(
+                            context: context,
+                            size: 15,
+                            dashboardViewModel: dashboardViewModel));
+                  } else {
+                    return Center(
+                        child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: AppSize.s300.h),
+                      child: const CupertinoActivityIndicator(),
+                    ));
+                  }
+                }
+                final DashboardTradeData offer =
+                    dashboardViewModel.trades[index];
+                return Padding(
+                  padding: EdgeInsets.only(
+                    // left: AppSize.s12.w,
+                    top: AppSize.s10.h,
+                    // right: AppSize.s12.w
                   ),
-                  decoration: BoxDecoration(
-                      // color: Colors.yellow ,
-                      // color: Color(0xfff6f6f6),
-                      borderRadius: BorderRadius.circular(12)),
-                  height: 105,
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: InkWell(
+                    onTap: () {
+                      dashboardViewModel.changeSelectedDashboardTrade(offer);
+                      if (!authProvider.userData.user!.emailVerified! ||
+                          !authProvider.userData.user!.phoneVerified! ||
+                          !authProvider.userData.user!.homeVerified! ||
+                          !authProvider.userData.user!.idCardVerified! ||
+                          authProvider.userData.user!.photo == null) {
+                        openVerifyAccountToTradeView(context);
+                      } else {
+                        // openSellView(context);
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                        top: 6,
+                        left: 5,
+                        right: 5,
+                      ),
+                      decoration: BoxDecoration(
+                          // color: Colors.yellow ,
+                          // color: Color(0xfff6f6f6),
+                          borderRadius: BorderRadius.circular(12)),
+                      height: 105,
+                      width: double.infinity,
+                      child: Column(
                         children: [
-                          Text(
-                            "${toBeginningOfSentenceCase(offer.user!.username!)}",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lexend',
-                              color: Color(0xff000000),
-                            ),
-                          ),
-                          Text(
-                            moneyFormat.format(offer.maxAmount),
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Lexend',
-                              color: Color(0xff000000),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            offer.paymentMethod!.name!,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Lexend',
-                              color: Color(0xff8e8e8e),
-                            ),
-                          ),
-                          const Text(
-                            '18%',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Lexend',
-                              color: Color(0xff8e8e8e),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "NGN ${moneyFormat.format(offer.minAmount!)} - ${moneyFormat.format(offer.maxAmount)}",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Lexend',
-                              color: Color(0xff8e8e8e),
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.041,
-                            width: MediaQuery.of(context).size.width * 0.2,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                elevation: 1,
-                                backgroundColor: const Color(0xffF4B731),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${toBeginningOfSentenceCase(offer.user!.username!)}",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Lexend',
+                                  color: Color(0xff000000),
+                                ),
                               ),
-                              onPressed: () {
-                                openSellView(context);
-                              },
-                              child: const FittedBox(
-                                child: Text(
-                                  'Sell',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Lexend',
-                                    color: Color(0xff303030),
+                              Text(
+                                moneyFormat.format(offer.maxAmount),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Lexend',
+                                  color: Color(0xff000000),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                offer.paymentMethod!.name!,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Lexend',
+                                  color: Color(0xff8e8e8e),
+                                ),
+                              ),
+                              const Text(
+                                '18%',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Lexend',
+                                  color: Color(0xff8e8e8e),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "NGN ${moneyFormat.format(offer.minAmount!)} - ${moneyFormat.format(offer.maxAmount)}",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Lexend',
+                                  color: Color(0xff8e8e8e),
+                                ),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.041,
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 1,
+                                    backgroundColor: const Color(0xffF4B731),
+                                  ),
+                                  onPressed: () {
+                                    openSellView(context);
+                                  },
+                                  child: const FittedBox(
+                                    child: Text(
+                                      'Sell',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Lexend',
+                                        color: Color(0xff303030),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const Divider(
+                            thickness: 1.5,
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Divider(
-                        thickness: 1.5,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          }),
+                );
+              }),
     ));
   }
 }

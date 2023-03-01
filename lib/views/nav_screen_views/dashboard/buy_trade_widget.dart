@@ -56,8 +56,8 @@ class BuyTradeWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Padding(
+                  children: const [
+                    Padding(
                       padding: EdgeInsets.only(top: 80),
                       child: CustomTextWithLineHeight(
                         text: 'You do not have an active trade.',
@@ -67,7 +67,7 @@ class BuyTradeWidget extends StatelessWidget {
                         alignCenter: true,
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     // CustomElevatedButton(
@@ -150,7 +150,7 @@ class BuyTradeWidget extends StatelessWidget {
                           authProvider.userData.user!.photo == null) {
                         openVerifyAccountToTradeView(context);
                       } else {
-                        openSellView(context);
+                        // openSellView(context);
                       }
                     },
                     child: Container(
@@ -240,7 +240,9 @@ class BuyTradeWidget extends StatelessWidget {
                                     elevation: 1,
                                     backgroundColor: const Color(0xffF4B731),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    openSellView(context);
+                                  },
                                   child: const FittedBox(
                                     child: Text(
                                       'Buy',
