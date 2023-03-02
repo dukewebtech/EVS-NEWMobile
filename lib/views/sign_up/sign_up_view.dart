@@ -35,57 +35,93 @@ class _SignUpViewState extends State<SignUpView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.whiteColor,
-      appBar: evsPayCustomAppBar(
-          context, AppStrings.back,
-          leadingTap: (){
-            Navigator.pop(context);
-          }),
-      body: SafeArea(child: SingleChildScrollView(
+      // appBar: evsPayCustomAppBar(
+      //     context, AppStrings.back,
+      //     leadingTap: (){
+      //       Navigator.pop(context);
+      //     }),
+      body: SafeArea(
+          child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: AppSize.s73.h,),
-
-            Center(
-              child: SizedBox(height: AppSize.s54.h,
-                child: const CustomTextWithLineHeight(text: AppStrings.signUp, textColor: ColorManager.blackTextColor, fontSize: FontSize.s30, fontWeight: FontWeightManager.bold,),),
+            SizedBox(
+              height: AppSize.s20.h,
             ),
-
-            SizedBox(height: AppSize.s58.h,),
-
-            Center(
-              child: SizedBox(height: AppSize.s28.h,
-                child: const CustomTextWithLineHeight(text: AppStrings.createYourEvsAccount, textColor: ColorManager.semiBlackTextColor, fontWeight: FontWeightManager.regular, fontSize: FontSize.s18,),),
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 25,
+              ),
             ),
-
-            SizedBox(height: AppSize.s40.h,),
-
+            // SizedBox(
+            //   height: AppSize.s5.h,
+            // ),
+            const Center(
+              child: CustomTextWithLineHeight(
+                text: AppStrings.signUp,
+                textColor: ColorManager.blackTextColor,
+                fontSize: FontSize.s30,
+                fontWeight: FontWeightManager.bold,
+              ),
+            ),
+            // Center(
+            //   child: SizedBox(
+            //     height: AppSize.s30.h,
+            //     child:
+            //   ),
+            // ),
+            SizedBox(
+              height: AppSize.s5.h,
+            ),
+            const Center(
+              child: CustomTextWithLineHeight(
+                text: AppStrings.createYourEvsAccount,
+                textColor: ColorManager.semiBlackTextColor,
+                fontWeight: FontWeightManager.regular,
+                fontSize: FontSize.s18,
+              ),
+            ),
+            SizedBox(
+              height: AppSize.s40.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSize.s30.w),
               child: Column(
                 children: [
                   const LabelText(text: AppStrings.userName),
-                  SizedBox(height: AppSize.s5.h,),
+                  SizedBox(
+                    height: AppSize.s5.h,
+                  ),
                   CustomTextField(
                     controller: userNameController,
                     hint: AppStrings.userName,
                   ),
 
-                  SizedBox(height: AppSize.s40.h,),
+                  SizedBox(
+                    height: AppSize.s40.h,
+                  ),
 
                   const LabelText(text: AppStrings.email),
-                  SizedBox(height: AppSize.s5.h,),
+                  SizedBox(
+                    height: AppSize.s5.h,
+                  ),
                   CustomTextField(
                     controller: userEmailController,
                     hint: AppStrings.email,
                   ),
 
-
-
-                  SizedBox(height: AppSize.s40.h,),
+                  SizedBox(
+                    height: AppSize.s40.h,
+                  ),
 
                   const LabelText(text: AppStrings.phone),
-                  SizedBox(height: AppSize.s5.h,),
+                  SizedBox(
+                    height: AppSize.s5.h,
+                  ),
                   CustomTextField(
                     controller: phoneNumberController,
                     hint: AppStrings.phoneNumber,
@@ -93,10 +129,14 @@ class _SignUpViewState extends State<SignUpView> {
                     isNumbers: true,
                   ),
 
-                  SizedBox(height: AppSize.s40.h,),
+                  SizedBox(
+                    height: AppSize.s40.h,
+                  ),
 
                   const LabelText(text: AppStrings.password),
-                  SizedBox(height: AppSize.s5.h,),
+                  SizedBox(
+                    height: AppSize.s5.h,
+                  ),
 
                   Container(
                       decoration: BoxDecoration(
@@ -108,11 +148,10 @@ class _SignUpViewState extends State<SignUpView> {
                         controller: passwordController,
                         cursorColor: ColorManager.textFieldColor,
                         keyboardType: TextInputType.text,
-                        obscureText:  obscureText,
+                        obscureText: obscureText,
                         style: const TextStyle(
                             color: ColorManager.textFieldColor,
-                            fontSize: FontSize.s16
-                        ),
+                            fontSize: FontSize.s16),
                         decoration: InputDecoration(
                           filled: false,
                           counterText: "",
@@ -120,52 +159,55 @@ class _SignUpViewState extends State<SignUpView> {
                           contentPadding: const EdgeInsets.all(10),
                           hintText: AppStrings.password,
                           suffixIcon: InkWell(
-                            onTap: (){
+                            onTap: () {
                               setState(() {
                                 obscureText = !obscureText;
                               });
                             },
-                            child: Icon(
-                                obscureText ?  Icons.visibility_off : Icons.visibility
-                            ),
+                            child: Icon(obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                            borderSide: const BorderSide(
+                                color: ColorManager.inactiveInputFieldColor,
                                 width: 1),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                            borderSide: const BorderSide(
+                                color: ColorManager.inactiveInputFieldColor,
                                 width: 1),
                           ),
                           focusedBorder: OutlineInputBorder(
                             gapPadding: 0.0,
                             borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(color: ColorManager.textFieldColor,
-                                width: 1),
+                            borderSide: const BorderSide(
+                                color: ColorManager.textFieldColor, width: 1),
                           ),
                           hintStyle: const TextStyle(
                               color: ColorManager.labelTextColor,
-                              fontSize: FontSize.s16
-                          ),
+                              fontSize: FontSize.s16),
                           labelStyle: const TextStyle(
                               color: ColorManager.labelTextColor,
-                              fontSize: FontSize.s16
-                          ),
+                              fontSize: FontSize.s16),
                         ),
-                      )
-                  ),
+                      )),
                   // CustomTextField(
                   //   controller: passwordController,
                   //   hint: AppStrings.password,
                   //   obSecureText: true,
                   // ),
 
-                  SizedBox(height: AppSize.s40.h,),
+                  SizedBox(
+                    height: AppSize.s40.h,
+                  ),
 
                   const LabelText(text: AppStrings.confirmPassword),
-                  SizedBox(height: AppSize.s5.h,),
+                  SizedBox(
+                    height: AppSize.s5.h,
+                  ),
                   Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.r),
@@ -176,23 +218,22 @@ class _SignUpViewState extends State<SignUpView> {
                         controller: confirmPasswordController,
                         cursorColor: ColorManager.textFieldColor,
                         keyboardType: TextInputType.text,
-                        obscureText:  obscureText,
+                        obscureText: obscureText,
                         style: const TextStyle(
                             color: ColorManager.textFieldColor,
-                            fontSize: FontSize.s16
-                        ),
+                            fontSize: FontSize.s16),
                         decoration: InputDecoration(
                           filled: false,
                           counterText: "",
                           suffixIcon: InkWell(
-                            onTap: (){
+                            onTap: () {
                               setState(() {
                                 obscureText = !obscureText;
                               });
                             },
-                            child: Icon(
-                                obscureText ?  Icons.visibility_off : Icons.visibility
-                            ),
+                            child: Icon(obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility),
                           ),
                           fillColor: ColorManager.whiteColor,
                           contentPadding: const EdgeInsets.all(10),
@@ -200,112 +241,126 @@ class _SignUpViewState extends State<SignUpView> {
                           // suffixIcon: showSuffixIcon ? Icon() : Container(),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                            borderSide: const BorderSide(
+                                color: ColorManager.inactiveInputFieldColor,
                                 width: 1),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
+                            borderSide: const BorderSide(
+                                color: ColorManager.inactiveInputFieldColor,
                                 width: 1),
                           ),
                           focusedBorder: OutlineInputBorder(
                             gapPadding: 0.0,
                             borderRadius: BorderRadius.circular(5.r),
-                            borderSide: const BorderSide(color: ColorManager.textFieldColor,
-                                width: 1),
+                            borderSide: const BorderSide(
+                                color: ColorManager.textFieldColor, width: 1),
                           ),
                           hintStyle: const TextStyle(
                               color: ColorManager.labelTextColor,
-                              fontSize: FontSize.s16
-                          ),
+                              fontSize: FontSize.s16),
                           labelStyle: const TextStyle(
                               color: ColorManager.labelTextColor,
-                              fontSize: FontSize.s16
-                          ),
+                              fontSize: FontSize.s16),
                         ),
-                      )
+                      )),
+
+                  SizedBox(
+                    height: AppSize.s38.h,
                   ),
 
+                  Consumer<AuthenticationProvider>(builder: (ctx, auth, child) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (auth.resMessage != '') {
+                        showTopSnackBar(
+                          context,
+                          CustomSnackBar.info(
+                            message: auth.resMessage,
+                            backgroundColor: auth.success
+                                ? ColorManager.deepGreenColor
+                                : ColorManager.primaryColor,
+                          ),
+                        );
 
-                  SizedBox(height: AppSize.s38.h,),
-
-
-                  Consumer<AuthenticationProvider>(
-                      builder: (ctx, auth, child) {
-                        WidgetsBinding.instance.
-                        addPostFrameCallback((_) {
-                          if (auth.resMessage != '') {
+                        ///Clear the response message to avoid duplicate
+                        auth.clear();
+                      }
+                    });
+                    return CustomElevatedButton(
+                        onTap: () {
+                          //  Perform sign up here
+                          if (userNameController.text.trim().isNotEmpty &&
+                              userEmailController.text.trim().isNotEmpty &&
+                              passwordController.text.trim().isNotEmpty &&
+                              confirmPasswordController.text
+                                  .trim()
+                                  .isNotEmpty &&
+                              phoneNumberController.text.trim().isNotEmpty) {
+                            auth.registerUser(
+                                email: userEmailController.text.trim(),
+                                password: passwordController.text.trim(),
+                                context: context,
+                                phone: phoneNumberController.text.trim(),
+                                username: userNameController.text);
+                          } else if (passwordController.text.trim() !=
+                              confirmPasswordController.text.trim()) {
                             showTopSnackBar(
                               context,
-                              CustomSnackBar.info(
-                                message: auth.resMessage,
-                                backgroundColor:
-                                auth.success ? ColorManager.deepGreenColor : ColorManager.primaryColor,
+                              const CustomSnackBar.info(
+                                message: AppStrings.passwordMismatch,
+                                backgroundColor: ColorManager.primaryColor,
                               ),
                             );
-                            ///Clear the response message to avoid duplicate
-                            auth.clear();
+                          } else {
+                            showTopSnackBar(
+                              context,
+                              const CustomSnackBar.info(
+                                message: AppStrings.allFieldsRequired,
+                                backgroundColor: ColorManager.primaryColor,
+                              ),
+                            );
                           }
-                        });
-                      return CustomElevatedButton(onTap: (){
-                        //  Perform sign up here
-                        if(userNameController.text.trim().isNotEmpty &&
-                            userEmailController.text.trim().isNotEmpty &&
-                        passwordController.text.trim().isNotEmpty &&
-                        confirmPasswordController.text.trim().isNotEmpty &&
-                        phoneNumberController.text.trim().isNotEmpty
-                        ){
-                          auth.registerUser(
-                              email: userEmailController.text.trim(),
-                              password: passwordController.text.trim(),
-                              context: context,
-                              phone: phoneNumberController.text.trim(),
-                              username: userNameController.text);
-                        }else if(
-                        passwordController.text.trim()
-                            != confirmPasswordController.text.trim()
-                        ){
-                          showTopSnackBar(
-                            context,
-                            const CustomSnackBar.info(
-                              message: AppStrings.passwordMismatch,
-                              backgroundColor:
-                              ColorManager.primaryColor,
-                            ),
-                          );
-                        }else{
-                          showTopSnackBar(
-                            context,
-                            const CustomSnackBar.info(
-                              message: AppStrings.allFieldsRequired,
-                              backgroundColor:
-                              ColorManager.primaryColor,
-                            ),
-                          );
-                        }
+                        },
+                        backgroundColor: ColorManager.primaryColor,
+                        textColor: ColorManager.blackTextColor,
+                        title: AppStrings.signUp.toUpperCase());
+                  }),
 
-                      }, backgroundColor: ColorManager.primaryColor, textColor: ColorManager.blackTextColor, title: AppStrings.signUp.toUpperCase());
-                    }
+                  SizedBox(
+                    height: AppSize.s18.h,
                   ),
-
-                  SizedBox(height: AppSize.s18.h,),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children:  [
-                      const CustomText(text: AppStrings.alreadyHaveAnAccount, fontSize: FontSize.s18, fontWeight: FontWeightManager.light, textColor: ColorManager.labelTextColor,),
-                      SizedBox(width: AppSize.s5.w,),
+                    children: [
+                      const CustomText(
+                        text: AppStrings.alreadyHaveAnAccount,
+                        fontSize: FontSize.s18,
+                        fontWeight: FontWeightManager.light,
+                        textColor: ColorManager.labelTextColor,
+                      ),
+                      SizedBox(
+                        width: AppSize.s5.w,
+                      ),
                       InkWell(
-                        onTap: (){
-                          openLoginScreen(context);
-                        },
-                          child: const CustomText(text: AppStrings.signIn, fontSize: FontSize.s18, fontWeight: FontWeightManager.bold, textColor: ColorManager.primaryColor,)),
-
+                          onTap: () {
+                            openLoginScreen(context);
+                          },
+                          child: const CustomText(
+                            text: AppStrings.signIn,
+                            fontSize: FontSize.s18,
+                            fontWeight: FontWeightManager.bold,
+                            textColor: ColorManager.primaryColor,
+                          )),
                     ],
                   )
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: AppSize.s25.h,
+            ),
           ],
         ),
       )),

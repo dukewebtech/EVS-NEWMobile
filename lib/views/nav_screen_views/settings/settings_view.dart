@@ -94,6 +94,7 @@ Future<void> _showMyDialog(BuildContext context) async {
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
+        // contentPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         title: const Text(
           'Sign Out',
@@ -106,7 +107,7 @@ Future<void> _showMyDialog(BuildContext context) async {
           child: ListBody(
             children: <Widget>[
               Text(
-                'Would you like to approve of this log-out?',
+                'Are you sure you want to sign-out?',
                 style: TextStyle(
                   fontFamily: 'Lexend',
                   color: Colors.grey.shade800,
@@ -118,13 +119,23 @@ Future<void> _showMyDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text('Approve'),
+            child: Text(
+              'Approve',
+              style: TextStyle(
+                color: Colors.grey.shade800,
+              ),
+            ),
             onPressed: () {
               openLoginScreen(context);
             },
           ),
           TextButton(
-            child: const Text('Decline'),
+            child: const Text(
+              'Decline',
+              style: TextStyle(
+                color: Color(0xffF4B731),
+              ),
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },

@@ -53,6 +53,8 @@ dependencies:
 
   flutter_countdown_timer: ^4.1.0
   iconsax: ^0.0.8
+  firebase_core: ^2.7.0
+  firebase_messaging: ^14.2.5
 
 
 
