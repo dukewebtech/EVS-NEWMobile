@@ -16,33 +16,31 @@ import 'package:provider/provider.dart';
 import 'resources/theme_manager.dart';
 import 'view_models/dashboard_view_model.dart';
 import 'view_models/general_view_model.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => AuthenticationProvider()),
-      ChangeNotifierProvider(create: (_) => UserProfileViewModel()),
-      ChangeNotifierProvider(create: (_) => EvsPayViewModel()),
-      ChangeNotifierProvider(create: (_) => TradeViewModel()),
-      ChangeNotifierProvider(create: (_) => MyAdsViewModel()),
-      ChangeNotifierProvider(create: (_) => WalletViewModel()),
-      ChangeNotifierProvider(create: (_) => TradeViewModel()),
-      ChangeNotifierProvider(create: (_) => ChatsViewModel()),
-      ChangeNotifierProvider(create: (_) => DashboardViewModel2()),
-      ChangeNotifierProvider(create: (_) =>  NavScreenViewModel()),
-    ],
-      child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => AuthenticationProvider()),
+    ChangeNotifierProvider(create: (_) => UserProfileViewModel()),
+    ChangeNotifierProvider(create: (_) => EvsPayViewModel()),
+    ChangeNotifierProvider(create: (_) => TradeViewModel()),
+    ChangeNotifierProvider(create: (_) => MyAdsViewModel()),
+    ChangeNotifierProvider(create: (_) => WalletViewModel()),
+    ChangeNotifierProvider(create: (_) => TradeViewModel()),
+    ChangeNotifierProvider(create: (_) => ChatsViewModel()),
+    ChangeNotifierProvider(create: (_) => DashboardViewModel2()),
+    ChangeNotifierProvider(create: (_) => NavScreenViewModel()),
+  ], child: const MyApp()));
 
   // whenever the initialization is completed, remove the splash screen:
   FlutterNativeSplash.remove();
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -55,11 +53,10 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.splashRoute,
-          theme: getApplicationTheme(),
-        ));
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: RouteGenerator.getRoute,
+              initialRoute: Routes.splashRoute,
+              theme: getApplicationTheme(),
+            ));
   }
 }
-

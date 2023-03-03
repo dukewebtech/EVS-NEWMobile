@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "214568726617",
+    "project_id": "evspay-aec3f",
+    "storage_bucket": "evspay-aec3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214568726617:android:28b60b5bee7ab33650c148",
+        "android_client_info": {
+          "package_name": "com.example.evs_pay_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214568726617-10gvmqt401qijvhu28irg4j0egv4kpu7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVLxpKD0eD7dUo10KC-C_Xz2PkFdqQgUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214568726617-10gvmqt401qijvhu28irg4j0egv4kpu7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
