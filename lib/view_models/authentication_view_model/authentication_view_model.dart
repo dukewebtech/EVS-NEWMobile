@@ -11,8 +11,6 @@ import '../../model/user_model/user_model.dart';
 import '../../resources/navigation_utils.dart';
 import '../../widgets/loading_indicator.dart';
 
-
-
 class AuthenticationProvider extends ChangeNotifier {
   ///Setter
   bool _isLoading = false;
@@ -24,7 +22,6 @@ class AuthenticationProvider extends ChangeNotifier {
 
   WalletModel? _walletData;
 
-
   ///Getter
   bool get isLoading => _isLoading;
   bool get success => _success;
@@ -34,10 +31,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
   WalletModel get walletData => _walletData!;
 
-
-
   String get pin => _pin;
-
 
   set phoneNumber(String value) {
     if (value != _phoneNumber) {
@@ -70,30 +64,29 @@ class AuthenticationProvider extends ChangeNotifier {
       }
     };
     try {
-      final response =
-      await http.post(
-          Uri.parse("$baseURL${Endpoints.login}"),
+      final response = await http.post(Uri.parse("$baseURL${Endpoints.login}"),
           headers: {
             'Content-Type': 'application/json',
-          }, body: json.encode(body));
+          },
+          body: json.encode(body));
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
-          _userData = userModelFromJson(response.body);
-          prefs.setString(accessToken, _userData!.accessToken!);
-          print("Saved token: ${prefs.getString(accessToken)}");
-          _isLoading = false;
-          _success = true;
-          _resMessage = "";
-          notifyListeners();
-          Navigator.pop(context);
+        _userData = userModelFromJson(response.body);
+        prefs.setString(accessToken, _userData!.accessToken!);
+        print("Saved token: ${prefs.getString(accessToken)}");
+        _isLoading = false;
+        _success = true;
+        _resMessage = "";
+        notifyListeners();
+        Navigator.pop(context);
 
-          await getWalletAddress(context: context);
+        await getWalletAddress(context: context);
         openNavScreen(context);
-
+        print('e tapp me o');
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");
-        final userNameError =  res['errors']['email'][0] ?? "";
+        final userNameError = res['errors']['email'][0] ?? "";
         _resMessage = "${res['message']}$userNameError";
         _isLoading = false;
         _success = false;
@@ -140,26 +133,26 @@ class AuthenticationProvider extends ChangeNotifier {
     };
     try {
       final response =
-      await http.put(
-          Uri.parse("$baseURL${Endpoints.recoverPassword}"),
-          headers: {
-            'Content-Type': 'application/json',
-          }, body: json.encode(body));
+          await http.put(Uri.parse("$baseURL${Endpoints.recoverPassword}"),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: json.encode(body));
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
         _isLoading = false;
         _success = true;
         print("Success: $success");
-        _resMessage = "Success! We have sent a password reset token to your email. Please check your email to continue the reset process.";
+        _resMessage =
+            "Success! We have sent a password reset token to your email. Please check your email to continue the reset process.";
         notifyListeners();
         Navigator.pop(context);
 
         openLoginScreen(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");
-        final userNameError =  res['errors']['email'][0] ?? "";
+        final userNameError = res['errors']['email'][0] ?? "";
         _resMessage = "${res['message']}$userNameError";
         _isLoading = false;
         _success = false;
@@ -205,13 +198,13 @@ class AuthenticationProvider extends ChangeNotifier {
       "phone_number": phoneNumber,
     };
     try {
-      final response =
-      await http.put(
+      final response = await http.put(
           Uri.parse("$baseURL${Endpoints.verifyPhoneNumberInit}"),
           headers: {
             'Authorization': 'Bearer ${_userData!.accessToken}',
             'Content-Type': 'application/json',
-          }, body: json.encode(body));
+          },
+          body: json.encode(body));
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
         _isLoading = false;
@@ -222,7 +215,6 @@ class AuthenticationProvider extends ChangeNotifier {
         Navigator.pop(context);
 
         openPhoneNumberVerificationScreen(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");
@@ -272,12 +264,12 @@ class AuthenticationProvider extends ChangeNotifier {
     };
     try {
       final response =
-      await http.put(
-          Uri.parse("$baseURL${Endpoints.verifyEmail}"),
-          headers: {
-            'Authorization': 'Bearer ${_userData!.accessToken}',
-            'Content-Type': 'application/json',
-          }, body: json.encode(body));
+          await http.put(Uri.parse("$baseURL${Endpoints.verifyEmail}"),
+              headers: {
+                'Authorization': 'Bearer ${_userData!.accessToken}',
+                'Content-Type': 'application/json',
+              },
+              body: json.encode(body));
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
         _isLoading = false;
@@ -288,7 +280,6 @@ class AuthenticationProvider extends ChangeNotifier {
         Navigator.pop(context);
 
         openNavScreen(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");
@@ -320,7 +311,6 @@ class AuthenticationProvider extends ChangeNotifier {
       // print("exception: $e");
     }
   }
-
 
   //VERIFY PHONE NUMBER
   void verifyPhoneNumberComplete({
@@ -338,13 +328,13 @@ class AuthenticationProvider extends ChangeNotifier {
       "otp": otp,
     };
     try {
-      final response =
-      await http.put(
+      final response = await http.put(
           Uri.parse("$baseURL${Endpoints.verifyPhoneNumberComplete}"),
           headers: {
             'Authorization': 'Bearer ${_userData!.accessToken}',
             'Content-Type': 'application/json',
-          }, body: json.encode(body));
+          },
+          body: json.encode(body));
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
         _isLoading = false;
@@ -355,7 +345,6 @@ class AuthenticationProvider extends ChangeNotifier {
         Navigator.pop(context);
 
         openLoginScreen(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");
@@ -387,7 +376,6 @@ class AuthenticationProvider extends ChangeNotifier {
       // print("exception: $e");
     }
   }
-
 
   //VERIFY PHONE NUMBER
   void verifyIdentity({
@@ -407,13 +395,12 @@ class AuthenticationProvider extends ChangeNotifier {
       "file": idCard,
     };
     try {
-      final response =
-      await http.put(
-          Uri.parse("$baseURL$endPoint"),
+      final response = await http.put(Uri.parse("$baseURL$endPoint"),
           headers: {
             'Authorization': 'Bearer ${_userData!.accessToken}',
             'Content-Type': 'application/json',
-          }, body: json.encode(body));
+          },
+          body: json.encode(body));
       print(" Status code: ${response.statusCode}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         final res = json.decode(response.body);
@@ -477,13 +464,12 @@ class AuthenticationProvider extends ChangeNotifier {
       "file": idCard,
     };
     try {
-      final response =
-      await http.put(
-          Uri.parse("$baseURL$endPoint"),
+      final response = await http.put(Uri.parse("$baseURL$endPoint"),
           headers: {
             'Authorization': 'Bearer ${_userData!.accessToken}',
             'Content-Type': 'application/json',
-          }, body: json.encode(body));
+          },
+          body: json.encode(body));
       print(" Status code: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         final res = json.decode(response.body);
@@ -530,7 +516,6 @@ class AuthenticationProvider extends ChangeNotifier {
     return updated;
   }
 
-
   //REGISTER USER
   void registerUser({
     required String email,
@@ -554,11 +539,11 @@ class AuthenticationProvider extends ChangeNotifier {
     };
     try {
       final response =
-      await http.post(
-          Uri.parse("$baseURL${Endpoints.register}"),
-          headers: {
-            'Content-Type': 'application/json',
-          }, body: json.encode(body));
+          await http.post(Uri.parse("$baseURL${Endpoints.register}"),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: json.encode(body));
       print("Registration response: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
@@ -568,16 +553,21 @@ class AuthenticationProvider extends ChangeNotifier {
         notifyListeners();
         Navigator.pop(context);
 
-        openLoginScreen(context);
+          /// when a user registers, user should be redirected to the bottomNav screen not the login screen *Kelvin*
+         await getWalletAddress(context: context);
+        openNavScreen(context);
 
+        /// I kelvin, commented this code because  after registration a user should be directed to the botoom nav screen.
+        // openLoginScreen(context);
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("response: ${response.body}");
-        final userNameError =  res['errors']['username']
-            == null ? "" : res['errors']['username'][0];
+        final userNameError = res['errors']['username'] == null
+            ? ""
+            : res['errors']['username'][0];
 
-        final emailError =  res['errors']['email']
-            == null ? "" : res['errors']['email'][0];
+        final emailError =
+            res['errors']['email'] == null ? "" : res['errors']['email'][0];
         _resMessage = "${res['message']}$userNameError $emailError";
         _isLoading = false;
         notifyListeners();
@@ -604,9 +594,6 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
-
-
-
   void clear() {
     _resMessage = "";
     notifyListeners();
@@ -618,13 +605,13 @@ class AuthenticationProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      final response =
-      await http.get(
+      final response = await http.get(
         Uri.parse("$baseURL${Endpoints.wallet}"),
-          headers: {
-            'Authorization': 'Bearer ${_userData!.accessToken}',
-            'Content-Type': 'application/json',
-          },);
+        headers: {
+          'Authorization': 'Bearer ${_userData!.accessToken}',
+          'Content-Type': 'application/json',
+        },
+      );
       print("Wallet info Response body: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
@@ -637,7 +624,7 @@ class AuthenticationProvider extends ChangeNotifier {
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");
-        final userNameError =  res['errors']['email'][0] ?? "";
+        final userNameError = res['errors']['email'][0] ?? "";
         _resMessage = "${res['message']}$userNameError";
         _isLoading = false;
         notifyListeners();
@@ -661,6 +648,4 @@ class AuthenticationProvider extends ChangeNotifier {
       print("exception: $e");
     }
   }
-
-
 }

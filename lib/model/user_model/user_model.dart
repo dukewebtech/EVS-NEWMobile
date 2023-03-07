@@ -10,7 +10,7 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   UserModel({
-    this.accessToken,
+    this.accessToken ,
     this.tokenType,
     this.expiresIn,
     this.lastSeen,

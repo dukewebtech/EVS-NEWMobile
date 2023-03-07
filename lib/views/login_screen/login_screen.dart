@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomTextField(
                     controller: userNameOrEmailController,
-                    hint: 'enter email',
+                    hint: 'Enter Email',
                   ),
                   SizedBox(
                     height: AppSize.s32.h,
@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           fillColor: ColorManager.whiteColor,
                           contentPadding: const EdgeInsets.all(10),
-                          hintText: 'password',
+                          hintText: 'Enter Password',
                           // suffixIcon: showSuffixIcon ? Icon() : Container(),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.r),
@@ -262,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: () {
                             //  Navigate to sign up screen
                             openSignUp(context);
-                            getToken();
+                            
                           },
                           child: const CustomText(
                             text: AppStrings.signUp,
