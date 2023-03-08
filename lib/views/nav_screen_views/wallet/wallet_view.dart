@@ -53,206 +53,216 @@ class _WalletViewState extends State<WalletView> {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: const Color.fromRGBO(248, 248, 248, 1),
-              height: AppSize.s229.h,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: Center(
-                      child: CustomTextWithLineHeight(
-                        text: AppStrings.wallet,
-                        textColor: ColorManager.lightTextColor,
-                        fontWeight: FontWeightManager.bold,
-                        fontSize: FontSize.s16,
-                      ),
-                    ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 20, left: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xffF4B731),
+                    borderRadius: BorderRadius.circular(12),
+                    image: const DecorationImage(
+                        image: AssetImage("assets/images/shape.png"),
+                        fit: BoxFit.cover),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSize.s30.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const CustomTextWithLineHeight(
-                          text: AppStrings.walletBalance,
-                          textColor: ColorManager.blackTextColor,
-                        ),
-                        // SizedBox(
-                        //   height: AppSize.s12.h,
-                        // ),
 
-                        Consumer<DashboardViewModel2>(
-                            builder: (ctx, dashboardViewModel, child) {
-                          return CustomTextWithLineHeight(
-                            text:
-                                "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading ? "0.00" : dashboardViewModel.btcNairaModel == null ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
-                            textColor: ColorManager.amountColor,
-                            fontSize: FontSize.s22,
-                            fontWeight: FontWeightManager.semiBold,
-                          );
-                        }),
-
-                        CustomTextWithLineHeight(
-                          text: authProvider.walletData.data!.isEmpty
-                              ? "0.00"
-                              : "${authProvider.walletData.data![0].balance} BTC",
-                          textColor: ColorManager.blackTextColor,
-                          fontSize: FontSize.s14,
-                          fontWeight: FontWeightManager.regular,
-                        ),
-
-                        // CustomTextWithLineHeight(
-                        //   text: authProvider.walletData.data!.isEmpty? "0.00" : AppStrings.amount,
-                        //   textColor: ColorManager.blackTextColor,
-                        //   fontSize: FontSize.s22,
-                        //   fontWeight: FontWeightManager.bold,),
-                        //
-                        // CustomTextWithLineHeight(
-                        //   text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
-                        //   textColor: ColorManager.blackTextColor,
-                        //   fontSize: FontSize.s14,
-                        //   fontWeight: FontWeightManager.regular,),
-
-                        SizedBox(
-                          height: AppSize.s21.h,
-                        ),
-                        SizedBox(
-                          // width: AppSize.s300.w,
-                          height: AppSize.s40.h,
-                          child: ListView.builder(
-                              itemCount: transactionTypes.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                final transaction = transactionTypes[index];
-                                return Padding(
-                                  padding:
-                                      EdgeInsets.only(right: AppSize.s10.w),
-                                  child: InkWell(
-                                    onTap: () {
-                                      if (authProvider
-                                          .walletData.data!.isEmpty) {
-                                        showTopSnackBar(
-                                          context,
-                                          const CustomSnackBar.info(
-                                            message:
-                                                "Verify your email to trade",
-                                            backgroundColor:
-                                                ColorManager.primaryColor,
-                                          ),
-                                        );
-                                      } else {
-                                        if (index == 0) {
-                                          openSendTradeScreen(context);
-                                        } else {
-                                          openReceiveTradeScreen(context);
-                                        }
-                                      }
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: AppSize.s24.w,
-                                          vertical: AppSize.s5.h),
-                                      // height: AppSize.s28.h,
-                                      width: AppSize.s100.w,
-                                      decoration: BoxDecoration(
-                                          color: transaction.containerColor,
-                                          borderRadius: BorderRadius.circular(
-                                              AppSize.s4.r)),
-                                      alignment: Alignment.center,
-                                      child: CustomTextWithLineHeight(
-                                        text: transaction.title,
-                                        textColor: transaction.textColor,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-                color: ColorManager.whiteColor,
-                // height: AppSize.s40.h,
-                width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppSize.s27.w, vertical: AppSize.s18.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // color: const Color.fromRGBO(248, 248, 248, 1),
+                  height: AppSize.s165.h,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CustomTextWithLineHeight(
-                        text: AppStrings.transactionHistory,
-                        fontSize: FontSize.s18,
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: AppSize.s20.w,
+                          right: AppSize.s20.w,
+                          top: AppSize.s15.h,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const CustomTextWithLineHeight(
+                              text: AppStrings.walletBalance,
+                              textColor: ColorManager.blackTextColor,
+                            ),
+                            // SizedBox(
+                            //   height: AppSize.s12.h,
+                            // ),
+
+                            Consumer<DashboardViewModel2>(
+                                builder: (ctx, dashboardViewModel, child) {
+                              return CustomTextWithLineHeight(
+                                text:
+                                    "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading ? "0.00" : dashboardViewModel.btcNairaModel == null ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
+                                textColor: ColorManager.amountColor,
+                                fontSize: FontSize.s22,
+                                fontWeight: FontWeightManager.semiBold,
+                              );
+                            }),
+
+                            CustomTextWithLineHeight(
+                              text: authProvider.walletData.data!.isEmpty
+                                  ? "0.00"
+                                  : "${authProvider.walletData.data![0].balance} BTC",
+                              textColor: ColorManager.blackTextColor,
+                              fontSize: FontSize.s14,
+                              fontWeight: FontWeightManager.regular,
+                            ),
+
+                            // CustomTextWithLineHeight(
+                            //   text: authProvider.walletData.data!.isEmpty? "0.00" : AppStrings.amount,
+                            //   textColor: ColorManager.blackTextColor,
+                            //   fontSize: FontSize.s22,
+                            //   fontWeight: FontWeightManager.bold,),
+                            //
+                            // CustomTextWithLineHeight(
+                            //   text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
+                            //   textColor: ColorManager.blackTextColor,
+                            //   fontSize: FontSize.s14,
+                            //   fontWeight: FontWeightManager.regular,),
+
+                            SizedBox(
+                              height: AppSize.s21.h,
+                            ),
+                            SizedBox(
+                              // width: AppSize.s300.w,
+                              height: AppSize.s40.h,
+                              child: ListView.builder(
+                                  itemCount: transactionTypes.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    final transaction = transactionTypes[index];
+                                    return Padding(
+                                      padding:
+                                          EdgeInsets.only(right: AppSize.s10.w),
+                                      child: InkWell(
+                                        onTap: () {
+                                          if (authProvider
+                                              .walletData.data!.isEmpty) {
+                                            showTopSnackBar(
+                                              context,
+                                              const CustomSnackBar.info(
+                                                message:
+                                                    "Verify your email to trade",
+                                                backgroundColor:
+                                                    ColorManager.primaryColor,
+                                              ),
+                                            );
+                                          } else {
+                                            if (index == 0) {
+                                              openSendTradeScreen(context);
+                                            } else {
+                                              openReceiveTradeScreen(context);
+                                            }
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: AppSize.s24.w,
+                                              vertical: AppSize.s5.h),
+                                          // height: AppSize.s28.h,
+                                          width: AppSize.s100.w,
+                                          decoration: BoxDecoration(
+                                              color: transaction.containerColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      AppSize.s4.r)),
+                                          alignment: Alignment.center,
+                                          child: CustomTextWithLineHeight(
+                                            text: transaction.title,
+                                            textColor: transaction.textColor,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
-                      PopupMenuButton(
-                          itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: const [
-                                          CustomTextWithLineHeight(
-                                              text: AppStrings.pending),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: AppSize.s13.h,
-                                      ),
-                                      SvgPicture.asset(AppImages.popupMenuIcon),
-                                    ],
-                                  ),
-                                  value: 1,
-                                  onTap: () {
-                                    // print("pending");
-                                  },
-                                ),
-                                PopupMenuItem(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: const [
-                                          CustomTextWithLineHeight(
-                                              text: AppStrings.completed),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: AppSize.s13.h,
-                                      ),
-                                      SvgPicture.asset(AppImages.popupMenuIcon),
-                                    ],
-                                  ),
-                                  value: 1,
-                                  onTap: () {
-                                    // print("pending");
-                                  },
-                                ),
-                                PopupMenuItem(
-                                  child: Column(
-                                    children: const [
-                                      CustomTextWithLineHeight(
-                                          text: AppStrings.cancelled),
-                                    ],
-                                  ),
-                                  value: 1,
-                                  onTap: () {
-                                    // print("pending");
-                                  },
-                                ),
-                              ])
                     ],
                   ),
-                )),
-            const TransactionWidget()
-          ],
+                ),
+              ),
+              Container(
+                  color: ColorManager.whiteColor,
+                  // height: AppSize.s40.h,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppSize.s27.w, vertical: AppSize.s18.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const CustomTextWithLineHeight(
+                          text: AppStrings.transactionHistory,
+                          fontSize: FontSize.s18,
+                        ),
+                        PopupMenuButton(
+                            itemBuilder: (context) => [
+                                  PopupMenuItem(
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: const [
+                                            CustomTextWithLineHeight(
+                                                text: AppStrings.pending),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: AppSize.s13.h,
+                                        ),
+                                        SvgPicture.asset(
+                                            AppImages.popupMenuIcon),
+                                      ],
+                                    ),
+                                    value: 1,
+                                    onTap: () {
+                                      // print("pending");
+                                    },
+                                  ),
+                                  PopupMenuItem(
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: const [
+                                            CustomTextWithLineHeight(
+                                                text: AppStrings.completed),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: AppSize.s13.h,
+                                        ),
+                                        SvgPicture.asset(
+                                            AppImages.popupMenuIcon),
+                                      ],
+                                    ),
+                                    value: 1,
+                                    onTap: () {
+                                      // print("pending");
+                                    },
+                                  ),
+                                  PopupMenuItem(
+                                    child: Column(
+                                      children: const [
+                                        CustomTextWithLineHeight(
+                                            text: AppStrings.cancelled),
+                                      ],
+                                    ),
+                                    value: 1,
+                                    onTap: () {
+                                      // print("pending");
+                                    },
+                                  ),
+                                ])
+                      ],
+                    ),
+                  )),
+              const TransactionWidget()
+            ],
+          ),
         ),
       ),
     );
