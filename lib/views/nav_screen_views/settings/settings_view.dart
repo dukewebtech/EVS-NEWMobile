@@ -72,7 +72,16 @@ class SettingsView extends StatelessWidget {
             ),
             SettingsItem(
                 onTap: () {
-                  _showMyDialog(context);
+                  showMyDialog(context,
+                      title: 'Sign Out',
+                      approveColor: Colors.grey.shade800,
+                      declineColor: Color(0xffF4B731)
+
+,
+                      description: 'Are you sure you want to sign-out?',
+                      dismissible: true, callback: () {
+                    openLoginScreen(context);
+                  });
 
                   // openLoginScreen(context);
                 },
@@ -88,17 +97,26 @@ class SettingsView extends StatelessWidget {
   }
 }
 
-Future<void> _showMyDialog(BuildContext context) async {
+//callback
+
+
+Future<void> showMyDialog(BuildContext context,
+    {required String title,
+    required Color approveColor,
+    required Color declineColor,
+    required String description,
+    required Function callback,
+    required bool dismissible}) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: dismissible, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
         // contentPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        title: const Text(
-          'Sign Out',
-          style: TextStyle(
+        title: Text(
+          title,
+          style: const TextStyle(
             fontFamily: 'Lexend',
             color: Color(0xff000000),
           ),
@@ -107,7 +125,7 @@ Future<void> _showMyDialog(BuildContext context) async {
           child: ListBody(
             children: <Widget>[
               Text(
-                'Are you sure you want to sign-out?',
+                description,
                 style: TextStyle(
                   fontFamily: 'Lexend',
                   color: Colors.grey.shade800,
@@ -122,18 +140,18 @@ Future<void> _showMyDialog(BuildContext context) async {
             child: Text(
               'Approve',
               style: TextStyle(
-                color: Colors.grey.shade800,
+                color: approveColor
               ),
             ),
             onPressed: () {
-              openLoginScreen(context);
+              callback();
             },
           ),
           TextButton(
-            child: const Text(
+            child:  Text(
               'Decline',
               style: TextStyle(
-                color: Color(0xffF4B731),
+                color: declineColor,
               ),
             ),
             onPressed: () {

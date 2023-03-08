@@ -34,10 +34,11 @@ class AppStrings {
   static const confirmPinForApp = "Confirm  pin for app login and transactions";
   static const verifyYourEmail = "Verify your email";
   static const enterTheCode = "Please enter the code sent to email@demo.com";
-  static const confirmationCode  = "Confirmation code";
+  static const confirmationCode = "Confirmation code";
   static const verifyAccount = "Verify Account";
   static const recoverMyPassword = "Recover my password";
-  static const enterTheEmailAddress = "Enter the email address for your Evs Pay account and we will send a reset link to your inbox. Follow the link to reset your password.";
+  static const enterTheEmailAddress =
+      "Enter the email address for your Evs Pay account and we will send a reset link to your inbox. Follow the link to reset your password.";
   static const settings = "Settings";
   static const security = "Security";
   static const notifications = "Notifications";
@@ -51,25 +52,32 @@ class AppStrings {
   static const signOut = "Sign Out";
   static const securitySettings = "Security Settings";
   static const twoFactorAuth = "Two-factor Authentication";
-  static const with2StepVerification = "With 2-Step Verification, you'll protect your account with both your password and your phone.";
+  static const with2StepVerification =
+      "With 2-Step Verification, you'll protect your account with both your password and your phone.";
   static const changePassword = "Change Password";
-  static const receiveNotificationOfNew = "Receive notifications of new online payments in your advertisements.";
+  static const receiveNotificationOfNew =
+      "Receive notifications of new online payments in your advertisements.";
   static const allowBioMetrics = "Allow bio metrics ";
-  static const receiveNotificationOfNewRelease = "Receive notifications of new online escrow releases.";
+  static const receiveNotificationOfNewRelease =
+      "Receive notifications of new online escrow releases.";
   static const changePin = "Change Pin";
   static const changeTransactionPin = "Change transaction Pin";
   static const notificationSettings = "Notification Settings";
   static const newTradeRequest = "New trade request";
-  static const receiveNotificationOfNewTrade = "Receive notifications of new trade requests.";
+  static const receiveNotificationOfNewTrade =
+      "Receive notifications of new trade requests.";
   static const newDisputes = "New disputes";
   static const receiveNotificationsOfNewDisputes = "New disputes";
   static const newOnlinePayment = "New online payments";
-  static const receiveNotificationsOfNewOnlinePayments = "Receive notifications of new online payments in your advertisements.";
+  static const receiveNotificationsOfNewOnlinePayments =
+      "Change your password.";
   static const onlineEscrowRelease = "Online escrow released";
-  static const receiveNotificationsOfNewOnlineEscrowReleases = "Receive notifications of new online escrow releases.";
+  static const receiveNotificationsOfNewOnlineEscrowReleases =
+      "Receive notifications of new online escrow releases.";
   static const notification = "Notification";
   static const profileEdit = "Profile edit";
-  static const tapOnTheImageToChangeProfilePicture = "Tap on the image to change the profile picture ";
+  static const tapOnTheImageToChangeProfilePicture =
+      "Tap on the image to change the profile picture ";
   static const name = "Name";
   static const ngn = "NGN";
   static const phone = "Phone";
@@ -89,17 +97,22 @@ class AppStrings {
   static const proofOfAddress = "Proof Of Address";
   static const paymentMethod = "Payment Method";
   static const selectCoin = "Select Coin";
-  static const uploadEitherCable = "Upload either Cable TV bill such as DSTV bill or Utility bill for services to the address.";
+  static const uploadEitherCable =
+      "Upload either Cable TV bill such as DSTV bill or Utility bill for services to the address.";
   static const uploadYourID = "Upload your ID ";
-  static const uploadEitherYourPassport = "Upload either your passport, driver’s licence or other national ID. ";
+  static const uploadEitherYourPassport =
+      "Upload either your passport, driver’s licence or other national ID. ";
   static const upload = "Upload";
   static const takeAShot = "Snap shot";
-  static const youWouldHaveToTake = "You would have to take a selfie for verification of your identity";
+  static const youWouldHaveToTake =
+      "You would have to take a selfie for verification of your identity";
   static const frontOfCard = "Front of card";
-  static const positionAll4CornersOf = "Position all 4 corners of the front clearly in the frame and remove any over";
+  static const positionAll4CornersOf =
+      "Position all 4 corners of the front clearly in the frame and remove any over";
   static const submitted = "Submitted";
   static const verifyPhone = "Verify Your Phone";
-  static const enterTheEmail = "Enter the email address for your Evs Pay account and we will send a reset link to your inbox. Follow the link to reset your password.";
+  static const enterTheEmail =
+      "Enter the email address for your Evs Pay account and we will send a reset link to your inbox. Follow the link to reset your password.";
   static const resendVerification = "Resend Verification ";
   static const issuedInYourCountry = "Issued in your country";
   static const sendALivePicture = "Send a live picture of yourself";
@@ -119,7 +132,8 @@ class AppStrings {
   static const pending = "Pending";
   static const completed = "Completed";
   static const cancelled = "Cancelled";
-  static const youHaveNotComplete = "You have to complete your Verification to trade";
+  static const youHaveNotComplete =
+      "You have to complete your Verification to trade";
   static const sell = "SELL";
   static const buy = "BUY";
   static const buyNow = "Buy Now";
@@ -147,7 +161,8 @@ class AppStrings {
   static const copyAddressToClipboard = "Copy address to clipboard";
   static const saveQrCode = "Save QR Code";
   static const transactionPin = "Transaction pin";
-  static const enterPinToCompleteTransaction = "Enter PIN to complete transaction ";
+  static const enterPinToCompleteTransaction =
+      "Enter PIN to complete transaction ";
   static const amt = "Amount";
   static const close = "Close";
   static const myAds = "My Ads";
@@ -185,22 +200,20 @@ class AppStrings {
   static const disputed = "Disputed";
   static const allFieldsRequired = "All fields are required";
   static const passwordMismatch = "All fields are required";
-  static const emailVerified =  "Email Verified";
-  static const phoneVerified =  "Phone number Verified";
-  static const addressVerified =  "Address Verified";
-  static const idVerified =  "ID Verified";
-  static const selfieVerified =  "Selfie Verified";
+  static const emailVerified = "Email Verified";
+  static const phoneVerified = "Phone number Verified";
+  static const addressVerified = "Address Verified";
+  static const idVerified = "ID Verified";
+  static const selfieVerified = "Selfie Verified";
   static const fillAllRequiredFields = "Fill all required fields";
   static const specifyAmountToSell = "Specify Amount To Sell";
   static const buyer = "buyer";
-  static const youHaveNotCreatedAnyOffer = "You have not created any offers yet";
+  static const youHaveNotCreatedAnyOffer =
+      "You have not created any offers yet";
   static const youHaveNoTrade = "You have no trade yet";
   static const secureEscrow = "Secure escrow + Automated trade with";
-  static const transferFundsTo = "Transfer funds to your wallet address to start trading.";
-  static const transferFundsToYourWallet = "Transfer funds to your wallet address to get started.";
-
-
-
-
-
+  static const transferFundsTo =
+      "Transfer funds to your wallet address to start trading.";
+  static const transferFundsToYourWallet =
+      "Transfer funds to your wallet address to get started.";
 }

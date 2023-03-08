@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:evs_pay_mobile/model/create_offer_model.dart';
 import 'package:evs_pay_mobile/model/user_model/api_payment_method_model.dart';
 import 'package:evs_pay_mobile/resources/color_manager.dart';
@@ -7,19 +6,13 @@ import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
 import 'package:evs_pay_mobile/view_models/nav_screen_view_model.dart';
-import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
-import 'package:evs_pay_mobile/widgets/custom_app_bar.dart';
-import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
-import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../resources/font_manager.dart';
-import '../../../resources/image_manager.dart';
 import '../../../view_models/general_view_model.dart';
 
 class CreateOfferView extends StatefulWidget {
@@ -71,32 +64,8 @@ class _CreateOfferViewState extends State<CreateOfferView> {
           /// i have inserted the sell and buy logic expect for the payment method which might cause and error
 
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 25),
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_outlined,
-                        color: Color(0xff292D32),
-                      )),
-                  SizedBox(
-                    width: AppSize.s3.w,
-                  ),
-                  const Text(
-                    'Create Offer',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Lexend',
-                      color: Color(0xff606060),
-                    ),
-                  ),
-                ],
-              ),
+            const ReusableTitle(
+              title: 'Create Offer',
             ),
 
             SizedBox(
@@ -1459,6 +1428,42 @@ class _CreateOfferViewState extends State<CreateOfferView> {
           ],
         ),
       )),
+    );
+  }
+}
+
+class ReusableTitle extends StatelessWidget {
+  final String title;
+  const ReusableTitle({required this.title, key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 25),
+      child: Row(
+        children: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_outlined,
+                color: Color(0xff292D32),
+              )),
+          SizedBox(
+            width: AppSize.s3.w,
+          ),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'Lexend',
+              color: Color(0xff3C3C3C),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

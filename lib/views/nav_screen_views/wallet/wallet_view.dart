@@ -26,18 +26,21 @@ class WalletView extends StatefulWidget {
 }
 
 class _WalletViewState extends State<WalletView> {
-
   int index = 0;
 
   @override
   void initState() {
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async{
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final evsPayVModel = Provider.of<EvsPayViewModel>(context, listen: false);
-      final authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
-      final dashboardViewModel = Provider.of<DashboardViewModel2>(context, listen: false);
+      final authProvider =
+          Provider.of<AuthenticationProvider>(context, listen: false);
+      final dashboardViewModel =
+          Provider.of<DashboardViewModel2>(context, listen: false);
       await authProvider.getWalletAddress(context: context);
-      await dashboardViewModel.getBtcToNairaRate(authProvider.walletData.data!.isEmpty? "0.00" : authProvider.walletData.data![0].balance.toString());
+      await dashboardViewModel.getBtcToNairaRate(
+          authProvider.walletData.data!.isEmpty
+              ? "0.00"
+              : authProvider.walletData.data![0].balance.toString());
       print("Waiting");
       evsPayVModel.getPaymentMethods(context: context);
     });
@@ -60,58 +63,48 @@ class _WalletViewState extends State<WalletView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSize.s14.w),
-                    child:  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                          Container(),
-
-                        CustomTextWithLineHeight(text: AppStrings.wallet,
-                          textColor: ColorManager.lightTextColor,
-                          fontWeight: FontWeightManager.bold, fontSize: FontSize.s16,),
-                          Container(
-                            height:
-                            AppSize.s40.h,
-                            width: AppSize.s40.h,
-                            decoration: BoxDecoration(
-                              color: ColorManager.blueColor,
-                              borderRadius: BorderRadius.circular(AppSize.s3.r),
-
-                            ),
-                            child: Image.asset(AppImages.qrCode),
-                          ),
-
-
-
-                      ],
-                    )
+                    padding: const EdgeInsets.only(top: 20, bottom: 10),
+                    child: Center(
+                      child: CustomTextWithLineHeight(
+                        text: AppStrings.wallet,
+                        textColor: ColorManager.lightTextColor,
+                        fontWeight: FontWeightManager.bold,
+                        fontSize: FontSize.s16,
+                      ),
+                    ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSize.s40.w),
+                    padding: EdgeInsets.symmetric(horizontal: AppSize.s30.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const CustomTextWithLineHeight(
                           text: AppStrings.walletBalance,
-                          textColor: ColorManager.blackTextColor,),
-                        SizedBox(height: AppSize.s12.h,),
+                          textColor: ColorManager.blackTextColor,
+                        ),
+                        // SizedBox(
+                        //   height: AppSize.s12.h,
+                        // ),
 
                         Consumer<DashboardViewModel2>(
                             builder: (ctx, dashboardViewModel, child) {
-                              return CustomTextWithLineHeight(
-                                text: "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading? "0.00" : dashboardViewModel.btcNairaModel == null
-                                    ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
-                                textColor: ColorManager.amountColor,
-                                fontSize: FontSize.s22,
-                                fontWeight: FontWeightManager.semiBold,);
-                            }
-                        ),
+                          return CustomTextWithLineHeight(
+                            text:
+                                "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading ? "0.00" : dashboardViewModel.btcNairaModel == null ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
+                            textColor: ColorManager.amountColor,
+                            fontSize: FontSize.s22,
+                            fontWeight: FontWeightManager.semiBold,
+                          );
+                        }),
 
                         CustomTextWithLineHeight(
-                          text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
+                          text: authProvider.walletData.data!.isEmpty
+                              ? "0.00"
+                              : "${authProvider.walletData.data![0].balance} BTC",
                           textColor: ColorManager.blackTextColor,
                           fontSize: FontSize.s14,
-                          fontWeight: FontWeightManager.regular,),
+                          fontWeight: FontWeightManager.regular,
+                        ),
 
                         // CustomTextWithLineHeight(
                         //   text: authProvider.walletData.data!.isEmpty? "0.00" : AppStrings.amount,
@@ -125,59 +118,61 @@ class _WalletViewState extends State<WalletView> {
                         //   fontSize: FontSize.s14,
                         //   fontWeight: FontWeightManager.regular,),
 
-                        SizedBox(height: AppSize.s21.h,),
-                         SizedBox(
+                        SizedBox(
+                          height: AppSize.s21.h,
+                        ),
+                        SizedBox(
                           // width: AppSize.s300.w,
                           height: AppSize.s40.h,
                           child: ListView.builder(
                               itemCount: transactionTypes.length,
                               scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index){
+                              itemBuilder: (context, index) {
                                 final transaction = transactionTypes[index];
                                 return Padding(
-                                  padding: EdgeInsets.only(
-                                    right: AppSize.s10.w
-                                  ),
+                                  padding:
+                                      EdgeInsets.only(right: AppSize.s10.w),
                                   child: InkWell(
-                                    onTap: (){
-                                      if(authProvider.walletData.data!.isEmpty){
+                                    onTap: () {
+                                      if (authProvider
+                                          .walletData.data!.isEmpty) {
                                         showTopSnackBar(
                                           context,
                                           const CustomSnackBar.info(
-                                            message: "Verify your email to trade",
+                                            message:
+                                                "Verify your email to trade",
                                             backgroundColor:
-                                            ColorManager.primaryColor,
+                                                ColorManager.primaryColor,
                                           ),
                                         );
-                                      }else{
-                                        if(index == 0){
+                                      } else {
+                                        if (index == 0) {
                                           openSendTradeScreen(context);
-                                        }else{
+                                        } else {
                                           openReceiveTradeScreen(context);
                                         }
                                       }
-
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: AppSize.s24.w,
-                                          vertical: AppSize.s5.h
-                                      ),
+                                          vertical: AppSize.s5.h),
                                       // height: AppSize.s28.h,
                                       width: AppSize.s100.w,
                                       decoration: BoxDecoration(
                                           color: transaction.containerColor,
-                                        borderRadius: BorderRadius.circular(AppSize.s4.r)
-                                      ),
+                                          borderRadius: BorderRadius.circular(
+                                              AppSize.s4.r)),
                                       alignment: Alignment.center,
-                                      child: CustomTextWithLineHeight(text: transaction.title, textColor: transaction.textColor,),
-
+                                      child: CustomTextWithLineHeight(
+                                        text: transaction.title,
+                                        textColor: transaction.textColor,
+                                      ),
                                     ),
                                   ),
                                 );
                               }),
                         ),
-
                       ],
                     ),
                   ),
@@ -185,70 +180,77 @@ class _WalletViewState extends State<WalletView> {
               ),
             ),
             Container(
-              color: ColorManager.whiteColor,
+                color: ColorManager.whiteColor,
                 // height: AppSize.s40.h,
                 width: double.infinity,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSize.s27.w, vertical: AppSize.s18.h),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppSize.s27.w, vertical: AppSize.s18.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const CustomTextWithLineHeight(text: AppStrings.transactionHistory, fontSize: FontSize.s18,),
+                      const CustomTextWithLineHeight(
+                        text: AppStrings.transactionHistory,
+                        fontSize: FontSize.s18,
+                      ),
                       PopupMenuButton(
                           itemBuilder: (context) => [
-                            PopupMenuItem(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: const [
-                                      CustomTextWithLineHeight(text: AppStrings.pending),
+                                PopupMenuItem(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: const [
+                                          CustomTextWithLineHeight(
+                                              text: AppStrings.pending),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: AppSize.s13.h,
+                                      ),
+                                      SvgPicture.asset(AppImages.popupMenuIcon),
                                     ],
                                   ),
-                                  SizedBox(height: AppSize.s13.h,),
-                                  SvgPicture.asset(AppImages.popupMenuIcon),
-                                ],
-                              ),
-                              value: 1,
-                              onTap: (){
-                                // print("pending");
-                              },
-                            ),
-                            PopupMenuItem(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: const [
-                                      CustomTextWithLineHeight(text: AppStrings.completed),
+                                  value: 1,
+                                  onTap: () {
+                                    // print("pending");
+                                  },
+                                ),
+                                PopupMenuItem(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: const [
+                                          CustomTextWithLineHeight(
+                                              text: AppStrings.completed),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: AppSize.s13.h,
+                                      ),
+                                      SvgPicture.asset(AppImages.popupMenuIcon),
                                     ],
                                   ),
-                                  SizedBox(height: AppSize.s13.h,),
-                                  SvgPicture.asset(AppImages.popupMenuIcon),
-                                ],
-                              ),
-                              value: 1,
-                              onTap: (){
-                                // print("pending");
-                              },
-                            ),
-
-                            PopupMenuItem(
-                              child: Column(
-                                children: const [
-                                  CustomTextWithLineHeight(text: AppStrings.cancelled),
-
-                                ],
-                              ),
-                              value: 1,
-                              onTap: (){
-                                // print("pending");
-                              },
-                            ),
-                          ]
-                      )
+                                  value: 1,
+                                  onTap: () {
+                                    // print("pending");
+                                  },
+                                ),
+                                PopupMenuItem(
+                                  child: Column(
+                                    children: const [
+                                      CustomTextWithLineHeight(
+                                          text: AppStrings.cancelled),
+                                    ],
+                                  ),
+                                  value: 1,
+                                  onTap: () {
+                                    // print("pending");
+                                  },
+                                ),
+                              ])
                     ],
                   ),
                 )),
-
             const TransactionWidget()
           ],
         ),

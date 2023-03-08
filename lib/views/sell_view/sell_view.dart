@@ -1,3 +1,4 @@
+import 'package:evs_pay_mobile/views/nav_screen_views/settings/settings_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -445,48 +446,59 @@ class _SellViewState extends State<SellView> {
                             return Center(
                               child: CustomElevatedButton(
                                   onTap: () async {
-                                    if (double.parse(nairaAmountController.text
-                                                    .trim()
-                                                    .isEmpty
-                                                ? "0.0"
-                                                : nairaAmountController.text
-                                                    .trim()) <
-                                            dashboardViewModel
-                                                .selectedDashboardTrade!
-                                                .minAmount ||
-                                        double.parse(nairaAmountController.text
-                                                    .trim()
-                                                    .isEmpty
-                                                ? "0.0"
-                                                : nairaAmountController.text
-                                                    .trim()) >
-                                            dashboardViewModel
-                                                .selectedDashboardTrade!
-                                                .maxAmount) {
-                                      showTopSnackBar(
-                                        context,
-                                        CustomSnackBar.info(
-                                          message:
-                                              "Amount much be between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}",
-                                          backgroundColor:
-                                              ColorManager.primaryColor,
-                                        ),
-                                      );
-                                    } else {
-                                      final isCreated =
-                                          await dashboardViewModel.initTrade(
-                                              nairaAmountController.text);
-                                      if (isCreated) {
-                                        Future.delayed(
-                                            const Duration(seconds: 1), () {
-                                          setState(() {
+                                    showMyDialog(context,
+                                        title: 'Proceed to sell',
+                                        approveColor: const Color(0xffF4B731),
+                                        declineColor: Colors.grey.shade800,
+                                        description:
+                                            'Are you sure you want to proceed?',
+                                        dismissible: false, callback: () async {
+                                      if (double.parse(nairaAmountController
+                                                      .text
+                                                      .trim()
+                                                      .isEmpty
+                                                  ? "0.0"
+                                                  : nairaAmountController.text
+                                                      .trim()) <
+                                              dashboardViewModel
+                                                  .selectedDashboardTrade!
+                                                  .minAmount ||
+                                          double.parse(nairaAmountController
+                                                      .text
+                                                      .trim()
+                                                      .isEmpty
+                                                  ? "0.0"
+                                                  : nairaAmountController.text
+                                                      .trim()) >
+                                              dashboardViewModel
+                                                  .selectedDashboardTrade!
+                                                  .maxAmount) {
+                                        showTopSnackBar(
+                                          context,
+                                          CustomSnackBar.info(
+                                            message:
+                                                "Amount much be between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}",
+                                            backgroundColor:
+                                                ColorManager.primaryColor,
+                                          ),
+                                        );
+                                      } else {
+                                        final isCreated =
+                                            await dashboardViewModel.initTrade(
+                                                nairaAmountController.text);
+                                        if (isCreated) {
+                                          Future.delayed(
+                                              const Duration(seconds: 1), () {
                                             setState(() {
-                                              openConfirmSellTradeView(context);
+                                              setState(() {
+                                                openConfirmSellTradeView(
+                                                    context);
+                                              });
                                             });
                                           });
-                                        });
+                                        }
                                       }
-                                    }
+                                    });
                                   },
                                   backgroundColor: ColorManager.primaryColor,
                                   textColor: ColorManager.blackTxtColor,
