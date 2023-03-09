@@ -31,31 +31,144 @@ class MyAdsItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: AppSize.s13.w),
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSize.s3.r),
-          border: Border.all(
-            color: ColorManager.inputFieldBorder
-          )
-        ),
+            borderRadius: BorderRadius.circular(AppSize.s3.r),
+            border: Border.all(color: ColorManager.inputFieldBorder)),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center ,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: AppSize.s13.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomTextWithLineHeight(
-                    text: myAd.paymentMethod.name!,
-                  fontWeight: FontWeightManager.bold,
-                  textColor: ColorManager.blackTxtColor,
-                ),
-                CustomTextWithLineHeight(
-                  text: myAd.type,
-                  fontWeight: FontWeightManager.bold,
-                  textColor: myAd.type == "SELL" ? ColorManager.primaryColor : ColorManager.lemonGreen,
-                ),
-              ],
+            SizedBox(
+              height: AppSize.s13.h,
             ),
-            SizedBox(height: AppSize.s8.h,),
+            Container(
+              padding: const EdgeInsets.only(
+                top: 0,
+                left: 0,
+                right: 0,
+              ),
+              decoration: BoxDecoration(
+                  // color: Colors.yellow,
+                  // color: Color(0xfff6f6f6),
+                  borderRadius: BorderRadius.circular(0)),
+              height: 104,
+              width: double.infinity,
+              child: Stack(
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 5,
+                    child: Text(
+                      myAd.paymentMethod.name!,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Lexend',
+                        color: Color(0xff000000),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      right: 0,
+                      top: 5,
+                      child: InkWell(
+                          onTap: () {
+                            print('tap');
+                          },
+                          child: const Icon(Icons.more_vert))),
+                  Positioned(
+                    right: 0,
+                    bottom: 30,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.035,
+                      width: MediaQuery.of(context).size.width * 0.18,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 1,
+                          backgroundColor: const Color(0xffF4B731),
+                        ),
+                        onPressed: () {
+                          openSellView(context);
+                        },
+                        child: const FittedBox(
+                          child: Text(
+                            'Buy',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff303030),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Positioned(
+                    top: 30,
+                    left: 0,
+                    child: Text(
+                      "NGN ${moneyFormat.format(myAd.minAmount)} - "
+                      "${moneyFormat.format(myAd.maxAmount)} ",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Lexend',
+                        color: Color(0xff8e8e8e),
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
+                    left: 0,
+                    top: 65,
+                    child: Text(
+                      Jiffy(myAd.createdAt).yMMMMEEEEdjm,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Lexend',
+                        color: Color(0xff8e8e8e),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Positioned(
+                    bottom: 5,
+                    left: -15,
+                    right: -15,
+                    child: Divider(
+                      thickness: 1.5,
+                    ),
+                  ),
+
+                  ///
+
+                 
+                ],
+              ),
+            ),
+
+            /// this is his original widgets for this page
+            CustomTextWithLineHeight(
+              text: myAd.paymentMethod.name!,
+              fontWeight: FontWeightManager.bold,
+              textColor: ColorManager.blackTxtColor,
+            ),
+            CustomTextWithLineHeight(
+              text: myAd.type,
+              fontWeight: FontWeightManager.bold,
+              textColor: myAd.type == "SELL"
+                  ? ColorManager.primaryColor
+                  : ColorManager.lemonGreen,
+            ),
+            SizedBox(
+              height: AppSize.s8.h,
+            ),
             Row(
               children: [
                 const CustomTextWithLineHeight(
@@ -74,7 +187,9 @@ class MyAdsItem extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: AppSize.s12.h,),
+            SizedBox(
+              height: AppSize.s12.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -85,7 +200,7 @@ class MyAdsItem extends StatelessWidget {
                   fontSize: FontSize.s10,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     evsPayProvider.setSelectedOffer(myAd);
                     show(context, evsPayProvider, myAdsViewModel);
                   },
@@ -98,30 +213,34 @@ class MyAdsItem extends StatelessWidget {
                 Container(
                   // height: AppSize.s15.h,
                   // width: AppSize.s48.w,
-                  padding: EdgeInsets.symmetric(horizontal: AppSize.s22.w, vertical: AppSize.s3.h),
-                  decoration:  BoxDecoration(
-                      color: myAd.status == "ACTIVE" ? ColorManager.deepGreenColor : ColorManager.primaryColor,
-                      borderRadius: BorderRadius.circular(AppSize.s2.r)
-                  ),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppSize.s22.w, vertical: AppSize.s3.h),
+                  decoration: BoxDecoration(
+                      color: myAd.status == "ACTIVE"
+                          ? ColorManager.deepGreenColor
+                          : ColorManager.primaryColor,
+                      borderRadius: BorderRadius.circular(AppSize.s2.r)),
                   alignment: Alignment.center,
-                  child: CustomTextWithLineHeight(text: myAd.status ?? "",
-                    textColor: myAd.status == "ACTIVE" ? ColorManager.whiteColor : ColorManager.blckColor,
-                  fontSize: FontSize.s6,),
+                  child: CustomTextWithLineHeight(
+                    text: myAd.status ?? "",
+                    textColor: myAd.status == "ACTIVE"
+                        ? ColorManager.whiteColor
+                        : ColorManager.blckColor,
+                    fontSize: FontSize.s6,
+                  ),
                 )
               ],
             ),
-            SizedBox(height: AppSize.s3.h,)
+            SizedBox(
+              height: AppSize.s3.h,
+            )
           ],
         ),
       ),
     );
   }
 
-
-
-  void show(
-      BuildContext ctx,
-      EvsPayViewModel evsPayViewModel,
+  void show(BuildContext ctx, EvsPayViewModel evsPayViewModel,
       MyAdsViewModel myAdsViewModel) {
     showMaterialModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -141,17 +260,16 @@ class MyAdsItem extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
               child: Container(
-                // height: AppSize.s117.h,
+                  // height: AppSize.s117.h,
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
                   decoration: BoxDecoration(
                       color: ColorManager.whiteColor,
-                      borderRadius: BorderRadius.circular(AppSize.s15.r)
-                  ),
+                      borderRadius: BorderRadius.circular(AppSize.s15.r)),
                   child: Column(
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                           openEditOffer(context);
                         },
@@ -162,11 +280,15 @@ class MyAdsItem extends StatelessWidget {
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-                      SizedBox(height: AppSize.s20.h,),
+                      SizedBox(
+                        height: AppSize.s20.h,
+                      ),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-                      SizedBox(height: AppSize.s22.h,),
+                      SizedBox(
+                        height: AppSize.s22.h,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           evsPayViewModel.getTradesOnOffer(
                               context: ctx,
                               offerId: evsPayViewModel.selectedOffer.reference);
@@ -179,28 +301,37 @@ class MyAdsItem extends StatelessWidget {
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-                      SizedBox(height: AppSize.s20.h,),
+                      SizedBox(
+                        height: AppSize.s20.h,
+                      ),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-                      SizedBox(height: AppSize.s22.h,),
+                      SizedBox(
+                        height: AppSize.s22.h,
+                      ),
                       InkWell(
-                        onTap: ()async{
+                        onTap: () async {
                           Navigator.pop(context);
-                          await  evsPayViewModel.enableOrDisableOffer(context);
-
+                          await evsPayViewModel.enableOrDisableOffer(context);
                         },
                         child: CustomTextWithLineHeight(
-                          text: evsPayViewModel.selectedOffer.status == "INACTIVE" ?
-                          AppStrings.enableTrade : AppStrings.disableTrade,
+                          text:
+                              evsPayViewModel.selectedOffer.status == "INACTIVE"
+                                  ? AppStrings.enableTrade
+                                  : AppStrings.disableTrade,
                           textColor: ColorManager.blckColor,
                           fontSize: FontSize.s16.sp,
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-                      SizedBox(height: AppSize.s20.h,),
+                      SizedBox(
+                        height: AppSize.s20.h,
+                      ),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-                      SizedBox(height: AppSize.s22.h,),
+                      SizedBox(
+                        height: AppSize.s22.h,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -211,18 +342,15 @@ class MyAdsItem extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
             ),
-
             SizedBox(
               height: AppSize.s13.h,
             ),
-
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -231,8 +359,7 @@ class MyAdsItem extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
                   decoration: BoxDecoration(
                       color: ColorManager.whiteColor,
-                      borderRadius: BorderRadius.circular(AppSize.s5.r)
-                  ),
+                      borderRadius: BorderRadius.circular(AppSize.s5.r)),
                   alignment: Alignment.center,
                   child: CustomTextWithLineHeight(
                     text: AppStrings.cancel,
