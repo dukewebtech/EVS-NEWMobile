@@ -55,6 +55,7 @@ dependencies:
   iconsax: ^0.0.8
   firebase_core: ^2.7.0
   firebase_messaging: ^14.2.5
+  dotted_border: ^2.0.0+3  
 
 
 

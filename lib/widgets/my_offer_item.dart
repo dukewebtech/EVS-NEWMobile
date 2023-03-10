@@ -87,7 +87,7 @@ class MyAdsItem extends StatelessWidget {
                           backgroundColor: const Color(0xffF4B731),
                         ),
                         onPressed: () {
-                          openSellView(context);
+                          // openSellView(context);
                         },
                         child: const FittedBox(
                           child: Text(

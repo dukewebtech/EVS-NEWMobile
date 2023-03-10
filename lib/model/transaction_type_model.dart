@@ -1,4 +1,3 @@
-import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -18,12 +17,12 @@ class TransactionTypeModel {
 final List<TransactionTypeModel> transactionTypes = [
   TransactionTypeModel(
       title: AppStrings.send,
-      textColor: ColorManager.blackTextColor,
-      containerColor: const Color(0xffffffff),
+      textColor: const Color(0xffffffff),
+      containerColor: const Color(0xff000000).withOpacity(0.8),
       slug: "send"),
   TransactionTypeModel(
       title: AppStrings.receive,
-      textColor: ColorManager.whiteColor,
-      containerColor: const Color.fromARGB(255, 37, 43, 215),
+      textColor: const Color(0xffffffff),
+      containerColor: const Color(0xff000000).withOpacity(0.8),
       slug: "receive"),
 ];

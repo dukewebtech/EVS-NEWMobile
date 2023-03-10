@@ -11,6 +11,7 @@ import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import '../../../view_models/general_view_model.dart';
@@ -54,7 +55,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(
-          Icons.add,
+          Iconsax.transaction_minus,
           color: Colors.black,
         ),
         elevation: 2.5,
