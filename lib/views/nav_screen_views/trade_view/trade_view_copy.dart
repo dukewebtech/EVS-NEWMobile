@@ -42,14 +42,18 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
       {
         "title": "My Ads",
         "isClicked": false,
+        "isCone": false,
       },
       {
         "title": "Trades",
         "isClicked": false,
+        "isCone": false,
       },
       {
         "title": "pro",
         "isClicked": false,
+        "isCone": true,
+
       }
     ];
     return Scaffold(
@@ -100,9 +104,28 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                 color: Color(0xff3C3C3C),
               ),
             ),
+
+            ///this is for my ads
+            // IconButton(
+            //     onPressed: () {
+            //       show(context);
+            //     },
+            //     icon: const Icon(Icons.add)),
+
+            ///this is for trades
+
+            const Icon(Icons.info_outline),
+            IconButton(
+                onPressed: () {
+                  // changeAll == 0 ? show(context) : showTradeDialog(context);
+                  if (changeAll == 0) show(context);
+                  if (changeAll == 1) showTradeDialog(context);
+                },
+                icon: const Icon(Icons.more_horiz_rounded)),
             SizedBox(
               height: AppSize.s18.h,
             ),
+
             SizedBox(
               height: 40,
               child: ListView.builder(
@@ -110,6 +133,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                   itemCount: btnList.length,
                   itemBuilder: (context, index) {
                     var title = btnList[index]['title'];
+                    // var icon = btnList[index]['isCone'];
 
                     return GestureDetector(
                       onTap: () {
@@ -119,6 +143,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                       },
                       child: Container(
                         height: 40,
+                        width: 140,
                         color: const Color(0xffEFEFEF),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
@@ -135,15 +160,39 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                                 : BorderRadius.circular(6),
                           ),
                           child: Center(
-                              child: Text(
-                            title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              fontFamily: 'Lexend',
-                              color: Color(0xff000000),
-                            ),
-                            // btnList[index]["title"],
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                 title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  fontFamily: 'Lexend',
+                                  color: Color(0xff000000),
+                                ),
+                                // btnList[index]["title"],
+                              ),
+                              // if (title == 'Pro') const Icon(Icons.star)
+
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     if (index == 1) {
+                              //       setState(() {
+                              //         print('This is one');
+                              //       });
+                              //     } else if (index == 2) {
+                              //       setState(() {
+                              //         print('This is Two');
+                              //       });
+                              //     }
+                              //   },
+                              //   child: Visibility(
+                              //     visible: index == 2,
+                              //     child: const Icon(Icons.star),
+                              //   ),
+                              // )
+                            ],
                           )),
                         ),
                       ),

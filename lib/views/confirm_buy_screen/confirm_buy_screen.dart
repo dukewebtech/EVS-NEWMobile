@@ -265,7 +265,7 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                       fontWeight: FontWeight.w400,
                       color: Color(0xff444444),
                     ),
-                    children: <TextSpan>[
+                    children: [
                       TextSpan(
                         text: '“I have paid” ',
                         style: TextStyle(

@@ -3,16 +3,11 @@ import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
-import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
-import '../../resources/strings_manager.dart';
-import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_text_field_no_border.dart';
-import '../scan_qr_code/scan_qr_code_view.dart';
 
 class SendTradeView extends StatefulWidget {
   const SendTradeView({Key? key}) : super(key: key);
@@ -91,7 +86,7 @@ class _SendTradeViewState extends State<SendTradeView> {
               child: TextFormField(
                 controller: walletAddressController,
                 decoration: InputDecoration(
-                  suffixIcon: Icon(
+                  suffixIcon: const Icon(
                     Icons.wallet_giftcard,
                     color: Color(0xff8a8a8a),
                   ),
@@ -463,14 +458,26 @@ class TitleAndAmount extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            fontFamily: 'Lexend',
-            color: const Color(0xff000000).withOpacity(0.40),
-          ),
+        Row(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Lexend',
+                color: const Color(0xff000000).withOpacity(0.40),
+              ),
+            ),
+            const SizedBox(
+              width: 3,
+            ),
+            Icon(
+              Icons.info_outline,
+              size: 10,
+              color: const Color(0xffCBBAFF).withOpacity(0.5),
+            ),
+          ],
         ),
         Text(
           amount,
@@ -478,7 +485,7 @@ class TitleAndAmount extends StatelessWidget {
             fontSize: 14,
             fontWeight: FontWeight.w400,
             fontFamily: 'Lexend',
-            color: Color(0xff000000).withOpacity(0.69),
+            color: const Color(0xff000000).withOpacity(0.69),
           ),
         )
       ],
