@@ -146,7 +146,7 @@ class _SendTradeViewState extends State<SendTradeView> {
                 children: [
                   Expanded(
                       child: CustomTextFieldNoBorder(
-                    controller: usdAmountController,
+                    controller: btcAmountController,
                     contentPadding: AppSize.s20,
                   )),
                   Container(
@@ -342,102 +342,142 @@ class _SendTradeViewState extends State<SendTradeView> {
             /// na here i go stop
 
             //
-            // SizedBox(height: AppSize.s24.h,),
-            //
-            // const CustomTextWithLineHeight(text: AppStrings.recipientBtcAddress,
-            //   fontSize: FontSize.s12,),
-            // SizedBox(height: AppSize.s8.h,),
-            //
-            // CustomTextField(controller: walletAddressController,
-            // hint: AppStrings.walletAddress,
-            //   contentPadding: AppSize.s20,),
-            //
-            // SizedBox(height: AppSize.s24.h,),
-            // CustomElevatedButton(onTap: ()async{
-            //   final qrCode = Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) =>const ScanQrCodeView()));
-            //
-            //   print("The code is: $qrCode");
-            // },
-            //     backgroundColor: ColorManager.primaryColor,
-            //     textColor: ColorManager.blackTxtColor,
-            //     title: AppStrings.scanQrCode,
-            // isIconButton: true,),
-            //
-            // SizedBox(height: AppSize.s48.h,),
-            // const CustomTextWithLineHeight(text: AppStrings.amt,
-            //   fontSize: FontSize.s12,),
-            // SizedBox(height: AppSize.s8.h,),
-            // Container(
-            //   decoration: BoxDecoration(
-            //     border: Border.all(
-            //       color: ColorManager.inputFieldBorder
-            //     ),
-            //     borderRadius: BorderRadius.circular(AppSize.s3.r)
-            //   ),
-            //   child: Row(
-            //     children: [
-            //       Expanded(child: CustomTextFieldNoBorder(controller: btcAmountController,
-            //       contentPadding: AppSize.s20,
-            //       hint: AppStrings.amt,)),
-            //
-            //       Container(
-            //         width: AppSize.s54.w,
-            //         alignment: Alignment.center,
-            //         child:
-            //         const CustomTextWithLineHeight(text: AppStrings.btc, fontSize: FontSize.s15,),
-            //       )
-            //     ],
-            //   ),
+            // SizedBox(
+            //   height: AppSize.s24.h,
             // ),
-            //
-            // SizedBox(height: AppSize.s34.h,),
-            // const CustomTextWithLineHeight(text: AppStrings.amt,
-            //   fontSize: FontSize.s12,),
-            // SizedBox(height: AppSize.s8.h,),
+
+            // const CustomTextWithLineHeight(
+            //   text: AppStrings.recipientBtcAddress,
+            //   fontSize: FontSize.s12,
+            // ),
+            // SizedBox(
+            //   height: AppSize.s8.h,
+            // ),
+
+            // CustomTextField(
+            //   controller: walletAddressController,
+            //   hint: AppStrings.walletAddress,
+            //   contentPadding: AppSize.s20,
+            // ),
+
+            // SizedBox(
+            //   height: AppSize.s24.h,
+            // ),
+            // CustomElevatedButton(
+            //   onTap: () async {
+            //     final qrCode = Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => const ScanQrCodeView()));
+
+            //     print("The code is: $qrCode");
+            //   },
+            //   backgroundColor: ColorManager.primaryColor,
+            //   textColor: ColorManager.blackTxtColor,
+            //   title: AppStrings.scanQrCode,
+            //   isIconButton: true,
+            // ),
+
+            // SizedBox(
+            //   height: AppSize.s48.h,
+            // ),
+            // const CustomTextWithLineHeight(
+            //   text: AppStrings.amt,
+            //   fontSize: FontSize.s12,
+            // ),
+            // SizedBox(
+            //   height: AppSize.s8.h,
+            // ),
             // Container(
             //   decoration: BoxDecoration(
-            //       border: Border.all(
-            //           color: ColorManager.inputFieldBorder
-            //       ),
-            //       borderRadius: BorderRadius.circular(AppSize.s3.r)
-            //   ),
+            //       border: Border.all(color: ColorManager.inputFieldBorder),
+            //       borderRadius: BorderRadius.circular(AppSize.s3.r)),
             //   child: Row(
             //     children: [
-            //       Expanded(child: CustomTextFieldNoBorder(controller: usdAmountController,
+            //       Expanded(
+            //           child: CustomTextFieldNoBorder(
+            //         controller: btcAmountController,
             //         contentPadding: AppSize.s20,
-            //         hint: AppStrings.amt,)),
-            //
+            //         hint: AppStrings.amt,
+            //       )),
             //       Container(
             //         width: AppSize.s54.w,
             //         alignment: Alignment.center,
-            //         child:
-            //         const CustomTextWithLineHeight(text: AppStrings.usd, fontSize: FontSize.s15,),
+            //         child: const CustomTextWithLineHeight(
+            //           text: AppStrings.btc,
+            //           fontSize: FontSize.s15,
+            //         ),
             //       )
             //     ],
             //   ),
             // ),
-            //
-            // SizedBox(height: AppSize.s34.h,),
-            // const CustomTextWithLineHeight(text: AppStrings.descriptionOptional,
-            //   fontSize: FontSize.s12,),
-            // SizedBox(height: AppSize.s8.h,),
-            //
-            // CustomTextField(controller: descriptionController,
+
+            // SizedBox(
+            //   height: AppSize.s34.h,
+            // ),
+            // const CustomTextWithLineHeight(
+            //   text: AppStrings.amt,
+            //   fontSize: FontSize.s12,
+            // ),
+            // SizedBox(
+            //   height: AppSize.s8.h,
+            // ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //       border: Border.all(color: ColorManager.inputFieldBorder),
+            //       borderRadius: BorderRadius.circular(AppSize.s3.r)),
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //           child: CustomTextFieldNoBorder(
+            //         controller: usdAmountController,
+            //         contentPadding: AppSize.s20,
+            //         hint: AppStrings.amt,
+            //       )),
+            //       Container(
+            //         width: AppSize.s54.w,
+            //         alignment: Alignment.center,
+            //         child: const CustomTextWithLineHeight(
+            //           text: AppStrings.usd,
+            //           fontSize: FontSize.s15,
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
+
+            // SizedBox(
+            //   height: AppSize.s34.h,
+            // ),
+            // const CustomTextWithLineHeight(
+            //   text: AppStrings.descriptionOptional,
+            //   fontSize: FontSize.s12,
+            // ),
+            // SizedBox(
+            //   height: AppSize.s8.h,
+            // ),
+
+            // CustomTextField(
+            //   controller: descriptionController,
             //   hint: AppStrings.descriptionOptional,
             //   maxLines: 10,
-            //   contentPadding: AppSize.s20,),
-            //
-            // SizedBox(height: AppSize.s58.h,),
-            //
+            //   contentPadding: AppSize.s20,
+            // ),
+
+            // SizedBox(
+            //   height: AppSize.s58.h,
+            // ),
+
             // CustomElevatedButton(
-            //     onTap: (){
+            //     onTap: () {
             //       openTransactionPinScreen(context);
             //     },
             //     backgroundColor: ColorManager.primaryColor,
             //     textColor: ColorManager.blackTextColor,
             //     title: AppStrings.clickToContinue),
-            // SizedBox(height: AppSize.s50.h,),
+            // SizedBox(
+            //   height: AppSize.s50.h,
+            // ),
           ],
         ),
       )),

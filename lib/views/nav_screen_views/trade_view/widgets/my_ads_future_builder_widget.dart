@@ -18,77 +18,84 @@ class MyAdsFutureBuilderWidget extends StatefulWidget {
   const MyAdsFutureBuilderWidget({Key? key}) : super(key: key);
 
   @override
-  State<MyAdsFutureBuilderWidget> createState() => _MyAdsFutureBuilderWidgetState();
+  State<MyAdsFutureBuilderWidget> createState() =>
+      _MyAdsFutureBuilderWidgetState();
 }
 
 class _MyAdsFutureBuilderWidgetState extends State<MyAdsFutureBuilderWidget> {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthenticationProvider>();
-    return FutureBuilder<List<OfferData?>>(
-        future: MyAdsService().getMyAds(
-            authProvider.userData.accessToken!),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(child: Text('Error Occurred'));
-          } else if (snapshot.hasData) {
-            if (snapshot.data!.isEmpty) {
-              return Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: AppSize.s96.h,
-                    ),
-                    Center(
-                      child: SvgPicture.asset("assets/images/empty_state.svg")
-                    ),
-                    SizedBox(
-                      height: AppSize.s49.h,
-                    ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          FutureBuilder<List<OfferData?>>(
+              future:
+                  MyAdsService().getMyAds(authProvider.userData.accessToken!),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(child: Text('Error Occurred'));
+                } else if (snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: AppSize.s96.h,
+                          ),
+                          Center(
+                              child: SvgPicture.asset(
+                                  "assets/images/empty_state.svg")),
+                          SizedBox(
+                            height: AppSize.s49.h,
+                          ),
+                          const CustomText(
+                            text: AppStrings.youHaveNotCreatedAnyOffer,
+                            textColor: ColorManager.blckColor,
+                            fontSize: FontSize.s16,
+                          ),
+                          SizedBox(
+                            height: AppSize.s8.h,
+                          ),
+                          SizedBox(
+                              width: AppSize.s208.w,
+                              child: const CustomTextNoOverFlow(
+                                  alignment: "center",
+                                  fontSize: FontSize.s13,
+                                  text: AppStrings.transferFundsToYourWallet))
+                        ],
+                      ),
+                    );
+                  } else {
+                    final offers = snapshot.data!;
+                    return SingleChildScrollView(
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          MyAdsService()
+                              .getMyAds(authProvider.userData.accessToken!);
+                        },
+                        child: ListView.builder(
+                            itemCount: offers.length,
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              final offer = offers[index];
 
-                    const CustomText(text:
-                    AppStrings.youHaveNotCreatedAnyOffer,
-                    textColor: ColorManager.blckColor,
-                    fontSize: FontSize.s16,),
-                    SizedBox(
-                      height: AppSize.s8.h,
-                    ),
-
-                    SizedBox(
-                      width: AppSize.s208.w,
-                        child: const CustomTextNoOverFlow(
-                          alignment: "center",
-                          fontSize: FontSize.s13,
-                            text: AppStrings.transferFundsToYourWallet))
-                  ],
-                ),
-              );
-            } else {
-              final offers = snapshot.data!;
-              return RefreshIndicator(
-
-                onRefresh: () async{
-                  MyAdsService().getMyAds(
-                      authProvider.userData.accessToken!);
-                },
-                child: ListView.builder(
-                    itemCount: offers.length,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final offer = offers[index];
-
-                      return MyAdsItem(myAd: offer!);
-                    }),
-              );
-            }
-          } else {
-            return Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.2),
-              child: const LoadingIndicator(),
-            );
-          }
-        });
+                              return MyAdsItem(myAd: offer!);
+                            }),
+                      ),
+                    );
+                  }
+                } else {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.2),
+                    child: const LoadingIndicator(),
+                  );
+                }
+              }),
+        ],
+      ),
+    );
   }
 }

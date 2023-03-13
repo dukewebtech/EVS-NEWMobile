@@ -1,13 +1,17 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:evs_pay_mobile/model/create_offer_model.dart';
 import 'package:evs_pay_mobile/model/user_model/api_payment_method_model.dart';
 import 'package:evs_pay_mobile/resources/color_manager.dart';
+import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
 import 'package:evs_pay_mobile/view_models/nav_screen_view_model.dart';
+import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -130,7 +134,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                         filled: false,
                         counterText: "",
                         fillColor: ColorManager.whiteColor,
-                        contentPadding: const EdgeInsets.only(),
+                        contentPadding: const EdgeInsets.only(left: 10),
                         hintText: '',
                         // suffixIcon: showSuffixIcon ? Icon() : Container(),
                         border: OutlineInputBorder(
@@ -173,41 +177,103 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                   SizedBox(
                     height: AppSize.s6.h,
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        filled: false,
-                        counterText: "",
-                        fillColor: ColorManager.whiteColor,
-                        contentPadding: const EdgeInsets.only(),
-                        hintText: '',
-                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(
-                              color: Color(0xffE8E8E8), width: 1),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton2(
+                            isExpanded: true,
+                            hint: Row(
+                              // ignore: prefer_const_literals_to_create_immutables
+                              children: [
+                                const Expanded(
+                                    child: CustomText(
+                                  text: '',
+                                )),
+                              ],
+                            ),
+                            items: evsPayViewModel.paymentMethod.paymentMethods
+                                .map((item) => DropdownMenuItem<PaymentMethods>(
+                                    value: item,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [CustomText(text: item.name!)],
+                                    )))
+                                .toList(),
+                            value: selectedPaymentMethod,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedPaymentMethod = value as PaymentMethods;
+                              });
+                            },
+                            icon: SvgPicture.asset(
+                              AppImages.dropDownIcon,
+                              height: 7,
+                            ),
+                            iconSize: 20,
+                            buttonHeight: 50,
+                            // barrierColor: Colors.amber,
+                            buttonPadding:
+                                const EdgeInsets.only(left: 0, right: 20),
+                            buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(AppSize.s6.r),
+                              border: Border.all(
+                                color: ColorManager.filterGreyColor,
+                              ),
+                              color: ColorManager.whiteColor,
+                            ),
+                            itemHeight: 40,
+                            dropdownPadding: null,
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(AppSize.s4.r),
+                              color: ColorManager.whiteColor,
+                            ),
+                            dropdownElevation: 8,
+                            selectedItemHighlightColor:
+                                ColorManager.filterGreyColor,
+                            scrollbarAlwaysShow: false,
+                            offset: const Offset(0, 0),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(
-                              color: Color(0xffE8E8E8), width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          gapPadding: 0.0,
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(
-                              color: Color(0xffE8E8E8), width: 1),
-                        ),
-                        hintStyle: const TextStyle(
-                            color: ColorManager.labelTextColor,
-                            fontSize: FontSize.s16),
-                        labelStyle: const TextStyle(
-                            color: ColorManager.labelTextColor,
-                            fontSize: FontSize.s16),
                       ),
-                    ),
+                    ],
                   ),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: TextFormField(
+                  //     decoration: InputDecoration(
+                  //       filled: false,
+                  //       counterText: "",
+                  //       fillColor: ColorManager.whiteColor,
+                  //       contentPadding: const EdgeInsets.only(left: 10),
+                  //       hintText: '',
+                  //       // suffixIcon: showSuffixIcon ? Icon() : Container(),
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(12.r),
+                  //         borderSide: const BorderSide(
+                  //             color: Color(0xffE8E8E8), width: 1),
+                  //       ),
+                  //       enabledBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(12.r),
+                  //         borderSide: const BorderSide(
+                  //             color: Color(0xffE8E8E8), width: 1),
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //         gapPadding: 0.0,
+                  //         borderRadius: BorderRadius.circular(12.r),
+                  //         borderSide: const BorderSide(
+                  //             color: Color(0xffE8E8E8), width: 1),
+                  //       ),
+                  //       hintStyle: const TextStyle(
+                  //           color: ColorManager.labelTextColor,
+                  //           fontSize: FontSize.s16),
+                  //       labelStyle: const TextStyle(
+                  //           color: ColorManager.labelTextColor,
+                  //           fontSize: FontSize.s16),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: AppSize.s26.h,
                   ),
@@ -231,7 +297,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                         filled: false,
                         counterText: "",
                         fillColor: ColorManager.whiteColor,
-                        contentPadding: const EdgeInsets.only(),
+                        contentPadding: const EdgeInsets.only(left: 10),
                         hintText: '',
                         // suffixIcon: showSuffixIcon ? Icon() : Container(),
                         border: OutlineInputBorder(
@@ -289,7 +355,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                 filled: false,
                                 counterText: "",
                                 fillColor: ColorManager.whiteColor,
-                                contentPadding: const EdgeInsets.only(),
+                                contentPadding: const EdgeInsets.only(left: 10),
                                 hintText: '',
                                 // suffixIcon: showSuffixIcon ? Icon() : Container(),
                                 border: OutlineInputBorder(
@@ -399,7 +465,8 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                         filled: false,
                         counterText: "",
                         fillColor: ColorManager.whiteColor,
-                        contentPadding: const EdgeInsets.only(),
+                        contentPadding:
+                            const EdgeInsets.only(left: 10, right: 20),
                         hintText: '',
                         // suffixIcon: showSuffixIcon ? Icon() : Container(),
                         border: OutlineInputBorder(
@@ -615,7 +682,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                         filled: false,
                         counterText: "",
                         fillColor: ColorManager.whiteColor,
-                        contentPadding: const EdgeInsets.only(),
+                        contentPadding: const EdgeInsets.only(left: 10),
                         hintText: '',
                         // suffixIcon: showSuffixIcon ? Icon() : Container(),
                         border: OutlineInputBorder(
@@ -658,40 +725,67 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                   SizedBox(
                     height: AppSize.s6.h,
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        filled: false,
-                        counterText: "",
-                        fillColor: ColorManager.whiteColor,
-                        contentPadding: const EdgeInsets.only(),
-                        hintText: '',
-                        // suffixIcon: showSuffixIcon ? Icon() : Container(),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(
-                              color: Color(0xffE8E8E8), width: 1),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton2(
+                            isExpanded: true,
+                            hint: Row(
+                              // ignore: prefer_const_literals_to_create_immutables
+                              children: [
+                                const Expanded(
+                                    child: CustomText(
+                                  text: '',
+                                )),
+                              ],
+                            ),
+                            items: evsPayViewModel.paymentMethod.paymentMethods
+                                .map((item) => DropdownMenuItem<PaymentMethods>(
+                                    value: item,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [CustomText(text: item.name!)],
+                                    )))
+                                .toList(),
+                            value: selectedPaymentMethod,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedPaymentMethod = value as PaymentMethods;
+                              });
+                            },
+                            icon: SvgPicture.asset(
+                              AppImages.dropDownIcon,
+                              height: 7,
+                            ),
+                            iconSize: 20,
+                            buttonHeight: 50,
+                            // barrierColor: Colors.amber,
+                            buttonPadding:
+                                const EdgeInsets.only(left: 0, right: 20),
+                            buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(AppSize.s6.r),
+                              border: Border.all(
+                                color: ColorManager.filterGreyColor,
+                              ),
+                              color: ColorManager.whiteColor,
+                            ),
+                            itemHeight: 40,
+                            dropdownPadding: null,
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(AppSize.s4.r),
+                              color: ColorManager.whiteColor,
+                            ),
+                            dropdownElevation: 8,
+                            selectedItemHighlightColor:
+                                ColorManager.filterGreyColor,
+                            scrollbarAlwaysShow: false,
+                            offset: const Offset(0, 0),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(
-                              color: Color(0xffE8E8E8), width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          gapPadding: 0.0,
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(
-                              color: Color(0xffE8E8E8), width: 1),
-                        ),
-                        hintStyle: const TextStyle(
-                            color: ColorManager.labelTextColor,
-                            fontSize: FontSize.s16),
-                        labelStyle: const TextStyle(
-                            color: ColorManager.labelTextColor,
-                            fontSize: FontSize.s16),
                       ),
-                    ),
+                    ],
                   ),
                   SizedBox(
                     height: AppSize.s26.h,
@@ -716,7 +810,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                         filled: false,
                         counterText: "",
                         fillColor: ColorManager.whiteColor,
-                        contentPadding: const EdgeInsets.only(),
+                        contentPadding: const EdgeInsets.only(left: 10),
                         hintText: '',
                         // suffixIcon: showSuffixIcon ? Icon() : Container(),
                         border: OutlineInputBorder(
@@ -774,7 +868,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                 filled: false,
                                 counterText: "",
                                 fillColor: ColorManager.whiteColor,
-                                contentPadding: const EdgeInsets.only(),
+                                contentPadding: const EdgeInsets.only(left: 10),
                                 hintText: '',
                                 // suffixIcon: showSuffixIcon ? Icon() : Container(),
                                 border: OutlineInputBorder(
@@ -828,7 +922,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                                 filled: false,
                                 counterText: "",
                                 fillColor: ColorManager.whiteColor,
-                                contentPadding: const EdgeInsets.only(),
+                                contentPadding: const EdgeInsets.only(left: 10),
                                 hintText: '',
                                 // suffixIcon: showSuffixIcon ? Icon() : Container(),
                                 border: OutlineInputBorder(
@@ -884,7 +978,8 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                         filled: false,
                         counterText: "",
                         fillColor: ColorManager.whiteColor,
-                        contentPadding: const EdgeInsets.only(),
+                        contentPadding:
+                            const EdgeInsets.only(left: 10, top: 20),
                         hintText: '',
                         // suffixIcon: showSuffixIcon ? Icon() : Container(),
                         border: OutlineInputBorder(

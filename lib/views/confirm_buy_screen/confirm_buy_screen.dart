@@ -1,15 +1,22 @@
+import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/views/send_trade/send_trade_view.dart';
+import 'package:evs_pay_mobile/widgets/expiry_date_widget.dart';
+import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
-import '../../resources/styles_manager.dart';
 import '../../resources/value_manager.dart';
 import '../../view_models/dashboard_view_model.dart';
 import '../../widgets/app_texts/custom_text.dart';
@@ -50,9 +57,14 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
 
                 Row(
                   children: [
-                    const Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff292D32),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Color(0xff292D32),
+                      ),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.24,
@@ -77,10 +89,10 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                     width: 97,
                     child: Card(
                       elevation: 0.5,
-                      child: const Center(
+                      child: Center(
                           child: Text(
-                        'from gary',
-                        style: TextStyle(
+                        "from ${dashboardViewModel.singleTradeModel.data!.partner!.username == auth.userData.user!.username ? dashboardViewModel.singleTradeModel.data!.user!.username : dashboardViewModel.singleTradeModel.data!.partner!.username}",
+                        style: const TextStyle(
                             fontFamily: 'lexend',
                             fontSize: 12.5,
                             fontWeight: FontWeight.w500,
@@ -98,13 +110,83 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Time remaining',
-                      style: TextStyle(
-                          fontFamily: 'lexend',
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xff000000)),
+                    const Expanded(
+                      child: Text(
+                        'Time remaining',
+                        style: TextStyle(
+                            fontFamily: 'lexend',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff000000)),
+                      ),
+                    ),
+                    CountdownTimer(
+                      endTime: dashboardViewModel.singleTradeModel.data!
+                          .deadline!.millisecondsSinceEpoch,
+                      widgetBuilder:
+                          (BuildContext context, CurrentRemainingTime? time) {
+                        if (time == null) {
+                          return Row(
+                            children: const [
+                              CustomTextWithLineHeight(
+                                text: "Trade Time Elapsed",
+                                textColor: ColorManager.blckColor,
+                                fontSize: FontSize.s16,
+                                fontWeight: FontWeightManager.bold,
+                              ),
+                            ],
+                          );
+                        }
+                        return Row(
+                          children: [
+                            ExpiryDateWidget(
+                                item: time.hours == null || time.hours! < 10
+                                    ? "0"
+                                    : time.hours.toString()[0]),
+                            SizedBox(
+                              width: AppSize.s4.w,
+                            ),
+                            ExpiryDateWidget(
+                                item: time.hours == null || time.hours! < 1
+                                    ? "0"
+                                    : time.hours!.toString()[0]),
+                            SizedBox(
+                              width: AppSize.s3.w,
+                            ),
+                            SvgPicture.asset("assets/images/clock_time.svg"),
+                            SizedBox(
+                              width: AppSize.s3.w,
+                            ),
+                            ExpiryDateWidget(
+                                item: time.min == null || time.min! < 10
+                                    ? "0"
+                                    : time.min.toString()[0]),
+                            SizedBox(
+                              width: AppSize.s4.w,
+                            ),
+                            ExpiryDateWidget(
+                                item: time.min == null || time.min! < 10
+                                    ? "0"
+                                    : time.min!.toString()[1]),
+                            SizedBox(
+                              width: AppSize.s3.w,
+                            ),
+                            SvgPicture.asset("assets/images/clock_time.svg"),
+                            ExpiryDateWidget(
+                                item: time.sec == null || time.sec! < 10
+                                    ? "0"
+                                    : time.sec.toString()[0]),
+                            SizedBox(
+                              width: AppSize.s4.w,
+                            ),
+                            ExpiryDateWidget(
+                                item: time.sec == null || time.sec! < 10
+                                    ? "0"
+                                    : time.sec!.toString()[1]),
+                          ],
+                        );
+                        // Text('days: [ ${time.days} ], hours: [ ${time.hours} ], min: [ ${time.min} ], sec: [ ${time.sec} ]');
+                      },
                     ),
                     CircleAvatar(
                       minRadius: 28,
@@ -166,26 +248,29 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                       padding:
                           const EdgeInsets.only(left: 13, right: 13, top: 17),
                       child: Column(
-                        children: const [
+                        children: [
                           TitleAndAmount(
                             title: 'Amount',
-                            amount: 'NGN 100,000',
+                            amount:
+                                "NGN ${moneyFormat.format(double.parse(dashboardViewModel.singleTradeModel.data!.amount!.toString()))}",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           TitleAndAmount(
                             title: 'Rate',
-                            amount: '125 BTC',
+                            amount:
+                                "NGN ${dashboardViewModel.singleTradeModel.data!.offer!.profitMargin}/\$",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           TitleAndAmount(
                             title: 'Quantity',
-                            amount: '0.3 BTC',
+                            amount:
+                                "${dashboardViewModel.singleTradeModel.data!.coinValue} BTC",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                         ],
@@ -213,7 +298,9 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: ColorManager.primaryColor),
-                          onPressed: () {},
+                          onPressed: () {
+                            openChatScreen(context);
+                          },
                           child: Row(
                             children: [
                               // Icon(
@@ -239,10 +326,10 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                 SizedBox(
                   height: AppSize.s30.h,
                 ),
-                const Center(
+                Center(
                   child: Text(
-                    ' Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ',
-                    style: TextStyle(
+                    "${dashboardViewModel.singleTradeModel.data!.offer!.terms}",
+                    style: const TextStyle(
                       fontFamily: 'lexend',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -290,48 +377,86 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                 SizedBox(
                   height: AppSize.s100.h,
                 ),
+                dashboardViewModel.loading
+                    ? const CupertinoActivityIndicator()
+                    : Consumer<DashboardViewModel2>(
+                        builder: (ctx, dashboardViewModel, child) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (dashboardViewModel.resMessage != '') {
+                            showTopSnackBar(
+                              context,
+                              CustomSnackBar.info(
+                                message: dashboardViewModel.resMessage,
+                                backgroundColor: dashboardViewModel.isSuccessful
+                                    ? ColorManager.deepGreenColor
+                                    : ColorManager.orangeColor,
+                              ),
+                            );
 
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.060,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorManager.primaryColor),
-                      onPressed: () {},
-                      child: const Text('I have paid')),
-                ),
+                            ///Clear the response message to avoid duplicate
+                            dashboardViewModel.clear();
+                          }
+                        });
+                        return CustomElevatedButton(
+                            width: double.infinity,
+                            onTap: () async {
+                              final action = dashboardViewModel
+                                          .singleTradeModel.data!.status ==
+                                      "ACTIVE"
+                                  ? "confirm"
+                                  : "cancel";
+                              final isConfirmed =
+                                  await dashboardViewModel.iHavePaidTrade(
+                                      dashboardViewModel
+                                          .singleTradeModel.data!.reference,
+                                      action);
+                              print("I have paid $isConfirmed");
+                              if (isConfirmed) {
+                                dashboardViewModel.getTradeDetails(
+                                    dashboardViewModel
+                                        .singleTradeModel.data!.reference);
+                              }
+                            },
+                            backgroundColor: ColorManager.primaryColor,
+                            textColor: Colors.white,
+                            title: dashboardViewModel
+                                        .singleTradeModel.data!.status ==
+                                    "ACTIVE"
+                                ? "I have Paid"
+                                : "Cancel Trade");
+                      }),
 
                 ///mind ends here
 
-                Container(
-                  height: AppSize.s28.h,
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: const [
-                      // CustomTextWithLineHeight(
-                      //   text:
-                      //       "Buy Bitcoin from  ${dashboardViewModel.singleTradeModel.data?.partner?.username == auth.userData.user!.username ? dashboardViewModel.singleTradeModel.data?.user?.username : dashboardViewModel.singleTradeModel.data?.partner?.username}",
-                      //   textColor: ColorManager.blckColor,
-                      //   fontSize: FontSize.s16,
-                      //   fontWeight: FontWeightManager.bold,
-                      // ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: AppSize.s28.h,
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: const [
-                      CustomTextWithLineHeight(
-                        text: "This transaction will last for",
-                        textColor: ColorManager.blckColor,
-                        fontSize: FontSize.s14,
-                        fontWeight: FontWeightManager.regular,
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   height: AppSize.s28.h,
+                //   alignment: Alignment.center,
+                //   child: Row(
+                //     children: [
+                //       CustomTextWithLineHeight(
+                //         text:
+                //             "Buy Bitcoin from  ${dashboardViewModel.singleTradeModel.data!.partner!.username == auth.userData.user!.username ? dashboardViewModel.singleTradeModel.data!.user!.username : dashboardViewModel.singleTradeModel.data!.partner!.username}",
+                //         textColor: ColorManager.blckColor,
+                //         fontSize: FontSize.s16,
+                //         fontWeight: FontWeightManager.bold,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Container(
+                //   height: AppSize.s28.h,
+                //   alignment: Alignment.center,
+                //   child: Row(
+                //     children: const [
+                //       CustomTextWithLineHeight(
+                //         text: "This transaction will last for",
+                //         textColor: ColorManager.blckColor,
+                //         fontSize: FontSize.s14,
+                //         fontWeight: FontWeightManager.regular,
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 // CountdownTimer(
                 //   endTime: dashboardViewModel
                 //       .singleTradeModel.data!.deadline!.millisecondsSinceEpoch,
@@ -380,11 +505,21 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                 //             item: time.min == null || time.min! < 10
                 //                 ? "0"
                 //                 : time.min!.toString()[1]),
-                //         // SizedBox(width: AppSize.s3.w,),
-                //         // SvgPicture.asset("assets/images/clock_time.svg"),
-                //         // ExpiryDateWidget(item: time.sec == null || time.sec! < 10 ? "0" : time.sec.toString()[0]),
-                //         // SizedBox(width: AppSize.s4.w,),
-                //         // ExpiryDateWidget(item: time.sec == null || time.sec! < 10 ? "0" : time.sec!.toString()[1]),
+                //         SizedBox(
+                //           width: AppSize.s3.w,
+                //         ),
+                //         SvgPicture.asset("assets/images/clock_time.svg"),
+                //         ExpiryDateWidget(
+                //             item: time.sec == null || time.sec! < 10
+                //                 ? "0"
+                //                 : time.sec.toString()[0]),
+                //         SizedBox(
+                //           width: AppSize.s4.w,
+                //         ),
+                //         ExpiryDateWidget(
+                //             item: time.sec == null || time.sec! < 10
+                //                 ? "0"
+                //                 : time.sec!.toString()[1]),
                 //       ],
                 //     );
                 //     // Text('days: [ ${time.days} ], hours: [ ${time.hours} ], min: [ ${time.min} ], sec: [ ${time.sec} ]');
@@ -393,213 +528,213 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
               ],
             ),
           ),
-          SizedBox(
-            height: AppSize.s19.h,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppSize.s24.w),
-            child: Column(
-              children: [
-                Row(
-                  children: const [
-                    CustomTextWithLineHeight(
-                      text: "Confirm Order info",
-                      textColor: ColorManager.blckColor,
-                      fontSize: FontSize.s16,
-                      fontWeight: FontWeightManager.bold,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.s8.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    CustomTextWithLineHeight(
-                      text: "Amount",
-                      textColor: ColorManager.arrowColor,
-                      fontSize: FontSize.s16,
-                      fontWeight: FontWeightManager.medium,
-                    ),
-                    // CustomTextWithLineHeight(
-                    //   text:
-                    //       "NGN${moneyFormat.format(double.parse(dashboardViewModel.singleTradeModel.data!.amount!.toString()))}",
-                    //   textColor: ColorManager.greenTextColor,
-                    //   fontSize: FontSize.s16,
-                    //   fontWeight: FontWeightManager.medium,
-                    // )
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.s4.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    CustomTextWithLineHeight(
-                      text: "Rate",
-                      textColor: ColorManager.arrowColor,
-                      fontSize: FontSize.s16,
-                      fontWeight: FontWeightManager.medium,
-                    ),
-                    // CustomTextWithLineHeight(
-                    //   text:
-                    //       "\$${dashboardViewModel.singleTradeModel.data!.offer!.profitMargin}/\$",
-                    //   textColor: ColorManager.greenTextColor,
-                    //   fontSize: FontSize.s16,
-                    //   fontWeight: FontWeightManager.medium,
-                    // )
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.s4.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    CustomTextWithLineHeight(
-                      text: "Quantity",
-                      textColor: ColorManager.arrowColor,
-                      fontSize: FontSize.s16,
-                      fontWeight: FontWeightManager.medium,
-                    ),
-                    // CustomTextWithLineHeight(
-                    //   text:
-                    //       "${dashboardViewModel.singleTradeModel.data!.coinValue} BTC",
-                    //   textColor: ColorManager.greenTextColor,
-                    //   fontSize: FontSize.s16,
-                    //   fontWeight: FontWeightManager.medium,
-                    // )
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.s16.h,
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: AppSize.s24.w),
-                child: const CustomTextWithLineHeight(
-                  text: "Trade Details",
-                  textColor: ColorManager.blackTxtColor,
-                  fontSize: FontSize.s16,
-                  fontWeight: FontWeightManager.bold,
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  openChatScreen(context);
-                },
-                child: Container(
-                  height: AppSize.s48.h,
-                  width: AppSize.s128.w,
-                  decoration: BoxDecoration(
-                      color: ColorManager.primaryColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(AppSize.s5.r),
-                        bottomLeft: Radius.circular(AppSize.s5.r),
-                      )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(AppImages.chatIcon),
-                      SizedBox(
-                        width: AppSize.s12.w,
-                      ),
-                      const CustomTextWithLineHeight(
-                        text: "Chat",
-                        textColor: ColorManager.blackTxtColor,
-                        fontSize: FontSize.s16,
-                        fontWeight: FontWeightManager.bold,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: AppSize.s5.h,
-          ),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(
-                horizontal: AppSize.s21.w, vertical: AppSize.s10.h),
-            decoration: BoxDecoration(
-                color: const Color.fromRGBO(217, 217, 217, 1),
-                borderRadius: BorderRadius.circular(AppSize.s10.r)),
-            margin: EdgeInsets.symmetric(horizontal: AppSize.s24.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // CustomTextNoOverFlow(
-                //   text:
-                //       "${dashboardViewModel.singleTradeModel.data!.offer!.terms}",
-                //   fontSize: FontSize.s15,
-                //   textColor: ColorManager.blckColor,
-                // ),
-                SizedBox(
-                  height: AppSize.s20.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const CustomTextNoOverFlow(
-                        text: "Call Contact:",
-                        fontSize: FontSize.s15,
-                        textColor: ColorManager.blckColor),
-                    SizedBox(
-                      width: AppSize.s20.w,
-                    ),
+          // SizedBox(
+          //   height: AppSize.s19.h,
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: AppSize.s24.w),
+          //   child: Column(
+          //     children: [
+          //       Row(
+          //         children: const [
+          //           CustomTextWithLineHeight(
+          //             text: "Confirm Order info",
+          //             textColor: ColorManager.blckColor,
+          //             fontSize: FontSize.s16,
+          //             fontWeight: FontWeightManager.bold,
+          //           ),
+          //         ],
+          //       ),
+          //       SizedBox(
+          //         height: AppSize.s8.h,
+          //       ),
+          //       Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           const CustomTextWithLineHeight(
+          //             text: "Amount",
+          //             textColor: ColorManager.arrowColor,
+          //             fontSize: FontSize.s16,
+          //             fontWeight: FontWeightManager.medium,
+          //           ),
+          //           CustomTextWithLineHeight(
+          //             text:
+          //                 "NGN${moneyFormat.format(double.parse(dashboardViewModel.singleTradeModel.data!.amount!.toString()))}",
+          //             textColor: ColorManager.greenTextColor,
+          //             fontSize: FontSize.s16,
+          //             fontWeight: FontWeightManager.medium,
+          //           )
+          //         ],
+          //       ),
+          //       SizedBox(
+          //         height: AppSize.s4.h,
+          //       ),
+          //       Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: const [
+          //           CustomTextWithLineHeight(
+          //             text: "Rate",
+          //             textColor: ColorManager.arrowColor,
+          //             fontSize: FontSize.s16,
+          //             fontWeight: FontWeightManager.medium,
+          //           ),
+          //           // CustomTextWithLineHeight(
+          //           //   text:
+          //           //       "\$${dashboardViewModel.singleTradeModel.data!.offer!.profitMargin}/\$",
+          //           //   textColor: ColorManager.greenTextColor,
+          //           //   fontSize: FontSize.s16,
+          //           //   fontWeight: FontWeightManager.medium,
+          //           // )
+          //         ],
+          //       ),
+          //       SizedBox(
+          //         height: AppSize.s4.h,
+          //       ),
+          //       Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: const [
+          //           CustomTextWithLineHeight(
+          //             text: "Quantity",
+          //             textColor: ColorManager.arrowColor,
+          //             fontSize: FontSize.s16,
+          //             fontWeight: FontWeightManager.medium,
+          //           ),
+          //           // CustomTextWithLineHeight(
+          //           //   text:
+          //           //       "${dashboardViewModel.singleTradeModel.data!.coinValue} BTC",
+          //           //   textColor: ColorManager.greenTextColor,
+          //           //   fontSize: FontSize.s16,
+          //           //   fontWeight: FontWeightManager.medium,
+          //           // )
+          //         ],
+          //       ),
+          //       SizedBox(
+          //         height: AppSize.s16.h,
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Padding(
+          //       padding: EdgeInsets.only(left: AppSize.s24.w),
+          //       child: const CustomTextWithLineHeight(
+          //         text: "Trade Details",
+          //         textColor: ColorManager.blackTxtColor,
+          //         fontSize: FontSize.s16,
+          //         fontWeight: FontWeightManager.bold,
+          //       ),
+          //     ),
+          //     InkWell(
+          //       onTap: () {
+          //         openChatScreen(context);
+          //       },
+          //       child: Container(
+          //         height: AppSize.s48.h,
+          //         width: AppSize.s128.w,
+          //         decoration: BoxDecoration(
+          //             color: ColorManager.primaryColor,
+          //             borderRadius: BorderRadius.only(
+          //               topLeft: Radius.circular(AppSize.s5.r),
+          //               bottomLeft: Radius.circular(AppSize.s5.r),
+          //             )),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //             SvgPicture.asset(AppImages.chatIcon),
+          //             SizedBox(
+          //               width: AppSize.s12.w,
+          //             ),
+          //             const CustomTextWithLineHeight(
+          //               text: "Chat",
+          //               textColor: ColorManager.blackTxtColor,
+          //               fontSize: FontSize.s16,
+          //               fontWeight: FontWeightManager.bold,
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // SizedBox(
+          //   height: AppSize.s5.h,
+          // ),
+          // Container(
+          //   width: double.infinity,
+          //   padding: EdgeInsets.symmetric(
+          //       horizontal: AppSize.s21.w, vertical: AppSize.s10.h),
+          //   decoration: BoxDecoration(
+          //       color: const Color.fromRGBO(217, 217, 217, 1),
+          //       borderRadius: BorderRadius.circular(AppSize.s10.r)),
+          //   margin: EdgeInsets.symmetric(horizontal: AppSize.s24.w),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       CustomTextNoOverFlow(
+          //         text:
+          //             "${dashboardViewModel.singleTradeModel.data!.offer!.terms}",
+          //         fontSize: FontSize.s15,
+          //         textColor: ColorManager.blckColor,
+          //       ),
+          //       SizedBox(
+          //         height: AppSize.s20.h,
+          //       ),
+          //       Row(
+          //         mainAxisAlignment: MainAxisAlignment.start,
+          //         children: [
+          //           const CustomTextNoOverFlow(
+          //               text: "Call Contact:",
+          //               fontSize: FontSize.s15,
+          //               textColor: ColorManager.blckColor),
+          //           SizedBox(
+          //             width: AppSize.s20.w,
+          //           ),
 
-                    /// this is another error causing widget
-                    // CustomTextNoOverFlow(
-                    //     text:
-                    //         "${dashboardViewModel.singleTradeModel.data!.partner!.phone!}",
-                    //     fontSize: FontSize.s15,
-                    //     textColor: ColorManager.blckColor),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: AppSize.s39.h,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppSize.s24.w),
-            child: RichText(
-              text: TextSpan(
-                text: "After payment click  ",
-                style: getRichTextStyle(
-                    fontSize: FontSize.s15,
-                    textColor: ColorManager.greyColor,
-                    fontWeight: FontWeightManager.medium),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: '“i have paid” ',
-                      style: getRichTextStyle(
-                          fontSize: FontSize.s15,
-                          textColor: ColorManager.blackColor,
-                          fontWeight: FontWeightManager.medium)),
-                  TextSpan(
-                      text: "button to notify seller",
-                      style: getRichTextStyle(
-                          fontSize: FontSize.s15,
-                          textColor: ColorManager.greyColor,
-                          fontWeight: FontWeightManager.medium)),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: AppSize.s50.h,
-          ),
+          //           /// this is another error causing widget
+          //           // CustomTextNoOverFlow(
+          //           //     text:
+          //           //         "${dashboardViewModel.singleTradeModel.data!.partner!.phone!}",
+          //           //     fontSize: FontSize.s15,
+          //           //     textColor: ColorManager.blckColor),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: AppSize.s39.h,
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: AppSize.s24.w),
+          //   child: RichText(
+          //     text: TextSpan(
+          //       text: "After payment click  ",
+          //       style: getRichTextStyle(
+          //           fontSize: FontSize.s15,
+          //           textColor: ColorManager.greyColor,
+          //           fontWeight: FontWeightManager.medium),
+          //       children: <TextSpan>[
+          //         TextSpan(
+          //             text: '“i have paid” ',
+          //             style: getRichTextStyle(
+          //                 fontSize: FontSize.s15,
+          //                 textColor: ColorManager.blackColor,
+          //                 fontWeight: FontWeightManager.medium)),
+          //         TextSpan(
+          //             text: "button to notify seller",
+          //             style: getRichTextStyle(
+          //                 fontSize: FontSize.s15,
+          //                 textColor: ColorManager.greyColor,
+          //                 fontWeight: FontWeightManager.medium)),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: AppSize.s50.h,
+          // ),
           // Padding(
           //   padding: EdgeInsets.symmetric(horizontal: AppSize.s50.w),
           //   child: dashboardViewModel.loading

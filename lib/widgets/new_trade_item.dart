@@ -28,27 +28,29 @@ class NewTradeItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 0),
       child: InkWell(
         onTap: () async {
-          dashboardViewModel.changeTradeReference(trade.reference);
-          context.read<DashboardViewModel2>().changeSelectedNewTrade(trade);
-          final isFetched = await context
-              .read<DashboardViewModel2>()
-              .getTradeDetails(trade.reference);
-          if (isFetched) {
-            print("Trade type: ${trade.type}");
-            if (trade.type == "SELL") {
-              if (trade.partner?.username == auth.userData.user?.username) {
-                openConfirmBuyTradeView(context);
-              } else {
-                openConfirmSellTradeView(context);
-              }
-            } else {
-              if (trade.partner?.username == auth.userData.user?.username) {
-                openConfirmSellTradeView(context);
-              } else {
-                openConfirmBuyTradeView(context);
-              }
-            }
-          }
+          /// this is the initial logic done by the previous developer
+
+          // dashboardViewModel.changeTradeReference(trade.reference);
+          // context.read<DashboardViewModel2>().changeSelectedNewTrade(trade);
+          // final isFetched = await context
+          //     .read<DashboardViewModel2>()
+          //     .getTradeDetails(trade.reference);
+          // if (isFetched) {
+          //   print("Trade type: ${trade.type}");
+          //   if (trade.type == "SELL") {
+          //     if (trade.partner?.username == auth.userData.user?.username) {
+          //       openConfirmBuyTradeView(context);
+          //     } else {
+          //       openConfirmSellTradeView(context);
+          //     }
+          //   } else {
+          //     if (trade.partner?.username == auth.userData.user?.username) {
+          //       openConfirmSellTradeView(context);
+          //     } else {
+          //       openConfirmBuyTradeView(context);
+          //     }
+          //   }
+          // }
         },
         child: Container(
           padding: const EdgeInsets.only(
@@ -90,8 +92,32 @@ class NewTradeItem extends StatelessWidget {
                       elevation: 1,
                       backgroundColor: const Color(0xffF4B731),
                     ),
-                    onPressed: () {
-                      openSellView(context);
+                    onPressed: () async {
+                      dashboardViewModel.changeTradeReference(trade.reference);
+                      context
+                          .read<DashboardViewModel2>()
+                          .changeSelectedNewTrade(trade);
+                      final isFetched = await context
+                          .read<DashboardViewModel2>()
+                          .getTradeDetails(trade.reference);
+                      if (isFetched) {
+                        print("Trade type: ${trade.type}");
+                        if (trade.type == "SELL") {
+                          if (trade.partner?.username ==
+                              auth.userData.user?.username) {
+                            openConfirmBuyTradeView(context);
+                          } else {
+                            openConfirmSellTradeView(context);
+                          }
+                        } else {
+                          if (trade.partner?.username ==
+                              auth.userData.user?.username) {
+                            openConfirmSellTradeView(context);
+                          } else {
+                            openConfirmBuyTradeView(context);
+                          }
+                        }
+                      }
                     },
                     child: const FittedBox(
                       child: Text(

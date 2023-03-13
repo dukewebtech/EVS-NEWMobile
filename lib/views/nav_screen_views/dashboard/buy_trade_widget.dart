@@ -5,14 +5,11 @@ import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/dashboard_trade_model.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
-import '../../../resources/image_manager.dart';
-import '../../../resources/strings_manager.dart';
 import '../../../resources/value_manager.dart';
 import '../../../widgets/app_texts/custom_text.dart';
 import '../../../widgets/re_usable_widgets.dart';
@@ -163,7 +160,7 @@ class BuyTradeWidget extends StatelessWidget {
                           // color: Colors.yellow ,
                           // color: Color(0xfff6f6f6),
                           borderRadius: BorderRadius.circular(12)),
-                      height: 105,
+                      height: 110,
                       width: double.infinity,
                       child: Column(
                         children: [
@@ -241,7 +238,7 @@ class BuyTradeWidget extends StatelessWidget {
                                     backgroundColor: const Color(0xffF4B731),
                                   ),
                                   onPressed: () {
-                                    openSellView(context);
+                                    openBuyTradeView(context);
                                   },
                                   child: const FittedBox(
                                     child: Text(

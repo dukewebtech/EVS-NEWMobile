@@ -6,7 +6,6 @@ import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/dashboard/buy_trade_widget.dart';
-import 'package:evs_pay_mobile/views/nav_screen_views/dashboard/filter_trade_widget.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/dashboard/sell_trade_widget.dart';
 import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,6 @@ import '../../../resources/strings_manager.dart';
 import '../../../view_models/dashboard_view_model.dart';
 import '../../../view_models/general_view_model.dart';
 import '../../../widgets/app_texts/custom_text.dart';
-import '../../../widgets/evs_pay_header_widget.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -154,7 +152,7 @@ class _DashboardViewState extends State<DashboardView> {
                         'Wallet Balance',
                         style: TextStyle(
                           fontFamily: 'Lexend',
-                          color: Color(0xff000000).withOpacity(0.40),
+                          color: const Color(0xff000000).withOpacity(0.40),
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
@@ -225,7 +223,7 @@ class _DashboardViewState extends State<DashboardView> {
                         'Wallet Balance',
                         style: TextStyle(
                           fontFamily: 'Lexend',
-                          color: Color(0xff000000).withOpacity(0.40),
+                          color: const Color(0xff000000).withOpacity(0.40),
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),
@@ -296,7 +294,7 @@ class _DashboardViewState extends State<DashboardView> {
                         'Wallet Balance',
                         style: TextStyle(
                           fontFamily: 'Lexend',
-                          color: Color(0xff000000).withOpacity(0.40),
+                          color: const Color(0xff000000).withOpacity(0.40),
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                         ),

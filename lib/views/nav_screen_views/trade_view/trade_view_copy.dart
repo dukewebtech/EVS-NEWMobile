@@ -38,6 +38,24 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
     final evsPayViewModel = context.watch<EvsPayViewModel>();
     final authProvider = context.watch<AuthenticationProvider>();
 
+    List<MyButton> btnLists = [
+      MyButton(
+        title: 'Add',
+        isClicked: () {},
+        isIcon: false,
+      ),
+      MyButton(
+        title: 'My text',
+        isClicked: () {},
+        isIcon: false,
+      ),
+      MyButton(
+        title: '',
+        isClicked: () {},
+        isIcon: true,
+      ),
+    ];
+
     List<Map<String, dynamic>> btnList = [
       {
         "title": "My Ads",
@@ -53,13 +71,12 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
         "title": "pro",
         "isClicked": false,
         "isCone": true,
-
       }
     ];
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(
-          Iconsax.transaction_minus,
+          Iconsax.add,
           color: Colors.black,
         ),
         elevation: 2.5,
@@ -114,21 +131,37 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
 
             ///this is for trades
 
-            const Icon(Icons.info_outline),
-            IconButton(
-                onPressed: () {
-                  // changeAll == 0 ? show(context) : showTradeDialog(context);
-                  if (changeAll == 0) show(context);
-                  if (changeAll == 1) showTradeDialog(context);
-                },
-                icon: const Icon(Icons.more_horiz_rounded)),
+            // const Icon(Icons.info_outline),
+            // IconButton(
+            //     onPressed: () {
+            // changeAll == 0 ? show(context) : showTradeDialog(context);
+            //       if (changeAll == 0) show(context);
+            //       if (changeAll == 1) showTradeDialog(context);
+            //     },
+            //     icon: const Icon(Icons.more_horiz_rounded)),
             SizedBox(
               height: AppSize.s18.h,
             ),
 
+            // SizedBox(
+            //   height: 40,
+            //   child: ListView.builder(
+            //       scrollDirection: Axis.horizontal,
+            //       itemCount: btnLists.length,
+            //       itemBuilder: (_, index) {
+            //         final isBtnList = btnLists[index];
+            //         return MyButton(
+            //           title: isBtnList.title,
+            //           isClicked: isBtnList.isClicked,
+            //           isIcon: isBtnList.isIcon,
+            //         );
+            //       }),
+            // ),
+
             SizedBox(
               height: 40,
               child: ListView.builder(
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: btnList.length,
                   itemBuilder: (context, index) {
@@ -142,13 +175,13 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                         });
                       },
                       child: Container(
-                        height: 40,
-                        width: 140,
+                        height: 60,
+                        width: index == 2 ? 70 : 126,
                         color: const Color(0xffEFEFEF),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.linearToEaseOut,
-                          width: 100,
+                          width: 0,
                           margin: const EdgeInsets.only(
                               left: 5, right: 5, top: 5, bottom: 5),
                           decoration: BoxDecoration(
@@ -163,17 +196,51 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                               child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                 title,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  fontFamily: 'Lexend',
-                                  color: Color(0xff000000),
-                                ),
-                                // btnList[index]["title"],
-                              ),
-                              // if (title == 'Pro') const Icon(Icons.star)
+                              index == 2
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        if (changeAll == 0) show(context);
+                                        if (changeAll == 1) {
+                                          showTradeDialog(context);
+                                        }
+                                        print('tappa');
+                                      },
+                                      child: Row(
+                                        children: [
+                                          const VerticalDivider(
+                                            thickness: 2,
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          GestureDetector(
+                                              onTap: (() {
+                                                if (changeAll == 0) {
+                                                  show(context);
+                                                }
+                                                if (changeAll == 1) {
+                                                  showTradeDialog(context);
+                                                }
+                                                print('e tapped m o');
+                                              }),
+                                              child: const Icon(
+                                                Icons.more_horiz_outlined,
+                                                size: 32,
+                                              )),
+                                        ],
+                                      ),
+                                    )
+                                  : Text(
+                                      title,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        fontFamily: 'Lexend',
+                                        color: Color(0xff000000),
+                                      ),
+                                      // btnList[index]["title"],
+                                    ),
+                              if (title == 'Pro') const Icon(Icons.star)
 
                               // GestureDetector(
                               //   onTap: () {
@@ -314,6 +381,15 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                   ? Container()
                   : const MyAdsFutureBuilderWidget(),
 
+            // if (changeAll == 2)
+            //   Center(
+            //     child: GestureDetector(
+            //       onTap: () {
+            //         show(context);
+            //       },
+            //     ),
+            //   ),
+
             // if (!isMyAds)
             //   evsPayViewModel.isLoading ? Container() : const TradesWidget(),
 
@@ -346,7 +422,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) => Container(
-        height: AppSize.s350.h,
+        height: AppSize.s450.h,
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.only(
@@ -403,29 +479,29 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
             SizedBox(
               height: AppSize.s13.h,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // height: AppSize.s60.h,
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
-                  decoration: BoxDecoration(
-                      color: ColorManager.whiteColor,
-                      borderRadius: BorderRadius.circular(AppSize.s5.r)),
-                  alignment: Alignment.center,
-                  child: CustomTextWithLineHeight(
-                    text: AppStrings.cancel,
-                    textColor: ColorManager.blckColor,
-                    fontSize: FontSize.s16.sp,
-                    fontWeight: FontWeightManager.medium,
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
+            //   child: InkWell(
+            //     onTap: () {
+            //       Navigator.pop(context);
+            //     },
+            //     child: Container(
+            //       // height: AppSize.s60.h,
+            //       width: double.infinity,
+            //       padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
+            //       decoration: BoxDecoration(
+            //           color: ColorManager.whiteColor,
+            //           borderRadius: BorderRadius.circular(AppSize.s5.r)),
+            //       alignment: Alignment.center,
+            //       child: CustomTextWithLineHeight(
+            //         text: AppStrings.cancel,
+            //         textColor: ColorManager.blckColor,
+            //         fontSize: FontSize.s16.sp,
+            //         fontWeight: FontWeightManager.medium,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -548,36 +624,35 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
             SizedBox(
               height: AppSize.s13.h,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // height: AppSize.s60.h,
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
-                  decoration: BoxDecoration(
-                      color: ColorManager.whiteColor,
-                      borderRadius: BorderRadius.circular(AppSize.s5.r)),
-                  alignment: Alignment.center,
-                  child: CustomTextWithLineHeight(
-                    text: AppStrings.cancel,
-                    textColor: ColorManager.blckColor,
-                    fontSize: FontSize.s16.sp,
-                    fontWeight: FontWeightManager.medium,
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
+            //   child: InkWell(
+            //     onTap: () {
+            //       Navigator.pop(context);
+            //     },
+            //     child: Container(
+            //       // height: AppSize.s60.h,
+            //       width: double.infinity,
+            //       padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
+            //       decoration: BoxDecoration(
+            //           color: ColorManager.whiteColor,
+            //           borderRadius: BorderRadius.circular(AppSize.s5.r)),
+            //       alignment: Alignment.center,
+            //       child: CustomTextWithLineHeight(
+            //         text: AppStrings.cancel,
+            //         textColor: ColorManager.blckColor,
+            //         fontSize: FontSize.s16.sp,
+            //         fontWeight: FontWeightManager.medium,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
     );
   }
 }
-
 
 //  Container(
 //                       padding: const EdgeInsets.only(
@@ -693,3 +768,75 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
 //                         ],
 //                       ),
 //                     ),
+
+class MyButton extends StatelessWidget {
+  final String title;
+  final VoidCallback isClicked;
+  final bool isIcon;
+
+  const MyButton({
+    Key? key,
+    required this.title,
+    required this.isClicked,
+    required this.isIcon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: isClicked,
+      child: Card(
+        color: title == "dd" ? const Color(0xff555555) : Colors.amber,
+        child: isIcon
+            ? GestureDetector(
+                onTap: () {
+                  AlertDialog(
+                    content: Column(
+                      children: const [],
+                    ),
+                  );
+                },
+                child: const Icon(Icons.more_horiz_rounded),
+              )
+            : Text(title),
+      ),
+    );
+  }
+}
+
+List<MyButton> btnLists = [
+  MyButton(
+    title: 'Add',
+    isClicked: () {},
+    isIcon: false,
+  ),
+  MyButton(
+    title: 'My text',
+    isClicked: () {},
+    isIcon: false,
+  ),
+  MyButton(
+    title: '',
+    isClicked: () {},
+    isIcon: true,
+  ),
+];
+
+class MyClass extends StatelessWidget {
+  const MyClass({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: btnLists.length,
+        itemBuilder: (_, index) {
+          final isBtnList = btnLists[index];
+          return MyButton(
+            title: isBtnList.title,
+            isClicked: isBtnList.isClicked,
+            isIcon: isBtnList.isIcon,
+          );
+        });
+  }
+}
