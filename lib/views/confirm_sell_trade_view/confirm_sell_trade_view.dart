@@ -1,15 +1,24 @@
+import 'package:evs_pay_mobile/resources/constants/constants.dart';
+import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
+import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/views/send_trade/send_trade_view.dart';
+import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
+import 'package:evs_pay_mobile/widgets/expiry_date_widget.dart';
+import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../resources/color_manager.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/value_manager.dart';
 import '../../view_models/dashboard_view_model.dart';
-import '../../widgets/custom_app_bar.dart';
 
 class ConfirmSellTradeScreen extends StatefulWidget {
   const ConfirmSellTradeScreen({Key? key}) : super(key: key);
@@ -27,13 +36,10 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
     return Scaffold(
-      appBar:
-          evsPayCustomAppBar(context, AppStrings.sellLowerCase, leadingTap: () {
-        Navigator.pop(context);
-      }, isCenterAlign: true),
       body: SafeArea(
           child: SingleChildScrollView(
               child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             height: AppSize.s12.h,
@@ -43,14 +49,20 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
             padding: EdgeInsets.symmetric(
                 horizontal: AppSize.s24.w, vertical: AppSize.s24.h),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /// mine starts here
 
                 Row(
                   children: [
-                    const Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff292D32),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Color(0xff292D32),
+                      ),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.24,
@@ -75,10 +87,10 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                     width: 97,
                     child: Card(
                       elevation: 0.5,
-                      child: const Center(
+                      child: Center(
                           child: Text(
-                        'from gary',
-                        style: TextStyle(
+                        "from ${dashboardViewModel.singleTradeModel.data?.partner?.username}",
+                        style: const TextStyle(
                             fontFamily: 'lexend',
                             fontSize: 12.5,
                             fontWeight: FontWeight.w500,
@@ -103,6 +115,58 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff000000)),
+                    ),
+                    CountdownTimer(
+                      endTime: dashboardViewModel.singleTradeModel.data!
+                          .deadline!.millisecondsSinceEpoch,
+                      widgetBuilder:
+                          (BuildContext context, CurrentRemainingTime? time) {
+                        if (time == null) {
+                          return Row(
+                            children: const [
+                              CustomTextWithLineHeight(
+                                text: "Trade Time Elapsed",
+                                textColor: ColorManager.blckColor,
+                                fontSize: FontSize.s16,
+                                fontWeight: FontWeightManager.bold,
+                              ),
+                            ],
+                          );
+                        }
+                        return Row(
+                          children: [
+                            ExpiryDateWidget(
+                                item: time.hours == null || time.hours! < 10
+                                    ? "0"
+                                    : time.hours.toString()[0]),
+                            SizedBox(
+                              width: AppSize.s4.w,
+                            ),
+                            ExpiryDateWidget(
+                                item: time.hours == null || time.hours! < 1
+                                    ? "0"
+                                    : time.hours!.toString()[0]),
+                            SizedBox(
+                              width: AppSize.s3.w,
+                            ),
+                            SvgPicture.asset("assets/images/clock_time.svg"),
+                            SizedBox(
+                              width: AppSize.s3.w,
+                            ),
+                            ExpiryDateWidget(
+                                item: time.min == null || time.min! < 10
+                                    ? "0"
+                                    : time.min.toString()[0]),
+                            SizedBox(
+                              width: AppSize.s4.w,
+                            ),
+                            ExpiryDateWidget(
+                                item: time.min == null || time.min! < 10
+                                    ? "0"
+                                    : time.min!.toString()[1]),
+                          ],
+                        );
+                      },
                     ),
                     CircleAvatar(
                       minRadius: 28,
@@ -162,33 +226,40 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                     ),
                     child: Padding(
                       padding:
-                          const EdgeInsets.only(left: 13, right: 13, top: 17),
+                          const EdgeInsets.only(left: 13, right: 13, top: 10),
                       child: Column(
-                        children: const [
+                        children: [
                           TitleAndAmount(
                             title: 'Amount',
-                            amount: 'NGN 100,000',
+                            amount:
+                                "NGN ${moneyFormat.format(double.parse(dashboardViewModel.singleTradeModel.data!.amount!.toString()))}",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           TitleAndAmount(
                             title: 'Rate',
-                            amount: '125 BTC',
+                            amount:
+                                "NGN ${dashboardViewModel.singleTradeModel.data!.offer!.profitMargin}/\$",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           TitleAndAmount(
                             title: 'Quantity',
-                            amount: '0.3 BTC',
+                            amount:
+                                "${dashboardViewModel.singleTradeModel.data!.coinValue} BTC",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           TitleAndAmount(
                             title: 'Payment Status',
-                            amount: 'Pending',
+                            amount: dashboardViewModel
+                                        .singleTradeModel.data!.confirmedAt ==
+                                    null
+                                ? 'Pending'
+                                : 'Paid',
                           ),
                         ],
                       ),
@@ -215,7 +286,9 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: ColorManager.primaryColor),
-                          onPressed: () {},
+                          onPressed: () {
+                            openChatScreen(context);
+                          },
                           child: Row(
                             children: [
                               // Icon(
@@ -241,10 +314,10 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                 SizedBox(
                   height: AppSize.s30.h,
                 ),
-                const Center(
+                Center(
                   child: Text(
-                    ' Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ',
-                    style: TextStyle(
+                    "${dashboardViewModel.singleTradeModel.data!.offer!.terms}",
+                    style: const TextStyle(
                       fontFamily: 'lexend',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -293,17 +366,65 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                 SizedBox(
                   height: AppSize.s100.h,
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.060,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorManager.primaryColor),
-                      onPressed: () {},
-                      child: const Text('Release coin')),
-                ),
+                Consumer<DashboardViewModel2>(
+                    builder: (ctx, dashboardViewModel, child) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (dashboardViewModel.resMessage != '') {
+                      showTopSnackBar(
+                        context,
+                        CustomSnackBar.info(
+                          message: dashboardViewModel.resMessage,
+                          backgroundColor: dashboardViewModel.isSuccessful
+                              ? ColorManager.deepGreenColor
+                              : ColorManager.orangeColor,
+                        ),
+                      );
 
-                /// mine ends here
+                      ///Clear the response message to avoid duplicate
+                      dashboardViewModel.clear();
+                    }
+                  });
+                  return dashboardViewModel.loading
+                      ? const Center(child: CupertinoActivityIndicator())
+                      : CustomElevatedButton(
+                          width: double.infinity,
+                          onTap: () async {
+                            final action = dashboardViewModel
+                                        .singleTradeModel.data!.status ==
+                                    "CONFIRMED"
+                                ? "complete"
+                                : dashboardViewModel
+                                            .singleTradeModel.data!.status ==
+                                        "COMPLETED"
+                                    ? "dispute"
+                                    : "comfirm";
+                            final isConfirmed =
+                                await dashboardViewModel.releaseCoin(
+                                    dashboardViewModel
+                                        .singleTradeModel.data!.reference,
+                                    action);
+
+                            if (isConfirmed) {
+                              dashboardViewModel.getTradeDetails(
+                                  dashboardViewModel
+                                      .singleTradeModel.data!.reference);
+                            }
+                            print("I have paid here $isConfirmed");
+                          },
+                          backgroundColor: ColorManager.primaryColor,
+                          textColor: Colors.white,
+                          title: dashboardViewModel
+                                      .singleTradeModel.data!.status ==
+                                  "CONFIRMED"
+                              ? "Release Coin"
+                              : dashboardViewModel
+                                          .singleTradeModel.data!.status ==
+                                      "COMPLETED"
+                                  ? "Dispute Trade"
+                                  : "Release Coin");
+                }),
+
+                // / mine ends here
                 // Container(
                 //   height: AppSize.s28.h,
                 //   alignment: Alignment.center,

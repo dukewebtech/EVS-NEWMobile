@@ -266,9 +266,9 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                     );
                   }),
             ),
-            SizedBox(
-              height: AppSize.s18.h,
-            ),
+            // SizedBox(
+            //   height: AppSize.s18.h,
+            // ),
             // Row(
             //   children: [
             //     Expanded(
@@ -395,22 +395,6 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
 
             if (changeAll == 1)
               evsPayViewModel.isLoading ? Container() : const TradesWidget(),
-
-            if (changeAll == 2)
-              SizedBox(
-                height: 200,
-                child: GestureDetector(
-                  onTap: () {
-                    if (changeAll == 0) {
-                      setState(() {
-                        print('ovo');
-                      });
-                    } else {
-                      print('2');
-                    }
-                  },
-                ),
-              )
           ],
         ),
       )),
