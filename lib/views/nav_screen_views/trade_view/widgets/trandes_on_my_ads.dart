@@ -1,4 +1,3 @@
-import 'package:evs_pay_mobile/model/trade_model.dart';
 import 'package:evs_pay_mobile/view_models/general_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,7 @@ class TradeOnMyAdsWidget extends StatelessWidget {
     return Expanded(
         child: ListView.builder(
             itemCount: evsPayProvider.trade.trades!.length,
-            itemBuilder: (context, index){
+            itemBuilder: (context, index) {
               final trade = evsPayProvider.trade.trades![index];
               return TradeItem(trade: trade);
             }));

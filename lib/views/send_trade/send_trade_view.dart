@@ -6,6 +6,7 @@ import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../widgets/custom_text_field_no_border.dart';
 
@@ -87,7 +88,7 @@ class _SendTradeViewState extends State<SendTradeView> {
                 controller: walletAddressController,
                 decoration: InputDecoration(
                   suffixIcon: const Icon(
-                    Icons.wallet_giftcard,
+                    Iconsax.scan,
                     color: Color(0xff8a8a8a),
                   ),
                   filled: false,
@@ -328,9 +329,18 @@ class _SendTradeViewState extends State<SendTradeView> {
 
             Center(
               child: CustomElevatedButton(
-                  onTap: () {
-                    openTransactionPinScreen(context);
-                  },
+                  onTap: btcAmountController.text.isEmpty ||
+                          descriptionController.text.isEmpty ||
+                          walletAddressController.text.isEmpty
+                      ? () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  dismissDirection: DismissDirection.horizontal,
+                                  content: Text('Please fill all fields')));
+                        }
+                      : () {
+                          openTransactionPinScreen(context);
+                        },
                   backgroundColor: ColorManager.primaryColor,
                   textColor: ColorManager.blackTextColor,
                   title: 'Send'),

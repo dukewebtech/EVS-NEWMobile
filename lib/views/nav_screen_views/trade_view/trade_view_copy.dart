@@ -266,9 +266,9 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                     );
                   }),
             ),
-            // SizedBox(
-            //   height: AppSize.s18.h,
-            // ),
+            SizedBox(
+              height: AppSize.s18.h,
+            ),
             // Row(
             //   children: [
             //     Expanded(
@@ -379,7 +379,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
             if (changeAll == 0)
               evsPayViewModel.isLoading
                   ? Container()
-                  : const MyAdsFutureBuilderWidget(),
+                  : MyAdsFutureBuilderWidget(),
 
             // if (changeAll == 2)
             //   Center(

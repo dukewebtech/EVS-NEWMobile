@@ -16,44 +16,45 @@ class MyAdsWidget extends StatelessWidget {
       if (myAdsViewModel.loading) {
         return const Center(
             child: Padding(
-              padding: EdgeInsets.all(8),
-              child: CircularProgressIndicator(),
-            ));
+          padding: EdgeInsets.all(8),
+          child: CircularProgressIndicator(),
+        ));
       } else if (myAdsViewModel.error) {
         return Center(
-            child: errorDialog(size: 20, myAdsViewModel: myAdsViewModel)
-        );
+            child: errorDialog(size: 20, myAdsViewModel: myAdsViewModel));
       }
     }
-    return Expanded(
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-            itemCount: myAdsViewModel.offers.length,
-            itemBuilder: (context, index){
-              final myAd = myAdsViewModel.offers[index];
-              return MyAdsItem(myAd: myAd);
-            }));
+    return ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: myAdsViewModel.offers.length,
+        itemBuilder: (context, index) {
+          final myAd = myAdsViewModel.offers[index];
+          return MyAdsItem(myAd: myAd);
+        });
   }
 }
 
-Widget errorDialog({required double size, required MyAdsViewModel myAdsViewModel}){
+Widget errorDialog(
+    {required double size, required MyAdsViewModel myAdsViewModel}) {
   return SizedBox(
     height: 180,
     width: 200,
-    child:  Column(
+    child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('An error occurred when fetching the ads.',
+        Text(
+          'An error occurred when fetching the ads.',
           style: TextStyle(
-              fontSize: size,
-              fontWeight: FontWeight.w500,
-              color: Colors.black
-          ),
+              fontSize: size, fontWeight: FontWeight.w500, color: Colors.black),
         ),
-        const SizedBox(height: 10,),
-        CustomElevatedButton(onTap: (){
-          myAdsViewModel.fetchOffers();
-        }, backgroundColor: ColorManager.primaryColor,
+        const SizedBox(
+          height: 10,
+        ),
+        CustomElevatedButton(
+            onTap: () {
+              myAdsViewModel.fetchOffers();
+            },
+            backgroundColor: ColorManager.primaryColor,
             textColor: ColorManager.whiteColor,
             title: "Retry"),
       ],
