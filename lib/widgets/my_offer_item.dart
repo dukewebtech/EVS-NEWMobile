@@ -276,7 +276,7 @@ class MyAdsItem extends StatelessWidget {
                           evsPayViewModel.getTradesOnOffer(
                               context: ctx,
                               offerId: evsPayViewModel.selectedOffer.reference);
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
                           text: AppStrings.viewTrade,

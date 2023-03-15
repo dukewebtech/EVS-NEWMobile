@@ -38,24 +38,6 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
     final evsPayViewModel = context.watch<EvsPayViewModel>();
     final authProvider = context.watch<AuthenticationProvider>();
 
-    List<MyButton> btnLists = [
-      MyButton(
-        title: 'Add',
-        isClicked: () {},
-        isIcon: false,
-      ),
-      MyButton(
-        title: 'My text',
-        isClicked: () {},
-        isIcon: false,
-      ),
-      MyButton(
-        title: '',
-        isClicked: () {},
-        isIcon: true,
-      ),
-    ];
-
     List<Map<String, dynamic>> btnList = [
       {
         "title": "My Ads",
@@ -379,7 +361,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
             if (changeAll == 0)
               evsPayViewModel.isLoading
                   ? Container()
-                  : MyAdsFutureBuilderWidget(),
+                  : const MyAdsFutureBuilderWidget(),
 
             // if (changeAll == 2)
             //   Center(
