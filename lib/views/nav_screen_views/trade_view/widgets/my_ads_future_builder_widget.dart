@@ -26,12 +26,22 @@ class _MyAdsFutureBuilderWidgetState extends State<MyAdsFutureBuilderWidget> {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthenticationProvider>();
-    return Expanded (
+    return Expanded(
       child: FutureBuilder<List<OfferData?>>(
           future: MyAdsService().getMyAds(authProvider.userData.accessToken!),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return const Center(child: Text('Error Occurred'));
+              return const Center(
+                  child: Text(
+                'An error occurred while fetching your trade',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'lexend',
+                  fontSize: 20,
+                  color: Color(0xff303030),
+                  fontWeight: FontWeight.w400,
+                ),
+              ));
             } else if (snapshot.hasData) {
               if (snapshot.data!.isEmpty) {
                 return Center(

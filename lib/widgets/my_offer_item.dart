@@ -254,7 +254,7 @@ class MyAdsItem extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
                           openEditOffer(context);
                         },
                         child: CustomTextWithLineHeight(
