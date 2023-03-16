@@ -28,6 +28,14 @@ class _BuyTradeViewState extends State<BuyTradeView> {
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+    var terms = dashboardViewModel.selectedDashboardTrade?.terms;
+    var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
+    var userName = dashboardViewModel.selectedDashboardTrade?.user!.username!;
+    var paymentMethod =
+        dashboardViewModel.selectedDashboardTrade?.paymentMethod!.name;
+    var amountRecieved =
+        nairaAmountController.text.isEmpty ? 0.0 : nairaAmountController.text;
+
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -77,21 +85,21 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                         children: [
                           /// the reason we have using ? is because if we use ! it throughs a null check operator error
                           Text(
-                            "${dashboardViewModel.selectedDashboardTrade?.user!.username!}",
-                            style: const TextStyle(
-                              fontSize: 16,
+                            userName ?? "UserName",
+                            style: TextStyle(
+                              fontSize: userName == null ? 15 : 20,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Lexend',
-                              color: Color(0xff000000),
+                              color: const Color(0xff000000),
                             ),
                           ),
                           Text(
-                            "${dashboardViewModel.selectedDashboardTrade?.paymentMethod!.name}",
-                            style: const TextStyle(
-                              fontSize: 16,
+                            paymentMethod ?? "payment method",
+                            style: TextStyle(
+                              fontSize: paymentMethod == null ? 13 : 16,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Lexend',
-                              color: Color(0xff969696),
+                              color: const Color(0xff969696),
                             ),
                           )
                         ],
@@ -112,7 +120,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                             ),
                           ),
                           Text(
-                            "${dashboardViewModel.selectedDashboardTrade?.profitMargin}",
+                            profitMargin.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
@@ -242,7 +250,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${nairaAmountController.text.isEmpty ? 0.0 : nairaAmountController.text}',
+                        amountRecieved.toString(),
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
@@ -373,7 +381,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
               height: AppSize.s15.h,
             ),
             Text(
-              "${dashboardViewModel.selectedDashboardTrade!.terms}",
+              terms ?? "No Terms of Trade available on this offer",
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,

@@ -7,7 +7,6 @@ import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/label_text.dart';
 import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -27,46 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final userNameOrEmailController = TextEditingController();
   final passwordController = TextEditingController();
   bool obscureText = true;
-  String? mtoken;
-
-  void getToken() async {
-    await FirebaseMessaging.instance.getToken().then((token) {
-      setState(() {
-        mtoken = token!;
-        print("my token is $mtoken");
-      });
-    });
-  }
-
-  void grantPermission() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
-    } else {
-      print('User declined or has not accepted permission');
-    }
-  }
 
   @override
   void initState() {
     userNameOrEmailController.text = "";
     passwordController.text = "";
-    grantPermission();
-    getToken();
+    // grantPermission();
     // userNameOrEmailController.text = "henrydukus2016@gmail.com";
     // passwordController.text = "password";
     super.initState();

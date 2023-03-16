@@ -297,6 +297,8 @@ class DashboardViewModel2 extends ChangeNotifier {
 
       final decodedResponse = json.decode(response.body);
 
+      print(decodedResponse);
+
       _loading = false;
       notifyListeners();
       if (response.statusCode == 200 || response.statusCode == 201) {

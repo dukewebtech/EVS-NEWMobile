@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:evs_pay_mobile/model/wallet_model.dart';
 import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/ednpoints.dart';
+import 'package:evs_pay_mobile/utils/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,8 +81,13 @@ class AuthenticationProvider extends ChangeNotifier {
         notifyListeners();
         Navigator.pop(context);
 
+        //update device token
+        var deviceToken = await Firebase().getToken();
+        await updateProfile({'device_id': deviceToken});
+
         await getWalletAddress(context: context);
         openNavScreen(context);
+
         print('e tapp me o');
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
@@ -447,6 +453,50 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> updateProfile(Map data) async {
+    _isLoading = true;
+    bool updated = false;
+    notifyListeners();
+
+    try {
+      final response = await http.patch(Uri.parse("${baseURL}accounts/profile"),
+          headers: {
+            'Authorization': 'Bearer ${_userData!.accessToken}',
+            'Content-Type': 'application/json',
+          },
+          body: json.encode(data));
+      print(" Status code: ${response.body}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final res = json.decode(response.body);
+        //first check for the user role
+        _isLoading = false;
+        updated = true;
+        print("Success: $success");
+        _resMessage = res['message'] ?? "";
+        notifyListeners();
+      } else {
+        final res = json.decode(response.body);
+        print("$res");
+        _resMessage = res['message'];
+        _isLoading = false;
+        _success = false;
+        notifyListeners();
+      }
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _success = false;
+      _resMessage = "Internet connection is not available";
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _success = false;
+      _resMessage = "Please try again";
+      notifyListeners();
+    }
+
+    return updated;
+  }
+
   Future<bool> updateProfilePhoto({
     required String idCard,
     required BuildContext context,
@@ -553,8 +603,8 @@ class AuthenticationProvider extends ChangeNotifier {
         notifyListeners();
         Navigator.pop(context);
 
-          /// when a user registers, user should be redirected to the bottomNav screen not the login screen *Kelvin*
-         await getWalletAddress(context: context);
+        /// when a user registers, user should be redirected to the bottomNav screen not the login screen *Kelvin*
+        await getWalletAddress(context: context);
         openNavScreen(context);
 
         /// I kelvin, commented this code because  after registration a user should be directed to the botoom nav screen.

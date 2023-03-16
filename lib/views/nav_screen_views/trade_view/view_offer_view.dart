@@ -89,8 +89,12 @@ class _ViewOfferViewState extends State<ViewOfferView> {
                       top: 10,
                       right: 6,
                       child: SizedBox(
-                        height: 30,
-                        width: 55,
+                        height: evsPayProvider.selectedOffer.status == "ACTIVE"
+                            ? 30
+                            : 33,
+                        width: evsPayProvider.selectedOffer.status == "ACTIVE"
+                            ? 55
+                            : 63,
                         child: Card(
                           elevation: 1,
                           shape: RoundedRectangleBorder(
