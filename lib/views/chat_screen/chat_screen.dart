@@ -54,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
               dashboardViewModel.tradeReference);
 
           SchedulerBinding.instance.addPostFrameCallback((_) {
-            /// i uncommented the code below because i was having a scrollController error
+            /// i uncommented the code below because i was having a scrollController error "kaizen"
             // _scrollController.animateTo(
             //     _scrollController.position.maxScrollExtent,
             //     duration: const Duration(milliseconds: 1),
@@ -85,9 +85,9 @@ class _ChatScreenState extends State<ChatScreen> {
         padding: EdgeInsets.symmetric(horizontal: AppSize.s20.w),
         child: Column(
           children: [
-            SizedBox(
-              height: AppSize.s130.h,
-            ),
+            // SizedBox(
+            //   height: AppSize.s130.h,
+            // ),
             Container(
               width: double.infinity,
               padding: EdgeInsets.only(
@@ -109,6 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       height: AppSize.s32.h,
                     ),
 
+                    /// this was here when i came "kaizen"
                     // StreamBuilder(
                     //   stream: Stream.periodic(const Duration(seconds: 5))
                     //       .asyncMap((i) => ChatService().getChats(authProvider.userData.accessToken!, dashboardViewModel.tradeReference)), // i is null here (check periodic docs)

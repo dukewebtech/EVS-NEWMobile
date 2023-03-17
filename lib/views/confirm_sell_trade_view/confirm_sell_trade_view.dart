@@ -168,35 +168,35 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                         );
                       },
                     ),
-                    CircleAvatar(
-                      minRadius: 28,
-                      child: Center(
-                        child: Column(
-                          children: const [
-                            Text(
-                              '12',
-                              style: TextStyle(
-                                fontFamily: 'lexend',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: Color(
-                                  0xff000000,
-                                ),
-                              ),
-                            ),
-                            Text('SECS',
-                                style: TextStyle(
-                                  fontFamily: 'lexend',
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(
-                                    0xff000000,
-                                  ),
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // CircleAvatar(
+                    //   minRadius: 28,
+                    //   child: Center(
+                    //     child: Column(
+                    //       children: const [
+                    //         Text(
+                    //           '12',
+                    //           style: TextStyle(
+                    //             fontFamily: 'lexend',
+                    //             fontSize: 18,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: Color(
+                    //               0xff000000,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         Text('SECS',
+                    //             style: TextStyle(
+                    //               fontFamily: 'lexend',
+                    //               fontSize: 10,
+                    //               fontWeight: FontWeight.w500,
+                    //               color: Color(
+                    //                 0xff000000,
+                    //               ),
+                    //             )),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 SizedBox(

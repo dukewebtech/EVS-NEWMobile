@@ -11,7 +11,7 @@ class AppStrings {
   static const clickToContinue = "Continue";
   static const finish = "FINISH";
   static const welcome = "Welcome";
-  static const loginBack = "Login in back to your account.";
+  static const loginBack = "Login back to your account.";
   static const userNameOrEmail = "Username or Email";
   static const password = "Password";
   static const forgotPassword = "Forgot Password?";

@@ -218,6 +218,7 @@ class _SendTradeViewState extends State<SendTradeView> {
               height: 70,
               child: TextFormField(
                 controller: descriptionController,
+                maxLines: 5,
                 decoration: InputDecoration(
                   filled: false,
                   counterText: "",
@@ -253,78 +254,78 @@ class _SendTradeViewState extends State<SendTradeView> {
             SizedBox(
               height: AppSize.s2.h,
             ),
-            SizedBox(
-              height: 170,
-              width: double.infinity,
-              child: Card(
-                elevation: 1.0,
-                color: const Color(0xffffffff),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11),
-                  side: const BorderSide(width: 0.5, color: Color(0xffE8E8E8)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 18, right: 18, top: 23),
-                  child: Column(
-                    children: const [
-                      TitleAndAmount(
-                        title: 'Amount to debit',
-                        amount: 'NGN 100,000',
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      TitleAndAmount(
-                        title: 'Amount to credit',
-                        amount: '125 BTC',
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      TitleAndAmount(
-                        title: 'Network fees',
-                        amount: '0.3 BTC',
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      TitleAndAmount(
-                        title: 'Platform fee',
-                        amount: '\$2',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 170,
+            //   width: double.infinity,
+            //   child: Card(
+            //     elevation: 1.0,
+            //     color: const Color(0xffffffff),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(11),
+            //       side: const BorderSide(width: 0.5, color: Color(0xffE8E8E8)),
+            //     ),
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(left: 18, right: 18, top: 23),
+            //       child: Column(
+            //         children: const [
+            //           TitleAndAmount(
+            //             title: 'Amount to debit',
+            //             amount: 'NGN 100,000',
+            //           ),
+            //           SizedBox(
+            //             height: 15,
+            //           ),
+            //           TitleAndAmount(
+            //             title: 'Amount to credit',
+            //             amount: '125 BTC',
+            //           ),
+            //           SizedBox(
+            //             height: 15,
+            //           ),
+            //           TitleAndAmount(
+            //             title: 'Network fees',
+            //             amount: '0.3 BTC',
+            //           ),
+            //           SizedBox(
+            //             height: 15,
+            //           ),
+            //           TitleAndAmount(
+            //             title: 'Platform fee',
+            //             amount: '\$2',
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: AppSize.s9.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'Total',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Lexend',
-                    color: Color(0xff000000),
-                  ),
-                ),
-                Text(
-                  'NGN 100,000',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Lexend',
-                    color: Color(0xff020202),
-                  ),
-                )
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: const [
+            //     Text(
+            //       'Total',
+            //       style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.w400,
+            //         fontFamily: 'Lexend',
+            //         color: Color(0xff000000),
+            //       ),
+            //     ),
+            //     Text(
+            //       'NGN 100,000',
+            //       style: TextStyle(
+            //         fontSize: 14,
+            //         fontWeight: FontWeight.w400,
+            //         fontFamily: 'Lexend',
+            //         color: Color(0xff020202),
+            //       ),
+            //     )
+            //   ],
+            // ),
             SizedBox(
-              height: AppSize.s50.h,
+              height: AppSize.s150.h,
             ),
 
             Center(

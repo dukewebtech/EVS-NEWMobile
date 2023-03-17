@@ -5,30 +5,32 @@ import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 
 class CustomTextField extends StatelessWidget {
-      final bool autoFocus;
-   final bool obSecureText;
-      final int? maxLines;
-      final double contentPadding;
-      final bool isNumbers;
-      final bool isEnabled;
-      final int maxLength;
-      final bool showPassword;
-      final bool showSuffixIcon;
-      Function(String)? onChanged;
+  final bool autoFocus;
+  final bool obSecureText;
+  final int? maxLines;
+  final double contentPadding;
+  final bool isNumbers;
+  final bool isEnabled;
+  final int maxLength;
+  final bool showPassword;
+  final bool showSuffixIcon;
+  Function(String)? onChanged;
   final String hint;
-      final TextEditingController controller;
-        CustomTextField({Key? key, this.autoFocus = false,
-          this.showSuffixIcon  = false,
-          this.showPassword = false,
+  final TextEditingController controller;
+  CustomTextField({
+    Key? key,
+    this.autoFocus = false,
+    this.showSuffixIcon = false,
+    this.showPassword = false,
     this.obSecureText = false,
-          this.isNumbers = false,
-          this.isEnabled = true,
+    this.isNumbers = false,
+    this.isEnabled = true,
     this.hint = "",
-          this.maxLines = 1,
-          required this.controller,
-           this.contentPadding = 10,
-          this.maxLength = 1000,
-           this.onChanged,
+    this.maxLines = 1,
+    required this.controller,
+    this.contentPadding = 10,
+    this.maxLength = 1000,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -48,14 +50,11 @@ class CustomTextField extends StatelessWidget {
               maxLines: maxLines,
               enabled: isEnabled,
               maxLength: maxLength,
-
-              keyboardType: isNumbers? TextInputType.number: TextInputType.text,
-              obscureText:  obSecureText,
-
-              style: const TextStyle(
-                color: ColorManager.textFieldColor,
-                  fontSize: FontSize.s16
-              ),
+              keyboardType:
+                  isNumbers ? TextInputType.number : TextInputType.text,
+              obscureText: obSecureText,
+              style: TextStyle(
+                  color: Colors.grey.shade700, fontSize: FontSize.s16),
               decoration: InputDecoration(
                 filled: false,
                 counterText: "",
@@ -65,33 +64,27 @@ class CustomTextField extends StatelessWidget {
                 // suffixIcon: showSuffixIcon ? Icon() : Container(),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.r),
-                  borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
-                      width: 1),
+                  borderSide: const BorderSide(
+                      color: ColorManager.inactiveInputFieldColor, width: 1),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.r),
-                  borderSide: const BorderSide(color: ColorManager.inactiveInputFieldColor,
-                      width: 1),
+                  borderSide: const BorderSide(
+                      color: ColorManager.inactiveInputFieldColor, width: 1),
                 ),
                 focusedBorder: OutlineInputBorder(
                   gapPadding: 0.0,
                   borderRadius: BorderRadius.circular(5.r),
-                  borderSide: const BorderSide(color: ColorManager.textFieldColor,
-                      width: 1),
+                  borderSide: const BorderSide(
+                      color: ColorManager.textFieldColor, width: 1),
                 ),
                 hintStyle: const TextStyle(
-                  color: ColorManager.labelTextColor,
-                  fontSize: FontSize.s16
-                ),
-                  labelStyle: const TextStyle(
-                    color: ColorManager.labelTextColor,
-                      fontSize: FontSize.s16
-                  ),
+                    color: ColorManager.labelTextColor, fontSize: FontSize.s16),
+                labelStyle: const TextStyle(
+                    color: ColorManager.labelTextColor, fontSize: FontSize.s16),
               ),
-            )
-        ),
+            )),
       ],
     );
   }
 }
-

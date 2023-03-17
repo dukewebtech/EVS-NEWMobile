@@ -179,7 +179,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   //     ? AppImages.good
                   //     : AppImages.close,
                   title: userProfileViewModel.userProfile.data!.email,
-                  textColor: ColorManager.primaryColor,
+                  textColor: Colors.grey.shade700,
                   borderColor: authProvider.userData.user!.emailVerified!
                       ? ColorManager.primaryColor
                       : ColorManager.redColor),
@@ -193,7 +193,7 @@ class _EditProfileViewState extends State<EditProfileView> {
               EditProfileItem(
                   // iconName: AppImages.good,
                   title: userProfileViewModel.userProfile.data!.username,
-                  textColor: ColorManager.primaryColor,
+                  textColor: Colors.grey.shade700,
                   borderColor: ColorManager.primaryColor),
               SizedBox(
                 height: AppSize.s27.h,
@@ -207,9 +207,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   //     ? AppImages.good
                   //     : AppImages.close,
                   title: userProfileViewModel.userProfile.data!.phone,
-                  textColor: authProvider.userData.user!.phoneVerified!
-                      ? ColorManager.primaryColor
-                      : ColorManager.primaryColor,
+                  textColor: Colors.grey.shade700,
                   borderColor: authProvider.userData.user!.phoneVerified!
                       ? ColorManager.primaryColor
                       : ColorManager.redColor),

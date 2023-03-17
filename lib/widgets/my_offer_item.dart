@@ -36,7 +36,7 @@ class MyAdsItem extends StatelessWidget {
             // color: Colors.yellow,
             // color: Color(0xfff6f6f6),
             borderRadius: BorderRadius.circular(5)),
-        height: 120,
+        height: 110,
         width: double.infinity,
         child: Stack(
           // crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,39 +65,39 @@ class MyAdsItem extends StatelessWidget {
                       print('tap');
                     },
                     child: const Icon(Icons.more_vert))),
-            Positioned(
-              right: 0,
-              bottom: 30,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.035,
-                width: MediaQuery.of(context).size.width * 0.18,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 1,
-                    backgroundColor: const Color(0xffF4B731),
-                  ),
-                  onPressed: () {
-                    // openSellView(context);
-                    // print('was tapped');
-                    // openBuyTradeView(context);
-                  },
-                  child: const FittedBox(
-                    child: Text(
-                      'Buy',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Lexend',
-                        color: Color(0xff303030),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
+            // Positioned(
+            //   right: 0,
+            //   bottom: 30,
+            //   child: SizedBox(
+            //     height: MediaQuery.of(context).size.height * 0.035,
+            //     width: MediaQuery.of(context).size.width * 0.18,
+            //     child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //         elevation: 1,
+            //         backgroundColor: const Color(0xffF4B731),
+            //       ),
+            //       onPressed: () {
+            //         // openSellView(context);
+            //         // print('was tapped');
+            //         // openBuyTradeView(context);
+            //       },
+            //       child: const FittedBox(
+            //         child: Text(
+            //           'Buy',
+            //           style: TextStyle(
+            //             fontSize: 14,
+            //             fontWeight: FontWeight.w400,
+            //             fontFamily: 'Lexend',
+            //             color: Color(0xff303030),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 5,
+            // ),
             Positioned(
               top: 30,
               left: 0,

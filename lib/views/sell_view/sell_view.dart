@@ -32,6 +32,7 @@ class _SellViewState extends State<SellView> {
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+
     return Scaffold(
       appBar:
           evsPayCustomAppBar(context, AppStrings.sellLowerCase, leadingTap: () {

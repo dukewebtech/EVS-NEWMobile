@@ -38,13 +38,13 @@ class SettingsView extends StatelessWidget {
             SizedBox(
               height: AppSize.s25.h,
             ),
-            SettingsItem(
-                onTap: () {},
-                iconName: AppImages.transactionIcon,
-                itemName: AppStrings.transactions),
-            SizedBox(
-              height: AppSize.s25.h,
-            ),
+            // SettingsItem(
+            //     onTap: () {},
+            //     iconName: AppImages.transactionIcon,
+            //     itemName: AppStrings.transactions),
+            // SizedBox(
+            //   height: AppSize.s25.h,
+            // ),
             SettingsItem(
                 onTap: () {
                   openVerificationHomeView(context);
@@ -75,9 +75,7 @@ class SettingsView extends StatelessWidget {
                   showMyDialog(context,
                       title: 'Sign Out',
                       approveColor: Colors.grey.shade800,
-                      declineColor: Color(0xffF4B731)
-
-,
+                      declineColor: const Color(0xffF4B731),
                       description: 'Are you sure you want to sign-out?',
                       dismissible: true, callback: () {
                     openLoginScreen(context);
@@ -98,7 +96,6 @@ class SettingsView extends StatelessWidget {
 }
 
 //callback
-
 
 Future<void> showMyDialog(BuildContext context,
     {required String title,
@@ -139,16 +136,14 @@ Future<void> showMyDialog(BuildContext context,
           TextButton(
             child: Text(
               'Approve',
-              style: TextStyle(
-                color: approveColor
-              ),
+              style: TextStyle(color: approveColor),
             ),
             onPressed: () {
               callback();
             },
           ),
           TextButton(
-            child:  Text(
+            child: Text(
               'Decline',
               style: TextStyle(
                 color: declineColor,
