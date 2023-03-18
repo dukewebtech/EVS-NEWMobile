@@ -509,26 +509,14 @@ class TitleAndAmount extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Lexend',
-                color: const Color(0xff000000).withOpacity(0.40),
-              ),
-            ),
-            const SizedBox(
-              width: 3,
-            ),
-            Icon(
-              Icons.info_outline,
-              size: 10,
-              color: const Color(0xffCBBAFF).withOpacity(0.5),
-            ),
-          ],
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Lexend',
+            color: const Color(0xff000000).withOpacity(0.40),
+          ),
         ),
         Text(
           amount,

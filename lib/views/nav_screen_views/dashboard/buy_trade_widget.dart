@@ -57,7 +57,7 @@ class BuyTradeWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(top: 80),
                       child: CustomTextWithLineHeight(
-                        text: 'You do not have an active trade.',
+                        text: 'They are no active trades',
                         textColor: Colors.black,
                         fontWeight: FontWeightManager.medium,
                         fontSize: FontSize.s18,

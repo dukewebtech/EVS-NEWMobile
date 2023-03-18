@@ -192,7 +192,7 @@ class _WalletViewState extends State<WalletView> {
                   width: double.infinity,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: AppSize.s27.w, vertical: AppSize.s18.h),
+                        horizontal: 0, vertical: AppSize.s18.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

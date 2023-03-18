@@ -224,23 +224,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                                     ),
                               if (title == 'Pro') const Icon(Icons.star)
 
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     if (index == 1) {
-                              //       setState(() {
-                              //         print('This is one');
-                              //       });
-                              //     } else if (index == 2) {
-                              //       setState(() {
-                              //         print('This is Two');
-                              //       });
-                              //     }
-                              //   },
-                              //   child: Visibility(
-                              //     visible: index == 2,
-                              //     child: const Icon(Icons.star),
-                              //   ),
-                              // )
+                             
                             ],
                           )),
                         ),

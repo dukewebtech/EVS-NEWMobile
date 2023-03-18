@@ -1,8 +1,4 @@
-import 'package:evs_pay_mobile/resources/color_manager.dart';
-import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
-import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
-import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,9 +7,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../resources/strings_manager.dart';
 import '../../resources/value_manager.dart';
-import '../../widgets/custom_app_bar.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReceiveTradeView extends StatelessWidget {
   const ReceiveTradeView({Key? key}) : super(key: key);
@@ -21,6 +16,15 @@ class ReceiveTradeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthenticationProvider>();
+    final name = authProvider.userData.user!.username;
+    final fname = authProvider.userData.user!.email;
+
+    void shareCode() async {
+      Share.share(
+        authProvider.walletData.data![0].receivableAddress!.address!,
+      );
+    }
+
     return Scaffold(
       // appBar: evsPayCustomAppBar(
       //     context, AppStrings.receive, isCenterAlign: true,
@@ -29,7 +33,8 @@ class ReceiveTradeView extends StatelessWidget {
       //     }
       // ),
       body: SafeArea(
-        /// i have inserted the receive trade logic
+
+          /// i have inserted the receive trade logic
           child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: AppSize.s26.w),
         child: Column(
@@ -50,6 +55,8 @@ class ReceiveTradeView extends StatelessWidget {
                   SizedBox(
                     width: AppSize.s3.w,
                   ),
+                  Text(name ?? "empty"),
+                  Text(fname ?? "empty"),
                   const Text(
                     'Receive',
                     style: TextStyle(
@@ -87,15 +94,16 @@ class ReceiveTradeView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 13, left: 16, right: 16),
                   child: Card(
                     elevation: 3,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(13)),
                     color: Colors.grey.shade200,
                     child: Center(
                       child: QrImage(
                         backgroundColor: const Color(0xfff6f6f6),
                         data: authProvider.walletData.data!.isEmpty
                             ? "0.00"
-                            : authProvider
-                                .walletData.data![0].receivableAddress!.address!,
+                            : authProvider.walletData.data![0]
+                                .receivableAddress!.address!,
                         version: QrVersions.auto,
                         size: AppSize.s200.h,
                       ),
@@ -107,9 +115,9 @@ class ReceiveTradeView extends StatelessWidget {
             SizedBox(
               height: AppSize.s28.h,
             ),
-             SizedBox(
+            SizedBox(
               height: 62,
-              width: 340,
+              width: 347,
               child: Padding(
                 padding: const EdgeInsets.only(top: 14, left: 15, right: 15),
                 child: Card(
@@ -119,7 +127,10 @@ class ReceiveTradeView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8),
                       child: Text(
-                        authProvider.walletData.data!.isEmpty? "No address" : authProvider.walletData.data![0].receivableAddress!.address!,
+                        authProvider.walletData.data!.isEmpty
+                            ? "No address"
+                            : authProvider.walletData.data![0]
+                                .receivableAddress!.address!,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -145,14 +156,16 @@ class ReceiveTradeView extends StatelessWidget {
                       backgroundColor: const Color(0xffF6F6F6),
                     ),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: authProvider.walletData.data![0].receivableAddress!.address!));
-                                showTopSnackBar(
-                                  context,
-                                  CustomSnackBar.info(
-                                    message: "Copied ${authProvider.walletData.data![0].receivableAddress!.address!}",
-                                  ),
-                                );
-
+                      Clipboard.setData(ClipboardData(
+                          text: authProvider.walletData.data![0]
+                              .receivableAddress!.address!));
+                      showTopSnackBar(
+                        context,
+                        CustomSnackBar.info(
+                          message:
+                              "Copied ${authProvider.walletData.data![0].receivableAddress!.address!}",
+                        ),
+                      );
                     },
                     child: Row(
                       children: [
@@ -166,10 +179,13 @@ class ReceiveTradeView extends StatelessWidget {
                         SizedBox(
                           width: AppSize.s6.w,
                         ),
-                        const Icon(
-                          Icons.copy,
-                          color: Color(0xff6D6D6D),
-                          size: 18,
+                        InkWell(
+                          onTap: () {},
+                          child: const Icon(
+                            Icons.copy,
+                            color: Color(0xff6D6D6D),
+                            size: 18,
+                          ),
                         )
                       ],
                     )),
@@ -180,7 +196,9 @@ class ReceiveTradeView extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffF6F6F6),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      shareCode();
+                    },
                     child: Row(
                       children: [
                         const Text(

@@ -130,219 +130,74 @@ class _DashboardViewState extends State<DashboardView> {
               SizedBox(
                 height: AppSize.s18.h,
               ),
-              if (changeAll == 0)
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffF4B731),
-                    borderRadius: BorderRadius.circular(12),
-                    image: const DecorationImage(
-                        image: AssetImage("assets/images/shape.png"),
-                        fit: BoxFit.cover),
-                  ),
-                  padding: const EdgeInsets.only(left: 24, top: 19),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.147,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // const CustomTextWithLineHeight(
-                      //   text: AppStrings.walletBalance,
-                      //   textColor: ColorManager.blackTextColor,),
-                      Text(
-                        'Wallet Balance',
-                        style: TextStyle(
-                          fontFamily: 'Lexend',
-                          color: const Color(0xff000000).withOpacity(0.40),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
+
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xffF4B731),
+                  borderRadius: BorderRadius.circular(12),
+                  image: const DecorationImage(
+                      image: AssetImage("assets/images/shape.png"),
+                      fit: BoxFit.cover),
+                ),
+                padding: const EdgeInsets.only(left: 24, top: 15, bottom: 10),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.147,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // const CustomTextWithLineHeight(
+                    //   text: AppStrings.walletBalance,
+                    //   textColor: ColorManager.blackTextColor,),
+                    Text(
+                      'Wallet Balance',
+                      style: TextStyle(
+                        fontFamily: 'Lexend',
+                        color: const Color(0xff000000).withOpacity(0.40),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
                       ),
-                      SizedBox(
-                        height: AppSize.s5.h,
-                      ),
-                      Consumer<DashboardViewModel2>(
-                          builder: (ctx, dashboardViewModel, child) {
-                        return Text(
-                          "NGN ${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading ? "0.00" : dashboardViewModel.btcNairaModel == null ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
-                          style: const TextStyle(
-                            fontFamily: 'Lexend',
-                            color: Color(0xff000000),
-                            fontSize: 30,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        );
-                        // CustomTextWithLineHeight(
-                        //   text: "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading? "0.00" : dashboardViewModel.btcNairaModel == null
-                        //       ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
-                        //   textColor: ColorManager.amountColor,
-                        //   fontSize: FontSize.s22,
-                        //   fontWeight: FontWeightManager.semiBold,);
-                      }),
-                      Text(
-                        authProvider.walletData.data!.isEmpty
-                            ? "0.00"
-                            : "${authProvider.walletData.data![0].balance} BTC",
+                    ),
+                    SizedBox(
+                      height: AppSize.s5.h,
+                    ),
+                    Consumer<DashboardViewModel2>(
+                        builder: (ctx, dashboardViewModel, child) {
+                      return Text(
+                        "NGN ${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading ? "0.00" : dashboardViewModel.btcNairaModel == null ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
                         style: const TextStyle(
                           fontFamily: 'Lexend',
-                          color: Color(0xff686868),
-                          fontSize: 15,
+                          color: Color(0xff000000),
+                          fontSize: 30,
                           fontWeight: FontWeight.w700,
                         ),
-                      ),
-
+                      );
                       // CustomTextWithLineHeight(
-                      //   text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
-                      //   textColor: ColorManager.blackTextColor,
-                      //   fontSize: FontSize.s14,
-                      //   fontWeight: FontWeightManager.regular,),
-                      SizedBox(
-                        height: AppSize.s18.h,
+                      //   text: "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading? "0.00" : dashboardViewModel.btcNairaModel == null
+                      //       ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
+                      //   textColor: ColorManager.amountColor,
+                      //   fontSize: FontSize.s22,
+                      //   fontWeight: FontWeightManager.semiBold,);
+                    }),
+                    Text(
+                      authProvider.walletData.data!.isEmpty
+                          ? "0.00"
+                          : "${authProvider.walletData.data![0].balance} BTC",
+                      style: const TextStyle(
+                        fontFamily: 'Lexend',
+                        color: Color(0xff686868),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
                       ),
-                    ],
-                  ),
-                ),
-              if (changeAll == 1)
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffF4B731),
-                    borderRadius: BorderRadius.circular(12),
-                    image: const DecorationImage(
-                        image: AssetImage("assets/images/shape.png"),
-                        fit: BoxFit.cover),
-                  ),
-                  padding: const EdgeInsets.only(left: 24, top: 19),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.147,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // const CustomTextWithLineHeight(
-                      //   text: AppStrings.walletBalance,
-                      //   textColor: ColorManager.blackTextColor,),
-                      Text(
-                        'Wallet Balance',
-                        style: TextStyle(
-                          fontFamily: 'Lexend',
-                          color: const Color(0xff000000).withOpacity(0.40),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(
-                        height: AppSize.s5.h,
-                      ),
-                      Consumer<DashboardViewModel2>(
-                          builder: (ctx, dashboardViewModel, child) {
-                        return Text(
-                          "NGN ${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading ? "0.00" : dashboardViewModel.btcNairaModel == null ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
-                          style: const TextStyle(
-                            fontFamily: 'Lexend',
-                            color: Color(0xff000000),
-                            fontSize: 30,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        );
-                        // CustomTextWithLineHeight(
-                        //   text: "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading? "0.00" : dashboardViewModel.btcNairaModel == null
-                        //       ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
-                        //   textColor: ColorManager.amountColor,
-                        //   fontSize: FontSize.s22,
-                        //   fontWeight: FontWeightManager.semiBold,);
-                      }),
-                      Text(
-                        authProvider.walletData.data!.isEmpty
-                            ? "0.00"
-                            : "${authProvider.walletData.data![0].balance} BTC",
-                        style: const TextStyle(
-                          fontFamily: 'Lexend',
-                          color: Color(0xff686868),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                    ),
 
-                      // CustomTextWithLineHeight(
-                      //   text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
-                      //   textColor: ColorManager.blackTextColor,
-                      //   fontSize: FontSize.s14,
-                      //   fontWeight: FontWeightManager.regular,),
-                      SizedBox(
-                        height: AppSize.s18.h,
-                      ),
-                    ],
-                  ),
+                    // CustomTextWithLineHeight(
+                    //   text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
+                    //   textColor: ColorManager.blackTextColor,
+                    //   fontSize: FontSize.s14,
+                    //   fontWeight: FontWeightManager.regular,),
+                  ],
                 ),
-              if (changeAll == 2)
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffF4B731),
-                    borderRadius: BorderRadius.circular(12),
-                    image: const DecorationImage(
-                        image: AssetImage("assets/images/shape.png"),
-                        fit: BoxFit.cover),
-                  ),
-                  padding: const EdgeInsets.only(left: 24, top: 19),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.147,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // const CustomTextWithLineHeight(
-                      //   text: AppStrings.walletBalance,
-                      //   textColor: ColorManager.blackTextColor,),
-                      Text(
-                        'Wallet Balance',
-                        style: TextStyle(
-                          fontFamily: 'Lexend',
-                          color: const Color(0xff000000).withOpacity(0.40),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(
-                        height: AppSize.s5.h,
-                      ),
-                      Consumer<DashboardViewModel2>(
-                          builder: (ctx, dashboardViewModel, child) {
-                        return Text(
-                          "NGN ${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading ? "0.00" : dashboardViewModel.btcNairaModel == null ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
-                          style: const TextStyle(
-                            fontFamily: 'Lexend',
-                            color: Color(0xff000000),
-                            fontSize: 30,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        );
-                        // CustomTextWithLineHeight(
-                        //   text: "NGN${authProvider.walletData.data!.isEmpty || authProvider.isLoading || dashboardViewModel.loading? "0.00" : dashboardViewModel.btcNairaModel == null
-                        //       ? "0.00" : moneyFormat.format(dashboardViewModel.btcNairaModel!.data.naira)}",
-                        //   textColor: ColorManager.amountColor,
-                        //   fontSize: FontSize.s22,
-                        //   fontWeight: FontWeightManager.semiBold,);
-                      }),
-                      Text(
-                        authProvider.walletData.data!.isEmpty
-                            ? "0.00"
-                            : "${authProvider.walletData.data![0].balance} BTC",
-                        style: const TextStyle(
-                          fontFamily: 'Lexend',
-                          color: Color(0xff686868),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-
-                      // CustomTextWithLineHeight(
-                      //   text: authProvider.walletData.data!.isEmpty? "0.00" : "${authProvider.walletData.data![0].balance} BTC",
-                      //   textColor: ColorManager.blackTextColor,
-                      //   fontSize: FontSize.s14,
-                      //   fontWeight: FontWeightManager.regular,),
-                      SizedBox(
-                        height: AppSize.s18.h,
-                      ),
-                    ],
-                  ),
-                ),
+              ),
 
               ///section that those the verification on the old design
               // if(!authProvider.userData.user!.emailVerified! || !authProvider.userData.user!.phoneVerified! ||

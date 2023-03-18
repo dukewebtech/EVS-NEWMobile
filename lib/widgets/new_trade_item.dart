@@ -30,27 +30,27 @@ class NewTradeItem extends StatelessWidget {
         onTap: () async {
           /// this is the initial logic done by the previous developer
 
-          // dashboardViewModel.changeTradeReference(trade.reference);
-          // context.read<DashboardViewModel2>().changeSelectedNewTrade(trade);
-          // final isFetched = await context
-          //     .read<DashboardViewModel2>()
-          //     .getTradeDetails(trade.reference);
-          // if (isFetched) {
-          //   print("Trade type: ${trade.type}");
-          //   if (trade.type == "SELL") {
-          //     if (trade.partner?.username == auth.userData.user?.username) {
-          //       openConfirmBuyTradeView(context);
-          //     } else {
-          //       openConfirmSellTradeView(context);
-          //     }
-          //   } else {
-          //     if (trade.partner?.username == auth.userData.user?.username) {
-          //       openConfirmSellTradeView(context);
-          //     } else {
-          //       openConfirmBuyTradeView(context);
-          //     }
-          //   }
-          // }
+          dashboardViewModel.changeTradeReference(trade.reference);
+          context.read<DashboardViewModel2>().changeSelectedNewTrade(trade);
+          final isFetched = await context
+              .read<DashboardViewModel2>()
+              .getTradeDetails(trade.reference);
+          if (isFetched) {
+            print("Trade type: ${trade.type}");
+            if (trade.type == "SELL") {
+              if (trade.partner?.username == auth.userData.user?.username) {
+                openConfirmBuyTradeView(context);
+              } else {
+                openConfirmSellTradeView(context);
+              }
+            } else {
+              if (trade.partner?.username == auth.userData.user?.username) {
+                openConfirmSellTradeView(context);
+              } else {
+                openConfirmBuyTradeView(context);
+              }
+            }
+          }
         },
         child: Container(
           padding: const EdgeInsets.only(

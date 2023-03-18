@@ -861,7 +861,7 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                           ),
                           SizedBox(
                             height: 72,
-                            width: 176,
+                            width: MediaQuery.of(context).size.width * 0.45,
                             child: TextFormField(
                               controller: minimumController,
                               decoration: InputDecoration(
@@ -915,14 +915,14 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                           ),
                           SizedBox(
                             height: 72,
-                            width: 176,
+                            width: MediaQuery.of(context).size.width * 0.45,
                             child: TextFormField(
                               controller: maximumController,
                               decoration: InputDecoration(
                                 filled: false,
                                 counterText: "",
                                 fillColor: ColorManager.whiteColor,
-                                contentPadding: const EdgeInsets.only(left: 10),
+                                contentPadding: const EdgeInsets.only(),
                                 hintText: '',
                                 // suffixIcon: showSuffixIcon ? Icon() : Container(),
                                 border: OutlineInputBorder(

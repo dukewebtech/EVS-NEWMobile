@@ -67,11 +67,11 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.24,
+                      width: MediaQuery.of(context).size.width * 0.20,
                     ),
                     const Center(
                         child: Text(
-                      'Buy Bitcoin',
+                      'Buying Bitcoin',
                       style: TextStyle(
                           fontFamily: 'lexend',
                           fontSize: 20,
@@ -294,20 +294,17 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.040,
-                      width: MediaQuery.of(context).size.width * 0.34,
+                      width: MediaQuery.of(context).size.width * 0.37,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
+                              // padding: const EdgeInsets.only(left: 10),
                               backgroundColor: ColorManager.primaryColor),
                           onPressed: () {
                             openChatScreen(context);
                           },
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              // Icon(
-                              //   Icons.message,
-                              //   color: Color(0xff000000),
-                              //   size: 20,
-                              // ),
                               SvgPicture.asset(AppImages.chatIcon),
                               const SizedBox(
                                 width: 4,
@@ -318,6 +315,19 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                       color: Color(0xff000000))),
+                              const SizedBox(
+                                width: 6,
+                              ),
+                              const CircleAvatar(
+                                radius: 8,
+                                backgroundColor: Color(0xff000000),
+                                child: Text('2',
+                                    style: TextStyle(
+                                        fontFamily: 'lexend',
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffffffff))),
+                              )
                             ],
                           )),
                     )
