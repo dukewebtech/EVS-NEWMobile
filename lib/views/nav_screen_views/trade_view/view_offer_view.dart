@@ -69,8 +69,8 @@ class _ViewOfferViewState extends State<ViewOfferView> {
                       fit: BoxFit.cover),
                 ),
 
-                // color: const Color.fromRGBO(248, 248, 248, 1),
-                height: AppSize.s114.h,
+                // color: const Color.fromRGBO(248, 248, 248, 1),s
+                height: AppSize.s120.h,
                 width: double.infinity,
                 child: Stack(
                   // crossAxisAlignment: CrossAxisAlignment.start,

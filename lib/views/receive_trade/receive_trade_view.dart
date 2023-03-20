@@ -16,8 +16,7 @@ class ReceiveTradeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthenticationProvider>();
-    final name = authProvider.userData.user!.username;
-    final fname = authProvider.userData.user!.email;
+    
 
     void shareCode() async {
       Share.share(
@@ -55,8 +54,6 @@ class ReceiveTradeView extends StatelessWidget {
                   SizedBox(
                     width: AppSize.s3.w,
                   ),
-                  Text(name ?? "empty"),
-                  Text(fname ?? "empty"),
                   const Text(
                     'Receive',
                     style: TextStyle(

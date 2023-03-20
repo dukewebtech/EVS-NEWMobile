@@ -36,14 +36,26 @@ class MyAdsItem extends StatelessWidget {
             // color: Colors.yellow,
             // color: Color(0xfff6f6f6),
             borderRadius: BorderRadius.circular(5)),
-        height: 110,
+        height: 125,
         width: double.infinity,
         child: Stack(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Positioned(
+                top: 0,
+                left: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: CircleAvatar(
+                    radius: 5,
+                    backgroundColor: myAd.status == "ACTIVE"
+                        ? ColorManager.deepGreenColor
+                        : Colors.red,
+                  ),
+                )),
+            Positioned(
               left: 0,
-              top: 5,
+              top: 15,
               child: Text(
                 myAd.paymentMethod.name!,
                 style: const TextStyle(
@@ -65,41 +77,47 @@ class MyAdsItem extends StatelessWidget {
                       print('tap');
                     },
                     child: const Icon(Icons.more_vert))),
-            // Positioned(
-            //   right: 0,
-            //   bottom: 30,
-            //   child: SizedBox(
-            //     height: MediaQuery.of(context).size.height * 0.035,
-            //     width: MediaQuery.of(context).size.width * 0.18,
-            //     child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //         elevation: 1,
-            //         backgroundColor: const Color(0xffF4B731),
-            //       ),
-            //       onPressed: () {
-            //         // openSellView(context);
-            //         // print('was tapped');
-            //         // openBuyTradeView(context);
-            //       },
-            //       child: const FittedBox(
-            //         child: Text(
-            //           'Buy',
-            //           style: TextStyle(
-            //             fontSize: 14,
-            //             fontWeight: FontWeight.w400,
-            //             fontFamily: 'Lexend',
-            //             color: Color(0xff303030),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 5,
-            // ),
             Positioned(
-              top: 30,
+              right: 0,
+              bottom: 30,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.035,
+                width: MediaQuery.of(context).size.width * 0.18,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.5,
+                    backgroundColor: myAd.type == "SELL"
+                        ? Colors.grey.shade100
+                        : Colors.grey.shade100,
+                  ),
+                  onPressed: null,
+                  child: FittedBox(
+                    child: CustomTextWithLineHeight(
+                      text: myAd.type,
+                      fontWeight: FontWeightManager.bold,
+                      textColor: myAd.type == "SELL"
+                          ? Colors.red
+                          : ColorManager.deepGreenColor,
+                    ),
+
+                    //     Text(
+                    //   'Buy',
+                    //   style: TextStyle(
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w400,
+                    //     fontFamily: 'Lexend',
+                    //     color: Color(0xff303030),
+                    //   ),
+                    // ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Positioned(
+              top: 35,
               left: 0,
               child: Text(
                 "NGN ${moneyFormat.format(myAd.minAmount)} - "
@@ -114,7 +132,7 @@ class MyAdsItem extends StatelessWidget {
             ),
             Positioned(
               left: 0,
-              top: 65,
+              top: 70,
               child: Text(
                 Jiffy(myAd.createdAt).yMMMMEEEEdjm,
                 style: const TextStyle(
@@ -124,9 +142,6 @@ class MyAdsItem extends StatelessWidget {
                   color: Color(0xff8e8e8e),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 5,
             ),
             const Positioned(
               bottom: 5,

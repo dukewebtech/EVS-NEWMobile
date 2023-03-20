@@ -58,6 +58,11 @@ class _EditOfferViewState extends State<EditOfferView> {
           Provider.of<EvsPayViewModel>(context, listen: false);
 
       locationController.text = evsPayViewModel.selectedOffer.location;
+      minimumController.text =
+          evsPayViewModel.selectedOffer.minAmount.toString();
+      maximumController.text =
+          evsPayViewModel.selectedOffer.maxAmount.toString();
+      termsOfTradeController.text = evsPayViewModel.selectedOffer.terms;
       final method = PaymentMethods(
           name: evsPayViewModel.selectedOffer.paymentMethod.name,
           code: evsPayViewModel.selectedOffer.paymentMethod.code);

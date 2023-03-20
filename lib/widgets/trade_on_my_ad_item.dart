@@ -27,50 +27,48 @@ class TradeOnMyAdItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSize.s4.r),
       child: InkWell(
-        onTap: ()async{
-          final  isFetched = await context.read<DashboardViewModel2>().getTradeDetails(trade.reference!);
-          if(isFetched){
-
-            if(trade.type == "SELL"){
+        onTap: () async {
+          final isFetched = await context
+              .read<DashboardViewModel2>()
+              .getTradeDetails(trade.reference!);
+          if (isFetched) {
+            if (trade.type == "SELL") {
               openConfirmBuyTradeView(context);
-            }else{
+            } else {
               openConfirmSellTradeView(context);
             }
-
           }
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: AppSize.s10.w),
-          height: AppSize.s96.h,
+          height: AppSize.s100.h,
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppSize.s3.r),
-              border: Border.all(
-                  color: ColorManager.inputFieldBorder
-              )
-          ),
+              border: Border.all(color: ColorManager.inputFieldBorder)),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center ,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomTextWithLineHeight(
-                    text: "${trade.partner?.username == auth.userData.user?.username ? trade.user?.username : trade.partner?.username}",
+                    text:
+                        "${trade.partner?.username == auth.userData.user?.username ? trade.user?.username : trade.partner?.username}",
                     fontWeight: FontWeightManager.bold,
                     textColor: ColorManager.blckColor,
                     fontSize: FontSize.s12,
                   ),
-
                   CustomTextWithLineHeight(
-                    text: trade.type! ,
+                    text: trade.type!,
                     fontWeight: FontWeightManager.bold,
                     textColor: ColorManager.blackTxtColor,
                   ),
                 ],
               ),
-
-              SizedBox(height: AppSize.s8.h,),
+              SizedBox(
+                height: AppSize.s8.h,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -80,7 +78,6 @@ class TradeOnMyAdItem extends StatelessWidget {
                     textColor: ColorManager.blckColor,
                     fontSize: FontSize.s12,
                   ),
-
                   CustomTextWithLineHeight(
                     text: "${moneyFormat.format(trade.amount)} "
                         "${trade.currency!.code!}",
@@ -90,7 +87,9 @@ class TradeOnMyAdItem extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: AppSize.s4.h,),
+              SizedBox(
+                height: AppSize.s4.h,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -100,32 +99,39 @@ class TradeOnMyAdItem extends StatelessWidget {
                     textColor: ColorManager.arrowColor,
                     fontSize: FontSize.s10,
                   ),
-
                 ],
               ),
-
-              SizedBox(height: AppSize.s10.h,),
-
+              SizedBox(
+                height: AppSize.s8.h,
+              ),
               Row(
                 children: [
                   Container(
                     // height: AppSize.s15.h,
                     // width: AppSize.s48.w,
-                    padding: EdgeInsets.symmetric(horizontal: AppSize.s22.w, vertical: AppSize.s3.h),
-                    decoration:  BoxDecoration(
-                        color: trade.status == "CONFIRMED" ?
-                        const Color.fromRGBO(0, 62, 220, 1) : trade.status == "CANCELLED" ||  trade.status == "DISPUTED" ?
-                        const Color.fromRGBO(218, 73, 79, 1) : trade.status == "ACTIVE" ? ColorManager.primaryColor :  ColorManager.deepGreenColor,
-                        borderRadius: BorderRadius.circular(AppSize.s2.r)
-                    ),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppSize.s22.w, vertical: AppSize.s3.h),
+                    decoration: BoxDecoration(
+                        color: trade.status == "CONFIRMED"
+                            ? const Color.fromRGBO(0, 62, 220, 1)
+                            : trade.status == "CANCELLED" ||
+                                    trade.status == "DISPUTED"
+                                ? const Color.fromRGBO(218, 73, 79, 1)
+                                : trade.status == "ACTIVE"
+                                    ? ColorManager.primaryColor
+                                    : ColorManager.deepGreenColor,
+                        borderRadius: BorderRadius.circular(AppSize.s2.r)),
                     alignment: Alignment.center,
-                    child: CustomTextWithLineHeight(text: trade.status ?? "",
-                      textColor: trade.status == "ACTIVE" ? const Color.fromRGBO(20, 24, 31, 1) : ColorManager.whiteColor, fontSize: FontSize.s6,),
+                    child: CustomTextWithLineHeight(
+                      text: trade.status ?? "",
+                      textColor: trade.status == "ACTIVE"
+                          ? const Color.fromRGBO(20, 24, 31, 1)
+                          : ColorManager.whiteColor,
+                      fontSize: FontSize.s6,
+                    ),
                   )
                 ],
               ),
-
-
             ],
           ),
         ),
@@ -152,17 +158,16 @@ class TradeOnMyAdItem extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
               child: Container(
-                // height: AppSize.s117.h,
+                  // height: AppSize.s117.h,
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
                   decoration: BoxDecoration(
                       color: ColorManager.whiteColor,
-                      borderRadius: BorderRadius.circular(AppSize.s15.r)
-                  ),
+                      borderRadius: BorderRadius.circular(AppSize.s15.r)),
                   child: Column(
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -172,14 +177,15 @@ class TradeOnMyAdItem extends StatelessWidget {
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-
-                      SizedBox(height: AppSize.s20.h,),
+                      SizedBox(
+                        height: AppSize.s20.h,
+                      ),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-
-                      SizedBox(height: AppSize.s22.h,),
-
+                      SizedBox(
+                        height: AppSize.s22.h,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                           // openViewTradeScreen(context);
                         },
@@ -190,14 +196,15 @@ class TradeOnMyAdItem extends StatelessWidget {
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-
-                      SizedBox(height: AppSize.s20.h,),
+                      SizedBox(
+                        height: AppSize.s20.h,
+                      ),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-
-                      SizedBox(height: AppSize.s22.h,),
-
+                      SizedBox(
+                        height: AppSize.s22.h,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -207,14 +214,15 @@ class TradeOnMyAdItem extends StatelessWidget {
                           fontWeight: FontWeightManager.medium,
                         ),
                       ),
-
-                      SizedBox(height: AppSize.s20.h,),
+                      SizedBox(
+                        height: AppSize.s20.h,
+                      ),
                       SvgPicture.asset(AppImages.tradeOptionsDivider),
-
-                      SizedBox(height: AppSize.s22.h,),
-
+                      SizedBox(
+                        height: AppSize.s22.h,
+                      ),
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -225,18 +233,15 @@ class TradeOnMyAdItem extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
             ),
-
             SizedBox(
               height: AppSize.s13.h,
             ),
-
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSize.s31.w),
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -245,8 +250,7 @@ class TradeOnMyAdItem extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: AppSize.s21.w),
                   decoration: BoxDecoration(
                       color: ColorManager.whiteColor,
-                      borderRadius: BorderRadius.circular(AppSize.s5.r)
-                  ),
+                      borderRadius: BorderRadius.circular(AppSize.s5.r)),
                   alignment: Alignment.center,
                   child: CustomTextWithLineHeight(
                     text: AppStrings.cancel,
