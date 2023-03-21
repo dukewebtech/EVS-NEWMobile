@@ -202,15 +202,15 @@ class BuyTradeWidget extends StatelessWidget {
                                   color: Color(0xff8e8e8e),
                                 ),
                               ),
-                              const Text(
-                                '18%',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Lexend',
-                                  color: Color(0xff8e8e8e),
-                                ),
-                              ),
+                              // const Text(
+                              //   '18%',
+                              //   style: TextStyle(
+                              //     fontSize: 14,
+                              //     fontWeight: FontWeight.w400,
+                              //     fontFamily: 'Lexend',
+                              //     color: Color(0xff8e8e8e),
+                              //   ),
+                              // ),
                             ],
                           ),
                           const SizedBox(

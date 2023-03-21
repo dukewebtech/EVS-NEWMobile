@@ -16,7 +16,6 @@ class ReceiveTradeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthenticationProvider>();
-    
 
     void shareCode() async {
       Share.share(
@@ -176,13 +175,10 @@ class ReceiveTradeView extends StatelessWidget {
                         SizedBox(
                           width: AppSize.s6.w,
                         ),
-                        InkWell(
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.copy,
-                            color: Color(0xff6D6D6D),
-                            size: 18,
-                          ),
+                        const Icon(
+                          Icons.copy,
+                          color: Color(0xff6D6D6D),
+                          size: 18,
                         )
                       ],
                     )),
