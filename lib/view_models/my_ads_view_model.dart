@@ -15,8 +15,6 @@ import '../../widgets/loading_indicator.dart';
 import '../resources/constants/constants.dart';
 import '../resources/navigation_utils.dart';
 
-
-
 class MyAdsViewModel extends ChangeNotifier {
   //NEW
   bool _isLastPage = false;
@@ -31,8 +29,6 @@ class MyAdsViewModel extends ChangeNotifier {
 
   CreateOfferModel? _createOfferModel;
 
-
-
   bool get isLastPage => _isLastPage;
   int get pageNumber => _pageNumber;
   String get url => _url;
@@ -43,14 +39,11 @@ class MyAdsViewModel extends ChangeNotifier {
 
   List<OfferData> get offers => _offers;
 
-
-  MyAdsViewModel(){
+  MyAdsViewModel() {
     fetchOffers();
   }
 
-
-
-  set setIsLastPage(bool value){
+  set setIsLastPage(bool value) {
     _isLastPage = value;
     notifyListeners();
   }
@@ -60,29 +53,25 @@ class MyAdsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  set setError(bool value){
+  set setError(bool value) {
     _error = value;
     notifyListeners();
   }
 
-  set url(String url){
+  set url(String url) {
     _url = url;
     notifyListeners();
   }
 
-  set setLoading(bool value){
+  set setLoading(bool value) {
     _loading = value;
     notifyListeners();
   }
 
-  set createOfferModel(CreateOfferModel createOfferModel){
+  set createOfferModel(CreateOfferModel createOfferModel) {
     _createOfferModel = createOfferModel;
     notifyListeners();
   }
-
-
-
-
 
   ///Setter
   bool _isLoading = false;
@@ -105,7 +94,6 @@ class MyAdsViewModel extends ChangeNotifier {
   //Trades on offer
   TradesOnOfferModel? _tradesOnOffer;
 
-
   ///Getter
   bool get isLoading => _isLoading;
   bool get isSuccessful => _isSuccessful;
@@ -121,18 +109,14 @@ class MyAdsViewModel extends ChangeNotifier {
   TradesModel get trade => _trade!;
   TradeData get selectedTrade => _selectedTrade!;
 
-
   //Trades on offer
   TradesOnOfferModel get tradesOnOffer => _tradesOnOffer!;
 
-
-
   //Set selected Trade;
-  void setSelectedTrade(TradeData trade){
+  void setSelectedTrade(TradeData trade) {
     _selectedTrade = trade;
     notifyListeners();
   }
-
 
   Future<void> fetchOffers() async {
     final prefs = await SharedPreferences.getInstance();
@@ -140,16 +124,16 @@ class MyAdsViewModel extends ChangeNotifier {
     notifyListeners();
     final retrievedAccessToken = prefs.getString(accessToken);
     try {
-      final response = await http.get(Uri.parse(
-        _url,
-      ),
+      final response = await http.get(
+          Uri.parse(
+            _url,
+          ),
           headers: {
             'Authorization': 'Bearer $retrievedAccessToken',
             'Content-Type': 'application/json',
-          }
-      );
+          });
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         // print("Trades Fetched: ${response.body}");
         offerModel = offersModelFromJson(response.body);
         final responseHere = offersModelFromJson(response.body);
@@ -164,7 +148,6 @@ class MyAdsViewModel extends ChangeNotifier {
 
         notifyListeners();
       }
-
     } catch (e) {
       print("error --> $e");
       _loading = false;
@@ -173,11 +156,12 @@ class MyAdsViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> enableOrDisableOffer() async {
+  Future<bool> enableOrDisableOffer(BuildContext context) async {
     bool isUpdated = false;
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     _loading = true;
+    print('i mounted here');
     notifyListeners();
     final body = {
       "location": _selectedOffer!.location,
@@ -187,35 +171,32 @@ class MyAdsViewModel extends ChangeNotifier {
       "payment_method_code": _selectedOffer!.paymentMethod.code,
       "currency_code": _selectedOffer!.currency!.code,
       "coin_symbol": _selectedOffer!.coin!.symbol,
-      "tags": [
-        _selectedOffer!.tags
-      ],
+      "tags": [_selectedOffer!.tags],
       "terms": _selectedOffer!.terms,
       "payment_window": _selectedOffer!.paymentWindow,
       "profit_margin": _selectedOffer!.profitMargin,
       "payment_details": "",
       "track_liquidity": _selectedOffer!.trackLiquidity == 1 ? true : false,
-      "trusted_people_only": _selectedOffer!.trustedPeopleOnly == 1 ? true : false,
+      "trusted_people_only":
+          _selectedOffer!.trustedPeopleOnly == 1 ? true : false,
       "expiry_date": _selectedOffer!.expiryDate,
-      "status": _selectedOffer!.status
+      "status": _selectedOffer!.status,
     };
     try {
-      final response = await http.put(Uri.parse(
-        baseURL + "offers/${_selectedOffer!.reference}"
-      ),
-          headers: {
-            'Authorization': 'Bearer $retrievedAccessToken',
-            'Content-Type': 'application/json',
-          },
+      final response = await http.put(
+        Uri.parse(baseURL + "offers/${_selectedOffer!.reference}"),
+        headers: {
+          'Authorization': 'Bearer $retrievedAccessToken',
+          'Content-Type': 'application/json',
+        },
         body: json.encode(body),
       );
       print("Status update response: ${response.body}");
-      if(response.statusCode == 200 || response.statusCode == 201){
+      if (response.statusCode == 200 || response.statusCode == 201) {
         isUpdated = true;
         _loading = false;
         notifyListeners();
       }
-
     } catch (e) {
       print("error --> $e");
       _loading = false;
@@ -226,13 +207,9 @@ class MyAdsViewModel extends ChangeNotifier {
     return isUpdated;
   }
 
-
-
   //GET Trades on offer
-  Future<void> getTradesOnOffer({
-    required BuildContext context,
-    required String offerId
-  }) async {
+  Future<void> getTradesOnOffer(
+      {required BuildContext context, required String offerId}) async {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     print("Access token $retrievedAccessToken");
@@ -242,13 +219,13 @@ class MyAdsViewModel extends ChangeNotifier {
         context: context,
         builder: (BuildContext context) => const LoadingIndicator());
     try {
-      final response =
-      await http.get(
+      final response = await http.get(
         Uri.parse("$baseURL${Endpoints.offers}/$offerId/trades"),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
-        },);
+        },
+      );
       // print("Trades body=====: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
@@ -285,7 +262,6 @@ class MyAdsViewModel extends ChangeNotifier {
     }
   }
 
-
 //  CREATE OFFER
   Future<bool> createOffer({
     required BuildContext context,
@@ -302,15 +278,16 @@ class MyAdsViewModel extends ChangeNotifier {
         context: context,
         builder: (BuildContext context) => const LoadingIndicator());
     try {
-      final response =
-      await http.post(
+      final response = await http.post(
         Uri.parse("$baseURL${Endpoints.offers}"),
         body: json.encode(createOfferModel.toJson()),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
-        },);
-      print("Trades body=====: ${response.body} Status code: ${response.statusCode}");
+        },
+      );
+      print(
+          "Trades body=====: ${response.body} Status code: ${response.statusCode}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         _resMessage = "Offer created successfully";
         _isLoading = false;
@@ -318,7 +295,6 @@ class MyAdsViewModel extends ChangeNotifier {
         isCreated = true;
         notifyListeners();
         Navigator.pop(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         _resMessage = res['message'];

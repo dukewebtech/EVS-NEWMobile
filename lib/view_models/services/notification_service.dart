@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 
 import '../../resources/ednpoints.dart';
 
-
 class NotificationService {
-  Future<List<NotificationModelApi?>> getNotifications(String token, String tradeReference) async {
+  Future<List<NotificationModelApi?>> getNotifications(
+      String token, String tradeReference) async {
     List<NotificationModelApi> notificationsFetched = [];
     String _url = baseURL + "accounts/notifications";
     try {

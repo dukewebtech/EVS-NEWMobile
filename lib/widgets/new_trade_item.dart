@@ -68,9 +68,29 @@ class NewTradeItem extends StatelessWidget {
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// the widget below is the new design widegt for the trade view
+              // CustomTextWithLineHeight(
+              //   text: trade.status ?? "",
+              //   textColor: ColorManager.accentColor,
+              //   fontSize: FontSize.s6,
+              // ),
+
               Positioned(
                 left: 0,
                 top: 0,
+                child: Text(
+                  trade.status ?? '',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Lexend',
+                    color: const Color(0xff000000).withOpacity(0.5),
+                  ),
+                ),
+              ),
+
+              Positioned(
+                left: 0,
+                top: 18,
                 child: Text(
                   "${trade.partner?.username == auth.userData.user?.username ? trade.user?.username : trade.partner?.username}",
                   style: const TextStyle(
@@ -85,49 +105,41 @@ class NewTradeItem extends StatelessWidget {
                 right: 0,
                 top: 5,
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                  width: MediaQuery.of(context).size.width * 0.18,
+                  height: MediaQuery.of(context).size.height * 0.034,
+                  width: MediaQuery.of(context).size.width * 0.23,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      elevation: 1,
-                      backgroundColor: const Color(0xffF4B731),
+                      elevation: 0.1,
+                      backgroundColor: Colors.grey.shade100,
                     ),
-                    onPressed: () async {
-                      dashboardViewModel.changeTradeReference(trade.reference);
-                      context
-                          .read<DashboardViewModel2>()
-                          .changeSelectedNewTrade(trade);
-                      final isFetched = await context
-                          .read<DashboardViewModel2>()
-                          .getTradeDetails(trade.reference);
-                      if (isFetched) {
-                        print("Trade type: ${trade.type}");
-                        if (trade.type == "SELL") {
-                          if (trade.partner?.username ==
-                              auth.userData.user?.username) {
-                            openConfirmBuyTradeView(context);
-                          } else {
-                            openConfirmSellTradeView(context);
-                          }
-                        } else {
-                          if (trade.partner?.username ==
-                              auth.userData.user?.username) {
-                            openConfirmSellTradeView(context);
-                          } else {
-                            openConfirmBuyTradeView(context);
-                          }
-                        }
-                      }
-                    },
-                    child: const FittedBox(
-                      child: Text(
-                        'Sell',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Lexend',
-                          color: Color(0xff303030),
-                        ),
+                    onPressed: null,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            trade.type == "SELL" ? "Sell" : "Buy",
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff303030),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          const Text(
+                            'BTC',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Lexend',
+                              color: ColorManager.primaryColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -137,7 +149,7 @@ class NewTradeItem extends StatelessWidget {
                 height: 5,
               ),
               Positioned(
-                top: 25,
+                top: 36,
                 left: 0,
                 child: Text(
                   trade.paymentMethod!.name ?? "",
@@ -158,10 +170,10 @@ class NewTradeItem extends StatelessWidget {
                 child: Text(
                   "NGN ${moneyFormat.format(trade.amount)}",
                   style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                     fontFamily: 'Lexend',
-                    color: Color(0xff8e8e8e),
+                    color: Color(0xff000000),
                   ),
                 ),
               ),

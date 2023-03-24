@@ -166,8 +166,10 @@ class AppStrings {
   static const amt = "Amount";
   static const close = "Close";
   static const myAds = "My Ads";
-  static const enableTrade = "Enable Trade";
-  static const disableTrade = "Disable Trade";
+  static const allTrade = "All Trade";
+
+  static const enableTrade = "Enabled Trade";
+  static const disableTrade = "Disabled Trade";
   static const cancel = "Cancel";
   static const editThisTrade = "Edit this trade";
   static const viewTrade = "View trade";

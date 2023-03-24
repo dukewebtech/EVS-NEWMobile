@@ -15,8 +15,6 @@ import '../../widgets/loading_indicator.dart';
 import '../resources/constants/constants.dart';
 import '../resources/navigation_utils.dart';
 
-
-
 class TradeViewModel extends ChangeNotifier {
   //NEW
   bool _isLastPage = false;
@@ -27,14 +25,13 @@ class TradeViewModel extends ChangeNotifier {
   bool _isBuyTradeLastPage = false;
   int _buyTradePageNumber = 0;
 
-   String _sellUrl = "http://evspay.com/api/trades/?type=sell";
+  String _sellUrl = "http://evspay.com/api/trades/?type=sell";
   String _buyUrl = "http://evspay.com/api/trades/?type=buy";
 
   String _newTradeUrl = "http://evspay.com/api/trades";
   String get newTradeUrl => _newTradeUrl;
 
-
-   bool _error = false;
+  bool _error = false;
   bool _loading = false;
   final int numberOfPostsPerRequest = 10;
   final List<TradeData> _trades = [];
@@ -46,8 +43,6 @@ class TradeViewModel extends ChangeNotifier {
   final List<TradeData> _buyTrades = [];
   TradesModel? buyTradesModel;
   final int nextPageTrigger = 3;
-
-
 
   bool get isLastPage => _isLastPage;
   bool get isBuyTradeLastPage => _isBuyTradeLastPage;
@@ -63,56 +58,51 @@ class TradeViewModel extends ChangeNotifier {
 
   List<TradeData> get buyTrades => _buyTrades;
 
-
-  TradeViewModel(){
+  TradeViewModel() {
     fetchTrades();
     newFetchTrades();
     fetchBuyTrades();
   }
 
-  set setIsLastPage(bool value){
+  set setIsLastPage(bool value) {
     _isLastPage = value;
     notifyListeners();
   }
 
-  set setError(bool value){
+  set setError(bool value) {
     _error = value;
     notifyListeners();
   }
 
-  set pageNumber(int value){
+  set pageNumber(int value) {
     _pageNumber = value;
     notifyListeners();
   }
 
-  set newPageNumber(int value){
+  set newPageNumber(int value) {
     _newPageNumber = value;
     notifyListeners();
   }
 
-  set sellUrl(String url){
+  set sellUrl(String url) {
     _sellUrl = url;
     notifyListeners();
   }
 
-  set newTradeUrl(String url){
+  set newTradeUrl(String url) {
     _newTradeUrl = url;
     notifyListeners();
   }
 
-  set buyUrl(String url){
+  set buyUrl(String url) {
     _buyUrl = url;
     notifyListeners();
   }
 
-  set setLoading(bool value){
+  set setLoading(bool value) {
     _loading = value;
     notifyListeners();
   }
-
-
-
-
 
   ///Setter
   bool _isLoading = false;
@@ -134,7 +124,6 @@ class TradeViewModel extends ChangeNotifier {
   //Trades on offer
   TradesOnOfferModel? _tradesOnOffer;
 
-
   ///Getter
   bool get isLoading => _isLoading;
   String get resMessage => _resMessage;
@@ -149,18 +138,14 @@ class TradeViewModel extends ChangeNotifier {
   TradesModel get trade => _trade!;
   TradeData get selectedTrade => _selectedTrade!;
 
-
   //Trades on offer
   TradesOnOfferModel get tradesOnOffer => _tradesOnOffer!;
 
-
-
   //Set selected Trade;
-  void setSelectedTrade(TradeData trade){
+  void setSelectedTrade(TradeData trade) {
     _selectedTrade = trade;
     notifyListeners();
   }
-
 
   Future<void> fetchTrades() async {
     print("Method called");
@@ -168,31 +153,31 @@ class TradeViewModel extends ChangeNotifier {
     final retrievedAccessToken = prefs.getString(accessToken);
     print("========$_sellUrl======");
     try {
-      final response = await http.get(Uri.parse(
-        _sellUrl,
-      ),
+      final response = await http.get(
+          Uri.parse(
+            _sellUrl,
+          ),
           headers: {
             'Authorization': 'Bearer $retrievedAccessToken',
             'Content-Type': 'application/json',
-          }
-      );
+          });
       print("Trades Fetched: ${response.body}");
       tradesModel = tradesModelFromJson(response.body);
       final responseHere = tradesModelFromJson(response.body);
       print("Here at mapping successful");
       final postList = responseHere.trades;
       print("List length: ${postList!.length}");
-        _isLastPage = (postList.length < numberOfPostsPerRequest);
-        _loading = false;
-        _pageNumber = _pageNumber + 1;
-        _trades.addAll(postList);
+      _isLastPage = (postList.length < numberOfPostsPerRequest);
+      _loading = false;
+      _pageNumber = _pageNumber + 1;
+      _trades.addAll(postList);
 
-        notifyListeners();
+      notifyListeners();
     } catch (e) {
       print("error --> $e");
-        _loading = false;
-        _error = true;
-        notifyListeners();
+      _loading = false;
+      _error = true;
+      notifyListeners();
     }
   }
 
@@ -201,12 +186,10 @@ class TradeViewModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     try {
-      final response = await http.get(Uri.parse(_newTradeUrl),
-          headers: {
-            'Authorization': 'Bearer $retrievedAccessToken',
-            'Content-Type': 'application/json',
-          }
-      );
+      final response = await http.get(Uri.parse(_newTradeUrl), headers: {
+        'Authorization': 'Bearer $retrievedAccessToken',
+        'Content-Type': 'application/json',
+      });
       // print("New Trades Fetched: ${response.body}");
       newTradesModel = newTradeModelFromJson(response.body);
       final responseHere = newTradeModelFromJson(response.body);
@@ -216,7 +199,8 @@ class TradeViewModel extends ChangeNotifier {
       _isLastPage = (postList.length < numberOfPostsPerRequest);
       _loading = false;
       _newPageNumber = _newPageNumber + 1;
-      _newTrades.addAll(postList.where((trade) => trade.status != "COMPLETED").toList());
+      _newTrades.addAll(
+          postList.where((trade) => trade.status != "COMPLETED").toList());
       notifyListeners();
     } catch (e) {
       print("error --> $e");
@@ -231,14 +215,14 @@ class TradeViewModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     try {
-      final response = await http.get(Uri.parse(
-        _buyUrl,
-      ),
+      final response = await http.get(
+          Uri.parse(
+            _buyUrl,
+          ),
           headers: {
             'Authorization': 'Bearer $retrievedAccessToken',
             'Content-Type': 'application/json',
-          }
-      );
+          });
       print("Trades Fetched: ${response.body}");
       buyTradesModel = tradesModelFromJson(response.body);
       final responseHere = tradesModelFromJson(response.body);
@@ -272,13 +256,13 @@ class TradeViewModel extends ChangeNotifier {
         context: context,
         builder: (BuildContext context) => const LoadingIndicator());
     try {
-      final response =
-      await http.get(
+      final response = await http.get(
         Uri.parse("$baseURL${Endpoints.trades}"),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
-        },);
+        },
+      );
       // print("Trades body=====: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
@@ -287,7 +271,6 @@ class TradeViewModel extends ChangeNotifier {
         _isLoading = false;
         notifyListeners();
         Navigator.pop(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         _resMessage = res['message'];
@@ -315,12 +298,9 @@ class TradeViewModel extends ChangeNotifier {
     }
   }
 
-
   //GET Trades
-  Future<void> getTradesOnOffer({
-    required BuildContext context,
-    required String offerId
-  }) async {
+  Future<void> getTradesOnOffer(
+      {required BuildContext context, required String offerId}) async {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     print("Access token $retrievedAccessToken");
@@ -330,13 +310,13 @@ class TradeViewModel extends ChangeNotifier {
         context: context,
         builder: (BuildContext context) => const LoadingIndicator());
     try {
-      final response =
-      await http.get(
+      final response = await http.get(
         Uri.parse("$baseURL${Endpoints.offers}/$offerId/trades"),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
-        },);
+        },
+      );
       // print("Trades body=====: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role

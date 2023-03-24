@@ -154,7 +154,7 @@ class SellTradeWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                moneyFormat.format(offer.maxAmount),
+                                offer.profitMargin.toString() + "/USD",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,

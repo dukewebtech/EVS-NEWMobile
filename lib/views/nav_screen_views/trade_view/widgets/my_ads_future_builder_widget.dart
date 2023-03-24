@@ -15,7 +15,10 @@ import '../../../../widgets/loading_indicator.dart';
 import '../../../../widgets/my_offer_item.dart';
 
 class MyAdsFutureBuilderWidget extends StatefulWidget {
-  const MyAdsFutureBuilderWidget({Key? key}) : super(key: key);
+  final String? offerType;
+
+  const MyAdsFutureBuilderWidget({Key? key, this.offerType = "all"})
+      : super(key: key);
 
   @override
   State<MyAdsFutureBuilderWidget> createState() =>
@@ -74,7 +77,17 @@ class _MyAdsFutureBuilderWidgetState extends State<MyAdsFutureBuilderWidget> {
                   ),
                 );
               } else {
-                final offers = snapshot.data!;
+                var offers = snapshot.data!;
+
+                offers = offers.where((offer) {
+                  Map status = <String, List>{
+                    "all": ['ACTIVE', 'INACTIVE'],
+                    "active": ['ACTIVE'],
+                    "inactive": ['INACTIVE'],
+                  };
+                  return status[widget.offerType].contains(offer!.status);
+                }).toList();
+
                 return RefreshIndicator(
                   onRefresh: () async {
                     MyAdsService().getMyAds(authProvider.userData.accessToken!);

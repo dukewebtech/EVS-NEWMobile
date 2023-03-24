@@ -15,12 +15,18 @@ import '../../../widgets/app_texts/custom_text.dart';
 import '../../../widgets/re_usable_widgets.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
-class BuyTradeWidget extends StatelessWidget {
+class BuyTradeWidget extends StatefulWidget {
   const BuyTradeWidget({Key? key}) : super(key: key);
 
   @override
+  State<BuyTradeWidget> createState() => _BuyTradeWidgetState();
+}
+
+class _BuyTradeWidgetState extends State<BuyTradeWidget> {
+  @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+
     final authProvider = context.watch<AuthenticationProvider>();
     if (dashboardViewModel.buyTrades.isEmpty) {
       if (dashboardViewModel.loading) {
@@ -134,7 +140,7 @@ class BuyTradeWidget extends StatelessWidget {
                 return Padding(
                   padding: EdgeInsets.only(
                     // left: AppSize.s12.w,
-                    top: AppSize.s18.h,
+                    top: AppSize.s5.h,
                     // right: AppSize.s12.w
                   ),
                   child: InkWell(
@@ -152,7 +158,7 @@ class BuyTradeWidget extends StatelessWidget {
                     },
                     child: Container(
                       padding: const EdgeInsets.only(
-                        top: 6,
+                        top: 5,
                         left: 5,
                         right: 5,
                       ),
@@ -160,7 +166,7 @@ class BuyTradeWidget extends StatelessWidget {
                           // color: Colors.yellow ,
                           // color: Color(0xfff6f6f6),
                           borderRadius: BorderRadius.circular(12)),
-                      height: 110,
+                      height: 105,
                       width: double.infinity,
                       child: Column(
                         children: [
@@ -177,7 +183,7 @@ class BuyTradeWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                moneyFormat.format(offer.maxAmount),
+                                offer.profitMargin.toString() + "/USD",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
@@ -230,7 +236,7 @@ class BuyTradeWidget extends StatelessWidget {
                               ),
                               SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.041,
+                                    MediaQuery.of(context).size.height * 0.035,
                                 width: MediaQuery.of(context).size.width * 0.2,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -239,6 +245,7 @@ class BuyTradeWidget extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     openBuyTradeView(context);
+                                    setState(() {});
                                   },
                                   child: const FittedBox(
                                     child: Text(
@@ -261,9 +268,9 @@ class BuyTradeWidget extends StatelessWidget {
                           const Divider(
                             thickness: 1.5,
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          // const SizedBox(
+                          //   height: 5,
+                          // ),
                         ],
                       ),
                     ),

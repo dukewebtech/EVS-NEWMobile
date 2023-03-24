@@ -14,8 +14,6 @@ import '../../widgets/loading_indicator.dart';
 import '../resources/constants/constants.dart';
 import '../resources/navigation_utils.dart';
 
-
-
 class EvsPayViewModel extends ChangeNotifier {
   ///Setter
   bool _isLoading = false;
@@ -38,7 +36,6 @@ class EvsPayViewModel extends ChangeNotifier {
   //Trades on offer
   TradesOnOfferModel? _tradesOnOffer;
 
-
   ///Getter
   bool get isLoading => _isLoading;
   bool get success => _success;
@@ -54,20 +51,17 @@ class EvsPayViewModel extends ChangeNotifier {
   TradesModel get trade => _trade!;
   TradeData get selectedTrade => _selectedTrade!;
 
-
   //Trades on offer
   TradesOnOfferModel get tradesOnOffer => _tradesOnOffer!;
 
-
-
   //Set selected Offer;
-  void setSelectedOffer(OfferData offer){
+  void setSelectedOffer(OfferData offer) {
     _selectedOffer = offer;
     notifyListeners();
   }
 
   //Set selected Trade;
-  void setSelectedTrade(TradeData trade){
+  void setSelectedTrade(TradeData trade) {
     _selectedTrade = trade;
     notifyListeners();
   }
@@ -84,12 +78,12 @@ class EvsPayViewModel extends ChangeNotifier {
     //     builder: (BuildContext context) => const LoadingIndicator());
     notifyListeners();
     try {
-      final response =
-      await http.get(
-          Uri.parse("$baseURL${Endpoints.paymentMethods}"),
-          headers: {
-            'Content-Type': 'application/json',
-          },);
+      final response = await http.get(
+        Uri.parse("$baseURL${Endpoints.paymentMethods}"),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
       print("Response body: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
@@ -103,7 +97,7 @@ class EvsPayViewModel extends ChangeNotifier {
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");
-        final userNameError =  res['errors']['email'][0] ?? "";
+        final userNameError = res['errors']['email'][0] ?? "";
         _resMessage = "${res['message']}$userNameError";
         _isLoading = false;
         _success = false;
@@ -133,12 +127,12 @@ class EvsPayViewModel extends ChangeNotifier {
     }
   }
 
-
   Future<bool> enableOrDisableOffer(BuildContext context) async {
     bool isUpdated = false;
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     _isLoading = true;
+
     print("Selected offer status: ${selectedOffer.status}");
     notifyListeners();
     final body = {
@@ -155,16 +149,16 @@ class EvsPayViewModel extends ChangeNotifier {
       "profit_margin": _selectedOffer!.profitMargin,
       "payment_details": "",
       "track_liquidity": _selectedOffer!.trackLiquidity == 1 ? true : false,
-      "trusted_people_only": _selectedOffer!.trustedPeopleOnly == 1 ? true : false,
+      "trusted_people_only":
+          _selectedOffer!.trustedPeopleOnly == 1 ? true : false,
       "expiry_date": _selectedOffer!.expiryDate.toString(),
       "status": _selectedOffer!.status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
     };
 
     // print("Payload: $body");
     try {
-      final response = await http.put(Uri.parse(
-          baseURL + "offers/${_selectedOffer!.reference}"
-      ),
+      final response = await http.put(
+        Uri.parse(baseURL + "offers/${_selectedOffer!.reference}"),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
@@ -172,7 +166,7 @@ class EvsPayViewModel extends ChangeNotifier {
         body: json.encode(body),
       );
       print("Status update response: ${response.body}");
-      if(response.statusCode == 200 || response.statusCode == 201){
+      if (response.statusCode == 200 || response.statusCode == 201) {
         isUpdated = true;
         _isLoading = false;
         notifyListeners();
@@ -184,7 +178,6 @@ class EvsPayViewModel extends ChangeNotifier {
     }
     return isUpdated;
   }
-
 
   //GET TRANSACTION HISTORY
   Future<void> getTransactionHistory({
@@ -198,13 +191,13 @@ class EvsPayViewModel extends ChangeNotifier {
         context: context,
         builder: (BuildContext context) => const LoadingIndicator());
     try {
-      final response =
-      await http.get(
+      final response = await http.get(
         Uri.parse("$baseURL${Endpoints.transactionHistory}"),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
-        },);
+        },
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
         _transactionHistories = transactionHistoryModelFromJson(response.body);
@@ -212,7 +205,6 @@ class EvsPayViewModel extends ChangeNotifier {
         _isLoading = false;
         notifyListeners();
         Navigator.pop(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");
@@ -241,7 +233,6 @@ class EvsPayViewModel extends ChangeNotifier {
     }
   }
 
-
   //GET offers
   Future<void> getOffers({
     required BuildContext context,
@@ -255,13 +246,13 @@ class EvsPayViewModel extends ChangeNotifier {
         context: context,
         builder: (BuildContext context) => const LoadingIndicator());
     try {
-      final response =
-      await http.get(
+      final response = await http.get(
         Uri.parse("$baseURL${Endpoints.offers}"),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
-        },);
+        },
+      );
       // print("offers body: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
@@ -270,7 +261,6 @@ class EvsPayViewModel extends ChangeNotifier {
         _isLoading = false;
         notifyListeners();
         Navigator.pop(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         _resMessage = res['message'];
@@ -297,7 +287,6 @@ class EvsPayViewModel extends ChangeNotifier {
       print("exception: $e");
     }
   }
-
 
   //GET Trades
   Future<void> getTrades({
@@ -312,13 +301,13 @@ class EvsPayViewModel extends ChangeNotifier {
         context: context,
         builder: (BuildContext context) => const LoadingIndicator());
     try {
-      final response =
-      await http.get(
+      final response = await http.get(
         Uri.parse("$baseURL${Endpoints.trades}"),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
-        },);
+        },
+      );
       print("Trades body=====: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role
@@ -327,7 +316,6 @@ class EvsPayViewModel extends ChangeNotifier {
         _isLoading = false;
         notifyListeners();
         Navigator.pop(context);
-
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         _resMessage = res['message'];
@@ -355,12 +343,9 @@ class EvsPayViewModel extends ChangeNotifier {
     }
   }
 
-
   //GET Trades
-  Future<void> getTradesOnOffer({
-    required BuildContext context,
-    required String offerId
-  }) async {
+  Future<void> getTradesOnOffer(
+      {required BuildContext context, required String offerId}) async {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     _isLoading = true;
@@ -370,13 +355,13 @@ class EvsPayViewModel extends ChangeNotifier {
         context: context,
         builder: (BuildContext context) => const LoadingIndicator());
     try {
-      final response =
-      await http.get(
+      final response = await http.get(
         Uri.parse("$baseURL${Endpoints.offers}/$offerId/trades"),
         headers: {
           'Authorization': 'Bearer $retrievedAccessToken',
           'Content-Type': 'application/json',
-        },);
+        },
+      );
       print("Trades body=====: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         //first check for the user role

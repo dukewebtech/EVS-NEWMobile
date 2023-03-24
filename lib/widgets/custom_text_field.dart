@@ -64,19 +64,19 @@ class CustomTextField extends StatelessWidget {
                 // suffixIcon: showSuffixIcon ? Icon() : Container(),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.r),
-                  borderSide: const BorderSide(
-                      color: ColorManager.inactiveInputFieldColor, width: 1),
+                  borderSide:
+                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.r),
-                  borderSide: const BorderSide(
-                      color: ColorManager.inactiveInputFieldColor, width: 1),
+                  borderSide:
+                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
                 ),
                 focusedBorder: OutlineInputBorder(
                   gapPadding: 0.0,
                   borderRadius: BorderRadius.circular(5.r),
-                  borderSide: const BorderSide(
-                      color: ColorManager.textFieldColor, width: 1),
+                  borderSide:
+                      const BorderSide(color: Color(0xffE8E8E8), width: 1),
                 ),
                 hintStyle: const TextStyle(
                     color: ColorManager.labelTextColor, fontSize: FontSize.s16),

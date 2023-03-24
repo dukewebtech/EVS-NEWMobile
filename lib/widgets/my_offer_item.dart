@@ -19,7 +19,10 @@ import 'app_texts/custom_text.dart';
 
 class MyAdsItem extends StatelessWidget {
   final OfferData myAd;
-  const MyAdsItem({Key? key, required this.myAd}) : super(key: key);
+  const MyAdsItem({
+    Key? key, 
+    required this.myAd,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +76,6 @@ class MyAdsItem extends StatelessWidget {
                     onTap: () {
                       evsPayProvider.setSelectedOffer(myAd);
                       show(context, evsPayProvider, myAdsViewModel);
-
-                      print('tap');
                     },
                     child: const Icon(Icons.more_vert))),
             Positioned(

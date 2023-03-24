@@ -30,6 +30,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
     var terms = dashboardViewModel.selectedDashboardTrade?.terms;
     var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
+    dashboardViewModel.selectedDashboardTrade?.profitMargin;
     var userName = dashboardViewModel.selectedDashboardTrade?.user!.username!;
     var paymentMethod =
         dashboardViewModel.selectedDashboardTrade?.paymentMethod!.name;
@@ -235,7 +236,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
               height: AppSize.s17.h,
             ),
             SizedBox(
-              height: 80,
+              height: 70,
               width: double.infinity,
               child: Card(
                 elevation: 0.5,
@@ -245,7 +246,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                   side: const BorderSide(width: 0.5, color: Color(0xffE8E8E8)),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 20),
+                  padding: const EdgeInsets.only(top: 15, left: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -258,15 +259,15 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                           color: Color(0xff666666),
                         ),
                       ),
-                      const Text(
-                        '\$49',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Lexend',
-                          color: Color(0xffA7A7A7),
-                        ),
-                      )
+                      // const Text(
+                      //   '\$49',
+                      //   style: TextStyle(
+                      //     fontSize: 16,
+                      //     fontWeight: FontWeight.w400,
+                      //     fontFamily: 'Lexend',
+                      //     color: Color(0xffA7A7A7),
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -377,6 +378,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                 color: Color(0xff000000),
               ),
             ),
+
             SizedBox(
               height: AppSize.s15.h,
             ),

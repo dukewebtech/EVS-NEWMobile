@@ -86,7 +86,7 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                 Center(
                   child: SizedBox(
                     height: 30,
-                    width: 97,
+                    width: 115,
                     child: Card(
                       elevation: 0.5,
                       child: Center(

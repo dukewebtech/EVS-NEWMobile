@@ -5,6 +5,7 @@ import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
+import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/my_ads_future_builder_widget.dart';
 import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/widgets/trades_widget.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
@@ -26,6 +27,8 @@ class TradeViewCopy extends StatefulWidget {
 class _TradeViewCopyState extends State<TradeViewCopy> {
   bool isMyAds = true;
   var changeAll = 0;
+  var type = "all";
+  var tradeType = "allTrades";
 
   @override
   void initState() {
@@ -37,6 +40,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
   Widget build(BuildContext context) {
     final evsPayViewModel = context.watch<EvsPayViewModel>();
     final authProvider = context.watch<AuthenticationProvider>();
+    final myAdsViewModel = context.watch<MyAdsViewModel>();
 
     List<Map<String, dynamic>> btnList = [
       {
@@ -55,6 +59,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
         "isCone": true,
       }
     ];
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(
@@ -179,38 +184,32 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               index == 2
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        if (changeAll == 0) show(context);
-                                        if (changeAll == 1) {
-                                          showTradeDialog(context);
-                                        }
-                                        print('tappa');
-                                      },
-                                      child: Row(
-                                        children: [
-                                          const VerticalDivider(
-                                            thickness: 2,
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          GestureDetector(
-                                              onTap: (() {
-                                                if (changeAll == 0) {
-                                                  show(context);
-                                                }
-                                                if (changeAll == 1) {
-                                                  showTradeDialog(context);
-                                                }
-                                                print('e tapped m o');
-                                              }),
-                                              child: const Icon(
-                                                Icons.more_horiz_outlined,
-                                                size: 32,
-                                              )),
-                                        ],
-                                      ),
+                                  ? Row(
+                                      children: [
+                                        const VerticalDivider(
+                                          thickness: 2,
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        GestureDetector(
+                                            onTap: (() {
+                                              if (changeAll == 0) {
+                                                show(
+                                                  context,
+                                                  myAdsViewModel:
+                                                      myAdsViewModel,
+                                                );
+                                              }
+                                              if (changeAll == 1) {
+                                                showTradeDialog(context);
+                                              }
+                                            }),
+                                            child: const Icon(
+                                              Icons.more_horiz_outlined,
+                                              size: 32,
+                                            )),
+                                      ],
                                     )
                                   : Text(
                                       title,
@@ -222,9 +221,6 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                                       ),
                                       // btnList[index]["title"],
                                     ),
-                              if (title == 'Pro') const Icon(Icons.star)
-
-                             
                             ],
                           )),
                         ),
@@ -345,7 +341,9 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
             if (changeAll == 0)
               evsPayViewModel.isLoading
                   ? Container()
-                  : const MyAdsFutureBuilderWidget(),
+                  : MyAdsFutureBuilderWidget(
+                      offerType: type,
+                    ),
 
             // if (changeAll == 2)
             //   Center(
@@ -360,14 +358,18 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
             //   evsPayViewModel.isLoading ? Container() : const TradesWidget(),
 
             if (changeAll == 1)
-              evsPayViewModel.isLoading ? Container() : const TradesWidget(),
+              evsPayViewModel.isLoading
+                  ? Container()
+                  : TradesWidget(
+                      offerType: tradeType,
+                    ),
           ],
         ),
       )),
     );
   }
 
-  void show(BuildContext context) {
+  void show(BuildContext context, {MyAdsViewModel? myAdsViewModel}) {
     showMaterialModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -396,6 +398,28 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                     children: [
                       InkWell(
                         onTap: () {
+                          // myAdsViewModel!.enableOrDisableOffer(context);
+                          setState(() => type = 'all');
+                          Navigator.pop(context);
+                        },
+                        child: CustomTextWithLineHeight(
+                          text: AppStrings.allTrade,
+                          textColor: ColorManager.blckColor,
+                          fontSize: FontSize.s16.sp,
+                          fontWeight: FontWeightManager.medium,
+                        ),
+                      ),
+                      SizedBox(
+                        height: AppSize.s20.h,
+                      ),
+                      SvgPicture.asset(AppImages.tradeOptionsDivider),
+                      SizedBox(
+                        height: AppSize.s22.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          myAdsViewModel!.enableOrDisableOffer(context);
+                          setState(() => type = 'active');
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -414,6 +438,7 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                       ),
                       InkWell(
                         onTap: () {
+                          setState(() => type = 'inactive');
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -487,6 +512,28 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                     children: [
                       InkWell(
                         onTap: () {
+                          setState(() => tradeType = 'allTrades');
+
+                          Navigator.pop(context);
+                        },
+                        child: CustomTextWithLineHeight(
+                          text: 'All Trade',
+                          textColor: ColorManager.blckColor,
+                          fontSize: FontSize.s16.sp,
+                          fontWeight: FontWeightManager.medium,
+                        ),
+                      ),
+                      SizedBox(
+                        height: AppSize.s20.h,
+                      ),
+                      SvgPicture.asset(AppImages.tradeOptionsDivider),
+                      SizedBox(
+                        height: AppSize.s22.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() => tradeType = 'active');
+
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -505,6 +552,8 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                       ),
                       InkWell(
                         onTap: () {
+                          setState(() => tradeType = 'completed');
+
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -523,6 +572,8 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                       ),
                       InkWell(
                         onTap: () {
+                          setState(() => tradeType = 'confirmed');
+
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -541,6 +592,8 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                       ),
                       InkWell(
                         onTap: () {
+                          setState(() => tradeType = 'disputed');
+
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(
@@ -559,6 +612,8 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
                       ),
                       InkWell(
                         onTap: () {
+                          setState(() => tradeType = 'cancelled');
+
                           Navigator.pop(context);
                         },
                         child: CustomTextWithLineHeight(

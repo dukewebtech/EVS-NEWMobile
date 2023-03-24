@@ -2,6 +2,7 @@ import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/image_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/views/send_trade/send_trade_view.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/expiry_date_widget.dart';
@@ -35,6 +36,7 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+    final auth = context.watch<AuthenticationProvider>();
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -84,12 +86,12 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                 Center(
                   child: SizedBox(
                     height: 30,
-                    width: 97,
+                    width: 115,
                     child: Card(
                       elevation: 0.5,
                       child: Center(
                           child: Text(
-                        "from ${dashboardViewModel.singleTradeModel.data?.partner?.username}",
+                        "to ${dashboardViewModel.singleTradeModel.data!.partner!.username == auth.userData.user!.username ? dashboardViewModel.singleTradeModel.data!.user!.username : dashboardViewModel.singleTradeModel.data!.partner!.username}",
                         style: const TextStyle(
                             fontFamily: 'lexend',
                             fontSize: 12.5,
