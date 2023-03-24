@@ -1,3 +1,4 @@
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,8 @@ import '../../widgets/app_texts/custom_text.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/re_usable_widgets.dart';
 
+import 'package:evs_pay_mobile/utils/local_notification_service.dart';
+
 class SellView extends StatefulWidget {
   const SellView({Key? key}) : super(key: key);
   @override
@@ -25,12 +28,39 @@ class _SellViewState extends State<SellView> {
   // final amountController = TextEditingController();
   // final usdAmount = TextEditingController();
 
+  late final LocalNotificationService service;
+
+  void onNotificationListener(String? payload) {
+    if (payload != null && payload.isNotEmpty) {}
+  }
+
+  void listenToNotification() {
+    service.onNotificationClick.stream.listen(onNotificationListener);
+  }
+
+  @override
+  void initState() {
+    service = LocalNotificationService();
+    service.initialize();
+    listenToNotification();
+    super.initState();
+  }
+
   final btcAmountController = TextEditingController();
   final nairaAmountController = TextEditingController();
   String btcAmount = "0.0";
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+    final authProvider = context.watch<AuthenticationProvider>();
+    final value = context.watch<DashboardViewModel2>();
+
+// "${dashboardViewModel.singleTradeModel.data!.coinValue}
+
+    var btcAmount = dashboardViewModel.btcToBuy;
+    var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
+    dashboardViewModel.selectedDashboardTrade?.profitMargin;
+    var userName = dashboardViewModel.selectedDashboardTrade?.user!.username!;
 
     return Scaffold(
       appBar:
@@ -413,7 +443,14 @@ class _SellViewState extends State<SellView> {
                     SizedBox(
                       height: AppSize.s24.h,
                     ),
-
+                    GestureDetector(
+                        onTap: () {
+                          service.showNotification(
+                              id: 1,
+                              title: "Buy BTC",
+                              body: "Dear Sell lomo jaye ");
+                        },
+                        child: const Text('noty')),
                     const Center(
                         child: CustomText(text: AppStrings.secureEscrow)),
                     const Center(
@@ -455,7 +492,8 @@ class _SellViewState extends State<SellView> {
                                                 ? "0.0"
                                                 : nairaAmountController.text
                                                     .trim()) <
-                                            dashboardViewModel.selectedDashboardTrade!
+                                            dashboardViewModel
+                                                .selectedDashboardTrade!
                                                 .minAmount ||
                                         double.parse(nairaAmountController.text
                                                     .trim()
@@ -483,9 +521,14 @@ class _SellViewState extends State<SellView> {
                                         Future.delayed(
                                             const Duration(seconds: 1), () {
                                           setState(() {
-                                            setState(() {
-                                              openConfirmSellTradeView(context);
-                                            });
+                                            // service.showNotification(
+                                            //     id: 1,
+                                            //     title: "Sell BTC",
+                                            //     body:
+                                            //         "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString() ?? ""}BTC at rate of ${dashboardViewModel.singleTradeModel.data!.coinValue} with ${userName ?? "User"}.  ");
+
+                                            print('tapped');
+                                            openConfirmSellTradeView(context);
                                           });
                                         });
                                       }

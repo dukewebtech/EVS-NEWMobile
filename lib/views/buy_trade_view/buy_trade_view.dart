@@ -1,3 +1,5 @@
+import 'package:evs_pay_mobile/utils/local_notification_service.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +13,7 @@ import '../../resources/navigation_utils.dart';
 import '../../resources/value_manager.dart';
 import '../../view_models/dashboard_view_model.dart';
 import '../../widgets/re_usable_widgets.dart';
+// import 'package:timezone/standalone.dart' as tz;
 
 class BuyTradeView extends StatefulWidget {
   const BuyTradeView({Key? key}) : super(key: key);
@@ -21,14 +24,39 @@ class BuyTradeView extends StatefulWidget {
 class _BuyTradeViewState extends State<BuyTradeView> {
   final btcAmountController = TextEditingController();
   final nairaAmountController = TextEditingController();
+  late final LocalNotificationService service;
+
   // final usdAmount = TextEditingController();
+
+  /// these codes are for the local notification
+  void onNotificationListener(String? payload) {
+    if (payload != null && payload.isNotEmpty) {}
+  }
+
+  void listenToNotification() {
+    service.onNotificationClick.stream.listen(onNotificationListener);
+  }
+
+  ///
+
+  @override
+  void initState() {
+    service = LocalNotificationService();
+    service.initialize();
+    listenToNotification();
+    super.initState();
+  }
+
   String btcAmount = "0.0";
   String lorem =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ";
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+    final authProvider = context.watch<AuthenticationProvider>();
+
     var terms = dashboardViewModel.selectedDashboardTrade?.terms;
+    var btcAmount = dashboardViewModel.btcToBuy;
     var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
     dashboardViewModel.selectedDashboardTrade?.profitMargin;
     var userName = dashboardViewModel.selectedDashboardTrade?.user!.username!;
@@ -50,6 +78,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        setState(() {});
                         Navigator.pop(context);
                       },
                       icon: const Icon(
@@ -71,6 +100,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                 ],
               ),
             ),
+
             SizedBox(
               height: 86,
               width: double.infinity,
@@ -455,7 +485,13 @@ class _BuyTradeViewState extends State<BuyTradeView> {
 
                               if (isCreated) {
                                 Future.delayed(const Duration(seconds: 1), () {
-                                  setState(() {
+                                  setState(() async {
+                                    await service.showNotification(
+                                        id: 0,
+                                        title: "Buy BTC",
+                                        body:
+                                            "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString() ?? ""}BTC at rate of $btcAmount with ${userName ?? "User"}.  ");
+                                    print('tapped');
                                     openConfirmBuyTradeView(context);
                                   });
                                 });

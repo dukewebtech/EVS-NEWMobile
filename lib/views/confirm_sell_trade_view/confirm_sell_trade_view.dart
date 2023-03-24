@@ -308,16 +308,16 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                               const SizedBox(
                                 width: 6,
                               ),
-                              const CircleAvatar(
-                                radius: 8,
-                                backgroundColor: Color(0xff000000),
-                                child: Text('2',
-                                    style: TextStyle(
-                                        fontFamily: 'lexend',
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xffffffff))),
-                              )
+                              // const CircleAvatar(
+                              //   radius: 8,
+                              //   backgroundColor: Color(0xff000000),
+                              //   child: Text('2',
+                              //       style: TextStyle(
+                              //           fontFamily: 'lexend',
+                              //           fontSize: 10,
+                              //           fontWeight: FontWeight.w400,
+                              //           color: Color(0xffffffff))),
+                              // )
                             ],
                           )),
                     )

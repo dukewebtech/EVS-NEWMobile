@@ -14,9 +14,14 @@ import '../../../widgets/app_texts/custom_text.dart';
 import '../../../widgets/re_usable_widgets.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
-class SellTradeWidget extends StatelessWidget {
+class SellTradeWidget extends StatefulWidget {
   const SellTradeWidget({Key? key}) : super(key: key);
 
+  @override
+  State<SellTradeWidget> createState() => _SellTradeWidgetState();
+}
+
+class _SellTradeWidgetState extends State<SellTradeWidget> {
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
