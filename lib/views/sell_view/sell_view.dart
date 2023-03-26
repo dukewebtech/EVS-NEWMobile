@@ -443,14 +443,7 @@ class _SellViewState extends State<SellView> {
                     SizedBox(
                       height: AppSize.s24.h,
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          service.showNotification(
-                              id: 1,
-                              title: "Buy BTC",
-                              body: "Dear Sell lomo jaye ");
-                        },
-                        child: const Text('noty')),
+
                     const Center(
                         child: CustomText(text: AppStrings.secureEscrow)),
                     const Center(
@@ -521,11 +514,11 @@ class _SellViewState extends State<SellView> {
                                         Future.delayed(
                                             const Duration(seconds: 1), () {
                                           setState(() {
-                                            // service.showNotification(
-                                            //     id: 1,
-                                            //     title: "Sell BTC",
-                                            //     body:
-                                            //         "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString() ?? ""}BTC at rate of ${dashboardViewModel.singleTradeModel.data!.coinValue} with ${userName ?? "User"}.  ");
+                                            service.showNotification(
+                                                id: 1,
+                                                title: "Sell BTC",
+                                                body:
+                                                    "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString() ?? ""}BTC at rate of ${dashboardViewModel.singleTradeModel.data!.coinValue} with ${userName ?? "User"}.  ");
 
                                             print('tapped');
                                             openConfirmSellTradeView(context);
