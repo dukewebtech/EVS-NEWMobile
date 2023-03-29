@@ -2,157 +2,291 @@ import 'dart:async';
 
 import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/font_manager.dart';
-import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
+import 'package:evs_pay_mobile/utils/local_notification_service.dart';
+import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
+import 'package:evs_pay_mobile/view_models/general_view_model.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/custom_app_bar.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
-import '../../resources/styles_manager.dart';
+import 'package:provider/provider.dart';
 
 class TransactionPinView extends StatefulWidget {
-  const TransactionPinView({Key? key}) : super(key: key);
+  final String walletAddres, description;
+  final double amount;
+
+  const TransactionPinView(
+      {required this.amount,
+      required this.description,
+      required this.walletAddres,
+      Key? key})
+      : super(key: key);
 
   @override
   State<TransactionPinView> createState() => _TransactionPinViewState();
 }
 
 class _TransactionPinViewState extends State<TransactionPinView> {
-
   late StreamController<ErrorAnimationType> errorController;
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  void onNotificationListener(String? payload) {
+    if (payload != null && payload.isNotEmpty) {}
+  }
+
+  late final LocalNotificationService service;
+  void listenToNotification() {
+    service.onNotificationClick.stream.listen(onNotificationListener);
+  }
 
   String currentText = "";
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    service = LocalNotificationService();
+    service.initialize();
+    listenToNotification();
     super.initState();
     errorController = StreamController<ErrorAnimationType>();
   }
+
   @override
   Widget build(BuildContext context) {
+    final evs = context.watch<EvsPayViewModel>();
+    final authProvider = context.watch<AuthenticationProvider>();
+
     return Scaffold(
       backgroundColor: ColorManager.whiteColor,
-      appBar: evsPayCustomAppBar(
-          context, AppStrings.back,
-      leadingTap: (){
-            Navigator.pop(context);
+      appBar: evsPayCustomAppBar(context, AppStrings.back, leadingTap: () {
+        Navigator.pop(context);
       }),
-      body: SafeArea(child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: AppSize.s73.h,),
+      body: SafeArea(
+          child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: AppSize.s40.h,
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(left: AppSize.s25.w, right: AppSize.s25.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: AppSize.s287.w,
+                          child: const CustomTextWithLineHeight(
+                            text: 'Transaction Details',
+                            textColor: ColorManager.blackTextColor,
+                            fontSize: FontSize.s30,
+                            fontWeight: FontWeightManager.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: const [
+                        SizedBox(
+                            child: CustomTextWithLineHeight(
+                          text: 'This is a breakdown of your transaction ',
+                          textColor: ColorManager.semiBlackTextColor,
+                          fontWeight: FontWeightManager.regular,
+                          fontSize: FontSize.s14,
+                        )),
+                      ],
+                    ),
 
-            Padding(
-              padding: EdgeInsets.only(
-                  left: AppSize.s30.w, right: AppSize.s30.w),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: AppSize.s287.w,
-                        child: const CustomTextWithLineHeight(
-                          text: AppStrings.transactionPin,
-                          textColor: ColorManager.blackTextColor,
-                          fontSize: FontSize.s30,
-                          fontWeight: FontWeightManager.bold,),),
-                    ],
-                  ),
-                  Row(
-                    children: const [
-                      SizedBox(
-                          child: CustomTextWithLineHeight(
-                            text: AppStrings.enterPinToCompleteTransaction,
-                            textColor: ColorManager.semiBlackTextColor,
-                            fontWeight: FontWeightManager.regular,
-                            fontSize: FontSize.s14,)),
-                    ],
-                  ),
+                    SizedBox(
+                      height: AppSize.s40.h,
+                    ),
+                    SizedBox(
+                      height: 100,
+                      width: double.infinity,
+                      child: Card(
+                        elevation: 0.5,
+                        color: Colors.grey.shade200,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 0, top: 0, right: 0),
+                          child: Stack(
+                            children: [
+                              const Positioned(
+                                top: 11,
+                                left: 8,
+                                child: Text(
+                                  'Id:',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Lexend',
+                                    color: Color(0xff000000),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 12,
+                                right: 8,
+                                child: Text(
+                                  widget.walletAddres,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Lexend',
+                                    color: Color(0xff969696),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Positioned(
+                                left: 8,
+                                top: 35,
+                                child: Text(
+                                  'Amount:',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Lexend',
+                                    color: Color(0xff000000),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 35,
+                                right: 8,
+                                child: Text(
+                                  widget.amount.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Lexend',
+                                    color: Color(0xff312DA3),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Positioned(
+                                left: 8,
+                                top: 60,
+                                child: Text(
+                                  'Description:',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Lexend',
+                                    color: Color(0xff000000),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                right: 8,
+                                top: 60,
+                                child: Text(
+                                  widget.description,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Lexend',
+                                    color: Color(0xff969696),
+                                  ),
+                                ),
+                              ),
+                              // Text(
+                              //   "NGN ${dashboardViewModel.createOfferModel.maxAmount ?? "kay"}",
+                              //   style: const TextStyle(
+                              //     fontSize: 14,
+                              //     fontWeight: FontWeight.w400,
+                              //     fontFamily: 'Lexend',
+                              //     color: Color(0xff8e8e8e),
+                              //   ),
+                              // )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
 
-                  SizedBox(height: AppSize.s40.h,),
+                    const SizedBox(
+                      height: 30,
+                    ),
 
-                  Center(
-                    child: CustomTextWithLineHeight(
-                      text: AppStrings.pin,
+                    CustomTextWithLineHeight(
+                      text: 'Enter Password to conclude trade',
                       textColor: ColorManager.lightTextColor,
                       fontWeight: FontWeightManager.light,
-                      fontSize: FontSize.s15,),
-                  ),
-
-                  PinCodeTextField(
-                    length: 4,
-                    obscureText: true,
-                    keyboardType: TextInputType.none,
-                    animationType: AnimationType.fade,
-                    showCursor: true,
-                    obscuringCharacter: "-",
-                    readOnly: false,
-                    textStyle: getCustomTextStyle(
-                        fontSize: FontSize.s14.sp,
-                        textColor: ColorManager.blackTextColor,
-                        fontWeight: FontWeight.w700),
-                    autoFocus: true,
-                    enableActiveFill: true,
-                    cursorColor: ColorManager.blackTextColor,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                    ],
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      inactiveColor: ColorManager.inactiveInputFieldColor,
-                      errorBorderColor: ColorManager.errorColor,
-                      activeColor: ColorManager.primaryColor,
-                      selectedColor: ColorManager.primaryColor,
-                      borderRadius: BorderRadius.circular(AppSize.s5.r),
-                      fieldHeight: AppSize.s48.h,
-                      selectedFillColor: ColorManager.whiteColor,
-                      inactiveFillColor: ColorManager.whiteColor,
-                      fieldWidth: AppSize.s48.w,
-                      activeFillColor: ColorManager.whiteColor,
+                      fontSize: FontSize.s15,
                     ),
-                    animationDuration: const Duration(milliseconds: 300),
-                    errorAnimationController: errorController,
-                    controller: textEditingController,
-                    onCompleted: (v) async {
-                      openTransactionSuccessfulScreen(context);
-                    },
-                    onChanged: (value) {
-                      // print(value);
-                      setState(() {
-                        currentText = value;
-                      });
-                    },
-                    beforeTextPaste: (text) {
-                      return true;
-                    },
-                    appContext: context,
-                  ),
 
-                  SizedBox(height: AppSize.s50.h,),
-                  CustomElevatedButton(onTap: (){
-                    //  route to confirm transaction screen
-                    openConfirmTransactionPin(context);
-                  }, backgroundColor: ColorManager.primaryColor,
-                      textColor: ColorManager.blackTextColor,
-                      title: AppStrings.send.toUpperCase()),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        enabled: true,
+                        errorStyle: TextStyle(color: Colors.red),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 1.0),
+                        ),
+                        hintText: 'Enter Password',
+                      ),
+                      controller: passwordController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'please enter password';
+                        }
+                        if (value.length < 8) {
+                          return 'password should not be less than 8 characters';
+                        }
+                        return null;
+                      },
+                    ),
 
+                    // S
+                    SizedBox(
+                      height: AppSize.s50.h,
+                    ),
+                    CustomElevatedButton(
+                        onTap: () {
+                          //  route to confirm transaction screen
+                          // openConfirmTransactionPin(context);
+                          if (_formKey.currentState!.validate()) {
+                            var ho = evs.sendBTC(
+                                context: context,
+                                walletAdresss: widget.walletAddres.trim(),
+                                amount: widget.amount,
+                                password: passwordController.text,
+                                description: widget.description);
+                          }
+                          service.showNotification(
+                              id: 1,
+                              title: "Send BTC",
+                              body:
+                                  "Dear ${authProvider.userData.user?.username} you have succeessfully sent ${widget.amount} to wallet:id ${widget.walletAddres} ");
+                        },
+                        backgroundColor: ColorManager.primaryColor,
+                        textColor: ColorManager.blackTextColor,
+                        title: AppStrings.send.toUpperCase()),
 
-
-                  SizedBox(height: AppSize.s18.h,)
-                ],
+                    SizedBox(
+                      height: AppSize.s18.h,
+                    )
+                  ],
+                ),
               ),
-            ),
-
-
-
-          ],
+            ],
+          ),
         ),
       )),
     );

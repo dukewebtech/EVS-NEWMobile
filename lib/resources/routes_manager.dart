@@ -1,5 +1,3 @@
-
-
 import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/views/buy_trade_view/buy_trade_view.dart';
 import 'package:evs_pay_mobile/views/chat_screen/chat_screen.dart';
@@ -72,12 +70,13 @@ class Routes {
   static const confirmSellTrade = "/confirm_sell_trade";
   static const chatScreen = "/chat_screen";
   static const settingsScreen = "/settings_screen";
-  static const verifyAccountScreen =  "/verify_account_screen";
-
+  static const verifyAccountScreen = "/verify_account_screen";
 }
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
+    dynamic args = routeSettings.arguments;
+
     switch (routeSettings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
@@ -114,9 +113,11 @@ class RouteGenerator {
       case Routes.takeASelfieScreen:
         return MaterialPageRoute(builder: (_) => const TakeASelfieView());
       case Routes.verificationSubmittedScreen:
-        return MaterialPageRoute(builder: (_) => const VerificationSubmittedView());
+        return MaterialPageRoute(
+            builder: (_) => const VerificationSubmittedView());
       case Routes.phoneVerification:
-        return MaterialPageRoute(builder: (_) => const PhoneNumberVerificationView());
+        return MaterialPageRoute(
+            builder: (_) => const PhoneNumberVerificationView());
       case Routes.emailVerification:
         return MaterialPageRoute(builder: (_) => const EmailVerificationView());
       case Routes.sendTradeView:
@@ -124,9 +125,17 @@ class RouteGenerator {
       case Routes.receiveTradeView:
         return MaterialPageRoute(builder: (_) => const ReceiveTradeView());
       case Routes.transactionPinView:
-        return MaterialPageRoute(builder: (_) => const TransactionPinView());
+        return MaterialPageRoute(
+            builder: (_) => TransactionPinView(
+                  // amount: 0.0,
+                  amount: double.parse(args['amount']),
+                  walletAddres: args['walletAddres'],
+                  // walletAddres: 'as',
+                  description: args['description'],
+                ));
       case Routes.transactionSuccessfulView:
-        return MaterialPageRoute(builder: (_) => const TransactionSuccessfulView());
+        return MaterialPageRoute(
+            builder: (_) => const TransactionSuccessfulView());
       case Routes.viewTradeScreen:
         return MaterialPageRoute(builder: (_) => const ViewOfferView());
       case Routes.createOffer:
@@ -140,13 +149,15 @@ class RouteGenerator {
       case Routes.confirmBuyTrade:
         return MaterialPageRoute(builder: (_) => const ConfirmBuyScreen());
       case Routes.confirmSellTrade:
-        return MaterialPageRoute(builder: (_) => const ConfirmSellTradeScreen());
+        return MaterialPageRoute(
+            builder: (_) => const ConfirmSellTradeScreen());
       case Routes.chatScreen:
         return MaterialPageRoute(builder: (_) => const ChatScreen());
       case Routes.settingsScreen:
         return MaterialPageRoute(builder: (_) => const SettingsView());
       case Routes.verifyAccountScreen:
-        return MaterialPageRoute(builder: (_) => const VerifyAccountToTradeScreen());
+        return MaterialPageRoute(
+            builder: (_) => const VerifyAccountToTradeScreen());
 
       default:
         return undefinedRoute();

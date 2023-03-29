@@ -54,6 +54,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
     final authProvider = context.watch<AuthenticationProvider>();
+    // var hhy = dashboardViewModel.selectedOffer?.maxAmount!.toString();
 
     var terms = dashboardViewModel.selectedDashboardTrade?.terms;
     var btcAmount = dashboardViewModel.btcToBuy;
@@ -64,6 +65,11 @@ class _BuyTradeViewState extends State<BuyTradeView> {
         dashboardViewModel.selectedDashboardTrade?.paymentMethod!.name;
     var amountRecieved =
         nairaAmountController.text.isEmpty ? 0.0 : nairaAmountController.text;
+
+    var limitmax =
+        dashboardViewModel.selectedDashboardTrade?.maxAmount.toString();
+    var limitmin =
+        dashboardViewModel.selectedDashboardTrade?.minAmount.toString();
 
     return Scaffold(
       body: SafeArea(
@@ -88,6 +94,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                   SizedBox(
                     width: AppSize.s3.w,
                   ),
+                  // Text(hhy ?? "mee"),
                   const Text(
                     'Buy BTC',
                     style: TextStyle(
@@ -102,13 +109,13 @@ class _BuyTradeViewState extends State<BuyTradeView> {
             ),
 
             SizedBox(
-              height: 86,
+              height: 95,
               width: double.infinity,
               child: Card(
                 elevation: 0.5,
                 color: Colors.grey.shade200,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 18, right: 16),
+                  padding: const EdgeInsets.only(left: 16, top: 12, right: 16),
                   child: Column(
                     children: [
                       Row(
@@ -151,7 +158,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                             ),
                           ),
                           Text(
-                            profitMargin.toString(),
+                            "$profitMargin/USD",
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
@@ -161,6 +168,41 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                           )
                         ],
                       ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Limit:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff000000),
+                            ),
+                          ),
+                          Text(
+                            "$limitmin - $limitmax",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lexend',
+                              color: Color(0xff312DA3),
+                            ),
+                          )
+                        ],
+                      ),
+                      // Text(
+                      //   "NGN ${dashboardViewModel.createOfferModel.maxAmount ?? "kay"}",
+                      //   style: const TextStyle(
+                      //     fontSize: 14,
+                      //     fontWeight: FontWeight.w400,
+                      //     fontFamily: 'Lexend',
+                      //     color: Color(0xff8e8e8e),
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -196,11 +238,11 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                 onChanged: (value) async {
                   if (value.isNotEmpty) {
                     btcAmount = value;
-                    await dashboardViewModel.getBtcToNairaRate(value);
+                    await dashboardViewModel.getNairaToBtcRate(value);
                     nairaAmountController.text =
-                        dashboardViewModel.btcNairaModel == null
+                        dashboardViewModel.nairaToBtc == null
                             ? "0.00"
-                            : dashboardViewModel.btcNairaModel!.data.naira
+                            : dashboardViewModel.nairaToBtc!.data.btc
                                 .toString();
                     setState(() {});
                   } else {
@@ -281,7 +323,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        amountRecieved.toString(),
+                        "${amountRecieved}BTC",
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,

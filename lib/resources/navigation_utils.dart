@@ -89,8 +89,8 @@ void openReceiveTradeScreen(BuildContext context) async{
   Navigator.pushNamed(context, Routes.receiveTradeView);
 }
 
-void openTransactionPinScreen(BuildContext context) async{
-  Navigator.pushNamed(context, Routes.transactionPinView);
+void openTransactionPinScreen(BuildContext context, Map args) async{
+  Navigator.pushNamed(context, Routes.transactionPinView, arguments: args);
 }
 
 void openTransactionSuccessfulScreen(BuildContext context) async{

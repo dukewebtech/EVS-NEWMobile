@@ -245,7 +245,6 @@ class _BuyTradeWidgetState extends State<BuyTradeWidget> {
                                   ),
                                   onPressed: () {
                                     openBuyTradeView(context);
-                                   
                                   },
                                   child: const FittedBox(
                                     child: Text(

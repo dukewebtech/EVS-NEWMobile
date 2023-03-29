@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:evs_pay_mobile/model/offers_model_api.dart';
 import 'package:evs_pay_mobile/model/trades_model_api.dart';
 import 'package:evs_pay_mobile/model/trades_on_offer_model.dart';
 import 'package:evs_pay_mobile/model/transaction_history_api_model.dart';
 import 'package:evs_pay_mobile/model/user_model/api_payment_method_model.dart';
 import 'package:evs_pay_mobile/resources/ednpoints.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/loading_indicator.dart';
 import '../resources/constants/constants.dart';
@@ -395,6 +397,47 @@ class EvsPayViewModel extends ChangeNotifier {
       notifyListeners();
       Navigator.pop(context);
       print("exception: $e");
+    }
+  }
+
+  //sendBTC
+
+  Future<void> sendBTC(
+      {required BuildContext context,
+      required String walletAdresss,
+      required double amount,
+      required password,
+      required String? description}) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final retrievedAccessToken = prefs.getString(accessToken);
+
+    final body = {
+      "destination_address": walletAdresss,
+      "amount": amount,
+      "password": password,
+      " description": description,
+    };
+    try {
+      // http://evspay.com/api/
+      final response = await http.post(
+          Uri.parse(
+              "http://evspay.com/api/btc/wallets/transactions/transfer-funds"),
+          headers: {
+            'Authorization': 'Bearer $retrievedAccessToken',
+            'Content-Type': 'application/json',
+          },
+          body: json.encode(body));
+      print("send btc response: ${response.body}");
+      if (response.statusCode == 200 || response.statusCode == 201) {}
+    } on SocketException catch (e) {
+      final snackBar = SnackBar(
+          content: Text('Error: $e'), duration: const Duration(seconds: 5));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } catch (e) {
+      print("exception: $e");
+
+      throw e.toString();
     }
   }
 }

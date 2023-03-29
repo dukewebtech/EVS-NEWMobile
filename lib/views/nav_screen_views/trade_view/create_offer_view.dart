@@ -10,6 +10,7 @@ import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
 import 'package:evs_pay_mobile/view_models/nav_screen_view_model.dart';
 import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
 import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
+import 'package:evs_pay_mobile/widgets/custom_text_field_no_border.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -1312,9 +1313,36 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                   SizedBox(
                     height: AppSize.s26.h,
                   ),
-                  const CustomTextWithLineHeight(
-                    text: AppStrings.location,
-                    textColor: ColorManager.blckColor,
+                  Row(
+                    children: [
+                      const CustomTextWithLineHeight(
+                        text: 'Location',
+                        textColor: ColorManager.blckColor,
+                      ),
+                      const SizedBox(
+                        width: 2,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              duration: Duration(seconds: 3),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10))),
+                              elevation: 5,
+                              content: Text(
+                                  'This is the location where you are sending bitcoin from')));
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 3.5),
+                          child: Icon(
+                            Icons.info_outline,
+                            size: 13,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: AppSize.s5.h,
@@ -1326,9 +1354,36 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                   SizedBox(
                     height: AppSize.s13.h,
                   ),
-                  const CustomTextWithLineHeight(
-                    text: '${AppStrings.paymentMethod}:',
-                    textColor: ColorManager.blckColor,
+                  Row(
+                    children: [
+                      const CustomTextWithLineHeight(
+                        text: AppStrings.paymentMethod,
+                        textColor: ColorManager.blckColor,
+                      ),
+                      const SizedBox(
+                        width: 3,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              duration: Duration(seconds: 3),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10))),
+                              elevation: 5,
+                              content: Text(
+                                  'This is the payment method you wnat to use in receiving your funds')));
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 3.5),
+                          child: Icon(
+                            Icons.info_outline,
+                            size: 13,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: AppSize.s4.h,
@@ -1402,32 +1457,140 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                   SizedBox(
                     height: AppSize.s11.h,
                   ),
-                  const CustomTextWithLineHeight(
-                    text: AppStrings.rate,
-                    textColor: ColorManager.blckColor,
+                  Row(
+                    children: [
+                      const CustomTextWithLineHeight(
+                        text: 'Rate',
+                        textColor: ColorManager.blckColor,
+                      ),
+                      const SizedBox(
+                        width: 2,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              duration: Duration(seconds: 3),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10))),
+                              elevation: 5,
+                              content: Text(
+                                  'This is the location where you are sending bitcoin from')));
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 3.5),
+                          child: Icon(
+                            Icons.info_outline,
+                            size: 13,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: AppSize.s4.h,
                   ),
-                  CustomTextField(
-                    controller: rateController,
-                    // hint: AppStrings.rate,
-                    isEnabled: true,
-                    isNumbers: true,
+                  Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: ColorManager.inputFieldBorder),
+                        borderRadius: BorderRadius.circular(AppSize.s3.r)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: CustomTextFieldNoBorder(
+                          controller: rateController,
+                          contentPadding: AppSize.s20,
+                          // hint: AppStrings.amt,
+                        )),
+                        Container(
+                          height: 55,
+                          width: AppSize.s50.w,
+                          alignment: Alignment.center,
+                          child: const CustomTextWithLineHeight(
+                            text: AppStrings.usd,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
+                  // CustomTextField(
+                  //   controller: rateController,
+                  //   // hint: AppStrings.rate,
+                  //   isEnabled: true,
+                  //   isNumbers: true,
+                  // ),
                   SizedBox(
                     height: AppSize.s11.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      CustomTextWithLineHeight(
-                        text: AppStrings.minimum,
-                        textColor: ColorManager.blckColor,
+                    children: [
+                      Row(
+                        children: [
+                          const CustomTextWithLineHeight(
+                            text: AppStrings.minimum,
+                            textColor: ColorManager.blckColor,
+                          ),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      duration: Duration(seconds: 3),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              topLeft: Radius.circular(10))),
+                                      elevation: 5,
+                                      content: Text(
+                                          'This is the location where you are sending bitcoin from')));
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.only(top: 3.5),
+                              child: Icon(
+                                Icons.info_outline,
+                                size: 13,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                      CustomTextWithLineHeight(
-                        text: AppStrings.maximum,
-                        textColor: ColorManager.blckColor,
+                      Row(
+                        children: [
+                          const CustomTextWithLineHeight(
+                            text: AppStrings.maximum,
+                            textColor: ColorManager.blckColor,
+                          ),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      duration: Duration(seconds: 3),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              topLeft: Radius.circular(10))),
+                                      elevation: 5,
+                                      content: Text(
+                                          'This is the location where you are sending bitcoin from')));
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.only(top: 3.5),
+                              child: Icon(
+                                Icons.info_outline,
+                                size: 13,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -1453,9 +1616,36 @@ class _CreateOfferViewState extends State<CreateOfferView> {
                   SizedBox(
                     height: AppSize.s11.h,
                   ),
-                  const CustomTextWithLineHeight(
-                    text: AppStrings.termsOfTrade,
-                    textColor: ColorManager.blckColor,
+                  Row(
+                    children: [
+                      const CustomTextWithLineHeight(
+                        text: AppStrings.termsOfTrade,
+                        textColor: ColorManager.blckColor,
+                      ),
+                      const SizedBox(
+                        width: 2,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              duration: Duration(seconds: 3),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10))),
+                              elevation: 5,
+                              content: Text(
+                                  'This is the location where you are sending bitcoin from')));
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 3.5),
+                          child: Icon(
+                            Icons.info_outline,
+                            size: 13,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: AppSize.s4.h,
