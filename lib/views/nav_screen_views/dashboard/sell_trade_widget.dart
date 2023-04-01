@@ -2,6 +2,7 @@ import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
+import 'package:evs_pay_mobile/views/sell_view/sell_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -220,7 +221,22 @@ class _SellTradeWidgetState extends State<SellTradeWidget> {
                                     backgroundColor: const Color(0xffF4B731),
                                   ),
                                   onPressed: () {
-                                    openSellView(context);
+                                    // openSellView(context);
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) => SellView(
+                                                  maxLimits: offer.maxAmount,
+                                                  minLimits: offer.minAmount!,
+                                                  terms: offer.terms,
+                                                  paymentType: offer
+                                                      .paymentMethod!.name!,
+                                                  amt: offer.profitMargin
+                                                      .toString(),
+                                                  username:
+                                                      "${toBeginningOfSentenceCase(offer.user!.username!)}",
+                                                ))));
                                   },
                                   child: const FittedBox(
                                     child: Text(

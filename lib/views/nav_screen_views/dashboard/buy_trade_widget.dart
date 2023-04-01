@@ -2,6 +2,7 @@ import 'package:evs_pay_mobile/resources/constants/constants.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
+import 'package:evs_pay_mobile/views/buy_trade_view/buy_trade_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -244,7 +245,29 @@ class _BuyTradeWidgetState extends State<BuyTradeWidget> {
                                     backgroundColor: const Color(0xffF4B731),
                                   ),
                                   onPressed: () {
-                                    openBuyTradeView(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) => BuyTradeView(
+                                                  terms: offer.terms,
+                                                  minLimits: offer.minAmount,
+                                                  maxLimits: offer.maxAmount,
+                                                  paymentType:
+                                                      offer.paymentMethod?.name,
+
+                                                  amt: offer.profitMargin
+                                                      .toString(),
+                                                  // paymentType: args['paymentType'],
+                                                  username:
+                                                      "${toBeginningOfSentenceCase(offer.user?.username)}",
+                                                  // limits:
+                                                  //     "NGN ${moneyFormat.format(offer.minAmount!)} - ${moneyFormat.format(offer.maxAmount)}",
+                                                ))));
+
+                                    // openBuyTradeView(context, {
+                                    //   'username': 'today',
+                                    //   // 'paymentType': offer.profitMargin.toString(),
+                                    // });
                                   },
                                   child: const FittedBox(
                                     child: Text(

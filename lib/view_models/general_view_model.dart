@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:evs_pay_mobile/model/send_btc_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -409,6 +410,12 @@ class EvsPayViewModel extends ChangeNotifier {
       required password,
       required String? description}) async {
     final prefs = await SharedPreferences.getInstance();
+    _isLoading = true;
+    _success = false;
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => const LoadingIndicator());
+    notifyListeners();
 
     final retrievedAccessToken = prefs.getString(accessToken);
 
@@ -429,7 +436,33 @@ class EvsPayViewModel extends ChangeNotifier {
           },
           body: json.encode(body));
       print("send btc response: ${response.body}");
-      if (response.statusCode == 200 || response.statusCode == 201) {}
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final sendbtc = SendBTCModel.fromJson(body);
+        _isLoading = false;
+        _success = true;
+        _resMessage = "";
+        notifyListeners();
+        Navigator.pop(context);
+      } else if (response.statusCode == 422) {
+        final res = json.decode(response.body);
+        print("$res");
+        _isLoading = false;
+        _success = false;
+        notifyListeners();
+        Navigator.pop(context);
+        const snackBar = SnackBar(
+            content: Text("Error: sendbtc"), duration: Duration(seconds: 20));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+
+      // Future.delayed(const Duration(seconds: 2), () {
+      //   return showDialog(
+      //       barrierDismissible: false,
+      //       context: context,
+      //       builder: (BuildContext context) =>
+      //           const Text('trade was sucessful'));
+      // });
+      notifyListeners();
     } on SocketException catch (e) {
       final snackBar = SnackBar(
           content: Text('Error: $e'), duration: const Duration(seconds: 5));

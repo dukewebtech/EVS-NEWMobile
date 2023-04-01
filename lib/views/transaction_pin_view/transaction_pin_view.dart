@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class TransactionPinView extends StatefulWidget {
   final String walletAddres, description;
@@ -262,13 +264,58 @@ class _TransactionPinViewState extends State<TransactionPinView> {
                           //  route to confirm transaction screen
                           // openConfirmTransactionPin(context);
                           if (_formKey.currentState!.validate()) {
-                            var ho = evs.sendBTC(
-                                context: context,
-                                walletAdresss: widget.walletAddres.trim(),
-                                amount: widget.amount,
-                                password: passwordController.text,
-                                description: widget.description);
+                            var ho = evs
+                                .sendBTC(
+                                    context: context,
+                                    walletAdresss: widget.walletAddres.trim(),
+                                    amount: widget.amount,
+                                    password: passwordController.text,
+                                    description: widget.description)
+                                .catchError((e) {
+                              showTopSnackBar(
+                                context,
+                                CustomSnackBar.info(
+                                  message: e.toString(),
+                                  backgroundColor: ColorManager.primaryColor,
+                                ),
+                              );
+                            }).then((value) => showDialog<void>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title:
+                                              const Text('Basic dialog title'),
+                                          content: const Text(
+                                              'TRANSACTION SUCCESSFUL'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              style: TextButton.styleFrom(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge,
+                                              ),
+                                              child: const Text('Disable'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            TextButton(
+                                              style: TextButton.styleFrom(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge,
+                                              ),
+                                              child: const Text('Enable'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ));
                           }
+
                           service.showNotification(
                               id: 1,
                               title: "Send BTC",

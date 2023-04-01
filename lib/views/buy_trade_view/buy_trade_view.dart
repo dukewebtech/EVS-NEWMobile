@@ -16,7 +16,22 @@ import '../../widgets/re_usable_widgets.dart';
 // import 'package:timezone/standalone.dart' as tz;
 
 class BuyTradeView extends StatefulWidget {
-  const BuyTradeView({Key? key}) : super(key: key);
+  final dynamic username;
+  final dynamic minLimits;
+  final dynamic maxLimits;
+  final dynamic amt;
+  final dynamic paymentType;
+  final dynamic terms;
+
+  const BuyTradeView(
+      {this.terms,
+      this.maxLimits,
+      this.minLimits,
+      this.amt,
+      this.username,
+      this.paymentType,
+      Key? key})
+      : super(key: key);
   @override
   State<BuyTradeView> createState() => _BuyTradeViewState();
 }
@@ -56,7 +71,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
     final authProvider = context.watch<AuthenticationProvider>();
     // var hhy = dashboardViewModel.selectedOffer?.maxAmount!.toString();
 
-    var terms = dashboardViewModel.selectedDashboardTrade?.terms;
+    // var terms = dashboardViewModel.selectedDashboardTrade?.terms;
     var btcAmount = dashboardViewModel.btcToBuy;
     var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
     dashboardViewModel.selectedDashboardTrade?.profitMargin;
@@ -66,10 +81,13 @@ class _BuyTradeViewState extends State<BuyTradeView> {
     var amountRecieved =
         nairaAmountController.text.isEmpty ? 0.0 : nairaAmountController.text;
 
-    var limitmax =
-        dashboardViewModel.selectedDashboardTrade?.maxAmount.toString();
-    var limitmin =
-        dashboardViewModel.selectedDashboardTrade?.minAmount.toString();
+    var btcRecieved =
+        btcAmountController.text.isEmpty ? 0.0 : btcAmountController.text;
+
+    // var limitmax =
+    // dashboardViewModel.selectedDashboardTrade?.maxAmount.toString();
+    // var limitmin =
+    //     dashboardViewModel.selectedDashboardTrade?.minAmount.toString();
 
     return Scaffold(
       body: SafeArea(
@@ -94,7 +112,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                   SizedBox(
                     width: AppSize.s3.w,
                   ),
-                  // Text(hhy ?? "mee"),
+                  Text(paymentMethod ?? "null"),
                   const Text(
                     'Buy BTC',
                     style: TextStyle(
@@ -109,9 +127,11 @@ class _BuyTradeViewState extends State<BuyTradeView> {
             ),
 
             SizedBox(
-              height: 95,
+              height: 105,
               width: double.infinity,
               child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
                 elevation: 0.5,
                 color: Colors.grey.shade200,
                 child: Padding(
@@ -123,21 +143,21 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                         children: [
                           /// the reason we have using ? is because if we use ! it throughs a null check operator error
                           Text(
-                            userName ?? "UserName",
-                            style: TextStyle(
-                              fontSize: userName == null ? 15 : 20,
+                            widget.username,
+                            style: const TextStyle(
+                              fontSize: 20,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Lexend',
-                              color: const Color(0xff000000),
+                              color: Color(0xff000000),
                             ),
                           ),
                           Text(
-                            paymentMethod ?? "payment method",
-                            style: TextStyle(
-                              fontSize: paymentMethod == null ? 13 : 16,
+                            widget.paymentType,
+                            style: const TextStyle(
+                              fontSize: 16,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Lexend',
-                              color: const Color(0xff969696),
+                              color: Color(0xff969696),
                             ),
                           )
                         ],
@@ -158,7 +178,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                             ),
                           ),
                           Text(
-                            "$profitMargin/USD",
+                            "${widget.amt}/USD",
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
@@ -184,7 +204,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                             ),
                           ),
                           Text(
-                            "$limitmin - $limitmax",
+                            "NGN ${widget.minLimits} - ${widget.maxLimits}",
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
@@ -227,7 +247,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
               width: double.infinity,
               height: 72,
               child: TextFormField(
-                controller: btcAmountController,
+                controller: nairaAmountController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 cursorColor: ColorManager.textFieldColor,
                 autofocus: true,
@@ -239,14 +259,13 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                   if (value.isNotEmpty) {
                     btcAmount = value;
                     await dashboardViewModel.getNairaToBtcRate(value);
-                    nairaAmountController.text =
-                        dashboardViewModel.nairaToBtc == null
-                            ? "0.00"
-                            : dashboardViewModel.nairaToBtc!.data.btc
-                                .toString();
+                    btcAmountController.text = dashboardViewModel.nairaToBtc ==
+                            null
+                        ? "0.00"
+                        : dashboardViewModel.nairaToBtc!.data.btc.toString();
                     setState(() {});
                   } else {
-                    nairaAmountController.text = "";
+                    btcAmountController.text = "";
                     setState(() {});
                   }
                 },
@@ -323,7 +342,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${amountRecieved}BTC",
+                        "${btcRecieved}BTC",
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
@@ -455,7 +474,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
               height: AppSize.s15.h,
             ),
             Text(
-              terms ?? "No Terms of Trade available on this offer",
+              widget.terms,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
@@ -511,7 +530,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                                 context,
                                 CustomSnackBar.info(
                                   message:
-                                      "Amount must be Between ${dashboardViewModel.selectedDashboardTrade!.minAmount} and ${dashboardViewModel.selectedDashboardTrade!.maxAmount}",
+                                      "Amount much be between ${widget.minLimits} and ${widget.maxLimits}",
                                   backgroundColor: ColorManager.primaryColor,
                                 ),
                               );
@@ -532,7 +551,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                                         id: 0,
                                         title: "Buy BTC",
                                         body:
-                                            "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString() ?? ""}BTC at rate of $btcAmount with ${userName ?? "User"}.  ");
+                                            "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${widget.amt ?? ""}BTC at rate of $btcAmount with ${userName ?? "User"}.  ");
                                     print('tapped');
                                     openConfirmBuyTradeView(context);
                                   });
@@ -546,14 +565,14 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                     }),
                   ),
 
-            //na here my own go stop
+            ///na here my own go stop
             // SizedBox(
             //   height: AppSize.s8.h,
             // ),
             // Center(
             //   child: CustomTextWithLineHeight(
             //     text:
-            //         "Buy BTC from ${dashboardViewModel.selectedDashboardTrade!.user!.username!} by ${dashboardViewModel.selectedDashboardTrade!.paymentMethod!.name}",
+            //         "Buy BTC from ${dashboardViewModel.selectedDashboardTrade?.user?.username!} by ${dashboardViewModel.selectedDashboardTrade?.paymentMethod?.name}",
             //     textColor: ColorManager.blckColor,
             //     fontSize: FontSize.s14,
             //   ),
@@ -591,7 +610,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
             //                   padding: EdgeInsets.only(left: AppSize.s8.w),
             //                   child: CustomTextWithLineHeight(
             //                     text:
-            //                         "${dashboardViewModel.selectedDashboardTrade!.profitMargin}",
+            //                         "${dashboardViewModel.selectedDashboardTrade?.profitMargin}",
             //                     textColor: ColorManager.blckColor,
             //                     fontSize: FontSize.s14,
             //                   ),
@@ -637,7 +656,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
             //                   padding: EdgeInsets.only(left: AppSize.s8.w),
             //                   child: CustomTextWithLineHeight(
             //                     text:
-            //                         "${moneyFormat.format(dashboardViewModel.selectedDashboardTrade!.minAmount)}-${moneyFormat.format(dashboardViewModel.selectedDashboardTrade!.maxAmount)} ${dashboardViewModel.selectedDashboardTrade!.currency!.code}",
+            //                         "${moneyFormat.format(dashboardViewModel.selectedDashboardTrade?.minAmount)}-${moneyFormat.format(dashboardViewModel.selectedDashboardTrade?.maxAmount)} ${dashboardViewModel.selectedDashboardTrade?.currency?.code}",
             //                     textColor: ColorManager.blckColor,
             //                     fontSize: FontSize.s14,
             //                   ),
@@ -919,7 +938,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
             //         ),
             //         CustomTextWithLineHeight(
             //           text:
-            //               "${dashboardViewModel.selectedDashboardTrade!.terms}",
+            //               "${dashboardViewModel.selectedDashboardTrade?.terms}",
             //           textColor: ColorManager.arrowColor,
             //           fontWeight: FontWeightManager.regular,
             //         ),

@@ -127,10 +127,8 @@ class RouteGenerator {
       case Routes.transactionPinView:
         return MaterialPageRoute(
             builder: (_) => TransactionPinView(
-                  // amount: 0.0,
                   amount: double.parse(args['amount']),
                   walletAddres: args['walletAddres'],
-                  // walletAddres: 'as',
                   description: args['description'],
                 ));
       case Routes.transactionSuccessfulView:

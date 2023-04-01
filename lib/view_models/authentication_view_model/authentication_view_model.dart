@@ -80,6 +80,7 @@ class AuthenticationProvider extends ChangeNotifier {
         _resMessage = "";
         notifyListeners();
         Navigator.pop(context);
+      
 
         //update device token
         var deviceToken = await Firebase().getToken();
