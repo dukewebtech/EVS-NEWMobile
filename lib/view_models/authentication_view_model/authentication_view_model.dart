@@ -83,7 +83,7 @@ class AuthenticationProvider extends ChangeNotifier {
       
 
         //update device token
-        var deviceToken = await Firebase().getToken();
+        var deviceToken = await FirebaseHandler().getToken();
         await updateProfile({'device_id': deviceToken});
 
         await getWalletAddress(context: context);

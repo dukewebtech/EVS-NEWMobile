@@ -59,6 +59,7 @@ class _SellViewState extends State<SellView> {
     listenToNotification();
     super.initState();
   }
+  
 
   final btcAmountController = TextEditingController();
   final nairaAmountController = TextEditingController();
@@ -93,7 +94,7 @@ class _SellViewState extends State<SellView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ///this is where i start "kaize"
+            ///this is where i start "kaizen"
 
             Padding(
               padding: const EdgeInsets.only(top: 22),
