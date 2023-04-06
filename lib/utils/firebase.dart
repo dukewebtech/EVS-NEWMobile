@@ -51,16 +51,17 @@ class FirebaseHandler {
        * When the app is open and it receives a push notification
        */
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      handleForegroundNotification(message.data);
+
+    
       //implement local notificatinon show
 
       // localNotificationService.showNotification(
-      //     id: 2,
-      //     title: message.messageId.toString(),
-      //     body: message.data.toString());
+      //     id: 2, title: 'kay', body: message.data.toString());
 
-      print('bckground2 called');
-      localNotificationService.showNotificationWithPayload(
-          id: 3, title: 'payload', body: message.data.toString(), payload: '');
+      print('bckground2 called ----------');
+      // localNotificationService.showNotificationWithPayload(
+      //     id: 3, title: 'pay', body: message.data.toString(), payload: '');
     });
 
     //onResume

@@ -69,6 +69,11 @@ class EvsPayViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+   void clear() {
+    _resMessage = "";
+    notifyListeners();
+  }
+
   //GET PAYMENT METHODS
   void getPaymentMethods({
     required BuildContext context,
@@ -437,40 +442,35 @@ class EvsPayViewModel extends ChangeNotifier {
           body: json.encode(body));
       print("send btc response: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final sendbtc = SendBTCModel.fromJson(body);
+        // final sendbtc = SendBTCModel.fromJson(body);
         _isLoading = false;
         _success = true;
-        _resMessage = "";
+        _resMessage = "Successful";
         notifyListeners();
         Navigator.pop(context);
-      } else if (response.statusCode == 422) {
-        final res = json.decode(response.body);
-        print("$res");
+      } else if (response.statusCode == 400) {
+        // final res = json.decode(response.body);
+        // print("$res");
         _isLoading = false;
+         _resMessage = "UnSuccessful";
         _success = false;
         notifyListeners();
         Navigator.pop(context);
-        const snackBar = SnackBar(
-            content: Text("Error: sendbtc"), duration: Duration(seconds: 20));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
-
-      // Future.delayed(const Duration(seconds: 2), () {
-      //   return showDialog(
-      //       barrierDismissible: false,
-      //       context: context,
-      //       builder: (BuildContext context) =>
-      //           const Text('trade was sucessful'));
-      // });
       notifyListeners();
-    } on SocketException catch (e) {
-      final snackBar = SnackBar(
-          content: Text('Error: $e'), duration: const Duration(seconds: 5));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } on SocketException catch (_) {
+      _isLoading = false;
+      _success = false;
+      _resMessage = "Internet connection is not available";
+      notifyListeners();
+      Navigator.pop(context);
     } catch (e) {
-      print("exception: $e");
-
-      throw e.toString();
+      _isLoading = false;
+      _success = false;
+      _resMessage = "Please try again";
+      notifyListeners();
+      Navigator.pop(context);
+      // print("exception: $e");
     }
   }
 }

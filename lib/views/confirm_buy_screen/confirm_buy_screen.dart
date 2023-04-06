@@ -388,7 +388,7 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
                   height: AppSize.s100.h,
                 ),
                 dashboardViewModel.loading
-                    ? const CupertinoActivityIndicator()
+                    ? const Center(child: CupertinoActivityIndicator())
                     : Consumer<DashboardViewModel2>(
                         builder: (ctx, dashboardViewModel, child) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {

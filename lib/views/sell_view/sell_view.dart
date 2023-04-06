@@ -59,7 +59,6 @@ class _SellViewState extends State<SellView> {
     listenToNotification();
     super.initState();
   }
-  
 
   final btcAmountController = TextEditingController();
   final nairaAmountController = TextEditingController();
@@ -464,9 +463,8 @@ class _SellViewState extends State<SellView> {
                                         id: 1,
                                         title: "Sell BTC",
                                         body:
-                                            "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString() ?? ""}BTC at rate of ${dashboardViewModel.singleTradeModel.data!.coinValue} with ${userName ?? "User"}.  ");
+                                            "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString()}BTC at rate of ${dashboardViewModel.singleTradeModel.data!.coinValue} with ${userName ?? "User"}.  ");
 
-                                    print('tapped');
                                     openConfirmSellTradeView(context);
                                   });
                                 });

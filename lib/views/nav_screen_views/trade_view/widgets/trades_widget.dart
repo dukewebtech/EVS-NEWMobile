@@ -26,6 +26,7 @@ class _TradesWidgetState extends State<TradesWidget> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final tradesViewModel =
           Provider.of<TradeViewModel>(context, listen: false);
@@ -37,6 +38,7 @@ class _TradesWidgetState extends State<TradesWidget> {
   @override
   Widget build(BuildContext context) {
     var tradeViewModel = context.watch<TradeViewModel>();
+
     List trades = tradeViewModel.newTrades;
 
     trades = trades.where((trade) {

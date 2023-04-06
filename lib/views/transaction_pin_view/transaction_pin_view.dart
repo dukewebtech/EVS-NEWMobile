@@ -259,6 +259,50 @@ class _TransactionPinViewState extends State<TransactionPinView> {
                     SizedBox(
                       height: AppSize.s50.h,
                     ),
+                    Consumer<EvsPayViewModel>(builder: (ctx, auth, child) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (auth.resMessage != '') {
+                          showTopSnackBar(
+                            context,
+                            CustomSnackBar.info(
+                              message: auth.resMessage,
+                              backgroundColor: ColorManager.primaryColor,
+                            ),
+                          );
+
+                          ///Clear the response message to avoid duplicate
+                          auth.clear();
+                        }
+                      });
+                      return CustomElevatedButton(
+                          onTap: () async {
+                            //  Perform login here
+                            if (_formKey.currentState!.validate()) {
+                              auth.sendBTC(
+                                  context: context,
+                                  walletAdresss: widget.walletAddres.trim(),
+                                  amount: widget.amount,
+                                  password: passwordController.text,
+                                  description: widget.description);
+                              await service.showNotification(
+                                  id: 1,
+                                  title: "Send BTC",
+                                  body:
+                                      "Dear ${authProvider.userData.user?.username} you have succeessfully sent ${widget.amount} to wallet:id ${widget.walletAddres} ");
+                            } else {
+                              showTopSnackBar(
+                                context,
+                                const CustomSnackBar.info(
+                                  message: 'please enter password',
+                                  backgroundColor: ColorManager.primaryColor,
+                                ),
+                              );
+                            }
+                          },
+                          backgroundColor: ColorManager.primaryColor,
+                          textColor: ColorManager.blackTextColor,
+                          title: AppStrings.login.toUpperCase());
+                    }),
                     CustomElevatedButton(
                         onTap: () {
                           //  route to confirm transaction screen

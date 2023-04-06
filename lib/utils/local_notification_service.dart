@@ -1,3 +1,6 @@
+import 'package:evs_pay_mobile/utils/helpers/navigator.dart';
+import 'package:evs_pay_mobile/views/nav_screen_views/trade_view/trade_view_copy.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 // import 'package:timezone/standalone.dart' as tz;
@@ -97,7 +100,8 @@ class LocalNotificationService {
   void onSelectNotification(String? payload) {
     print('payload $payload');
     if (payload != null && payload.isNotEmpty) {
-      onNotificationClick.add(payload);
+      navigator.currentState?.push(MaterialPageRoute(
+          builder: ((context) => const TradeViewCopy(page: 1))));
     }
   }
 }

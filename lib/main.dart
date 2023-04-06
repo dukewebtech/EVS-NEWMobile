@@ -2,6 +2,7 @@ import 'package:evs_pay_mobile/resources/routes_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/utils/firebase.dart';
 import 'package:evs_pay_mobile/utils/helpers/navigator.dart';
+import 'package:evs_pay_mobile/utils/helpers/notification.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/user_profile_view_model.dart';
 import 'package:evs_pay_mobile/view_models/chats_view_model.dart';
@@ -9,7 +10,6 @@ import 'package:evs_pay_mobile/view_models/my_ads_view_model.dart';
 import 'package:evs_pay_mobile/view_models/nav_screen_view_model.dart';
 import 'package:evs_pay_mobile/view_models/trade_view_model.dart';
 import 'package:evs_pay_mobile/view_models/wallet_transaction_view_model.dart';
-import 'package:evs_pay_mobile/views/veriffy_email_view/verify_email_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -21,13 +21,11 @@ import 'view_models/general_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+
+
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // Handle the incoming message
-  print(message.data.toString());
-  navigator.currentState?.push(
-      MaterialPageRoute(builder: ((context) => const VerifyEmailView())));
-  print(
-      '----------------------------handling background----------------------');
 }
 
 void main() async {

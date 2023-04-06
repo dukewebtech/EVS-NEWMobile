@@ -18,7 +18,8 @@ import 'package:provider/provider.dart';
 import '../../../view_models/general_view_model.dart';
 
 class TradeViewCopy extends StatefulWidget {
-  const TradeViewCopy({Key? key}) : super(key: key);
+  final int page;
+  const TradeViewCopy({Key? key, this.page = 0}) : super(key: key);
 
   @override
   State<TradeViewCopy> createState() => _TradeViewCopyState();
@@ -32,8 +33,9 @@ class _TradeViewCopyState extends State<TradeViewCopy> {
 
   @override
   void initState() {
+    
     super.initState();
-    changeAll = 0;
+    changeAll = widget.page;
   }
 
   @override
