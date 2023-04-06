@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:evs_pay_mobile/model/send_btc_model.dart';
+import 'package:evs_pay_mobile/views/nav_screen_views/wallet/wallet_view.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,7 +69,7 @@ class EvsPayViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-   void clear() {
+  void clear() {
     _resMessage = "";
     notifyListeners();
   }
@@ -443,16 +443,20 @@ class EvsPayViewModel extends ChangeNotifier {
       print("send btc response: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         // final sendbtc = SendBTCModel.fromJson(body);
+        final res = json.decode(response.body);
+        print(res);
         _isLoading = false;
         _success = true;
         _resMessage = "Successful";
         notifyListeners();
         Navigator.pop(context);
-      } else if (response.statusCode == 400) {
-        // final res = json.decode(response.body);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const WalletView()));
+      } else if (response.statusCode == 400 || response.statusCode == 402) {
+        final res = json.decode(response.body);
         // print("$res");
         _isLoading = false;
-         _resMessage = "UnSuccessful";
+        _resMessage = res["message"];
         _success = false;
         notifyListeners();
         Navigator.pop(context);
@@ -467,7 +471,7 @@ class EvsPayViewModel extends ChangeNotifier {
     } catch (e) {
       _isLoading = false;
       _success = false;
-      _resMessage = "Please try again";
+      _resMessage = e.toString();
       notifyListeners();
       Navigator.pop(context);
       // print("exception: $e");

@@ -2,7 +2,6 @@ import 'package:evs_pay_mobile/resources/routes_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/utils/firebase.dart';
 import 'package:evs_pay_mobile/utils/helpers/navigator.dart';
-import 'package:evs_pay_mobile/utils/helpers/notification.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/user_profile_view_model.dart';
 import 'package:evs_pay_mobile/view_models/chats_view_model.dart';
@@ -20,8 +19,6 @@ import 'view_models/dashboard_view_model.dart';
 import 'view_models/general_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
-
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -49,7 +46,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => WalletViewModel()),
     ChangeNotifierProvider(create: (_) => TradeViewModel()),
     ChangeNotifierProvider(create: (_) => ChatsViewModel()),
-    ChangeNotifierProvider(create: (_) => DashboardViewModel2()),
+    ChangeNotifierProvider(create: (context) => DashboardViewModel2()),
     ChangeNotifierProvider(create: (_) => NavScreenViewModel()),
   ], child: const MyApp()));
 

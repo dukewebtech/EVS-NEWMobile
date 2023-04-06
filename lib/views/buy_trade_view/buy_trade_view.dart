@@ -63,8 +63,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
   }
 
   String btcAmount = "0.0";
-  String lorem =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ";
+
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
@@ -114,7 +113,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                   ),
                   Text(paymentMethod ?? "null"),
                   const Text(
-                    'Buy BTC',
+                    'Buy BTC ',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -511,21 +510,25 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                       });
                       return CustomElevatedButton(
                           onTap: () async {
+                            final minAmount = widget.minLimits;
+                            final maxAmount = widget.maxLimits;
                             // print('tappeds');
                             if (double.parse(nairaAmountController.text
                                             .trim()
                                             .isEmpty
                                         ? "0.0"
                                         : nairaAmountController.text.trim()) <
-                                    dashboardViewModel
-                                        .selectedDashboardTrade!.minAmount ||
+                                    // dashboardViewModel
+                                    //     .selectedDashboardTrade!.minAmount
+                                    minAmount ||
                                 double.parse(nairaAmountController.text
                                             .trim()
                                             .isEmpty
                                         ? "0.0"
                                         : nairaAmountController.text.trim()) >
-                                    dashboardViewModel
-                                        .selectedDashboardTrade!.maxAmount) {
+                                    // dashboardViewModel
+                                    //     .selectedDashboardTrade!.maxAmount
+                                    maxAmount) {
                               showTopSnackBar(
                                 context,
                                 CustomSnackBar.info(

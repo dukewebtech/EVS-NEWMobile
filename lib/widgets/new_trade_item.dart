@@ -18,12 +18,16 @@ import 'app_texts/custom_text.dart';
 
 class NewTradeItem extends StatelessWidget {
   final NewTradeData trade;
-  const NewTradeItem({Key? key, required this.trade}) : super(key: key);
+  final dynamic test;
+  const NewTradeItem({Key? key, required this.trade, required this.test})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
     final auth = context.watch<AuthenticationProvider>();
+
+    // final last = dashboardViewModel.
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0),
       child: InkWell(
@@ -52,6 +56,7 @@ class NewTradeItem extends StatelessWidget {
             }
           }
         },
+
         child: Container(
           padding: const EdgeInsets.only(
             top: 0,
@@ -74,6 +79,12 @@ class NewTradeItem extends StatelessWidget {
               //   fontSize: FontSize.s6,
               // ),
 
+              test == 0
+                  ? const CircleAvatar(
+                      radius: 4,
+                      backgroundColor: Colors.red,
+                    )
+                  : const SizedBox.shrink(),
               Positioned(
                 left: 0,
                 top: 0,
@@ -87,7 +98,6 @@ class NewTradeItem extends StatelessWidget {
                   ),
                 ),
               ),
-
               Positioned(
                 left: 0,
                 top: 18,

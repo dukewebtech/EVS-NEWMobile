@@ -73,6 +73,8 @@ class _SellViewState extends State<SellView> {
 
 // "${dashboardViewModel.singleTradeModel.data!.coinValue}
 
+    var ky = dashboardViewModel.selectedTrade?.amount;
+    print("this ---------------- $ky ------------------------");
     var btcAmount = dashboardViewModel.btcToBuy;
     var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
     dashboardViewModel.selectedDashboardTrade?.profitMargin;
@@ -428,23 +430,21 @@ class _SellViewState extends State<SellView> {
                           onTap: () async {
                             // final ngnAmount =
                             //     double.parse(nairaAmountController.text);
-                            // final minAmount = double.parse(widget.minLimits);
-                            // final maxAmount = double.parse(widget.maxLimits);
+                            final minAmount = widget.minLimits;
+                            final maxAmount = widget.maxLimits;
 
                             if (double.parse(nairaAmountController.text
                                             .trim()
                                             .isEmpty
                                         ? "0.0"
                                         : nairaAmountController.text.trim()) <
-                                    dashboardViewModel
-                                        .selectedDashboardTrade!.minAmount ||
+                                    minAmount ||
                                 double.parse(nairaAmountController.text
                                             .trim()
                                             .isEmpty
                                         ? "0.0"
                                         : nairaAmountController.text.trim()) >
-                                    dashboardViewModel
-                                        .selectedDashboardTrade!.maxAmount) {
+                                    maxAmount) {
                               showTopSnackBar(
                                 context,
                                 CustomSnackBar.info(

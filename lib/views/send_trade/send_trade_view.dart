@@ -1,18 +1,13 @@
 import 'package:evs_pay_mobile/resources/color_manager.dart';
 import 'package:evs_pay_mobile/resources/font_manager.dart';
 import 'package:evs_pay_mobile/resources/navigation_utils.dart';
-import 'package:evs_pay_mobile/resources/strings_manager.dart';
 import 'package:evs_pay_mobile/resources/value_manager.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
-import 'package:evs_pay_mobile/widgets/app_texts/custom_text.dart';
-import 'package:evs_pay_mobile/widgets/custom_text_field.dart';
 import 'package:evs_pay_mobile/widgets/re_usable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import '../../widgets/custom_text_field_no_border.dart';
 
 class SendTradeView extends StatefulWidget {
   const SendTradeView({Key? key}) : super(key: key);
@@ -39,8 +34,10 @@ class _SendTradeViewState extends State<SendTradeView> {
 
     final authProvider = context.watch<AuthenticationProvider>();
     // var pay = evs.sendBTC(walletAdresss: walletAdresss, amount: amount, password: password, description: description)
-    var amountRecieved =
-        nairaAmountController.text.isEmpty ? 0.0 : nairaAmountController.text;
+    // var amountRecieved =
+    //     nairaAmountController.text.isEmpty ? 0.0 : nairaAmountController.text;
+    var btcRecieved =
+        btcAmountController.text.isEmpty ? 0.0 : btcAmountController.text;
 
     return Scaffold(
       // appBar: evsPayCustomAppBar(
@@ -180,7 +177,7 @@ class _SendTradeViewState extends State<SendTradeView> {
                     }
                     return null;
                   },
-                  controller: btcAmountController,
+                  controller: nairaAmountController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   cursorColor: ColorManager.textFieldColor,
                   autofocus: true,
@@ -193,14 +190,14 @@ class _SendTradeViewState extends State<SendTradeView> {
                     if (value.isNotEmpty) {
                       btcAmount = value;
                       await dashboardViewModel.getNairaToBtcRate(value);
-                      nairaAmountController.text =
+                      btcAmountController.text =
                           dashboardViewModel.nairaToBtc == null
                               ? "0.00"
                               : dashboardViewModel.nairaToBtc!.data.btc
                                   .toString();
                       setState(() {});
                     } else {
-                      nairaAmountController.text = "";
+                      btcAmountController.text = "";
                       setState(() {});
                     }
                   },
@@ -326,7 +323,7 @@ class _SendTradeViewState extends State<SendTradeView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${amountRecieved}BTC",
+                          "${btcRecieved}BTC",
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
@@ -499,128 +496,128 @@ class _SendTradeViewState extends State<SendTradeView> {
 
               /// na here i go stop
 
-              SizedBox(
-                height: AppSize.s24.h,
-              ),
+              // SizedBox(
+              //   height: AppSize.s24.h,
+              // ),
 
-              const CustomTextWithLineHeight(
-                text: AppStrings.recipientBtcAddress,
-                fontSize: FontSize.s12,
-              ),
-              SizedBox(
-                height: AppSize.s8.h,
-              ),
+              // const CustomTextWithLineHeight(
+              //   text: AppStrings.recipientBtcAddress,
+              //   fontSize: FontSize.s12,
+              // ),
+              // SizedBox(
+              //   height: AppSize.s8.h,
+              // ),
 
-              CustomTextField(
-                controller: walletAddressController,
-                hint: AppStrings.walletAddress,
-                contentPadding: AppSize.s20,
-              ),
+              // CustomTextField(
+              //   controller: walletAddressController,
+              //   hint: AppStrings.walletAddress,
+              //   contentPadding: AppSize.s20,
+              // ),
 
-              SizedBox(
-                height: AppSize.s24.h,
-              ),
+              // SizedBox(
+              //   height: AppSize.s24.h,
+              // ),
 
-              SizedBox(
-                height: AppSize.s48.h,
-              ),
-              const CustomTextWithLineHeight(
-                text: AppStrings.amt,
-                fontSize: FontSize.s12,
-              ),
-              SizedBox(
-                height: AppSize.s8.h,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: ColorManager.inputFieldBorder),
-                    borderRadius: BorderRadius.circular(AppSize.s3.r)),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: CustomTextFieldNoBorder(
-                      controller: btcAmountController,
-                      contentPadding: AppSize.s20,
-                      hint: AppStrings.amt,
-                    )),
-                    Container(
-                      width: AppSize.s54.w,
-                      alignment: Alignment.center,
-                      child: const CustomTextWithLineHeight(
-                        text: AppStrings.btc,
-                        fontSize: FontSize.s15,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              // SizedBox(
+              //   height: AppSize.s48.h,
+              // ),
+              // const CustomTextWithLineHeight(
+              //   text: AppStrings.amt,
+              //   fontSize: FontSize.s12,
+              // ),
+              // SizedBox(
+              //   height: AppSize.s8.h,
+              // ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //       border: Border.all(color: ColorManager.inputFieldBorder),
+              //       borderRadius: BorderRadius.circular(AppSize.s3.r)),
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //           child: CustomTextFieldNoBorder(
+              //         controller: btcAmountController,
+              //         contentPadding: AppSize.s20,
+              //         hint: AppStrings.amt,
+              //       )),
+              //       Container(
+              //         width: AppSize.s54.w,
+              //         alignment: Alignment.center,
+              //         child: const CustomTextWithLineHeight(
+              //           text: AppStrings.btc,
+              //           fontSize: FontSize.s15,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
 
-              SizedBox(
-                height: AppSize.s34.h,
-              ),
-              const CustomTextWithLineHeight(
-                text: AppStrings.amt,
-                fontSize: FontSize.s12,
-              ),
-              SizedBox(
-                height: AppSize.s8.h,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: ColorManager.inputFieldBorder),
-                    borderRadius: BorderRadius.circular(AppSize.s3.r)),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: CustomTextFieldNoBorder(
-                      controller: usdAmountController,
-                      contentPadding: AppSize.s20,
-                      hint: AppStrings.amt,
-                    )),
-                    Container(
-                      width: AppSize.s54.w,
-                      alignment: Alignment.center,
-                      child: const CustomTextWithLineHeight(
-                        text: AppStrings.usd,
-                        fontSize: FontSize.s15,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              // SizedBox(
+              //   height: AppSize.s34.h,
+              // ),
+              // const CustomTextWithLineHeight(
+              //   text: AppStrings.amt,
+              //   fontSize: FontSize.s12,
+              // ),
+              // SizedBox(
+              //   height: AppSize.s8.h,
+              // ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //       border: Border.all(color: ColorManager.inputFieldBorder),
+              //       borderRadius: BorderRadius.circular(AppSize.s3.r)),
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //           child: CustomTextFieldNoBorder(
+              //         controller: usdAmountController,
+              //         contentPadding: AppSize.s20,
+              //         hint: AppStrings.amt,
+              //       )),
+              //       Container(
+              //         width: AppSize.s54.w,
+              //         alignment: Alignment.center,
+              //         child: const CustomTextWithLineHeight(
+              //           text: AppStrings.usd,
+              //           fontSize: FontSize.s15,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
 
-              SizedBox(
-                height: AppSize.s34.h,
-              ),
-              const CustomTextWithLineHeight(
-                text: AppStrings.descriptionOptional,
-                fontSize: FontSize.s12,
-              ),
-              SizedBox(
-                height: AppSize.s8.h,
-              ),
+              // SizedBox(
+              //   height: AppSize.s34.h,
+              // ),
+              // const CustomTextWithLineHeight(
+              //   text: AppStrings.descriptionOptional,
+              //   fontSize: FontSize.s12,
+              // ),
+              // SizedBox(
+              //   height: AppSize.s8.h,
+              // ),
 
-              CustomTextField(
-                controller: descriptionController,
-                hint: AppStrings.descriptionOptional,
-                maxLines: 10,
-                contentPadding: AppSize.s20,
-              ),
+              // CustomTextField(
+              //   controller: descriptionController,
+              //   hint: AppStrings.descriptionOptional,
+              //   maxLines: 10,
+              //   contentPadding: AppSize.s20,
+              // ),
 
-              SizedBox(
-                height: AppSize.s58.h,
-              ),
+              // SizedBox(
+              //   height: AppSize.s58.h,
+              // ),
 
-              CustomElevatedButton(
-                  onTap: () {
-                    openTransactionPinScreen(context, {});
-                  },
-                  backgroundColor: ColorManager.primaryColor,
-                  textColor: ColorManager.blackTextColor,
-                  title: AppStrings.clickToContinue),
-              SizedBox(
-                height: AppSize.s50.h,
-              ),
+              // CustomElevatedButton(
+              //     onTap: () {
+              //       openTransactionPinScreen(context, {});
+              //     },
+              //     backgroundColor: ColorManager.primaryColor,
+              //     textColor: ColorManager.blackTextColor,
+              //     title: AppStrings.clickToContinue),
+              // SizedBox(
+              //   height: AppSize.s50.h,
+              // ),
             ],
           ),
         ),

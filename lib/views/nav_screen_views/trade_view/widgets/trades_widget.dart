@@ -128,8 +128,14 @@ class _TradesWidgetState extends State<TradesWidget> {
                           ));
                         }
                       }
+                      final test = index;
+
                       final NewTradeData post = trades[index];
-                      return NewTradeItem(trade: post);
+
+                      return NewTradeItem(
+                        trade: post,
+                        test: test,
+                      );
                     }),
               ));
   }
