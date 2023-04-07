@@ -550,12 +550,12 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                               if (isCreated) {
                                 Future.delayed(const Duration(seconds: 1), () {
                                   setState(() async {
-                                    await service.showNotification(
-                                        id: 0,
-                                        title: "Buy BTC",
-                                        body:
-                                            "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${widget.amt ?? ""}BTC at rate of $btcAmount with ${userName ?? "User"}.  ");
-                                    print('tapped');
+                                    // await service.showNotification(
+                                    //     id: 0,
+                                    //     title: "Buy BTC",
+                                    //     body:
+                                    //         "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${widget.amt ?? ""}BTC at rate of $btcAmount with ${userName ?? "User"}.  ");
+                                    // print('tapped');
                                     openConfirmBuyTradeView(context);
                                   });
                                 });

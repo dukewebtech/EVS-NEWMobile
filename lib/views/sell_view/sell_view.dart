@@ -459,11 +459,11 @@ class _SellViewState extends State<SellView> {
                               if (isCreated) {
                                 Future.delayed(const Duration(seconds: 1), () {
                                   setState(() {
-                                    service.showNotification(
-                                        id: 1,
-                                        title: "Sell BTC",
-                                        body:
-                                            "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString()}BTC at rate of ${dashboardViewModel.singleTradeModel.data!.coinValue} with ${userName ?? "User"}.  ");
+                                    // service.showNotification(
+                                    //     id: 1,
+                                    //     title: "Sell BTC",
+                                    //     body:
+                                    //         "Dear ${authProvider.userData.user?.username}, You have initiated a trade of ${profitMargin.toString()}BTC at rate of ${dashboardViewModel.singleTradeModel.data!.coinValue} with ${userName ?? "User"}.  ");
 
                                     openConfirmSellTradeView(context);
                                   });

@@ -84,8 +84,9 @@ void handleForegroundNotification(Map? payload) {
       payload: 'payload Naviga',
       id: 2,
       title: "Trade Request",
-      body:
-          "You've a new trade request of N${payload!['amount'].toString()} from ${payload['partner_id'].toString()}",
+      body: "You've a new trade request of N${payload!['amount'].toString()} ",
+///i removed the below code becos it was not returning the proper username from mr sams end.
+      // from ${payload['partner_id'].toString()}
     );
 
     // navigator.currentState?.push(MaterialPageRoute(
