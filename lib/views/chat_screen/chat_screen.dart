@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:evs_pay_mobile/model/user_model/chat_model.dart';
 import 'package:evs_pay_mobile/view_models/chats_view_model.dart';
 import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +21,8 @@ import '../../view_models/services/chats_services.dart';
 import '../../widgets/app_texts/custom_text.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/loading_indicator.dart';
+
+import 'package:file_picker/file_picker.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -65,6 +69,42 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  Uint8List? image;
+  String? attachment;
+
+  void _pickFile() async {
+    // opens storage to pick files and the picked file or files
+    // are assigned into result and if no file is chosen result is null.
+    // you can also toggle "allowMultiple" true or false depending on your need
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+    // if no file is picked
+    if (result != null) {
+      var name = result.files.first.name;
+      image = result.files.first.bytes;
+      image = image;
+
+      var imageByte = "data:image/png;base64," + base64Encode(image!);
+      print(name);
+      print(image);
+
+      setState(() {
+        if (name.isEmpty) {
+          name = name;
+        }
+        attachment = imageByte;
+      });
+    }
+    // var file = result.files.first;
+
+    // we will log the name, size and path of the
+    // first picked file (if multiple are selected)
+
+    // print(result.files.first.name);
+    // print(result.files.first.size);
+    // print(result.files.first.path);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -88,6 +128,16 @@ class _ChatScreenState extends State<ChatScreen> {
             // SizedBox(
             //   height: AppSize.s130.h,
             // ),
+
+            GestureDetector(
+              onTap: () {
+                _pickFile();
+                print('tapped');
+              },
+              child: SvgPicture.asset(
+                "assets/images/icons/attachment.svg",
+              ),
+            ),
             Container(
               width: double.infinity,
               padding: EdgeInsets.only(
@@ -317,7 +367,14 @@ class _ChatScreenState extends State<ChatScreen> {
                     padding: EdgeInsets.only(bottom: AppSize.s18.h),
                     child: Row(
                       children: [
-                        SvgPicture.asset("assets/images/icons/attachment.svg"),
+                        GestureDetector(
+                          onTap: () {
+                            _pickFile();
+                          },
+                          child: SvgPicture.asset(
+                            "assets/images/icons/attachment.svg",
+                          ),
+                        ),
                         SizedBox(
                           width: AppSize.s5.w,
                         ),
@@ -367,9 +424,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                       final bool isSent = await context
                                           .read<ChatsViewModel>()
                                           .sendMessage(
-                                              chatController.text,
-                                              dashboardViewModel
-                                                  .tradeReference);
+                                            chatController.text,
+                                            dashboardViewModel.tradeReference,
+                                            attachment,
+                                          );
 
                                       print("Sent: $isSent");
 

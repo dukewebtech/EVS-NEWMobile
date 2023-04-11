@@ -79,12 +79,12 @@ class NewTradeItem extends StatelessWidget {
               //   fontSize: FontSize.s6,
               // ),
 
-              test == 0
-                  ? const CircleAvatar(
-                      radius: 4,
-                      backgroundColor: Colors.red,
-                    )
-                  : const SizedBox.shrink(),
+              // test == 0
+              //     ? const CircleAvatar(
+              //         radius: 4,
+              //         backgroundColor: Colors.red,
+              //       )
+              //     : const SizedBox.shrink(),
               Positioned(
                 left: 0,
                 top: 0,

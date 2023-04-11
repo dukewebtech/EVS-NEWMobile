@@ -254,7 +254,7 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
-  //VERIFY PHONE NUMBER
+  //VERIFY Email
   void verifyEmailInit({
     required String email,
     required BuildContext context,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:evs_pay_mobile/resources/ednpoints.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ class ChatsViewModel extends ChangeNotifier {
 
 
 
-  Future<bool> sendMessage(String chat, String tradeReference) async {
+  Future<bool> sendMessage(String chat, String tradeReference, String? file) async {
     bool isSent = false;
 
     final prefs = await SharedPreferences.getInstance();
@@ -35,7 +36,7 @@ class ChatsViewModel extends ChangeNotifier {
     final String url = baseURL + "trades/$tradeReference/chats/send-message";
     final body = {
       "message": chat,
-      "attachment": ""
+      "attachment": file,
     };
     try {
       final response = await http.post(Uri.parse(url,
