@@ -248,9 +248,9 @@ class _TransactionPinViewState extends State<TransactionPinView> {
                         if (value!.isEmpty) {
                           return 'please enter password';
                         }
-                        if (value.length < 8) {
-                          return 'password should not be less than 8 characters';
-                        }
+                        // if (value.length < 8) {
+                        //   return 'password should not be less than 8 characters';
+                        // }
                         return null;
                       },
                     ),

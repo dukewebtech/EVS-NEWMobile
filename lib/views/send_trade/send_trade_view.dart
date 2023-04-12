@@ -105,7 +105,7 @@ class _SendTradeViewState extends State<SendTradeView> {
                     if (value!.isEmpty) {
                       return 'please enter wallet address';
                     }
-                    if (value.length < 35) {
+                    if (value.length < 25) {
                       return 'enter a valid address';
                     }
                     return null;

@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 
 import '../../resources/ednpoints.dart';
 
-
 class ChatService {
   Future<List<Chats?>> getChats(String token, String tradeReference) async {
     List<Chats> chats = [];

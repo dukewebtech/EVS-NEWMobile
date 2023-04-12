@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:evs_pay_mobile/model/user_model/chat_model.dart';
 import 'package:evs_pay_mobile/view_models/chats_view_model.dart';
 import 'package:evs_pay_mobile/view_models/dashboard_view_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,6 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<List<Chats?>>? _future;
   bool showBottomSheet = true;
   final chatController = TextEditingController();
+  bool ifChat = true;
 
   final ScrollController _scrollController = ScrollController();
 
@@ -69,40 +69,27 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  Uint8List? image;
+  // Uint8List? image;
   String? attachment;
 
   void _pickFile() async {
-    // opens storage to pick files and the picked file or files
-    // are assigned into result and if no file is chosen result is null.
-    // you can also toggle "allowMultiple" true or false depending on your need
-    final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    final result = await FilePicker.platform.pickFiles(
+        lockParentWindow: true, withData: true, allowMultiple: false);
 
-    // if no file is picked
+    print("----------- $result -----------");
+
     if (result != null) {
       var name = result.files.first.name;
-      image = result.files.first.bytes;
-      image = image;
+      final image = result.files.first.bytes;
+      // this.image = image;
 
-      var imageByte = "data:image/png;base64," + base64Encode(image!);
-      print(name);
-      print(image);
+      var imageByte = base64Encode(image!);
+      print("--- converted to base64 $imageByte");
 
       setState(() {
-        if (name.isEmpty) {
-          name = name;
-        }
-        attachment = imageByte;
+        attachment = "data:image/png;base64" + imageByte;
       });
     }
-    // var file = result.files.first;
-
-    // we will log the name, size and path of the
-    // first picked file (if multiple are selected)
-
-    // print(result.files.first.name);
-    // print(result.files.first.size);
-    // print(result.files.first.path);
   }
 
   @override
@@ -129,15 +116,6 @@ class _ChatScreenState extends State<ChatScreen> {
             //   height: AppSize.s130.h,
             // ),
 
-            GestureDetector(
-              onTap: () {
-                _pickFile();
-                print('tapped');
-              },
-              child: SvgPicture.asset(
-                "assets/images/icons/attachment.svg",
-              ),
-            ),
             Container(
               width: double.infinity,
               padding: EdgeInsets.only(
@@ -320,12 +298,20 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           AppSize.s12.r)),
-                                              child: CustomTextNoOverFlow(
-                                                text: chat?.message,
-                                                fontSize: FontSize.s12,
-                                                textColor:
-                                                    ColorManager.blckColor,
-                                              ),
+                                              child: ifChat
+                                                  ? CustomTextNoOverFlow(
+                                                      text: chat?.message,
+                                                      fontSize: FontSize.s12,
+                                                      textColor: ColorManager
+                                                          .blckColor,
+                                                    )
+                                                  : SizedBox(
+                                                      height: 50,
+                                                      width: 50,
+                                                      child: Image.network(chat!
+                                                          .attachment
+                                                          .toString()),
+                                                    ),
                                             ),
                                           ],
                                         ),
@@ -426,7 +412,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                           .sendMessage(
                                             chatController.text,
                                             dashboardViewModel.tradeReference,
-                                            attachment,
+                                            attachment!,
                                           );
 
                                       print("Sent: $isSent");
