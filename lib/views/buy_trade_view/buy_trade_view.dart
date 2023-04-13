@@ -68,12 +68,13 @@ class _BuyTradeViewState extends State<BuyTradeView> {
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
     final authProvider = context.watch<AuthenticationProvider>();
+
     // var hhy = dashboardViewModel.selectedOffer?.maxAmount!.toString();
 
     // var terms = dashboardViewModel.selectedDashboardTrade?.terms;
     var btcAmount = dashboardViewModel.btcToBuy;
     var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
-    dashboardViewModel.selectedDashboardTrade?.profitMargin;
+    // dashboardViewModel.selectedDashboardTrade?.profitMargin;
     var userName = dashboardViewModel.selectedDashboardTrade?.user!.username!;
     var paymentMethod =
         dashboardViewModel.selectedDashboardTrade?.paymentMethod!.name;
@@ -82,6 +83,8 @@ class _BuyTradeViewState extends State<BuyTradeView> {
 
     var btcRecieved =
         btcAmountController.text.isEmpty ? 0.0 : btcAmountController.text;
+    // var init = dashboardViewModel.initTrade(nairaAmountController.text);
+    // print(" --------------------- ${init.toString()} ------------------");
 
     // var limitmax =
     // dashboardViewModel.selectedDashboardTrade?.maxAmount.toString();

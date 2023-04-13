@@ -27,8 +27,10 @@ class _BuyTradeWidgetState extends State<BuyTradeWidget> {
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+    // var userName = dashboardViewModel.singleTradeModel.data!.partner!.lastName;
 
     final authProvider = context.watch<AuthenticationProvider>();
+
     if (dashboardViewModel.buyTrades.isEmpty) {
       if (dashboardViewModel.loading) {
         return const Scaffold(

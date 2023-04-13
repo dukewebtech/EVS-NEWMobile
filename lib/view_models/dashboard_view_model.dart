@@ -63,7 +63,6 @@ class DashboardViewModel2 extends ChangeNotifier {
   List<DashboardTradeData> _filteredTrades = [];
   List<DashboardTradeData> get filteredTrades => _filteredTrades;
 
-  DashboardTradeData? _selectedDashboardTrade;
   TradeData? _selectedTrade;
   TradeData? get selectedTrade => _selectedTrade;
 
@@ -84,6 +83,7 @@ class DashboardViewModel2 extends ChangeNotifier {
 
   List<DashboardTradeData> get buyTrades => _buyTrades;
 
+  DashboardTradeData? _selectedDashboardTrade;
   DashboardTradeData? get selectedDashboardTrade => _selectedDashboardTrade;
 
   //NEW
@@ -283,7 +283,7 @@ class DashboardViewModel2 extends ChangeNotifier {
     try {
       final response = await http.post(
           Uri.parse(
-            "http://evspay.com/api/offers/${_selectedDashboardTrade!.reference}/trades/init",
+            "http://evspay.com/api/offers/${_selectedDashboardTrade?.reference}/trades/init",
           ),
           headers: {
             'Authorization': 'Bearer $retrievedAccessToken',
@@ -316,7 +316,7 @@ class DashboardViewModel2 extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      print("error --> $e");
+      print("kay error --> $e");
       _loading = false;
       _error = true;
       notifyListeners();

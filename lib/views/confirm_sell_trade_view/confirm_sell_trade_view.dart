@@ -21,7 +21,6 @@ import '../../resources/color_manager.dart';
 import '../../resources/value_manager.dart';
 import '../../view_models/dashboard_view_model.dart';
 
-
 class ConfirmSellTradeScreen extends StatefulWidget {
   const ConfirmSellTradeScreen({Key? key}) : super(key: key);
 

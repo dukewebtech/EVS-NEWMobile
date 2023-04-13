@@ -64,8 +64,25 @@ class _SellViewState extends State<SellView> {
   final nairaAmountController = TextEditingController();
 
   String btcAmount = "0.0";
+
+  @override
+  void dispose() {
+    super.dispose();
+    nairaAmountController.dispose();
+    btcAmountController.dispose();
+    widget.amt;
+    widget.username;
+    widget.terms;
+    widget.minLimits;
+    widget.maxLimits;
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (mounted) {
+      setState(() {});
+    }
+
     final dashboardViewModel = context.watch<DashboardViewModel2>();
 
     final authProvider = context.watch<AuthenticationProvider>();
@@ -73,7 +90,8 @@ class _SellViewState extends State<SellView> {
 
 // "${dashboardViewModel.singleTradeModel.data!.coinValue}
 
-    var ky = dashboardViewModel.selectedTrade?.amount;
+    var ky = dashboardViewModel.selectedDashboardTrade?.maxAmount;
+    var my = dashboardViewModel.selectedDashboardTrade?.minAmount;
     print("this ---------------- $ky ------------------------");
     var btcAmount = dashboardViewModel.btcToBuy;
     var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
@@ -125,6 +143,9 @@ class _SellViewState extends State<SellView> {
                 ],
               ),
             ),
+
+            Text(ky.toString()),
+            Text(my.toString()),
             SizedBox(
               height: 100,
               width: double.infinity,

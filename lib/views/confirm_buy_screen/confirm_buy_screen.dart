@@ -36,6 +36,9 @@ class _ConfirmBuyScreenState extends State<ConfirmBuyScreen> {
   @override
   Widget build(BuildContext context) {
     final dashboardViewModel = context.watch<DashboardViewModel2>();
+    var tradeRef = dashboardViewModel.singleTradeModel.data!.reference;
+    // var userName = dashboardViewModel.singleTradeModel.data!.partner!.lastName;
+    print("this is the single trade ref ${tradeRef.toString()}");
     final auth = context.watch<AuthenticationProvider>();
     return Scaffold(
       body: SafeArea(
