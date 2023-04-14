@@ -27,12 +27,11 @@ class _TradesWidgetState extends State<TradesWidget> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final tradesViewModel =
-          Provider.of<TradeViewModel>(context, listen: false);
-      tradesViewModel.pageNumber = 0;
-      tradesViewModel.newFetchTrades();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    final tradesViewModel = Provider.of<TradeViewModel>(context, listen: false);
+    tradesViewModel.pageNumber = 0;
+    tradesViewModel.newFetchTrades();
+    // });
   }
 
   @override

@@ -16,6 +16,7 @@ import '../../widgets/re_usable_widgets.dart';
 // import 'package:timezone/standalone.dart' as tz;
 
 class BuyTradeView extends StatefulWidget {
+  final dynamic ref;
   final dynamic username;
   final dynamic minLimits;
   final dynamic maxLimits;
@@ -24,7 +25,8 @@ class BuyTradeView extends StatefulWidget {
   final dynamic terms;
 
   const BuyTradeView(
-      {this.terms,
+      {this.ref,
+      this.terms,
       this.maxLimits,
       this.minLimits,
       this.amt,
@@ -547,8 +549,9 @@ class _BuyTradeViewState extends State<BuyTradeView> {
                                   nairaAmountController.text);
                               print(
                                   "BTC Amount: ${nairaAmountController.text}");
-                              final isCreated = await dashboardViewModel
-                                  .initTrade(nairaAmountController.text);
+                              final isCreated =
+                                  await dashboardViewModel.initTrade(
+                                      nairaAmountController.text, widget.ref);
 
                               if (isCreated) {
                                 Future.delayed(const Duration(seconds: 1), () {
@@ -662,6 +665,9 @@ class _BuyTradeViewState extends State<BuyTradeView> {
             //                   padding: EdgeInsets.only(left: AppSize.s8.w),
             //                   child: CustomTextWithLineHeight(
             //                     text:
+
+            //                         // "${dashboardViewModel.selectedDashboardTrade?.minAmount}",
+
             //                         "${moneyFormat.format(dashboardViewModel.selectedDashboardTrade?.minAmount)}-${moneyFormat.format(dashboardViewModel.selectedDashboardTrade?.maxAmount)} ${dashboardViewModel.selectedDashboardTrade?.currency?.code}",
             //                     textColor: ColorManager.blckColor,
             //                     fontSize: FontSize.s14,

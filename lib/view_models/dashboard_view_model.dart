@@ -268,7 +268,7 @@ class DashboardViewModel2 extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> initTrade(String nairaAmount) async {
+  Future<bool> initTrade(String nairaAmount, String reference) async {
     bool isInitiated = false;
     _isSuccessful = false;
 
@@ -283,7 +283,9 @@ class DashboardViewModel2 extends ChangeNotifier {
     try {
       final response = await http.post(
           Uri.parse(
-            "http://evspay.com/api/offers/${_selectedDashboardTrade?.reference}/trades/init",
+            "http://evspay.com/api/offers/$reference/trades/init",
+
+            // "http://evspay.com/api/offers/${_selectedDashboardTrade?.reference}/trades/init",
           ),
           headers: {
             'Authorization': 'Bearer $retrievedAccessToken',
@@ -297,7 +299,7 @@ class DashboardViewModel2 extends ChangeNotifier {
 
       final decodedResponse = json.decode(response.body);
 
-      print(decodedResponse);
+      print('this is the response  for initTrade: $decodedResponse');
 
       _loading = false;
       notifyListeners();

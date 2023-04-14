@@ -1,3 +1,4 @@
+import 'package:evs_pay_mobile/model/dashboard_trade_model.dart';
 import 'package:evs_pay_mobile/view_models/authentication_view_model/authentication_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ import '../../widgets/re_usable_widgets.dart';
 import 'package:evs_pay_mobile/utils/local_notification_service.dart';
 
 class SellView extends StatefulWidget {
+    final dynamic ref;
+
   final dynamic username;
   final dynamic minLimits;
   final dynamic maxLimits;
@@ -26,7 +29,9 @@ class SellView extends StatefulWidget {
   final dynamic paymentType;
   final dynamic terms;
   const SellView(
-      {this.username,
+      {
+        this.ref,
+        this.username,
       this.maxLimits,
       this.minLimits,
       this.amt,
@@ -79,12 +84,12 @@ class _SellViewState extends State<SellView> {
 
   @override
   Widget build(BuildContext context) {
-    if (mounted) {
-      setState(() {});
-    }
+    // if (mounted) {
+    //   setState(() {});
+    // }
 
     final dashboardViewModel = context.watch<DashboardViewModel2>();
-
+// final List<DashboardTradeData> offer =dashboardViewModel.trades;
     final authProvider = context.watch<AuthenticationProvider>();
     final value = dashboardViewModel.buyTrades;
 
@@ -92,6 +97,8 @@ class _SellViewState extends State<SellView> {
 
     var ky = dashboardViewModel.selectedDashboardTrade?.maxAmount;
     var my = dashboardViewModel.selectedDashboardTrade?.minAmount;
+   
+    // var ty = dashboardViewModel.initTradeData.data?.coin?.name;
     print("this ---------------- $ky ------------------------");
     var btcAmount = dashboardViewModel.btcToBuy;
     var profitMargin = dashboardViewModel.selectedDashboardTrade?.profitMargin;
@@ -143,7 +150,7 @@ class _SellViewState extends State<SellView> {
                 ],
               ),
             ),
-
+            // Text(ty ?? "null"),
             Text(ky.toString()),
             Text(my.toString()),
             SizedBox(
@@ -392,7 +399,12 @@ class _SellViewState extends State<SellView> {
             SizedBox(
               height: AppSize.s30.h,
             ),
-
+            // Text(dashboardViewModel.singleTradeModel.data!.offer!.profitMargin
+            //     .toString()),
+            // Text(dashboardViewModel.singleTradeModel.data!.offer!.minAmount
+            //     .toString()),
+            // Text(dashboardViewModel.singleTradeModel.data!.offer!.terms
+            //     .toString()),
             // const Center(child: CustomText(text: AppStrings.secureEscrow)),
             // const Center(
             //     child: CustomText(
@@ -476,7 +488,7 @@ class _SellViewState extends State<SellView> {
                               );
                             } else {
                               final isCreated = await dashboardViewModel
-                                  .initTrade(nairaAmountController.text);
+                                  .initTrade(nairaAmountController.text, widget.ref);
                               if (isCreated) {
                                 Future.delayed(const Duration(seconds: 1), () {
                                   setState(() {
@@ -497,8 +509,11 @@ class _SellViewState extends State<SellView> {
                           title: AppStrings.proceedToSell),
                     );
                   }),
+            Text(dashboardViewModel.selectedDashboardTrade?.maxAmount
+                    .toString() ??
+                "null")
 
-            ///this where i ed
+            ///this where i end
             // SizedBox(
             //   height: AppSize.s42.h,
             // ),

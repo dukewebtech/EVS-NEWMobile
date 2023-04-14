@@ -166,6 +166,18 @@ class _ConfirmSellTradeScreenState extends State<ConfirmSellTradeScreen> {
                                 item: time.min == null || time.min! < 10
                                     ? "0"
                                     : time.min!.toString()[1]),
+                            SvgPicture.asset("assets/images/clock_time.svg"),
+                            ExpiryDateWidget(
+                                item: time.sec == null || time.sec! < 10
+                                    ? "0"
+                                    : time.sec.toString()[0]),
+                            SizedBox(
+                              width: AppSize.s4.w,
+                            ),
+                            ExpiryDateWidget(
+                                item: time.sec == null || time.sec! < 10
+                                    ? "0"
+                                    : time.sec!.toString()[1]),
                           ],
                         );
                       },

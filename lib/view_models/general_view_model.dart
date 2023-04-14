@@ -451,10 +451,7 @@ class EvsPayViewModel extends ChangeNotifier {
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
-
-        // Navigator.pu
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => const WalletView()));
+        
       } else if (response.statusCode == 400 || response.statusCode == 402) {
         final res = json.decode(response.body);
         // print("$res");

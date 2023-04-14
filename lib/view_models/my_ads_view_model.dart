@@ -161,7 +161,7 @@ class MyAdsViewModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final retrievedAccessToken = prefs.getString(accessToken);
     _loading = true;
-    print('i mounted here');
+    
     notifyListeners();
     final body = {
       "location": _selectedOffer!.location,

@@ -227,6 +227,7 @@ class _SellTradeWidgetState extends State<SellTradeWidget> {
                                         context,
                                         MaterialPageRoute(
                                             builder: ((context) => SellView(
+                                                  ref: offer.reference,
                                                   maxLimits: offer.maxAmount,
                                                   minLimits: offer.minAmount!,
                                                   terms: offer.terms,

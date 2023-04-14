@@ -89,7 +89,6 @@ class AuthenticationProvider extends ChangeNotifier {
         await getWalletAddress(context: context);
         openNavScreen(context);
 
-        print('e tapp me o');
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("$res");

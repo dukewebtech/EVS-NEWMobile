@@ -251,6 +251,8 @@ class _BuyTradeWidgetState extends State<BuyTradeWidget> {
                                         context,
                                         MaterialPageRoute(
                                             builder: ((context) => BuyTradeView(
+                                              ref: offer.reference,
+                                              
                                                   terms: offer.terms,
                                                   minLimits: offer.minAmount,
                                                   maxLimits: offer.maxAmount,
