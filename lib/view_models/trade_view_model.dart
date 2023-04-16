@@ -198,7 +198,7 @@ class TradeViewModel extends ChangeNotifier {
       print("List length: ${postList!.length}");
       _isLastPage = (postList.length < numberOfPostsPerRequest);
       _loading = false;
-      _newPageNumber = _newPageNumber + 1;
+      // _newPageNumber = _newPageNumber + 1;
       _newTrades.addAll(
           postList.where((trade) => trade.status != "COMPLETED").toList());
       notifyListeners();

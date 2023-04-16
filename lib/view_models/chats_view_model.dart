@@ -15,7 +15,7 @@ class ChatsViewModel extends ChangeNotifier {
   }
 
   Future<bool> sendMessage(
-      String chat, String tradeReference, String file) async {
+      String chat, String tradeReference, String? file) async {
     bool isSent = false;
 
     final prefs = await SharedPreferences.getInstance();
@@ -35,6 +35,8 @@ class ChatsViewModel extends ChangeNotifier {
             'Content-Type': 'application/json',
           },
           body: json.encode(body));
+
+      print("-------> chat was called");
 
       print(
           "Send chat response: ${response.body} Status code: ${response.statusCode}");

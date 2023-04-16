@@ -83,11 +83,12 @@ class _ChatScreenState extends State<ChatScreen> {
       final image = result.files.first.bytes;
       // this.image = image;
 
-      var imageByte = base64Encode(image!);
+      var imageByte = base64Encode(image!).trim();
       print("--- converted to base64 $imageByte");
 
       setState(() {
-        attachment = "data:image/png;base64" + imageByte;
+        attachment = "data:image/png;base64," + imageByte;
+        print("------> $attachment");
       });
     }
   }
@@ -309,7 +310,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       height: 50,
                                                       width: 50,
                                                       child: Image.network(chat!
-                                                          .attachment
+                                                          .attachment!.file
                                                           .toString()),
                                                     ),
                                             ),
@@ -410,10 +411,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                       final bool isSent = await context
                                           .read<ChatsViewModel>()
                                           .sendMessage(
-                                            chatController.text,
-                                            dashboardViewModel.tradeReference,
-                                            attachment!,
-                                          );
+                                              chatController.text,
+                                              dashboardViewModel.tradeReference,
+                                              attachment);
 
                                       print("Sent: $isSent");
 
@@ -421,10 +421,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                         setState(() {
                                           chatController.text = "";
                                           ChatService().getChats(
-                                              authProvider
-                                                  .userData.accessToken!,
-                                              dashboardViewModel
-                                                  .tradeReference);
+                                            authProvider.userData.accessToken!,
+                                            dashboardViewModel.tradeReference,
+                                          );
                                         });
                                       }
                                     }

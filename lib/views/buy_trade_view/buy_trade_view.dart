@@ -79,7 +79,7 @@ class _BuyTradeViewState extends State<BuyTradeView> {
     // dashboardViewModel.selectedDashboardTrade?.profitMargin;
     var userName = dashboardViewModel.selectedDashboardTrade?.user!.username!;
     var paymentMethod =
-        dashboardViewModel.selectedDashboardTrade?.paymentMethod!.name;
+        dashboardViewModel.selectedDashboardTrade?.paymentMethod?.name;
     var amountRecieved =
         nairaAmountController.text.isEmpty ? 0.0 : nairaAmountController.text;
 
