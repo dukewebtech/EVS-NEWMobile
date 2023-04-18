@@ -181,6 +181,47 @@ class TradeViewModel extends ChangeNotifier {
     }
   }
 
+  /// i created this method as a test so as to rebuild my trades list automatically "kaizen"
+
+  Future<List<NewTradeData?>> newFetchTradesTest() async {
+    print("Method called $_newTradeUrl");
+    final prefs = await SharedPreferences.getInstance();
+    final retrievedAccessToken = prefs.getString(accessToken);
+    List<NewTradeData> myTrades = [];
+
+    try {
+      final response = await http.get(Uri.parse(_newTradeUrl), headers: {
+        'Authorization': 'Bearer $retrievedAccessToken',
+        'Content-Type': 'application/json',
+      });
+      // print("New Trades Fetched: ${response.body}");
+      newTradesModel = newTradeModelFromJson(response.body);
+
+      final responseHere = newTradeModelFromJson(response.body);
+      print("------> List of newTrade $responseHere");
+      print("Here at mapping successful");
+      final postList = responseHere.data;
+      print(postList);
+      print("List length: ${postList!.length}");
+      _isLastPage = (postList.length < numberOfPostsPerRequest);
+      _loading = false;
+      _newPageNumber = _newPageNumber + 1;
+      _newTrades.addAll(
+          postList.where((trade) => trade.status != "COMPLETED").toList());
+      notifyListeners();
+    } catch (e) {
+      print("error --> $e");
+      _loading = false;
+      _error = true;
+      notifyListeners();
+    }
+    notifyListeners();
+
+    return _newTrades;
+    // myTrades;
+  }
+
+  /// this is the orignal newTrades method "kaizen"
   Future<void> newFetchTrades() async {
     print("Method called $_newTradeUrl");
     final prefs = await SharedPreferences.getInstance();
@@ -195,10 +236,11 @@ class TradeViewModel extends ChangeNotifier {
       final responseHere = newTradeModelFromJson(response.body);
       print("Here at mapping successful");
       final postList = responseHere.data;
+      print("postList -----> $postList");
       print("List length: ${postList!.length}");
       _isLastPage = (postList.length < numberOfPostsPerRequest);
       _loading = false;
-      // _newPageNumber = _newPageNumber + 1;
+      _newPageNumber = _newPageNumber + 1;
       _newTrades.addAll(
           postList.where((trade) => trade.status != "COMPLETED").toList());
       notifyListeners();
