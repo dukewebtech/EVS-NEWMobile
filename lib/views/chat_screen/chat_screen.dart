@@ -36,7 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<List<Chats?>>? _future;
   bool showBottomSheet = true;
   final chatController = TextEditingController();
-  bool ifChat = true;
+  // bool ifChat = true;
 
   final ScrollController _scrollController = ScrollController();
 
@@ -53,18 +53,32 @@ class _ChatScreenState extends State<ChatScreen> {
             Provider.of<AuthenticationProvider>(context, listen: false);
         final dashboardViewModel =
             Provider.of<DashboardViewModel2>(context, listen: false);
-        setState(() {
-          _future = getChats(authProvider.userData.accessToken ?? "",
-              dashboardViewModel.tradeReference);
+        if (mounted) {
+          setState(() {
+            _future = getChats(authProvider.userData.accessToken ?? "",
+                dashboardViewModel.tradeReference);
 
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            /// i uncommented the code below because i was having a scrollController error "kaizen"
-            // _scrollController.animateTo(
-            //     _scrollController.position.maxScrollExtent,
-            //     duration: const Duration(milliseconds: 1),
-            //     curve: Curves.fastOutSlowIn);
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              /// i uncommented the code below because i was having a scrollController error "kaizen"
+              // _scrollController.animateTo(
+              //     _scrollController.position.maxScrollExtent,
+              //     duration: const Duration(milliseconds: 1),
+              //     curve: Curves.fastOutSlowIn);
+            });
           });
-        });
+        }
+        // setState(() {
+        //   _future = getChats(authProvider.userData.accessToken ?? "",
+        //       dashboardViewModel.tradeReference);
+
+        //   SchedulerBinding.instance.addPostFrameCallback((_) {
+        //     /// i uncommented the code below because i was having a scrollController error "kaizen"
+        //     // _scrollController.animateTo(
+        //     //     _scrollController.position.maxScrollExtent,
+        //     //     duration: const Duration(milliseconds: 1),
+        //     //     curve: Curves.fastOutSlowIn);
+        //   });
+        // });
       });
     });
   }
@@ -96,7 +110,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    setUpTimedFetch();
+    if (mounted) {
+      setUpTimedFetch();
+    }
   }
 
   @override
@@ -106,7 +122,8 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar:
           evsPayCustomAppBar(context, AppStrings.buyLowerCase, leadingTap: () {
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        Navigator.of(context).pop();
       }, isCenterAlign: true),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -280,40 +297,46 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   : MainAxisAlignment.start,
                                           children: [
                                             Container(
-                                              constraints: BoxConstraints(
-                                                  maxWidth:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.7),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: AppSize.s16.w,
-                                                  vertical: AppSize.s8.h),
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      chat?.direction == "SEND"
-                                                          ? ColorManager
-                                                              .primaryColor
-                                                          : ColorManager
-                                                              .chatCardColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppSize.s12.r)),
-                                              child: ifChat
-                                                  ? CustomTextNoOverFlow(
-                                                      text: chat?.message,
-                                                      fontSize: FontSize.s12,
-                                                      textColor: ColorManager
-                                                          .blckColor,
-                                                    )
-                                                  : SizedBox(
-                                                      height: 50,
-                                                      width: 50,
-                                                      child: Image.network(chat!
-                                                          .attachment!.file
-                                                          .toString()),
-                                                    ),
-                                            ),
+                                                constraints: BoxConstraints(
+                                                    maxWidth:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.7),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: AppSize.s16.w,
+                                                    vertical: AppSize.s8.h),
+                                                decoration: BoxDecoration(
+                                                    color: chat?.direction ==
+                                                            "SEND"
+                                                        ? ColorManager
+                                                            .primaryColor
+                                                        : ColorManager
+                                                            .chatCardColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            AppSize.s12.r)),
+                                                child: chat?.attachment?.file ==
+                                                        null
+                                                    ? CustomTextNoOverFlow(
+                                                        text: chat?.message,
+                                                        fontSize: FontSize.s12,
+                                                        textColor: ColorManager
+                                                            .blckColor,
+                                                      )
+                                                    : const SizedBox.shrink()
+
+                                                //  SizedBox(
+                                                //     height: 150,
+                                                //     width: 150,
+                                                //     child: Image.memory(
+                                                //         UriData.parse(chat
+                                                //                     ?.attachment
+                                                //                     ?.file
+                                                //                 as String)
+                                                //             .contentAsBytes()),
+                                                //   ),
+                                                ),
                                           ],
                                         ),
                                       );

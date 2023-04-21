@@ -26,6 +26,8 @@ class _TradesWidgetState extends State<TradesWidget> {
   @override
   void initState() {
     super.initState();
+    //   tradeViewModel.newFetchTrades(); // Call the function to populate the initial data
+    // _newTradesStreamController.addStream(tradeViewModel.newTradesStream);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final tradesViewModel =
@@ -41,6 +43,8 @@ class _TradesWidgetState extends State<TradesWidget> {
     // tradesViewModel.pageNumber = 0;
     // tradesViewModel.newFetchTrades();
     var tradeViewModel = context.watch<TradeViewModel>();
+
+    List trades = tradeViewModel.newTrades;
 
     /// i tried using a consumer but the list is not still building automaticaly.
 
@@ -151,222 +155,223 @@ class _TradesWidgetState extends State<TradesWidget> {
     // /oringal widget for this page
     // List trades = tradeViewModel.newTrades;
 
-    // trades = trades.where((trade) {
-    //   Map status = <String, List>{
-    //     "allTrades": ['ACTIVE', 'CONFIRMED', 'CANCELLED'],
-    //     "active": ['ACTIVE'],
-    //     "completed": ['COMPLETED'],
-    //     "confirmed": ['CONFIRMED'],
-    //     "disputed": ['DISPUTED'],
-    //     "cancelled": ['CANCELLED'],
-    //   };
+    trades = trades.where((trade) {
+      Map status = <String, List>{
+        "allTrades": ['ACTIVE', 'CONFIRMED', 'CANCELLED'],
+        "active": ['ACTIVE'],
+        "completed": ['COMPLETED'],
+        "confirmed": ['CONFIRMED'],
+        "disputed": ['DISPUTED'],
+        "cancelled": ['CANCELLED'],
+      };
 
-    //   return status[widget.offerType].contains(trade.status);
-    // }).toList();
+      return status[widget.offerType].contains(trade.status);
+    }).toList();
 
-    // if (trades.isEmpty) {
-    //   if (tradeViewModel.loading) {
-    //     return const Center(
-    //         child: Padding(
-    //       padding: EdgeInsets.all(8),
-    //       child: CircularProgressIndicator(),
-    //     ));
-    //   } else if (tradeViewModel.error) {
-    //     return Center(
-    //         child: errorDialog(size: 20, tradeViewModel: tradeViewModel));
-    //   }
-    // }
-    // return Expanded(
-    //     child: trades.isEmpty
-    //         ? Center(
-    //             child: Column(
-    //               children: [
-    //                 SizedBox(
-    //                   height: AppSize.s96.h,
-    //                 ),
-    //                 Center(
-    //                     child:
-    //                         SvgPicture.asset("assets/images/empty_state.svg")),
-    //                 SizedBox(
-    //                   height: AppSize.s49.h,
-    //                 ),
-    //                 const CustomText(
-    //                   text: AppStrings.youHaveNoTrade,
-    //                   textColor: ColorManager.blckColor,
-    //                   fontSize: FontSize.s16,
-    //                 ),
-    //                 SizedBox(
-    //                   height: AppSize.s8.h,
-    //                 ),
-    //                 // SizedBox(
-    //                 //     width: AppSize.s208.w,
-    //                 //     child: const CustomTextNoOverFlow(
-    //                 //         alignment: "center",
-    //                 //         fontSize: FontSize.s13,
-    //                 //         text: AppStrings.transferFundsTo))
-    //               ],
-    //             ),
-    //           )
-    //         : RefreshIndicator(
-    //             onRefresh: () async {
-    //               await tradeViewModel.newFetchTrades();
-    //             },
-    //             child: ListView.builder(
-    //                 itemCount: trades.length + (tradeViewModel.isLastPage ? 0 : 1),
-    //                 itemBuilder: (context, index) {
-    //                   if (index ==
-    //                       trades.length - tradeViewModel.nextPageTrigger) {
-    //                     if (tradeViewModel.newTradesModel!.links!.next !=
-    //                         null) {
-    //                       tradeViewModel.newTradeUrl =
-    //                           tradeViewModel.newTradesModel!.links!.next ?? '';
-    //                       tradeViewModel.newFetchTrades();
-    //                     }
-    //                   }
-    //                   if (index == trades.length) {
-    //                     if (tradeViewModel.error) {
-    //                       return Center(
-    //                           child: errorDialog(
-    //                               size: 13, tradeViewModel: tradeViewModel));
-    //                     } else {
-    //                       return Center(
-    //                           child: Padding(
-    //                         padding:
-    //                             EdgeInsets.symmetric(vertical: AppSize.s300.h),
-    //                         child: const CupertinoActivityIndicator(),
-    //                       ));
-    //                     }
-    //                   }
-    //                   final test = index;
-
-    //                   final NewTradeData post = trades[index];
-
-    //                   return NewTradeItem(
-    //                     trade: post,
-    //                     test: test,
-    //                   );
-    //                 }),
-    //           ));
-// futureBuider part
+    if (trades.isEmpty) {
+      if (tradeViewModel.loading) {
+        return const Center(
+            child: Padding(
+          padding: EdgeInsets.all(8),
+          child: CircularProgressIndicator(),
+        ));
+      } else if (tradeViewModel.error) {
+        return Center(
+            child: errorDialog(size: 20, tradeViewModel: tradeViewModel));
+      }
+    }
     return Expanded(
-      child: FutureBuilder<List<NewTradeData?>>(
-          future: tradeViewModel.newFetchTradesTest(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return const Center(
-                  child: Text(
-                'An error occurred while fetching your trade',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'lexend',
-                  fontSize: 20,
-                  color: Color(0xff303030),
-                  fontWeight: FontWeight.w400,
+        child: trades.isEmpty
+            ? Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: AppSize.s96.h,
+                    ),
+                    Center(
+                        child:
+                            SvgPicture.asset("assets/images/empty_state.svg")),
+                    SizedBox(
+                      height: AppSize.s49.h,
+                    ),
+                    const CustomText(
+                      text: AppStrings.youHaveNoTrade,
+                      textColor: ColorManager.blckColor,
+                      fontSize: FontSize.s16,
+                    ),
+                    SizedBox(
+                      height: AppSize.s8.h,
+                    ),
+                    // SizedBox(
+                    //     width: AppSize.s208.w,
+                    //     child: const CustomTextNoOverFlow(
+                    //         alignment: "center",
+                    //         fontSize: FontSize.s13,
+                    //         text: AppStrings.transferFundsTo))
+                  ],
                 ),
+              )
+            : RefreshIndicator(
+                onRefresh: () async {
+                  await tradeViewModel.newFetchTrades();
+                },
+                child: ListView.builder(
+                    itemCount:
+                        trades.length + (tradeViewModel.isLastPage ? 0 : 1),
+                    itemBuilder: (context, index) {
+                      if (index ==
+                          trades.length - tradeViewModel.nextPageTrigger) {
+                        if (tradeViewModel.newTradesModel!.links!.next !=
+                            null) {
+                          tradeViewModel.newTradeUrl =
+                              tradeViewModel.newTradesModel!.links!.next ?? '';
+                          tradeViewModel.newFetchTrades();
+                        }
+                      }
+                      if (index == trades.length) {
+                        if (tradeViewModel.error) {
+                          return Center(
+                              child: errorDialog(
+                                  size: 13, tradeViewModel: tradeViewModel));
+                        } else {
+                          return Center(
+                              child: Padding(
+                            padding:
+                                EdgeInsets.symmetric(vertical: AppSize.s300.h),
+                            child: const CupertinoActivityIndicator(),
+                          ));
+                        }
+                      }
+                      final test = index;
+
+                      final NewTradeData post = trades[index];
+
+                      return NewTradeItem(
+                        trade: post,
+                        test: test,
+                      );
+                    }),
               ));
-            } else if (snapshot.hasData) {
-              if (snapshot.data == null) {
-                return Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: AppSize.s96.h,
-                      ),
-                      Center(
-                          child: SvgPicture.asset(
-                              "assets/images/empty_state.svg")),
-                      SizedBox(
-                        height: AppSize.s49.h,
-                      ),
-                      const CustomText(
-                        text: AppStrings.youHaveNotCreatedAnyOffer,
-                        textColor: ColorManager.blckColor,
-                        fontSize: FontSize.s16,
-                      ),
-                      SizedBox(
-                        height: AppSize.s8.h,
-                      ),
-                      SizedBox(
-                          width: AppSize.s208.w,
-                          child: const CustomTextNoOverFlow(
-                              alignment: "center",
-                              fontSize: FontSize.s13,
-                              text: AppStrings.transferFundsToYourWallet))
-                    ],
-                  ),
-                );
-              } else {
-                // List trades = tradeViewModel.newTrades;
+// futureBuider part
+    // return Expanded(
+    //   child: FutureBuilder<List<NewTradeData?>>(
+    //       future: tradeViewModel.newFetchTradesTest(),
+    //       builder: (context, snapshot) {
+    //         if (snapshot.hasError) {
+    //           return const Center(
+    //               child: Text(
+    //             'An error occurred while fetching your trade',
+    //             textAlign: TextAlign.center,
+    //             style: TextStyle(
+    //               fontFamily: 'lexend',
+    //               fontSize: 20,
+    //               color: Color(0xff303030),
+    //               fontWeight: FontWeight.w400,
+    //             ),
+    //           ));
+    //         } else if (snapshot.hasData) {
+    //           if (snapshot.data == null) {
+    //             return Center(
+    //               child: Column(
+    //                 children: [
+    //                   SizedBox(
+    //                     height: AppSize.s96.h,
+    //                   ),
+    //                   Center(
+    //                       child: SvgPicture.asset(
+    //                           "assets/images/empty_state.svg")),
+    //                   SizedBox(
+    //                     height: AppSize.s49.h,
+    //                   ),
+    //                   const CustomText(
+    //                     text: AppStrings.youHaveNotCreatedAnyOffer,
+    //                     textColor: ColorManager.blckColor,
+    //                     fontSize: FontSize.s16,
+    //                   ),
+    //                   SizedBox(
+    //                     height: AppSize.s8.h,
+    //                   ),
+    //                   SizedBox(
+    //                       width: AppSize.s208.w,
+    //                       child: const CustomTextNoOverFlow(
+    //                           alignment: "center",
+    //                           fontSize: FontSize.s13,
+    //                           text: AppStrings.transferFundsToYourWallet))
+    //                 ],
+    //               ),
+    //             );
+    //           } else {
+    //             // List trades = tradeViewModel.newTrades;
 
-                var offers = snapshot.data!;
+    //             var offers = snapshot.data!;
 
-                offers = offers.where((offers) {
-                  Map status = <String, List>{
-                    "allTrades": ['ACTIVE', 'CONFIRMED', 'CANCELLED'],
-                    "active": ['ACTIVE'],
-                    "completed": ['COMPLETED'],
-                    "confirmed": ['CONFIRMED'],
-                    "disputed": ['DISPUTED'],
-                    "cancelled": ['CANCELLED'],
-                  };
+    //             offers = offers.where((offers) {
+    //               Map status = <String, List>{
+    //                 "allTrades": ['ACTIVE', 'CONFIRMED', 'CANCELLED'],
+    //                 "active": ['ACTIVE'],
+    //                 "completed": ['COMPLETED'],
+    //                 "confirmed": ['CONFIRMED'],
+    //                 "disputed": ['DISPUTED'],
+    //                 "cancelled": ['CANCELLED'],
+    //               };
 
-                  return status[widget.offerType].contains(offers!.status);
-                }).toList();
+    //               return status[widget.offerType].contains(offers!.status);
+    //             }).toList();
 
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    await tradeViewModel.newFetchTradesTest();
-                  },
-                  child: ListView.builder(
-                      itemCount:
-                          offers.length + (tradeViewModel.isLastPage ? 0 : 1),
-                      itemBuilder: (context, index) {
-                        if (index ==
-                            offers.length - tradeViewModel.nextPageTrigger) {
-                          if (tradeViewModel.newTradesModel!.links!.next !=
-                              null) {
-                            tradeViewModel.newTradeUrl =
-                                tradeViewModel.newTradesModel!.links!.next ??
-                                    '';
-                            tradeViewModel.newFetchTradesTest();
-                          }
-                        }
-                        if (index == offers.length) {
-                          if (tradeViewModel.error) {
-                            return Center(
-                                child: errorDialog(
-                                    size: 13, tradeViewModel: tradeViewModel));
-                          } else {
-                            return Center(
-                                child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: AppSize.s300.h),
-                              child: const CupertinoActivityIndicator(),
-                            ));
-                          }
-                        }
+    //             return RefreshIndicator(
+    //               onRefresh: () async {
+    //                 await tradeViewModel.newFetchTradesTest();
+    //               },
+    //               child: ListView.builder(
+    //                   itemCount:
+    //                       offers.length + (tradeViewModel.isLastPage ? 0 : 1),
+    //                   itemBuilder: (context, index) {
+    //                     if (index ==
+    //                         offers.length - tradeViewModel.nextPageTrigger) {
+    //                       if (tradeViewModel.newTradesModel!.links!.next !=
+    //                           null) {
+    //                         tradeViewModel.newTradeUrl =
+    //                             tradeViewModel.newTradesModel!.links!.next ??
+    //                                 '';
+    //                         tradeViewModel.newFetchTradesTest();
+    //                       }
+    //                     }
+    //                     if (index == offers.length) {
+    //                       if (tradeViewModel.error) {
+    //                         return Center(
+    //                             child: errorDialog(
+    //                                 size: 13, tradeViewModel: tradeViewModel));
+    //                       } else {
+    //                         return Center(
+    //                             child: Padding(
+    //                           padding: EdgeInsets.symmetric(
+    //                               vertical: AppSize.s300.h),
+    //                           child: const CupertinoActivityIndicator(),
+    //                         ));
+    //                       }
+    //                     }
 
-                        final test = index;
+    //                     final test = index;
 
-                        final NewTradeData post = offers[index]!;
+    //                     final NewTradeData post = offers[index]!;
 
-                        return NewTradeItem(
-                          trade: post,
-                          test: test,
-                        );
-                      }),
-                );
-              }
-            } else {
-              return Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.2),
-                  child: const Text("loading")
-                  // LoadingIndicator(),
-                  );
-            }
-          }),
-    );
+    //                     return NewTradeItem(
+    //                       trade: post,
+    //                       test: test,
+    //                     );
+    //                   }),
+    //             );
+    //           }
+    //         } else {
+    //           return Padding(
+    //               padding: EdgeInsets.only(
+    //                   top: MediaQuery.of(context).size.height * 0.2),
+    //               child: const Text("loading")
+    //               // LoadingIndicator(),
+    //               );
+    //         }
+    //       }),
+    // );
   }
 }
 

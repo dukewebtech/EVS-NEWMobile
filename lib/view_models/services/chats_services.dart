@@ -11,12 +11,16 @@ class ChatService {
     try {
       final response = await http
           .get(Uri.parse(_url), headers: {'Authorization': 'Bearer $token'});
+
+      print(response.body);
       // print("Response Body: ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (json.decode(response.body) == null) {
+          //
         } else {
           final offer = chatModelFromJson(response.body);
           chats = offer.data!;
+          print("this are the chat $chats");
         }
       } else {
         // print(request

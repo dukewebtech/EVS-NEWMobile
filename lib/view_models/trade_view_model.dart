@@ -181,6 +181,35 @@ class TradeViewModel extends ChangeNotifier {
     }
   }
 
+  // test for stream
+
+  Stream<List<NewTradeData>?> get newTradesStream async* {
+    final prefs = await SharedPreferences.getInstance();
+    final retrievedAccessToken = prefs.getString(accessToken);
+    try {
+      final response = await http.get(Uri.parse(_newTradeUrl), headers: {
+        'Authorization': 'Bearer $retrievedAccessToken',
+        'Content-Type': 'application/json',
+      });
+      newTradesModel = newTradeModelFromJson(response.body);
+      final responseHere = newTradeModelFromJson(response.body);
+      final postList = responseHere.data;
+      _isLastPage = (postList!.length < numberOfPostsPerRequest);
+      _loading = false;
+      _newPageNumber = _newPageNumber + 1;
+      final newTrades =
+          postList.where((trade) => trade.status != "COMPLETED").toList();
+      yield newTrades;
+    } catch (e) {
+      print("error --> $e");
+      _loading = false;
+      _error = true;
+      yield null;
+    }
+    await Future.delayed(const Duration(
+        seconds: 10)); // Wait for 30 seconds before fetching again
+  }
+
   /// i created this method as a test so as to rebuild my trades list automatically "kaizen"
 
   Future<List<NewTradeData?>> newFetchTradesTest() async {

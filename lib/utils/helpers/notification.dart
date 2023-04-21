@@ -65,18 +65,18 @@ void handleForegroundNotification(Map? payload) {
     return false;
   }
 
-  if (isType('chat')) {
-    print('---------------------------- na m deyssssss----------------------');
-    //do this
+  // if (isType('chat')) {
+  //   print('---------------------------- na m deyssssss----------------------');
+  //   //do this
 
-    localNotificationService.showNotificationWithPayload(
-        payload: 'payload Naviga',
-        id: 1,
-        title: payload!['recipient_id'].toString(),
-        body: payload['message'].toString());
-    // navigator.currentState?.push(MaterialPageRoute(
-    //     builder: ((context) => const TradeViewCopy(page: 1))));
-  }
+  //   localNotificationService.showNotificationWithPayload(
+  //       payload: 'payload Naviga',
+  //       id: 1,
+  //       title: payload!['recipient_id'].toString(),
+  //       body: payload['message'].toString());
+  //   // navigator.currentState?.push(MaterialPageRoute(
+  //   //     builder: ((context) => const TradeViewCopy(page: 1))));
+  // }
 
   if (isType('trade')) {
     print('----------------------------doing trade work----------------------');
@@ -85,7 +85,8 @@ void handleForegroundNotification(Map? payload) {
       id: 2,
       title: "Trade Request",
       body: "You've a new trade request of N${payload!['amount'].toString()} ",
-///i removed the below code becos it was not returning the proper username from mr sams end.
+
+      ///i removed the below code becos it was not returning the proper username from mr sams end.
       // from ${payload['partner_id'].toString()}
     );
 
