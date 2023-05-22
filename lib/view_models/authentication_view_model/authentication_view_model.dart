@@ -603,12 +603,9 @@ class AuthenticationProvider extends ChangeNotifier {
         notifyListeners();
         Navigator.pop(context);
 
-        /// when a user registers, user should be redirected to the bottomNav screen not the login screen *Kelvin*
         await getWalletAddress(context: context);
-        openNavScreen(context);
 
-        /// I kelvin, commented this code because  after registration a user should be directed to the botoom nav screen.
-        // openLoginScreen(context);
+        openLoginScreen(context);
       } else if (response.statusCode == 422) {
         final res = json.decode(response.body);
         print("response: ${response.body}");

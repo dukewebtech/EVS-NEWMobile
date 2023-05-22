@@ -40,8 +40,7 @@ ThemeData getApplicationTheme() {
       elevatedButtonTheme: ElevatedButtonThemeData(
       
           style: ElevatedButton.styleFrom(
-        textStyle: getAppBarTitleStyle(textColor: ColorManager.whiteColor),
-        primary: ColorManager.primaryColor,
+        textStyle: getAppBarTitleStyle(textColor: ColorManager.whiteColor), backgroundColor: ColorManager.primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.buttonBorderRadius),
         ),
@@ -50,10 +49,10 @@ ThemeData getApplicationTheme() {
 
       //  Text Theme
       textTheme: TextTheme(
-          headline1: getBoldStyle(
+          displayLarge: getBoldStyle(
               textColor: ColorManager.primaryColor, fontSize: FontSize.s24),
-          headline2: getPageSubtitleStyle(textColor: ColorManager.primaryColor),
-          bodyText1: getRegularStyle(textColor: ColorManager.lightTextColor)),
+          displayMedium: getPageSubtitleStyle(textColor: ColorManager.primaryColor),
+          bodyLarge: getRegularStyle(textColor: ColorManager.lightTextColor)),
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.all(AppPadding.contentPadding),
         hintStyle: getHintStyle(textColor: ColorManager.hintColor),
@@ -78,7 +77,7 @@ ThemeData getApplicationTheme() {
 
         //  Focus Borders
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: ColorManager.primaryColor,
               width: AppSize.inputBorderSide,
             ),
